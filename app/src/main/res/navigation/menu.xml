@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/menu"
+  app:startDestination="@id/menuFragment">
+
+  <fragment
+    android:id="@+id/clientsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.ClientsFragment"
+    android:label="fragment_clients"
+    tools:layout="@layout/fragment_clients" />
+  <fragment
+    android:id="@+id/driversFragment"
+    android:name="com.android.bdkstock.screens.main.menu.DriversFragment"
+    android:label="fragment_drivers"
+    tools:layout="@layout/fragment_drivers" />
+  <fragment
+    android:id="@+id/menuFragment"
+    android:name="com.android.bdkstock.screens.main.menu.MenuFragment"
+    android:label="fragment_menu"
+    tools:layout="@layout/fragment_menu" >
+    <action
+      android:id="@+id/action_menuFragment_to_clientsFragment"
+      app:destination="@id/clientsFragment" />
+    <action
+      android:id="@+id/action_menuFragment_to_driversFragment"
+      app:destination="@id/driversFragment" />
+    <action
+      android:id="@+id/action_menuFragment_to_employeesFragment"
+      app:destination="@id/employeesFragment" />
+    <action
+      android:id="@+id/action_menuFragment_to_financialFragment"
+      app:destination="@id/financialFragment" />
+    <action
+      android:id="@+id/action_menuFragment_to_ingredientsFragment"
+      app:destination="@id/ingredientsFragment" />
+    <action
+      android:id="@+id/action_menuFragment_to_productsFragment"
+      app:destination="@id/productsFragment" />
+    <action
+      android:id="@+id/action_menuFragment_to_salesFragment"
+      app:destination="@id/salesFragment" />
+  </fragment>
+  <fragment
+    android:id="@+id/employeesFragment"
+    android:name="com.android.bdkstock.screens.main.menu.EmployeesFragment"
+    android:label="fragment_employees"
+    tools:layout="@layout/fragment_employees" />
+  <fragment
+    android:id="@+id/financialFragment"
+    android:name="com.android.bdkstock.screens.main.menu.FinancialFragment"
+    android:label="fragment_financial"
+    tools:layout="@layout/fragment_financial" />
+  <fragment
+    android:id="@+id/ingredientsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.IngredientsFragment"
+    android:label="fragment_ingredients"
+    tools:layout="@layout/fragment_ingredients" />
+  <fragment
+    android:id="@+id/productsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.ProductsFragment"
+    android:label="fragment_products"
+    tools:layout="@layout/fragment_products" />
+  <fragment
+    android:id="@+id/salesFragment"
+    android:name="com.android.bdkstock.screens.main.menu.SalesFragment"
+    android:label="fragment_sales"
+    tools:layout="@layout/fragment_sales" />
+</navigation>

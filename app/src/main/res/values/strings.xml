@@ -1,0 +1,15 @@
+<resources>
+  <string name="app_name">BDKStock</string>
+  <string name="bdk_stock">BDK Stock</string>
+  <string name="phone_number">Телефон номер</string>
+  <string name="password">Пароль</string>
+  <string name="log_in">Войти</string>
+  <string name="logo">Logo</string>
+  <string name="connection_error">Нет подключения к Интернету</string>
+  <string name="internal_exception">Внутренняя ошибка</string>
+  <string name="auth_error">auth error</string>
+  <string name="invalid_phone_number_or_password">Неверный номер телефона или пароль</string>
+  <string name="error_empty_phone_number">вам нужно указать номер телефона</string>
+  <string name="error_empty_password">вам нужно указать пароль</string>
+  <string name="unknown_error">Ooops something went wrong !!!</string>
+</resources>
