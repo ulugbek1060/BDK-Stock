@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
+    mavenCentral()
     }
 
     ext {
@@ -16,15 +17,17 @@ buildscript {
         refresh_layout_version = "1.1.0"
         coroutines_version = "1.6.4"
         paging_version = "3.1.1"
+        kotlin_version = '1.7.21'
     }
 
     dependencies {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 plugins {
     id 'com.android.application' version '7.3.0' apply false
     id 'com.android.library' version '7.3.0' apply false
-    id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.21' apply false
     id 'com.google.dagger.hilt.android' version '2.44' apply false
 }

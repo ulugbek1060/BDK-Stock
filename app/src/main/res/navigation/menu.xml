@@ -44,7 +44,7 @@
   </fragment>
   <fragment
     android:id="@+id/employeesFragment"
-    android:name="com.android.bdkstock.screens.main.menu.EmployeesFragment"
+    android:name="com.android.bdkstock.screens.main.menu.employees.EmployeesFragment"
     android:label="fragment_employees"
     tools:layout="@layout/fragment_employees" />
   <fragment

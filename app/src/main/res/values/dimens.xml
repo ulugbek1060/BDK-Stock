@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="dimen_small">4dp</dimen>
+  <dimen name="dimen_medium">8dp</dimen>
+  <dimen name="dimen_large">12dp</dimen>
+  <dimen name="dimen_big">16dp</dimen>
+  <dimen name="dimen_extra_big">20dp</dimen>
+  <dimen name="corner_small">6dp</dimen>
+  <dimen name="corner_medium">12dp</dimen>
+  <dimen name="corner_big">18dp</dimen>
+  <dimen name="corner_extra_big">24dp</dimen>
+  <dimen name="margin_recycler_item_regular">8dp</dimen>
+</resources>

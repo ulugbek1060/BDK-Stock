@@ -18,6 +18,23 @@
     android:id="@+id/activityFragment"
     android:name="com.android.bdkstock.screens.main.ActivityFragment"
     android:label="fragment_activity"
-    tools:layout="@layout/fragment_activity" />
+    tools:layout="@layout/fragment_activity">
+    <action
+      android:id="@+id/action_activityFragment_to_displayEmployeeFragment"
+      app:destination="@id/displayEmployeeFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
+  </fragment>
+  <fragment
+    android:id="@+id/displayEmployeeFragment"
+    android:name="com.android.bdkstock.screens.main.menu.employees.DisplayEmployeeFragment"
+    android:label="fragment_display_employee"
+    tools:layout="@layout/fragment_display_employee">
+    <argument
+      android:name="employeeEntity"
+      app:argType="com.android.model.repository.employees.entity.EmployeeEntity" />
+  </fragment>
 
 </navigation>

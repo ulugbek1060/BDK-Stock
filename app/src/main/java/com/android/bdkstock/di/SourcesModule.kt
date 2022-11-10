@@ -1,9 +1,11 @@
 package com.android.bdkstock.di
 
-import com.android.model.source.account.AccountSource
-import com.android.model.source.settings.AppSettings
-import com.android.model.source.settings.SharedPreferencesAppSettings
+import com.android.model.repository.account.AccountSource
+import com.android.model.repository.employees.EmployeesSource
+import com.android.model.repository.settings.AppSettings
+import com.android.model.repository.settings.SharedPreferencesAppSettings
 import com.android.source.network.account.AccountSourceImpl
+import com.android.source.network.employees.EmployeesSourceIml
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,5 +24,11 @@ abstract class SourcesModule {
    abstract fun bindsAppSettings(
       sharedPreferencesAppSettings: SharedPreferencesAppSettings
    ): AppSettings
+
+
+   @Binds
+   abstract fun bindsEmployeesSource(
+      employeesSourceIml: EmployeesSourceIml
+   ): EmployeesSource
 
 }

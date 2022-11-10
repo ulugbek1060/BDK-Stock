@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.bdkstock.R
-import com.android.model.models.AuthException
-import com.android.model.models.BackendException
-import com.android.model.models.EmptyFieldException
-import com.android.model.models.Field
-import com.android.model.source.account.AccountRepository
+import com.android.model.utils.AuthException
+import com.android.model.utils.BackendException
+import com.android.model.utils.EmptyFieldException
+import com.android.model.utils.Field
+import com.android.model.repository.account.AccountRepository
 import com.android.model.utils.*
 import com.google.gson.JsonParseException
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,7 +1,9 @@
 package com.android.bdkstock.di
 
-import com.android.model.source.settings.AppSettings
+import android.util.Log
+import com.android.model.repository.settings.AppSettings
 import com.android.source.network.account.AccountApi
+import com.android.source.network.employees.EmployeesApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -18,6 +20,8 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
+   
+   private val TAG = this.javaClass.simpleName
 
    @Provides
    @Singleton
@@ -39,9 +43,10 @@ class NetworkModule {
    private fun createInterceptor(appSettings: AppSettings): Interceptor {
       return Interceptor { chain ->
          val newBuilder = chain.request().newBuilder()
+         Log.d(TAG, "createInterceptor: ${chain.request().url}")
          val token = appSettings.getCurrentToken()
          if (token != null) {
-            newBuilder.addHeader("Authorization", token)
+            newBuilder.addHeader("Authorization", "Bearer $token")
          }
          return@Interceptor chain.proceed(newBuilder.build())
       }
@@ -73,5 +78,11 @@ class NetworkModule {
    @Singleton
    fun provideAccountApi(retrofit: Retrofit): AccountApi {
       return retrofit.create(AccountApi::class.java)
+   }
+
+   @Provides
+   @Singleton
+   fun provideEmployeesApi(retrofit: Retrofit): EmployeesApi {
+      return retrofit.create(EmployeesApi::class.java)
    }
 }

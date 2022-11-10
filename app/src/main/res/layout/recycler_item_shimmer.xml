@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="@dimen/corner_extra_big"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/color_item_background">
+
+      <TextView
+        android:id="@+id/tv_fullname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_extra_big"
+        android:ellipsize="end"
+        android:fontFamily="@font/font_bold"
+        android:maxLines="1"
+        android:textColor="@color/text_color_light"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tv_phone_number"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/container_job_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Employees" />
+
+      <TextView
+        android:id="@+id/tv_phone_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_extra_big"
+        android:ellipsize="end"
+        android:fontFamily="@font/font_bold"
+        android:maxLines="1"
+        android:textColor="@color/sub_text_color"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/container_job_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_fullname"
+        tools:text="+998901010101" />
+
+      <androidx.cardview.widget.CardView
+        android:id="@+id/container_job_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_extra_big"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+          android:id="@+id/container_frame"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/white_blue"
+          android:paddingStart="@dimen/dimen_large"
+          android:paddingTop="@dimen/dimen_small"
+          android:paddingEnd="@dimen/dimen_large"
+          android:paddingBottom="@dimen/dimen_small">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+              android:id="@+id/tv_job_title"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:ellipsize="end"
+              android:fontFamily="@font/font_regular"
+              android:lines="1"
+              android:textColor="@color/blue"
+              android:textSize="12sp"
+              android:textStyle="bold"
+              tools:text="Manager" />
+
+          </LinearLayout>
+
+        </FrameLayout>
+
+      </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </androidx.cardview.widget.CardView>
+</com.facebook.shimmer.ShimmerFrameLayout>

@@ -1,7 +1,7 @@
 package com.android.bdkstock.screens.splash
 
 import androidx.lifecycle.ViewModel
-import com.android.model.source.account.AccountRepository
+import com.android.model.repository.account.AccountRepository
 import com.android.model.utils.MutableLiveEvent
 import com.android.model.utils.liveData
 import com.android.model.utils.publishEvent

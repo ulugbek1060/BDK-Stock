@@ -3,14 +3,8 @@ package com.android.bdkstock.screens.main.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.bdkstock.R
-import com.android.model.models.AuthException
-import com.android.model.models.BackendException
-import com.android.model.models.ConnectionException
-import com.android.model.source.account.AccountRepository
-import com.android.model.utils.MutableLiveEvent
-import com.android.model.utils.MutableUnitLiveEvent
-import com.android.model.utils.liveData
-import com.android.model.utils.publishEvent
+import com.android.model.repository.account.AccountRepository
+import com.android.model.utils.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -41,7 +35,7 @@ open class BaseViewModel(private val accountRepository: AccountRepository) : Vie
       }
    }
 
-   fun logout() {
+   fun logout() = viewModelScope.launch {
       accountRepository.logout()
    }
 }
