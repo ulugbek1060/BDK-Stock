@@ -5,7 +5,10 @@
   android:layout_width="match_parent"
   android:layout_height="80dp"
   android:layout_margin="8dp"
-  app:cardCornerRadius="@dimen/corner_extra_big"
+  android:clickable="true"
+  android:focusable="true"
+  android:foreground="?attr/selectableItemBackground"
+  app:cardCornerRadius="@dimen/corner_extra"
   app:cardElevation="0dp">
 
   <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +20,7 @@
       android:id="@+id/tv_fullname"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen_extra_big"
+      android:layout_marginStart="@dimen/dimen_extra"
       android:ellipsize="end"
       android:fontFamily="@font/font_bold"
       android:maxLines="1"
@@ -35,7 +38,7 @@
       android:id="@+id/tv_phone_number"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen_extra_big"
+      android:layout_marginStart="@dimen/dimen_extra"
       android:ellipsize="end"
       android:fontFamily="@font/font_bold"
       android:maxLines="1"
@@ -52,7 +55,7 @@
       android:id="@+id/container_job_title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_margin="@dimen/dimen_extra_big"
+      android:layout_margin="@dimen/dimen_extra"
       app:cardCornerRadius="16dp"
       app:cardElevation="0dp"
       app:layout_constraintBottom_toBottomOf="parent"

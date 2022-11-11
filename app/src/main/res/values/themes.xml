@@ -16,6 +16,7 @@
   </style>
 
   <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense" />
+  <style name="TextInputLayoutStyleDropDown" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu" />
 
   <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
     <item name="android:windowBackground">@drawable/splash_background</item>

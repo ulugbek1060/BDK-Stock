@@ -11,16 +11,17 @@
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:fontFamily="@font/font_bold"
-    android:padding="@dimen/dimen_extra_big"
-    android:text="Employees"
+    android:padding="@dimen/dimen_extra"
+    android:text="@string/employees"
     android:textColor="@color/text_color"
-    android:textSize="28sp"
+    android:textSize="@dimen/text_size_big"
     android:textStyle="bold"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
   <ImageButton
+    android:contentDescription="@string/search"
     android:id="@+id/button_search"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -31,8 +32,25 @@
     app:layout_constraintRight_toRightOf="@id/tv_title_employees"
     app:layout_constraintTop_toTopOf="@id/tv_title_employees" />
 
+  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/tv_title_employees">
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recycler_employees"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:listitem="@layout/recycler_item_employee" />
+
+  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
   <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/recycler_employees"
+    android:id="@+id/recycler_shimmer_loading"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:visibility="gone"
@@ -40,16 +58,20 @@
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toBottomOf="@id/tv_title_employees"
-    tools:listitem="@layout/recycler_item_employee" />
-
-  <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/recycler_shimmer_loading"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_title_employees"
     tools:listitem="@layout/recycler_item_shimmer" />
+
+  <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    android:id="@+id/extended_fab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:contentDescription="@string/add"
+    android:text="@string/add"
+    android:textColor="@color/white"
+    app:backgroundTint="@color/blue"
+    app:icon="@drawable/ic_add"
+    app:iconTint="@color/white"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

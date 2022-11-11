@@ -1,4 +1,4 @@
-package com.android.source.network.employees.entity
+package com.android.source.network.employees.entity.get
 
 import com.google.gson.annotations.SerializedName
 

@@ -3,7 +3,7 @@ package com.android.bdkstock
 import android.app.Application
 import android.util.Log
 import com.android.model.utils.Const
-import com.android.source.network.employees.entity.EmployeesResponseEntity
+import com.android.source.network.employees.entity.get.EmployeesResponseEntity
 import com.google.gson.GsonBuilder
 import dagger.hilt.android.HiltAndroidApp
 import okhttp3.Interceptor

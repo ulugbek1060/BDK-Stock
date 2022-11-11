@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content">
+
+  <com.facebook.shimmer.ShimmerFrameLayout
+    android:id="@+id/shimmer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <include layout="@layout/recycler_item_shimmer" />
+
+  </com.facebook.shimmer.ShimmerFrameLayout>
 
   <TextView
     android:id="@+id/tv_error"
@@ -40,8 +52,8 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
-        android:paddingStart="@dimen/dimen_extra_big"
-        android:paddingEnd="@dimen/dimen_extra_big">
+        android:paddingStart="@dimen/dimen_extra"
+        android:paddingEnd="@dimen/dimen_extra">
 
         <TextView
           android:layout_width="wrap_content"
@@ -49,10 +61,10 @@
           android:ellipsize="end"
           android:fontFamily="@font/font_regular"
           android:lines="1"
+          android:text="@string/try_again"
           android:textColor="@color/white"
           android:textSize="16sp"
-          android:textStyle="bold"
-          tools:text="Button" />
+          android:textStyle="bold" />
 
       </LinearLayout>
 
