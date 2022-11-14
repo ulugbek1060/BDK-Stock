@@ -4,6 +4,7 @@ import android.util.Log
 import com.android.model.repository.settings.AppSettings
 import com.android.source.network.account.AccountApi
 import com.android.source.network.employees.EmployeesApi
+import com.android.source.network.job.JobApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -84,5 +85,11 @@ class NetworkModule {
    @Singleton
    fun provideEmployeesApi(retrofit: Retrofit): EmployeesApi {
       return retrofit.create(EmployeesApi::class.java)
+   }
+
+   @Provides
+   @Singleton
+   fun provideJobApi(retrofit: Retrofit): JobApi {
+      return retrofit.create(JobApi::class.java)
    }
 }

@@ -2,6 +2,7 @@ package com.android.source.network.employees
 
 import com.android.model.repository.employees.EmployeesSource
 import com.android.model.repository.employees.entity.EmployeeEntity
+import com.android.model.repository.jobs.entity.JobEntity
 import com.android.source.network.base.BaseNetworkSource
 import com.android.source.network.employees.entity.register.RegisterEmployeeRequestEntity
 import com.android.source.network.employees.entity.update.UpdateEmployeeRequestEntity
@@ -19,7 +20,7 @@ class EmployeesSourceIml @Inject constructor(
       phoneNumber: String,
       address: String,
       jobId: Int
-   ): String = wrapNetworkException {
+   ): EmployeeEntity = wrapNetworkException {
       val body = RegisterEmployeeRequestEntity(
          firstname = firstname,
          lastname = lastname,
@@ -27,7 +28,18 @@ class EmployeesSourceIml @Inject constructor(
          address = address,
          jobId = jobId
       )
-      employeesApi.registerEmployee(body).message
+      val response = employeesApi.registerEmployee(body).user
+      EmployeeEntity(
+         id = response.id,
+         firstname = response.firstname,
+         lastname = response.lastname,
+         address = response.address,
+         job = JobEntity(
+            id = response.job.id,
+            name = response.job.name
+         ),
+         phoneNumber = response.phoneNumber
+      )
    }
 
    override suspend fun getEmployees(
@@ -40,11 +52,15 @@ class EmployeesSourceIml @Inject constructor(
          pageIndex = pageIndex,
          pageSize = pageSize
       ).data.map { employee ->
+
          EmployeeEntity(
             address = employee.address,
             firstname = employee.firstname,
             id = employee.id,
-            jobTitle = employee.job,
+            job = JobEntity(
+               id = employee.job.id,
+               name = employee.job.name
+            ),
             lastname = employee.lastname,
             phoneNumber = employee.phoneNumber
          )
@@ -70,5 +86,4 @@ class EmployeesSourceIml @Inject constructor(
       )
       employeesApi.updateEmployee(id, body).message
    }
-
 }

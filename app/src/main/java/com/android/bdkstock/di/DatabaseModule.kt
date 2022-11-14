@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.android.model.database.AppDatabase
 import com.android.model.database.account.AccountDao
+import com.android.model.database.jobs.JobsDao
 import com.android.model.database.employees.EmployeesDao
 import dagger.Module
 import dagger.Provides
@@ -33,6 +34,12 @@ class DatabaseModule {
    @Singleton
    fun provideEmployeesDao(appDatabase: AppDatabase): EmployeesDao {
       return appDatabase.getEmployeesDao()
+   }
+
+   @Provides
+   @Singleton
+   fun provideJobsDao(appDatabase: AppDatabase): JobsDao {
+      return appDatabase.getJobsDao()
    }
 
    private companion object {

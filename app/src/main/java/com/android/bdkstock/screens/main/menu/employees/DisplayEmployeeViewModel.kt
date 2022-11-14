@@ -1,24 +1,43 @@
 package com.android.bdkstock.screens.main.menu.employees
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.base.BaseViewModel
-import com.android.model.features.JobTitle
 import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.employees.EmployeeRepository
+import com.android.model.repository.employees.entity.EmployeeEntity
+import com.android.model.repository.jobs.JobRepository
+import com.android.model.repository.jobs.entity.JobEntity
 import com.android.model.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @HiltViewModel
 class DisplayEmployeeViewModel @Inject constructor(
-   accountRepository: AccountRepository,
    savedStateHandle: SavedStateHandle,
-   private val employeesRepository: EmployeeRepository
+   accountRepository: AccountRepository,
+   private val employeesRepository: EmployeeRepository,
+   private val jobsRepository: JobRepository
 ) : BaseViewModel(accountRepository) {
+
+   private val TAG = "DisplayEmployeeViewMode"
+
+   private val _currentEmployee =
+      DisplayEmployeeFragmentArgs.fromSavedStateHandle(savedStateHandle)
+
+   private val _showChangesDialog = MutableUnitLiveEvent()
+   val showChangesDialog = _showChangesDialog.liveData()
+
+   private val _jobsEntity = MutableLiveData<Results<List<JobEntity>?>>(Pending())
+   val jobsEntity = _jobsEntity.liveData()
+
+   private val _employeeEntity = MutableLiveData<EmployeeEntity>()
+   val employeeEntity = _employeeEntity.liveData()
 
    private val _state = MutableLiveData(State())
    val state = _state.liveData()
@@ -29,16 +48,24 @@ class DisplayEmployeeViewModel @Inject constructor(
    private val _clearPassword = MutableUnitLiveEvent()
    val clearPassword = _clearPassword.liveData()
 
-   private val _jobTitle = MutableLiveData<JobTitle>()
-   val jobTitle = _jobTitle.liveData()
-
-   private val _employee = DisplayEmployeeFragmentArgs.fromSavedStateHandle(savedStateHandle)
-
-   private val _employeeEntity = MutableLiveData(_employee.employeeEntity)
-   val employeeEntity = _employeeEntity.liveData()
-
    init {
-      _jobTitle.value = getInitialJobTitle()
+      viewModelScope.safeLaunch {
+         jobsRepository.getJobs().collectLatest {
+            _jobsEntity.value = it
+         }
+      }
+      getInitialDateOfEmployee()
+   }
+
+   /**
+    * 1. initial user data
+    */
+   private fun getInitialDateOfEmployee() = safeAction {
+      val phoneNumber = _currentEmployee.employeeEntity.phoneNumber
+      val entity = _currentEmployee.employeeEntity.copy(
+         phoneNumber = formatPhoneNumber(phoneNumber)
+      )
+      _employeeEntity.value = entity
    }
 
    fun updateEmployee(
@@ -47,13 +74,13 @@ class DisplayEmployeeViewModel @Inject constructor(
       newAddress: String,
       newPhoneNumber: String,
       newPassword: String,
-      newPasswordConfirm: String
+      newPasswordConfirm: String,
    ) = viewModelScope.safeLaunch {
-      if (changesState()) {
+      if (isChangeable()) {
          showProgress()
          try {
             val message = employeesRepository.updateEmployee(
-               id = _employeeEntity.requireValue().id,
+               id = getEmployeeId(),
                firstname = newFirstname,
                lastname = newLastname,
                phoneNumber = newPhoneNumber,
@@ -62,6 +89,7 @@ class DisplayEmployeeViewModel @Inject constructor(
                confirmPassword = newPasswordConfirm,
                jobId = getJobId()
             )
+            Log.d(TAG, "updateEmployee: $message")
             successResultAndRestoreState(message)
          } catch (e: EmptyFieldException) {
             publishEmptyFieldError(e)
@@ -71,41 +99,61 @@ class DisplayEmployeeViewModel @Inject constructor(
       }
    }
 
-   fun toggleChanges() {
-      val changes = _state.value?.isChangesEnable ?: false
-
-      // if editing is canceled set old values
-      if (changes) _employeeEntity.value = _employee.employeeEntity // for canceling changes
-      if (changes) _jobTitle.value = getInitialJobTitle() // for canceling changes
-
-      _state.value = State(isChangesEnable = !changes)
-   }
-
-   fun setJobTitle(jobTitle: JobTitle) {
-      _jobTitle.value = jobTitle
-   }
-
-   private fun getInitialJobTitle(): JobTitle {
-      val job = _employeeEntity.requireValue().jobTitle
-      var jobTitle: JobTitle = JobTitle(1, "Admin")
-      JobTitle.getJobs().forEach {
-         if (it.jobName == job) {
-            jobTitle = it
-            return@forEach
-         }
+   fun setChangeableState(checkState: Boolean) {
+      if (checkState) {
+         showDialogEvent()
+      } else {
+         _state.value = State(isChangesEnable = false)
+         getInitialDateOfEmployee()
       }
-      return jobTitle
    }
 
-   private fun changesState(): Boolean = _state.requireValue().isChangesEnable
+   /**
+    * to change job title
+    */
+   fun setJobEntity(job: JobEntity) {
+      _employeeEntity.value = _employeeEntity.requireValue().copy(
+         job = job
+      )
+   }
 
-   private fun getJobId() = _jobTitle.requireValue().jobId
+   fun enableChangeableState() {
+      _state.value = _state.requireValue().copy(
+         isChangesEnable = true
+      )
+   }
+
+   /**
+    * to know change state is active or not
+    */
+   private fun isChangeable(): Boolean = _state.requireValue().isChangesEnable
+
+   private fun showDialogEvent() = _showChangesDialog.publishEvent()
+
+   private fun getEmployeeId() = _employeeEntity.requireValue().id
+
+   private fun getJobId() = _employeeEntity.requireValue().job.id.toInt()
 
    private fun successResultAndRestoreState(message: String) {
       publishMessage(message)
       _state.postValue(State())
       _clearPassword.publishEvent()
    }
+
+   private fun formatPhoneNumber(number: String): String {
+      return try {
+         if (number.contains("+998")) {
+            number.removePrefix("+998")
+         } else if (number.contains("998")) {
+            number.removePrefix("998")
+         } else {
+            number
+         }
+      } catch (e: Exception) {
+         "phone number is invalid"
+      }
+   }
+
 
    private fun publishEmptyFieldError(e: EmptyFieldException) {
       _state.value = _state.value?.copy(
@@ -131,6 +179,7 @@ class DisplayEmployeeViewModel @Inject constructor(
    }
 
    private fun publishMessage(message: String) = _showMessages.publishEvent(message)
+
 
    data class State(
       val emptyFirstnameError: Boolean = false,

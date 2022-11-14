@@ -3,6 +3,7 @@ package com.android.model.database.account.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.android.model.repository.account.entity.AccountEntity
+import com.android.model.repository.jobs.entity.JobEntity
 
 @Entity(tableName = "account")
 data class AccountRoomEntity(
@@ -10,7 +11,7 @@ data class AccountRoomEntity(
    val firstname: String,
    val lastname: String,
    val address: String,
-   val jobTitle: String,
+   val job: AccountJobRoom,
    val phoneNumber: String
 ) {
    fun toAccountEntity() = AccountEntity(
@@ -18,7 +19,10 @@ data class AccountRoomEntity(
       firstname = firstname,
       lastname = lastname,
       address = address,
-      jobTitle = jobTitle,
+      job = JobEntity(
+         id = job.id,
+         name = job.name
+      ),
       phoneNumber = phoneNumber
    )
 }

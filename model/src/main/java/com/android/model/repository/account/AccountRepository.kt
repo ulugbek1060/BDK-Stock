@@ -1,8 +1,8 @@
 package com.android.model.repository.account
 
 import com.android.model.database.account.AccountDao
-import com.android.model.repository.Repository
 import com.android.model.repository.account.entity.AccountEntity
+import com.android.model.repository.base.BaseRepository
 import com.android.model.repository.settings.AppSettings
 import com.android.model.utils.AuthException
 import com.android.model.utils.BackendException
@@ -17,7 +17,9 @@ class AccountRepository @Inject constructor(
    private val accountSource: AccountSource,
    private val appSettings: AppSettings,
    private val accountDao: AccountDao
-) : Repository {
+) : BaseRepository() {
+
+   private val TAG = this.javaClass.simpleName
 
    fun isSignedIn(): Boolean {
       // user is signed-in if auth token exists
@@ -39,19 +41,21 @@ class AccountRepository @Inject constructor(
       if (password.isBlank()) throw EmptyFieldException(Field.Password)
 
       // if there is error throws
-      val userEntity = try {
-         accountSource.signIn(phoneNumber, password)
+      try {
+         val accountEntity = accountSource.signIn(phoneNumber, password)
+
+         appSettings.setCurrentToken(accountEntity.token)
+
+         // save user data to database
+         accountDao.insert(accountEntity.toUserRoomEntity())
+
       } catch (e: Exception) {
-         if (e is BackendException && e.code == 401) {
-            throw AuthException(e)
+         throw if (e is BackendException && e.code == 401) {
+            AuthException(e)
          } else {
             throw e
          }
       }
-      appSettings.setCurrentToken(userEntity.token)
-
-      // save user data to database
-      accountDao.insert(userEntity.toUserRoomEntity())
    }
 
    /**

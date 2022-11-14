@@ -20,14 +20,17 @@
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
-  <TextView
+  <CheckBox
     android:id="@+id/button_edit"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:fontFamily="@font/font_bold"
     android:padding="@dimen/dimen_large"
+    android:checked="false"
+    android:button="@android:color/transparent"
     android:text="@string/edit"
     android:textColor="@color/blue"
+    android:background="@android:color/transparent"
     app:layout_constraintBottom_toBottomOf="@id/tv_title_profile"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="@id/tv_title_profile" />
@@ -203,6 +206,8 @@
         android:enabled="false"
         android:hint="@string/phone_number"
         app:errorEnabled="true"
+        app:counterMaxLength="9"
+        app:prefixText="+998"
         app:layout_constraintBottom_toTopOf="@id/input_layout_address"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -268,6 +273,21 @@
           tools:ignore="LabelFor" />
 
       </com.google.android.material.textfield.TextInputLayout>
+
+      <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progress_job_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:layout_marginBottom="@dimen/corner_big"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/input_layout_job_title"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/input_layout_job_title"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading" />
 
       <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_password"

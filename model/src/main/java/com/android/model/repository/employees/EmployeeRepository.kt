@@ -2,7 +2,7 @@ package com.android.model.repository.employees
 
 import androidx.paging.*
 import com.android.model.database.employees.EmployeesDao
-import com.android.model.repository.Repository
+import com.android.model.repository.base.Repository
 import com.android.model.repository.employees.entity.EmployeeEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.BackendException
@@ -25,12 +25,13 @@ class EmployeeRepository @Inject constructor(
       phoneNumber: String,
       address: String,
       jobId: Int?
-   ): String {
+   ): EmployeeEntity {
 
       if (firstname.isBlank()) throw EmptyFieldException(Field.Firstname)
       if (lastname.isBlank()) throw EmptyFieldException(Field.Lastname)
       if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PhoneNumber)
       if (address.isBlank()) throw EmptyFieldException(Field.Address)
+      if (jobId == null) throw EmptyFieldException(Field.Job)
 
       return try {
          employeesSource.registerEmployee(
@@ -38,7 +39,7 @@ class EmployeeRepository @Inject constructor(
             lastname = lastname,
             phoneNumber = phoneNumber,
             address = address,
-            jobId = jobId ?: throw EmptyFieldException(Field.Job)
+            jobId = jobId
          )
       } catch (e: Exception) {
          if (e is BackendException && e.code == 401) {
@@ -89,6 +90,7 @@ class EmployeeRepository @Inject constructor(
       if (address.isBlank()) throw EmptyFieldException(Field.Address)
       if (password.isBlank()) throw EmptyFieldException(Field.Password)
       if (confirmPassword != password) throw EmptyFieldException(Field.MismatchPasswordFields)
+      if (jobId == null) throw throw EmptyFieldException(Field.Job)
 
       return try {
          employeesSource.updateEmployee(
@@ -98,7 +100,7 @@ class EmployeeRepository @Inject constructor(
             phoneNumber = phoneNumber,
             address = address,
             password = password,
-            job = jobId ?: throw throw EmptyFieldException(Field.Job)
+            job = jobId
          )
       } catch (e: Exception) {
          if (e is BackendException && e.code == 401) {
@@ -110,27 +112,27 @@ class EmployeeRepository @Inject constructor(
    }
 
 
-//   fun getEmployees(
-//      query: String
-//   ): Flow<PagingData<EmployeeEntity>> {
-//      return Pager(
-//         config = PagingConfig(
-//            pageSize = PAGE_SIZE,
-//            enablePlaceholders = false
-//         ),
-//         pagingSourceFactory = {
-//            EmployeesPagingSource(object : EmployeesPagingSource.EmployeesPageLoader {
-//               override suspend fun getEmployees(pageIndex: Int): List<EmployeeEntity> {
-//                  return employeesSource.getEmployees(
-//                     query = query,
-//                     pageIndex = pageIndex,
-//                     pageSize = PAGE_SIZE
-//                  )
-//               }
-//            })
-//         }
-//      ).flow
-//   }
+   fun getEmployees(
+      query: String
+   ): Flow<PagingData<EmployeeEntity>> {
+      return Pager(
+         config = PagingConfig(
+            pageSize = PAGE_SIZE,
+            enablePlaceholders = false
+         ),
+         pagingSourceFactory = {
+            EmployeesPagingSource(object : EmployeesPagingSource.EmployeesPageLoader {
+               override suspend fun getEmployees(pageIndex: Int): List<EmployeeEntity> {
+                  return employeesSource.getEmployees(
+                     query = query,
+                     pageIndex = pageIndex,
+                     pageSize = PAGE_SIZE
+                  )
+               }
+            })
+         }
+      ).flow
+   }
 
    private companion object {
       const val PAGE_SIZE = 10

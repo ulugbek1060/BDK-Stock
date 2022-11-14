@@ -38,7 +38,7 @@ class EmployeesViewModel @Inject constructor(
       employeesFlow = query.asFlow()
          .debounce(500)
          .flatMapLatest {
-            employeesRepository.getEmployeesFromLocal(it)
+            employeesRepository.getEmployees(it)
          }
          // always use cacheIn operator for flows returned by Pager. Otherwise exception may be thrown
          // when 1) refreshing/invalidating or 2) subscribing to the flow more than once.

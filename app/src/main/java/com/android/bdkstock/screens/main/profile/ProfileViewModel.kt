@@ -7,7 +7,7 @@ import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.account.entity.AccountEntity
 import com.android.model.utils.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,14 +20,9 @@ class ProfileViewModel @Inject constructor(
 
    init {
       viewModelScope.safeLaunch {
-//         _accountInfo.value = repository.getAccount().first()
-         repository.getAccount().collect {
+         repository.getAccount().collectLatest {
             _accountInfo.value = it
          }
       }
    }
-
-   data class State(
-      val accountInProcess:Boolean = false
-   )
 }

@@ -5,12 +5,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.android.bdkstock.R
-import com.android.model.utils.observeEvent
+import com.android.model.utils.*
 
 abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 
@@ -67,5 +68,17 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
       val topLevelHost =
          requireActivity().supportFragmentManager.findFragmentById(R.id.fragment_main_container) as NavHostFragment?
       return topLevelHost?.navController ?: findNavController()
+   }
+
+   fun <T> LiveData<Results<T>>.observeResults(
+      fragment: Fragment,
+      progress: View?,
+      onSuccess: (T) -> Unit
+   ) = observe(fragment.viewLifecycleOwner) { result ->
+      if (result is Success) {
+         progress?.gone()
+         onSuccess(result.value)
+      }
+      if (result is Pending) progress?.visible()
    }
 }

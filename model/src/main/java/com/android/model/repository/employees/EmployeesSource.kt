@@ -17,7 +17,7 @@ interface EmployeesSource {
       phoneNumber: String,
       address: String,
       jobId: Int
-   ): String // message
+   ): EmployeeEntity // message
 
    /**
     * gets all registered employees

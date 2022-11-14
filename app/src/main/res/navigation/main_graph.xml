@@ -39,14 +39,20 @@
     android:name="com.android.bdkstock.screens.main.menu.employees.DisplayEmployeeFragment"
     android:label="fragment_display_employee"
     tools:layout="@layout/fragment_display_employee">
+
     <argument
       android:name="employeeEntity"
       app:argType="com.android.model.repository.employees.entity.EmployeeEntity" />
   </fragment>
+
   <fragment
     android:id="@+id/registerEmployeeFragment"
     android:name="com.android.bdkstock.screens.main.menu.employees.RegisterEmployeeFragment"
     android:label="fragment_register_employee"
-    tools:layout="@layout/fragment_register_employee" />
+    tools:layout="@layout/fragment_register_employee" >
+    <action
+      android:id="@+id/action_registerEmployeeFragment_to_displayEmployeeFragment"
+      app:destination="@id/displayEmployeeFragment" />
+  </fragment>
 
 </navigation>

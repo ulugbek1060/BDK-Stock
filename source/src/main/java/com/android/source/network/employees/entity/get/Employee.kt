@@ -1,6 +1,7 @@
 package com.android.source.network.employees.entity.get
 
 
+import com.android.source.network.job.entity.Job
 import com.google.gson.annotations.SerializedName
 
 data class Employee(
@@ -11,7 +12,7 @@ data class Employee(
    @SerializedName("id")
    val id: Long, // 3
    @SerializedName("job")
-   val job: String, // Admin
+   val job: Job, // Admin
    @SerializedName("last_name")
    val lastname: String, // jurayev
    @SerializedName("phone_number")

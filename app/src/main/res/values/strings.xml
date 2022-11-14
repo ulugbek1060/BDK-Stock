@@ -36,4 +36,10 @@
   <string name="employee">Сотркдник</string>
   <string name="add_employee">Добавить сотркдник</string>
   <string name="search">Поиск</string>
+  <string name="permissions_denied_forever">Разрешение отклонено навсегда</string>
+  <string name="open">Открыть</string>
+  <string name="permission_denied">Доступе отказано</string>
+  <string name="edit_user_details">Изменить данные сотрудника</string>
+  <string name="no">Нет</string>
+  <string name="yes">Да</string>
 </resources>

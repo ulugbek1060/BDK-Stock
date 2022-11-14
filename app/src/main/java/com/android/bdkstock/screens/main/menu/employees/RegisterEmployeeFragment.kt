@@ -3,13 +3,12 @@ package com.android.bdkstock.screens.main.menu.employees
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentRegisterEmployeeBinding
+import com.android.bdkstock.screens.main.ActivityFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
-import com.android.model.features.JobTitle
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,33 +23,35 @@ class RegisterEmployeeFragment : BaseFragment(R.layout.fragment_register_employe
       binding = FragmentRegisterEmployeeBinding.bind(view)
 
       observeState()
-      observeMessages()
+      observeNavigation()
 
-      setupJobTitle()
+      fetchJobTitle()
+
 
       binding.buttonSave.setOnClickListener { saveEmployeeAction() }
    }
 
-   private fun observeMessages() {
-      viewModel.showMessages.observeEvent(viewLifecycleOwner) {
-         Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+   private fun observeNavigation() {
+      viewModel.navigate.observeEvent(viewLifecycleOwner) { employee ->
+         findTopNavController().popBackStack()
+         val args =
+            ActivityFragmentDirections.actionActivityFragmentToDisplayEmployeeFragment(employee)
+         findTopNavController().navigate(args)
       }
    }
 
-   private fun setupJobTitle() {
-      val jobsList = JobTitle.getJobs()
+   private fun fetchJobTitle() {
+      viewModel.jobsList.observeResults(this, null) { jobs ->
+         val list = jobs ?: emptyList()
 
-      viewModel.setJobTitle(jobsList[2])
+         binding.autoCompleteJobTitle.setText(null, false)
 
-      viewModel.jobTitle.observe(viewLifecycleOwner) {
-         binding.autoCompleteJobTitle.setText(it.jobName, false)
-      }
+         val adapter = ArrayAdapter(requireContext(), R.layout.auto_complete_item_job_title, list)
+         binding.autoCompleteJobTitle.setAdapter(adapter)
 
-      val adapter = ArrayAdapter(requireContext(), R.layout.auto_complete_item_job_title, jobsList)
-      binding.autoCompleteJobTitle.setAdapter(adapter)
-
-      binding.autoCompleteJobTitle.setOnItemClickListener { _, _, position, _ ->
-         viewModel.setJobTitle(jobsList[position])
+         binding.autoCompleteJobTitle.setOnItemClickListener { _, _, position, _ ->
+            viewModel.setJobTitle(list[position])
+         }
       }
    }
 
@@ -59,22 +60,17 @@ class RegisterEmployeeFragment : BaseFragment(R.layout.fragment_register_employe
          firstname = binding.inputName.text.toString(),
          lastname = binding.inputSurname.text.toString(),
          address = binding.inputAddress.text.toString(),
-         phoneNumber = binding.inputPhoneNumber.text.toString()
+         phoneNumber = "998${binding.inputPhoneNumber.text.toString()}"
       )
    }
 
    private fun observeState() {
       viewModel.state.observe(viewLifecycleOwner) { state ->
-         binding.inputLayoutName.isEnabled =
-            !state.disableFields || !state.isProgressActive
-         binding.inputLayoutSurname.isEnabled =
-            !state.disableFields || !state.isProgressActive
-         binding.inputLayoutAddress.isEnabled =
-            !state.disableFields || !state.isProgressActive
-         binding.inputLayoutPhoneNumber.isEnabled =
-            !state.disableFields || !state.isProgressActive
-         binding.inputLayoutJobTitle.isEnabled =
-            !state.disableFields || !state.isProgressActive
+         binding.inputLayoutName.isEnabled = !state.isProgressActive
+         binding.inputLayoutSurname.isEnabled = !state.isProgressActive
+         binding.inputLayoutAddress.isEnabled = !state.isProgressActive
+         binding.inputLayoutPhoneNumber.isEnabled = !state.isProgressActive
+         binding.inputLayoutJobTitle.isEnabled = !state.isProgressActive
 
          binding.lottiProgress.isVisible = state.isProgressActive
          binding.buttonSave.isVisible = !state.isProgressActive
@@ -101,4 +97,5 @@ class RegisterEmployeeFragment : BaseFragment(R.layout.fragment_register_employe
    private fun getPhoneNumberError(state: Boolean) =
       if (state) requireContext().getString(R.string.error_empty_phone_number)
       else null
+
 }

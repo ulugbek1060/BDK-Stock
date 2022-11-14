@@ -34,6 +34,7 @@ class EmployeesFragment : BaseFragment(R.layout.fragment_employees) {
    private lateinit var binding: FragmentEmployeesBinding
    override val viewModel by viewModels<EmployeesViewModel>()
    private lateinit var layoutManager: LinearLayoutManager
+
    private val TAG = this.javaClass.simpleName
 
    @SuppressLint("SetTextI18n")
@@ -42,14 +43,13 @@ class EmployeesFragment : BaseFragment(R.layout.fragment_employees) {
       bind { employee ->
          tvFullname.text = "${employee.firstname}, ${employee.lastname}"
          tvPhoneNumber.text = "+${employee.phoneNumber}"
-         tvJobTitle.text = employee.jobTitle
+         tvJobTitle.text = employee.job.name
       }
       listeners {
          root.onClick { employee ->
             val args =
                ActivityFragmentDirections.actionActivityFragmentToDisplayEmployeeFragment(employee)
             findTopNavController().navigate(args)
-
          }
       }
    }

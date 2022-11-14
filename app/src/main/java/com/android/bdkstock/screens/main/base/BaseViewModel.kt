@@ -35,6 +35,14 @@ open class BaseViewModel(private val accountRepository: AccountRepository) : Vie
       }
    }
 
+   fun safeAction(block: () -> Unit) {
+      try {
+         block()
+      } catch (e: Exception) {
+         e.printStackTrace()
+      }
+   }
+
    fun logout() = viewModelScope.launch {
       accountRepository.logout()
    }
