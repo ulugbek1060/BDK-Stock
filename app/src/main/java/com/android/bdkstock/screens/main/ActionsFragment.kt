@@ -7,18 +7,18 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentActivityBinding
+import com.android.bdkstock.databinding.FragmentActionsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ActivityFragment : Fragment(R.layout.fragment_activity) {
+class ActionsFragment : Fragment(R.layout.fragment_actions) {
 
-   private lateinit var binding: FragmentActivityBinding
+   private lateinit var binding: FragmentActionsBinding
    private lateinit var navController: NavController
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentActivityBinding.bind(view)
+      binding = FragmentActionsBinding.bind(view)
 
       val navHost =
          childFragmentManager.findFragmentById(R.id.fragment_activities_container) as NavHostFragment

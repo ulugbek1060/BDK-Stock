@@ -5,7 +5,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical"
-  tools:context=".screens.main.ActivityFragment">
+  tools:context=".screens.main.ActionsFragment">
 
   <androidx.fragment.app.FragmentContainerView
     android:id="@+id/fragment_activities_container"
@@ -17,7 +17,7 @@
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:navGraph="@navigation/activity_graph" />
+    app:navGraph="@navigation/actions_graph" />
 
   <com.google.android.material.bottomnavigation.BottomNavigationView
     android:id="@+id/bottom_navigation"

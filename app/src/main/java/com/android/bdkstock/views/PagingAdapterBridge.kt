@@ -1,4 +1,4 @@
-package com.android.bdkstock.screens.main.menu.employees
+package com.android.bdkstock.views
 
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -12,10 +12,10 @@ inline fun <reified T : Any, reified B : ViewBinding> pagingAdapter(
    noinline block: ConcreteItemTypeScope<T, B>.() -> Unit
 ): PagingDataAdapter<T, BindingHolder> {
    val delegate = simpleAdapterDelegate(block)
-   return EmployeesPagerAdapterBridge(delegate)
+   return PagingAdapterBridge(delegate)
 }
 
-class EmployeesPagerAdapterBridge<T : Any>(
+class PagingAdapterBridge<T : Any>(
    private val delegate: AdapterDelegate<T>
 ) : PagingDataAdapter<T, BindingHolder>(
    delegate.itemCallback()
@@ -23,7 +23,8 @@ class EmployeesPagerAdapterBridge<T : Any>(
 
    override fun onBindViewHolder(holder: BindingHolder, position: Int) {
       // please note, NULL values are not supported!
-      delegate.onBindViewHolder(holder, getItem(position)!!)
+      val item = getItem(position) ?: return
+      delegate.onBindViewHolder(holder, item)
    }
 
    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder {
@@ -32,7 +33,8 @@ class EmployeesPagerAdapterBridge<T : Any>(
 
    override fun getItemViewType(position: Int): Int {
       // please note, NULL values are not supported!
-      return delegate.getItemViewType(getItem(position)!!)
+      val item = getItem(position) ?: return 0
+      return delegate.getItemViewType(item)
    }
 
 }

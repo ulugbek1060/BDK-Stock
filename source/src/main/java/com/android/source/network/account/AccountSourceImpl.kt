@@ -11,6 +11,8 @@ class AccountSourceImpl @Inject constructor(
    private val accountApi: AccountApi
 ) : BaseNetworkSource(), AccountSource {
 
+   private val TAG = this.javaClass.simpleName
+
    override suspend fun signIn(phoneNumber: String, password: String): AccountEntity =
       wrapNetworkException {
          val signInRequestEntity = SignInRequestEntity(phoneNumber, password)
@@ -33,4 +35,8 @@ class AccountSourceImpl @Inject constructor(
          account.token = response.token.accessToken
          account
       }
+
+   override suspend fun logout(): String = wrapNetworkException {
+      accountApi.logout().success
+   }
 }

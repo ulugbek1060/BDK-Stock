@@ -15,7 +15,7 @@ open class BaseRepository {
     * @throws ParseBackendResponseException
     * @throws JsonParseException
     */
-   open suspend fun <T> launchWithException(block: suspend () -> T): T {
+   open suspend fun <T> wrapExceptions(block: suspend () -> T): T {
       return try {
          block.invoke()
       } catch (e: Exception) {
@@ -44,11 +44,7 @@ open class BaseRepository {
             saveFetchedResult(fetch())
             query().map { Success(it) }
          } catch (e: Exception) {
-            if (e is BackendException && e.code == 401) {
-               throw AuthException(e)
-            } else {
-               query().map { Success(it) }
-            }
+            query().map { Success(it) }
          }
       } else {
          query().map { Success(it) }

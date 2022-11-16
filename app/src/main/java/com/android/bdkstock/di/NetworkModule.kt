@@ -3,6 +3,8 @@ package com.android.bdkstock.di
 import android.util.Log
 import com.android.model.repository.settings.AppSettings
 import com.android.source.network.account.AccountApi
+import com.android.source.network.clients.ClientsApi
+import com.android.source.network.drivers.DriversApi
 import com.android.source.network.employees.EmployeesApi
 import com.android.source.network.job.JobApi
 import com.google.gson.Gson
@@ -91,5 +93,17 @@ class NetworkModule {
    @Singleton
    fun provideJobApi(retrofit: Retrofit): JobApi {
       return retrofit.create(JobApi::class.java)
+   }
+
+   @Provides
+   @Singleton
+   fun provideDriversApi(retrofit: Retrofit): DriversApi {
+      return retrofit.create(DriversApi::class.java)
+   }
+
+   @Provides
+   @Singleton
+   fun provideClientsApi(retrofit: Retrofit): ClientsApi {
+      return retrofit.create(ClientsApi::class.java)
    }
 }

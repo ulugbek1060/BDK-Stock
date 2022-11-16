@@ -19,12 +19,11 @@ class MenuViewModel @Inject constructor(
    private val listMenus = ArrayList<MenuItem>()
       .apply {
          add(MenuItem(1, R.drawable.ic_employees, "Employees", R.id.employeesFragment))
-         add(MenuItem(1, R.drawable.ic_sales, "Sales", R.id.salesFragment))
-         add(MenuItem(1, R.drawable.ic_financial, "Financial", R.id.financialFragment))
-         add(MenuItem(1, R.drawable.ic_materials, "Ingredients", R.id.ingredientsFragment))
-         add(MenuItem(1, R.drawable.ic_products, "Products", R.id.productsFragment))
-         add(MenuItem(1, R.drawable.ic_clients, "Clients", R.id.clientsFragment))
-         add(MenuItem(1, R.drawable.ic_drivers, "Drivers", R.id.driversFragment))
+         add(MenuItem(2, R.drawable.ic_sales, "Sales", R.id.salesFragment))
+         add(MenuItem(3, R.drawable.ic_ingredients, "Ingredients", R.id.ingredientsFragment))
+         add(MenuItem(4, R.drawable.ic_products, "Products", R.id.productsFragment))
+         add(MenuItem(5, R.drawable.ic_clients, "Clients", R.id.clientsFragment))
+         add(MenuItem(6, R.drawable.ic_circle_truck, "Drivers", R.id.driversFragment))
       }
 
    init {

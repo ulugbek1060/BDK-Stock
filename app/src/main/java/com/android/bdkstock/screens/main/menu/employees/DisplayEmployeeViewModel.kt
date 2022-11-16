@@ -60,12 +60,14 @@ class DisplayEmployeeViewModel @Inject constructor(
    /**
     * 1. initial user data
     */
-   private fun getInitialDateOfEmployee() = safeAction {
+   private fun getInitialDateOfEmployee() = try {
       val phoneNumber = _currentEmployee.employeeEntity.phoneNumber
       val entity = _currentEmployee.employeeEntity.copy(
          phoneNumber = formatPhoneNumber(phoneNumber)
       )
       _employeeEntity.value = entity
+   } catch (e: Exception) {
+      e.printStackTrace()
    }
 
    fun updateEmployee(
@@ -153,7 +155,6 @@ class DisplayEmployeeViewModel @Inject constructor(
          "phone number is invalid"
       }
    }
-
 
    private fun publishEmptyFieldError(e: EmptyFieldException) {
       _state.value = _state.value?.copy(

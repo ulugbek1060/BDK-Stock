@@ -122,7 +122,7 @@ class DisplayEmployeeFragment : BaseFragment(R.layout.fragment_display_employee)
          AlertDialog.Builder(requireContext())
             .setTitle(R.string.edit)
             .setMessage(R.string.edit_user_details)
-            .setNegativeButton(R.string.no) { _, _ -> }
+            .setNegativeButton(R.string.no) { _, _ -> binding.buttonEdit.isChecked = false }
             .setPositiveButton(R.string.yes) { _, _ -> viewModel.enableChangeableState() }
             .create()
             .show()

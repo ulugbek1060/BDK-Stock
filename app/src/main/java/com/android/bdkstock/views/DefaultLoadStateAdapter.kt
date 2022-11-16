@@ -1,4 +1,4 @@
-package com.android.bdkstock.screens.main.menu.employees
+package com.android.bdkstock.views
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

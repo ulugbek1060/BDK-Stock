@@ -4,21 +4,29 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/main_graph"
   app:startDestination="@id/signInFragment">
+
   <fragment
     android:id="@+id/signInFragment"
     android:name="com.android.bdkstock.screens.auth.SignInFragment"
     android:label="fragment_sign_in"
     tools:layout="@layout/fragment_sign_in">
+
     <action
       android:id="@+id/action_signInFragment_to_activityFragment"
-      app:destination="@id/activityFragment" />
+      app:destination="@id/actionsFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
+
   </fragment>
 
   <fragment
-    android:id="@+id/activityFragment"
-    android:name="com.android.bdkstock.screens.main.ActivityFragment"
+    android:id="@+id/actionsFragment"
+    android:name="com.android.bdkstock.screens.main.ActionsFragment"
     android:label="fragment_activity"
-    tools:layout="@layout/fragment_activity">
+    tools:layout="@layout/fragment_actions">
+
     <action
       android:id="@+id/action_activityFragment_to_displayEmployeeFragment"
       app:destination="@id/displayEmployeeFragment"
@@ -26,6 +34,7 @@
       app:exitAnim="@anim/exit"
       app:popEnterAnim="@anim/pop_enter"
       app:popExitAnim="@anim/pop_exit" />
+
     <action
       android:id="@+id/action_activityFragment_to_registerEmployeeFragment"
       app:destination="@id/registerEmployeeFragment"
@@ -33,6 +42,23 @@
       app:exitAnim="@anim/exit"
       app:popEnterAnim="@anim/pop_enter"
       app:popExitAnim="@anim/pop_exit" />
+
+    <action
+      android:id="@+id/action_activityFragment_to_registerDriverFragment"
+      app:destination="@id/registerDriverFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
+
+    <action
+      android:id="@+id/action_activityFragment_to_displayDriverFragment"
+      app:destination="@id/displayDriverFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
+
   </fragment>
   <fragment
     android:id="@+id/displayEmployeeFragment"
@@ -49,10 +75,24 @@
     android:id="@+id/registerEmployeeFragment"
     android:name="com.android.bdkstock.screens.main.menu.employees.RegisterEmployeeFragment"
     android:label="fragment_register_employee"
-    tools:layout="@layout/fragment_register_employee" >
-    <action
-      android:id="@+id/action_registerEmployeeFragment_to_displayEmployeeFragment"
-      app:destination="@id/displayEmployeeFragment" />
+    tools:layout="@layout/fragment_register_employee"/>
+
+  <fragment
+    android:id="@+id/registerDriverFragment"
+    android:name="com.android.bdkstock.screens.main.menu.drivers.RegisterDriverFragment"
+    android:label="fragment_register_driver"
+    tools:layout="@layout/fragment_register_driver"/>
+
+  <fragment
+    android:id="@+id/displayDriverFragment"
+    android:name="com.android.bdkstock.screens.main.menu.drivers.DisplayDriverFragment"
+    android:label="fragment_display_driver"
+    tools:layout="@layout/fragment_display_driver">
+
+    <argument
+      android:name="driverEntity"
+      app:argType="com.android.model.repository.drivers.entity.DriverEntity" />
+
   </fragment>
 
 </navigation>

@@ -24,5 +24,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
          binding.inputPhoneNumber.setText(it.phoneNumber)
          binding.inputAddress.setText(it.address)
       }
+
+      binding.buttonSettings.setOnClickListener { navigate(R.id.action_profileFragment_to_settingsFragment) }
    }
 }

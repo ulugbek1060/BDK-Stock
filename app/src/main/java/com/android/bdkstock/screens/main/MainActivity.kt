@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
          savedInstanceState: Bundle?
       ) {
          super.onFragmentViewCreated(fm, f, v, savedInstanceState)
-         if (f is ActivityFragment || f is NavHostFragment) return
+         if (f is ActionsFragment || f is NavHostFragment) return
          onNavControllerActivated(f.findNavController())
       }
    }
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
    private fun checkSign(): Boolean = intent.getBooleanExtra(FLAG_SIGNED_IN, false)
    private fun getMainGraphId(): Int = R.navigation.main_graph
    private fun getSignInId(): Int = R.id.signInFragment
-   private fun getActivitiesId(): Int = R.id.activityFragment
+   private fun getActivitiesId(): Int = R.id.actionsFragment
 
    override fun onSupportNavigateUp(): Boolean {
       return navController.navigateUp() || super.onSupportNavigateUp()

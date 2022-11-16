@@ -7,8 +7,6 @@ import com.android.model.repository.employees.entity.EmployeeEntity
 import okio.IOException
 import retrofit2.HttpException
 
-//typealias EmployeesPageLoader = suspend (Int) -> List<EmployeeEntity>
-
 class EmployeesPagingSource(
    private val loader: EmployeesPageLoader
 ) : PagingSource<Int, EmployeeEntity>() {
@@ -27,8 +25,6 @@ class EmployeesPagingSource(
       return try {
          val employees = loader.getEmployees(pageIndex)
 
-         Log.d(TAG, "load:$employees ")
-         // success! now we can return LoadResult.Page
          return LoadResult.Page(
             data = employees,
             // index of the previous page if exists

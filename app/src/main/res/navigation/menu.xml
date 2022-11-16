@@ -7,12 +7,12 @@
 
   <fragment
     android:id="@+id/clientsFragment"
-    android:name="com.android.bdkstock.screens.main.menu.ClientsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.clients.ClientsFragment"
     android:label="fragment_clients"
     tools:layout="@layout/fragment_clients" />
   <fragment
     android:id="@+id/driversFragment"
-    android:name="com.android.bdkstock.screens.main.menu.DriversFragment"
+    android:name="com.android.bdkstock.screens.main.menu.drivers.DriversFragment"
     android:label="fragment_drivers"
     tools:layout="@layout/fragment_drivers" />
   <fragment
@@ -22,25 +22,53 @@
     tools:layout="@layout/fragment_menu" >
     <action
       android:id="@+id/action_menuFragment_to_clientsFragment"
-      app:destination="@id/clientsFragment" />
+      app:destination="@id/clientsFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
     <action
       android:id="@+id/action_menuFragment_to_driversFragment"
-      app:destination="@id/driversFragment" />
+      app:destination="@id/driversFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
     <action
       android:id="@+id/action_menuFragment_to_employeesFragment"
-      app:destination="@id/employeesFragment" />
+      app:destination="@id/employeesFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
     <action
       android:id="@+id/action_menuFragment_to_financialFragment"
-      app:destination="@id/financialFragment" />
+      app:destination="@id/financialFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
     <action
       android:id="@+id/action_menuFragment_to_ingredientsFragment"
-      app:destination="@id/ingredientsFragment" />
+      app:destination="@id/ingredientsFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
     <action
       android:id="@+id/action_menuFragment_to_productsFragment"
-      app:destination="@id/productsFragment" />
+      app:destination="@id/productsFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
     <action
       android:id="@+id/action_menuFragment_to_salesFragment"
-      app:destination="@id/salesFragment" />
+      app:destination="@id/salesFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
   </fragment>
   <fragment
     android:id="@+id/employeesFragment"
@@ -67,4 +95,5 @@
     android:name="com.android.bdkstock.screens.main.menu.SalesFragment"
     android:label="fragment_sales"
     tools:layout="@layout/fragment_sales" />
+
 </navigation>

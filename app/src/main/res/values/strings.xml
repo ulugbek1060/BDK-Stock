@@ -42,4 +42,15 @@
   <string name="edit_user_details">Изменить данные сотрудника</string>
   <string name="no">Нет</string>
   <string name="yes">Да</string>
+  <string name="drivers">Водители</string>
+  <string name="add_driver">Добавить водитель</string>
+  <string name="register_driver">Зарегистрировать водителя</string>
+  <string name="vehicle">Автомобиль</string>
+  <string name="registration_number_of_vehicle">Регистрационный номер автомобиля</string>
+  <string name="error_empty_vehicle">Вам необходимо выбрать авто</string>
+  <string name="error_empty_reg_number">вам нужно указать номео авто</string>
+  <string name="editing">Редактирование</string>
+  <string name="edit_driver_message">Вы хотите редактировать поля водителя?</string>
+  <string name="driver">Водиель</string>
+  <string name="clients">Клиенты</string>
 </resources>

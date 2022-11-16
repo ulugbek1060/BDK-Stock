@@ -14,7 +14,7 @@ sealed class Results<T> {
                Success(mapper(this.value))
             }
          }
-         is Error<T> -> Error(this.error)
+           is Error<T> -> Error(this.error)
          is Empty<T> -> Empty()
          is Pending<T> -> Pending()
       }

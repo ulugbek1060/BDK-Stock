@@ -4,8 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.android.model.database.AppDatabase
 import com.android.model.database.account.AccountDao
-import com.android.model.database.jobs.JobsDao
 import com.android.model.database.employees.EmployeesDao
+import com.android.model.database.jobs.JobsDao
+import com.android.model.database.vehicles.VehiclesDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +22,7 @@ class DatabaseModule {
    @Singleton
    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
       return Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME)
+//         .fallbackToDestructiveMigration()
          .build()
    }
 
@@ -40,6 +42,12 @@ class DatabaseModule {
    @Singleton
    fun provideJobsDao(appDatabase: AppDatabase): JobsDao {
       return appDatabase.getJobsDao()
+   }
+
+   @Provides
+   @Singleton
+   fun provideVehicleDao(appDatabase: AppDatabase): VehiclesDao {
+      return appDatabase.getVehiclesDao()
    }
 
    private companion object {

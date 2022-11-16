@@ -1,6 +1,7 @@
 package com.android.model.repository.account
 
 import com.android.model.database.account.AccountDao
+import com.android.model.database.employees.EmployeesDao
 import com.android.model.repository.account.entity.AccountEntity
 import com.android.model.repository.base.BaseRepository
 import com.android.model.repository.settings.AppSettings
@@ -16,7 +17,8 @@ import javax.inject.Inject
 class AccountRepository @Inject constructor(
    private val accountSource: AccountSource,
    private val appSettings: AppSettings,
-   private val accountDao: AccountDao
+   private val accountDao: AccountDao,
+   private val employeeDao: EmployeesDao
 ) : BaseRepository() {
 
    private val TAG = this.javaClass.simpleName
@@ -65,8 +67,14 @@ class AccountRepository @Inject constructor(
       return accountDao.getAccount().map { it?.toAccountEntity() }
    }
 
+   suspend fun logoutManually(): String = accountSource.logout()
+
+   /**
+    * function supports only code 401 from backend & null token
+    */
    suspend fun logout() {
       appSettings.setCurrentToken(null)
       accountDao.delete()
+      employeeDao.clear()
    }
 }

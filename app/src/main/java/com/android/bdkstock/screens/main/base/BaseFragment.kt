@@ -36,18 +36,14 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 
    private fun logout() {
       viewModel.logout()
-      restartWithSignIn()
-   }
-
-   private fun restartWithSignIn() {
       findNavController().navigate(R.id.signInFragment, null, navOptions {
          anim {
             enter = R.anim.enter
             exit = R.anim.exit
-            popEnter = R.anim.pop_enter
+            popExit = R.anim.pop_enter
             popExit = R.anim.pop_exit
          }
-         popUpTo(R.id.activityFragment) {
+         popUpTo(R.id.actionsFragment) {
             inclusive = true
          }
       })
@@ -55,6 +51,17 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 
    fun Fragment.navigate(id: Int) {
       findNavController().navigate(id, null, navOptions {
+         anim {
+            enter = R.anim.enter
+            exit = R.anim.exit
+            popExit = R.anim.pop_enter
+            popExit = R.anim.pop_exit
+         }
+      })
+   }
+
+   fun navigateFromTopNavController(id: Int) {
+      findTopNavController().navigate(id, null, navOptions {
          anim {
             enter = R.anim.enter
             exit = R.anim.exit

@@ -1,7 +1,9 @@
 package com.android.bdkstock.screens.main.menu.employees
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.employees.EmployeeRepository
@@ -90,6 +92,7 @@ class RegisterEmployeeViewModel @Inject constructor(
    private fun hideProgress() {
       _state.value = _state.requireValue().copy(isProgressActive = false)
    }
+
    data class State(
       val isProgressActive: Boolean = false,
       val emptyFirstname: Boolean = false,
@@ -97,5 +100,22 @@ class RegisterEmployeeViewModel @Inject constructor(
       val emptyAddress: Boolean = false,
       val emptyPhoneNumber: Boolean = false,
       var disableFields: Boolean = false
-   )
+   ) {
+      fun getNameError(context: Context) =
+         if (emptyFirstname) context.getString(R.string.error_empty_name)
+         else null
+
+      fun getSurnameError(context: Context) =
+         if (emptyLastname) context.getString(R.string.error_empty_surname)
+         else null
+
+      fun getAddressError(context: Context) =
+         if (emptyAddress) context.getString(R.string.error_empty_address)
+         else null
+
+      fun getPhoneNumberError(context: Context) =
+         if (emptyPhoneNumber) context.getString(R.string.error_empty_phone_number)
+         else null
+
+   }
 }

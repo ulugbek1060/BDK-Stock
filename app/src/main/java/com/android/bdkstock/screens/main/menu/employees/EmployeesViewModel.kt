@@ -26,23 +26,29 @@ class EmployeesViewModel @Inject constructor(
    savedStateHandle: SavedStateHandle
 ) : BaseViewModel(repository) {
 
+   private val TAG = this.javaClass.simpleName
+
    val employeesFlow: Flow<PagingData<EmployeeEntity>>
 
-   private val query = savedStateHandle.getLiveData("query", "")
+   private val query = savedStateHandle.getLiveData(EMPLOYEE_QUERY_KEY, "")
 
-   fun setQuery(query: String) {
-      this.query.value = query
+   fun setQuery(search: String) {
+      this.query.value = search
    }
 
    init {
       employeesFlow = query.asFlow()
          .debounce(500)
          .flatMapLatest {
-            employeesRepository.getEmployees(it)
+            employeesRepository.getEmployeesFromLocal(it)
          }
          // always use cacheIn operator for flows returned by Pager. Otherwise exception may be thrown
          // when 1) refreshing/invalidating or 2) subscribing to the flow more than once.
          .cachedIn(viewModelScope)
+   }
+
+   private companion object {
+      const val EMPLOYEE_QUERY_KEY = "employee_key"
    }
 
 }

@@ -1,7 +1,11 @@
 package com.android.bdkstock.screens.main.profile
 
+import androidx.lifecycle.viewModelScope
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
+import com.android.model.utils.MutableLiveEvent
+import com.android.model.utils.liveData
+import com.android.model.utils.publishEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -9,4 +13,12 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
    private val repository: AccountRepository
 ) : BaseViewModel(repository) {
+
+   private val _doLogoutActions = MutableLiveEvent<String>()
+   val doLogoutActions = _doLogoutActions.liveData()
+
+   fun logoutManually() = viewModelScope.safeLaunch {
+      val message = repository.logoutManually()
+      _doLogoutActions.publishEvent(message)
+   }
 }

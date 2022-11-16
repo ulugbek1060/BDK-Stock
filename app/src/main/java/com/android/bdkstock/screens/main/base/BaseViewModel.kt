@@ -6,9 +6,13 @@ import com.android.bdkstock.R
 import com.android.model.repository.account.AccountRepository
 import com.android.model.utils.*
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 open class BaseViewModel(private val accountRepository: AccountRepository) : ViewModel() {
+
+   private val TAG = this.javaClass.simpleName
 
    private val _showErrorMessageResEvent = MutableLiveEvent<Int>()
    val showErrorMessageRes = _showErrorMessageResEvent.liveData()
@@ -30,18 +34,21 @@ open class BaseViewModel(private val accountRepository: AccountRepository) : Vie
          } catch (e: AuthException) {
             _showAuthErrorAndRestart.publishEvent()
          } catch (e: Exception) {
+            e.printStackTrace()
             _showErrorMessageResEvent.publishEvent(R.string.internal_exception)
          }
       }
    }
 
-   fun safeAction(block: () -> Unit) {
-      try {
-         block()
-      } catch (e: Exception) {
-         e.printStackTrace()
-      }
-   }
+   //uiScope.launch {
+   //    dataFlow()
+   //        .onEach { value -> updateUI(value) }
+   //        .handleErrors()
+   //        .collect()
+   //}
+
+   fun <T> Flow<T>.handleErrors(): Flow<T> =
+      catch { e -> _showErrorMessageEvent.publishEvent(e.message ?: "Undefined Error!") }
 
    fun logout() = viewModelScope.launch {
       accountRepository.logout()

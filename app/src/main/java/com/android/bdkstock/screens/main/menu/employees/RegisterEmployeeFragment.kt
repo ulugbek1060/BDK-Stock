@@ -7,7 +7,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentRegisterEmployeeBinding
-import com.android.bdkstock.screens.main.ActivityFragmentDirections
+import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,15 +27,13 @@ class RegisterEmployeeFragment : BaseFragment(R.layout.fragment_register_employe
 
       fetchJobTitle()
 
-
       binding.buttonSave.setOnClickListener { saveEmployeeAction() }
    }
 
    private fun observeNavigation() {
-      viewModel.navigate.observeEvent(viewLifecycleOwner) { employee ->
+      viewModel.navigate.observeEvent(viewLifecycleOwner) {
          findTopNavController().popBackStack()
-         val args =
-            ActivityFragmentDirections.actionActivityFragmentToDisplayEmployeeFragment(employee)
+         val args = ActionsFragmentDirections.actionActivityFragmentToDisplayEmployeeFragment(it)
          findTopNavController().navigate(args)
       }
    }
@@ -75,27 +73,10 @@ class RegisterEmployeeFragment : BaseFragment(R.layout.fragment_register_employe
          binding.lottiProgress.isVisible = state.isProgressActive
          binding.buttonSave.isVisible = !state.isProgressActive
 
-         binding.inputLayoutName.error = getNameError(state.emptyFirstname)
-         binding.inputLayoutSurname.error = getSurnameError(state.emptyLastname)
-         binding.inputLayoutAddress.error = getAddressError(state.emptyAddress)
-         binding.inputLayoutPhoneNumber.error = getPhoneNumberError(state.emptyPhoneNumber)
+         binding.inputLayoutName.error = state.getNameError(requireContext())
+         binding.inputLayoutSurname.error = state.getSurnameError(requireContext())
+         binding.inputLayoutAddress.error = state.getAddressError(requireContext())
+         binding.inputLayoutPhoneNumber.error = state.getPhoneNumberError(requireContext())
       }
    }
-
-   private fun getNameError(state: Boolean) =
-      if (state) requireContext().getString(R.string.error_empty_name)
-      else null
-
-   private fun getSurnameError(state: Boolean) =
-      if (state) requireContext().getString(R.string.error_empty_surname)
-      else null
-
-   private fun getAddressError(state: Boolean) =
-      if (state) requireContext().getString(R.string.error_empty_address)
-      else null
-
-   private fun getPhoneNumberError(state: Boolean) =
-      if (state) requireContext().getString(R.string.error_empty_phone_number)
-      else null
-
 }

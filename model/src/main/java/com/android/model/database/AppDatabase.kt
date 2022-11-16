@@ -10,19 +10,21 @@ import com.android.model.database.employees.EmployeesDao
 import com.android.model.database.employees.entity.EmployeeRoomEntity
 import com.android.model.database.jobs.JobsDao
 import com.android.model.database.jobs.entity.JobRoomEntity
+import com.android.model.database.vehicles.VehiclesDao
+import com.android.model.database.vehicles.entity.VehicleModelRoomEntity
 
 @Database(
-   version = 6,
+   version = 2,
    entities = [
       AccountRoomEntity::class,
       EmployeeRoomEntity::class,
-      JobRoomEntity::class
+      JobRoomEntity::class,
+      VehicleModelRoomEntity::class
    ],
    autoMigrations = [
       AutoMigration(
-         from = 5,
-         to = 6,
-         spec = EmployeeMigrationFrom5To6::class
+         from = 1,
+         to = 2
       )
    ],
    exportSchema = true
@@ -35,4 +37,6 @@ abstract class AppDatabase : RoomDatabase() {
    abstract fun getEmployeesDao(): EmployeesDao
 
    abstract fun getJobsDao(): JobsDao
+
+   abstract fun getVehiclesDao(): VehiclesDao
 }
