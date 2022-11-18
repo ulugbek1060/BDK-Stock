@@ -192,7 +192,6 @@ class DisplayEmployeeFragment : BaseFragment(R.layout.fragment_display_employee)
       requireActivity().startActivity(sendIntent)
    }
 
-
    private fun observeState() {
       viewModel.state.observe(viewLifecycleOwner) { state ->
 
@@ -206,17 +205,16 @@ class DisplayEmployeeFragment : BaseFragment(R.layout.fragment_display_employee)
          binding.inputLayoutJobTitle.isEnabled = state.isChangesEnable
 
          // colors
-//         binding.containerSaveButton.setBackgroundColor(state.getButtonSaveColor(requireContext()))
          binding.buttonEdit.setTextColor(state.getToggleButtonColor(requireContext()))
          binding.buttonEdit.setText(state.getToggleButtonText(requireContext()))
 
          // error messages
-         binding.inputLayoutName.error = getNameError(state.emptyFirstnameError)
-         binding.inputLayoutSurname.error = getSurnameError(state.emptyLastnameError)
-         binding.inputLayoutAddress.error = getAddressError(state.emptyAddressError)
-         binding.inputLayoutPhoneNumber.error = getPhoneNumberError(state.emptyPhoneNumberError)
-         binding.inputLayoutPassword.error = getPasswordError(state.emptyPasswordError)
-         binding.inputLayoutPasswordConfirm.error = getPasswordError(state.passwordMismatch)
+         binding.inputLayoutName.error = state.getNameError(requireContext())
+         binding.inputLayoutSurname.error = state.getSurnameError(requireContext())
+         binding.inputLayoutAddress.error = state.getAddressError(requireContext())
+         binding.inputLayoutPhoneNumber.error = state.getPhoneNumberError(requireContext())
+         binding.inputLayoutPassword.error = state.getPasswordError(requireContext())
+         binding.inputLayoutPasswordConfirm.error = state.getPasswordError(requireContext())
 
          // visibility
          binding.buttonSave.isVisible = state.isChangesEnable && !state.isProgressActive
@@ -228,27 +226,6 @@ class DisplayEmployeeFragment : BaseFragment(R.layout.fragment_display_employee)
    private fun toggleChangesAction(checkState: Boolean) {
       viewModel.setChangeableState(checkState)
    }
-
-   private fun getNameError(state: Boolean) =
-      if (state) requireContext().getString(R.string.error_empty_name)
-      else null
-
-   private fun getSurnameError(state: Boolean) =
-      if (state) requireContext().getString(R.string.error_empty_surname)
-      else null
-
-   private fun getAddressError(state: Boolean) =
-      if (state) requireContext().getString(R.string.error_empty_address)
-      else null
-
-   private fun getPhoneNumberError(state: Boolean) =
-      if (state) requireContext().getString(R.string.error_empty_phone_number)
-      else null
-
-   private fun getPasswordError(state: Boolean) =
-      if (state) requireContext().getString(R.string.error_empty_password)
-      else null
-
 }
 
 

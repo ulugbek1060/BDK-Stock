@@ -192,19 +192,36 @@ class DisplayEmployeeViewModel @Inject constructor(
       val isChangesEnable: Boolean = false,
       val isProgressActive: Boolean = false
    ) {
-      fun getToggleButtonColor(context: Context): Int {
-         return if (isChangesEnable) context.getColor(R.color.red)
+      fun getToggleButtonColor(context: Context) =
+         if (isChangesEnable) context.getColor(R.color.red)
          else context.getColor(R.color.blue)
-      }
 
-      fun getToggleButtonText(context: Context): String {
-         return if (isChangesEnable) context.getString(R.string.cancel)
+      fun getToggleButtonText(context: Context) =
+         if (isChangesEnable) context.getString(R.string.cancel)
          else context.getString(R.string.edit)
-      }
 
-      fun getButtonSaveColor(context: Context): Int {
-         return if (isChangesEnable) context.getColor(R.color.blue)
+      fun getButtonSaveColor(context: Context) =
+         if (isChangesEnable) context.getColor(R.color.blue)
          else context.getColor(R.color.grey)
-      }
+
+      fun getNameError(context: Context) =
+         if (emptyFirstnameError) context.getString(R.string.error_empty_name)
+         else null
+
+      fun getSurnameError(context: Context) =
+         if (emptyLastnameError) context.getString(R.string.error_empty_surname)
+         else null
+
+      fun getAddressError(context: Context) =
+         if (emptyAddressError) context.getString(R.string.error_empty_address)
+         else null
+
+      fun getPhoneNumberError(context: Context) =
+         if (emptyPhoneNumberError) context.getString(R.string.error_empty_phone_number)
+         else null
+
+      fun getPasswordError(context: Context) =
+         if (emptyPasswordError) context.getString(R.string.error_empty_password)
+         else null
    }
 }

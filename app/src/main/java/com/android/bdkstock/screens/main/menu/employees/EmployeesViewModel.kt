@@ -26,8 +26,6 @@ class EmployeesViewModel @Inject constructor(
    savedStateHandle: SavedStateHandle
 ) : BaseViewModel(repository) {
 
-   private val TAG = this.javaClass.simpleName
-
    private val _showAuthError = MutableUnitLiveEvent()
    val showAuthError = _showAuthError.liveData()
 
