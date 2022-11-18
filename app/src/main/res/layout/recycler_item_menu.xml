@@ -31,20 +31,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-<!--      <ImageView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:rotation="180"-->
-<!--        android:src="@drawable/ic_decor"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+      <!--      <ImageView-->
+      <!--        android:layout_width="wrap_content"-->
+      <!--        android:layout_height="wrap_content"-->
+      <!--        android:rotation="180"-->
+      <!--        android:src="@drawable/ic_decor"-->
+      <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+      <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
       <ImageView
         android:id="@+id/iv_item_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_big"
-        android:src="@drawable/ic_employees"
+        android:src="@drawable/ic_employees_bulk"
         app:layout_constraintBottom_toTopOf="@id/tv_item_title"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -6,13 +6,9 @@ import com.android.bdkstock.R
 import com.android.model.repository.account.AccountRepository
 import com.android.model.utils.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 open class BaseViewModel(private val accountRepository: AccountRepository) : ViewModel() {
-
-   private val TAG = this.javaClass.simpleName
 
    private val _showErrorMessageResEvent = MutableLiveEvent<Int>()
    val showErrorMessageRes = _showErrorMessageResEvent.liveData()
@@ -30,27 +26,33 @@ open class BaseViewModel(private val accountRepository: AccountRepository) : Vie
          } catch (e: ConnectionException) {
             _showErrorMessageResEvent.publishEvent(R.string.connection_error)
          } catch (e: BackendException) {
-            _showErrorMessageEvent.publishEvent(e.message ?: "")
+            _showErrorMessageEvent.publishEvent(e.message ?: "Undefined Message from Backend")
          } catch (e: AuthException) {
             _showAuthErrorAndRestart.publishEvent()
          } catch (e: Exception) {
-            e.printStackTrace()
             _showErrorMessageResEvent.publishEvent(R.string.internal_exception)
          }
       }
    }
 
-   //uiScope.launch {
-   //    dataFlow()
-   //        .onEach { value -> updateUI(value) }
-   //        .handleErrors()
-   //        .collect()
-   //}
-
-   fun <T> Flow<T>.handleErrors(): Flow<T> =
-      catch { e -> _showErrorMessageEvent.publishEvent(e.message ?: "Undefined Error!") }
-
    fun logout() = viewModelScope.launch {
       accountRepository.logout()
    }
+
+   fun restart() {
+      _showAuthErrorAndRestart.publishEvent()
+   }
+
 }
+
+//fun <T> Flow<T>.handleException(): Flow<T> = flow {
+//      try {
+//         collectLatest { emit(it) }
+//      } catch (e: AuthException) {
+//         e.printStackTrace()
+//         _showAuthErrorAndRestart.publishEvent()
+//      } catch (e: Throwable) {
+//         e.printStackTrace()
+//         _showErrorMessageResEvent.publishEvent(R.string.internal_exception)
+//      }
+//   }

@@ -25,7 +25,7 @@ class RegisterEmployeeViewModel @Inject constructor(
    private val _state = MutableLiveData(State())
    val state = _state.liveData()
 
-   private val _jobsList = MutableLiveData<Results<List<JobEntity>?>>(Pending())
+   private val _jobsList = MutableLiveData<List<JobEntity>>(emptyList())
    val jobsList = _jobsList.liveData()
 
    private val _navigate = MutableLiveEvent<EmployeeEntity>()
@@ -35,8 +35,8 @@ class RegisterEmployeeViewModel @Inject constructor(
 
    init {
       viewModelScope.safeLaunch {
-         jobRepository.getJobs().collectLatest {
-            _jobsList.value = it
+         jobRepository.getJobs().collectLatest { result ->
+            if (result is Success) _jobsList.value = result.value ?: emptyList()
          }
       }
    }

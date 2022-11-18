@@ -17,7 +17,7 @@
     tools:layout="@layout/fragment_drivers" />
   <fragment
     android:id="@+id/menuFragment"
-    android:name="com.android.bdkstock.screens.main.menu.MenuFragment"
+    android:name="com.android.bdkstock.screens.main.menu.actions.MenuFragment"
     android:label="fragment_menu"
     tools:layout="@layout/fragment_menu" >
     <action

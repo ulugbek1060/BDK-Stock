@@ -43,7 +43,7 @@ class EmployeesSourceIml @Inject constructor(
    }
 
    override suspend fun getEmployees(
-      query: String,
+      query: String?,
       pageIndex: Int,
       pageSize: Int
    ): List<EmployeeEntity> = wrapNetworkException {
@@ -85,5 +85,29 @@ class EmployeesSourceIml @Inject constructor(
          jobId = job
       )
       employeesApi.updateEmployee(id, body).message
+   }
+
+   override suspend fun searchBy(
+      query: String?,
+      pageIndex: Int,
+      pageSize: Int
+   ): List<EmployeeEntity> = wrapNetworkException {
+      employeesApi.getEmployeesSearchBy(
+         query = query,
+         pageIndex = pageIndex,
+         pageSize = pageSize
+      ).data.map { employee ->
+         EmployeeEntity(
+            address = employee.address,
+            firstname = employee.firstname,
+            id = employee.id,
+            job = JobEntity(
+               id = employee.job.id,
+               name = employee.job.name
+            ),
+            lastname = employee.lastname,
+            phoneNumber = employee.phoneNumber
+         )
+      }
    }
 }

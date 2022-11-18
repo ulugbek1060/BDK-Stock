@@ -9,6 +9,7 @@ import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentRegisterEmployeeBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.views.findTopNavController
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,15 +34,13 @@ class RegisterEmployeeFragment : BaseFragment(R.layout.fragment_register_employe
    private fun observeNavigation() {
       viewModel.navigate.observeEvent(viewLifecycleOwner) {
          findTopNavController().popBackStack()
-         val args = ActionsFragmentDirections.actionActivityFragmentToDisplayEmployeeFragment(it)
+         val args = ActionsFragmentDirections.actionActionsFragmentToDisplayEmployeeFragment(it)
          findTopNavController().navigate(args)
       }
    }
 
    private fun fetchJobTitle() {
-      viewModel.jobsList.observeResults(this, null) { jobs ->
-         val list = jobs ?: emptyList()
-
+      viewModel.jobsList.observe(viewLifecycleOwner) { list ->
          binding.autoCompleteJobTitle.setText(null, false)
 
          val adapter = ArrayAdapter(requireContext(), R.layout.auto_complete_item_job_title, list)

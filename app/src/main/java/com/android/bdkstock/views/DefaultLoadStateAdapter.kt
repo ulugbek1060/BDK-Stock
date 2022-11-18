@@ -21,29 +21,24 @@ class DefaultLoadStateAdapter(
     * - footer
     * - main indicator
     */
-   class Holder(
-      private val binding: LoadStateBinding,
-      private val refreshLayout: SwipeRefreshLayout?,
-      private val tryAgainAction: TryAgainAction
+   inner class Holder(
+      private val swipeRefreshLayout: SwipeRefreshLayout? = null,
+      private val binding: LoadStateBinding
    ) : RecyclerView.ViewHolder(binding.root) {
 
       init {
          binding.buttonRetry.setOnClickListener { tryAgainAction() }
       }
 
-      fun bind(loadState: LoadState) = with(binding) {
-         tvError.isVisible = loadState is LoadState.Error
-         buttonRetry.isVisible = loadState is LoadState.Error
-         if (refreshLayout != null) {
-            refreshLayout.isRefreshing = loadState is LoadState.Loading
-            shimmerLayout.stopShimmer()
-            shimmerLayout.isVisible = false
-         } else {
-            shimmerLayout.isVisible = loadState is LoadState.Loading
-            shimmerLayout.startShimmer()
+      fun bind(loadState: LoadState) = binding.apply {
+         progressBar.isVisible = loadState is LoadState.Loading
+         buttonRetry.isVisible = loadState !is LoadState.Loading
+         textViewError.isVisible = loadState !is LoadState.Loading
+
+         if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing) {
+            swipeRefreshLayout.isRefreshing = false
          }
       }
-
    }
 
    override fun onBindViewHolder(holder: Holder, loadState: LoadState) {
@@ -52,6 +47,10 @@ class DefaultLoadStateAdapter(
 
    override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): Holder {
       val binding = LoadStateBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-      return Holder(binding, refreshLayout, tryAgainAction)
+      return Holder(refreshLayout, binding)
+   }
+
+   override fun displayLoadStateAsItem(loadState: LoadState): Boolean {
+      return loadState is LoadState.Loading || loadState is LoadState.Error
    }
 }

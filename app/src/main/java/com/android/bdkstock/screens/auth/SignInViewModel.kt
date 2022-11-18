@@ -47,6 +47,8 @@ class SignInViewModel @Inject constructor(
          processEmptyFieldException(e)
       } catch (e: AuthException) {
          processAuthException()
+      } catch (e: ConnectionException) {
+         // TODO: need to initialize connection exception
       } finally {
          hideProgress()
       }

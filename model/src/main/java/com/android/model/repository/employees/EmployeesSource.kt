@@ -26,7 +26,7 @@ interface EmployeesSource {
     * @throws ParseBackendResponseException
     */
    suspend fun getEmployees(
-      query: String,
+      query: String?,
       pageIndex: Int,
       pageSize: Int
    ): List<EmployeeEntity> // list
@@ -38,7 +38,7 @@ interface EmployeesSource {
     * @throws ParseBackendResponseException
     */
    suspend fun updateEmployee(
-      id:Long,
+      id: Long,
       firstname: String,
       lastname: String,
       phoneNumber: String,
@@ -46,5 +46,11 @@ interface EmployeesSource {
       password: String,
       job: Int
    ): String // message
+
+   suspend fun searchBy(
+      query: String?,
+      pageIndex: Int,
+      pageSize: Int
+   ): List<EmployeeEntity>
 
 }

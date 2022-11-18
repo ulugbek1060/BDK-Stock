@@ -1,44 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  android:gravity="center"
+  android:orientation="vertical"
+  android:padding="4dp">
 
-  <com.facebook.shimmer.ShimmerFrameLayout
-    android:id="@+id/shimmer_layout"
+  <com.airbnb.lottie.LottieAnimationView
+    android:id="@+id/progress_bar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
-
-    <include layout="@layout/recycler_item_shimmer" />
-
-  </com.facebook.shimmer.ShimmerFrameLayout>
+    android:layout_height="45dp"
+    app:lottie_autoPlay="true"
+    app:lottie_loop="true"
+    app:lottie_rawRes="@raw/loading" />
 
   <TextView
-    android:id="@+id/tv_error"
+    android:id="@+id/text_view_error"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/dimen_large"
-    android:text="@string/unknown_error"
-    app:layout_constraintBottom_toTopOf="@id/button_retry"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    android:text="@string/unknown_error" />
 
   <androidx.cardview.widget.CardView
     android:id="@+id/button_retry"
     android:layout_width="wrap_content"
     android:layout_height="45dp"
-    android:layout_margin="@dimen/dimen_large"
+    android:layout_margin="8dp"
     app:cardCornerRadius="6dp"
-    app:cardElevation="0dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_error">
+    android:clickable="true"
+    android:focusable="true"
+    app:cardElevation="0dp">
 
     <FrameLayout
       android:layout_width="match_parent"
@@ -49,11 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:paddingStart="@dimen/dimen_extra"
-        android:paddingEnd="@dimen/dimen_extra">
+        android:gravity="center">
 
         <TextView
           android:layout_width="wrap_content"
@@ -61,7 +48,8 @@
           android:ellipsize="end"
           android:fontFamily="@font/font_regular"
           android:lines="1"
-          android:text="@string/try_again"
+          android:paddingHorizontal="@dimen/dimen_extra"
+          android:text="@string/retry"
           android:textColor="@color/white"
           android:textSize="16sp"
           android:textStyle="bold" />
@@ -72,4 +60,4 @@
 
   </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

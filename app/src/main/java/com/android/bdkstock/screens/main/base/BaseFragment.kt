@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.android.bdkstock.R
+import com.android.bdkstock.views.findTopNavController
 import com.android.model.utils.*
 
 abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
@@ -34,9 +35,12 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
       }
    }
 
+   /**
+    * Log out without colling (api/user/logout)  if token is unusable
+    */
    private fun logout() {
       viewModel.logout()
-      findNavController().navigate(R.id.signInFragment, null, navOptions {
+      findTopNavController().navigate(R.id.signInFragment, null, navOptions {
          anim {
             enter = R.anim.enter
             exit = R.anim.exit
@@ -47,45 +51,5 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
             inclusive = true
          }
       })
-   }
-
-   fun Fragment.navigate(id: Int) {
-      findNavController().navigate(id, null, navOptions {
-         anim {
-            enter = R.anim.enter
-            exit = R.anim.exit
-            popExit = R.anim.pop_enter
-            popExit = R.anim.pop_exit
-         }
-      })
-   }
-
-   fun navigateFromTopNavController(id: Int) {
-      findTopNavController().navigate(id, null, navOptions {
-         anim {
-            enter = R.anim.enter
-            exit = R.anim.exit
-            popEnter = R.anim.pop_enter
-            popExit = R.anim.pop_exit
-         }
-      })
-   }
-
-   fun Fragment.findTopNavController(): NavController {
-      val topLevelHost =
-         requireActivity().supportFragmentManager.findFragmentById(R.id.fragment_main_container) as NavHostFragment?
-      return topLevelHost?.navController ?: findNavController()
-   }
-
-   fun <T> LiveData<Results<T>>.observeResults(
-      fragment: Fragment,
-      progress: View?,
-      onSuccess: (T) -> Unit
-   ) = observe(fragment.viewLifecycleOwner) { result ->
-      if (result is Success) {
-         progress?.gone()
-         onSuccess(result.value)
-      }
-      if (result is Pending) progress?.visible()
    }
 }

@@ -28,20 +28,14 @@ class DriversViewModel @Inject constructor(
 
    val driversFlow: Flow<PagingData<DriverEntity>>
 
-   // for saving query
-   private val _query = savedStateHandle.getLiveData(QUERY_DRIVER_KEY, "")
-
-   fun setQuery(search: String) {
-      _query.value = search
-   }
+   private val query = savedStateHandle.getLiveData<String>(QUERY_DRIVER_KEY)
 
    init {
-      driversFlow = _query.asFlow()
+      driversFlow = query.asFlow()
          .debounce(500)
          .flatMapLatest {
-            driversRepository.getDrivers(it)
-         }
-         .cachedIn(viewModelScope)
+            driversRepository.getDriversForSearch(it)
+         }.cachedIn(viewModelScope)
    }
 
    private companion object {

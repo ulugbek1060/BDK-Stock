@@ -1,4 +1,4 @@
-package com.android.bdkstock.screens.main.menu
+package com.android.bdkstock.screens.main.menu.actions
 
 import androidx.lifecycle.MutableLiveData
 import com.android.bdkstock.R
@@ -18,12 +18,12 @@ class MenuViewModel @Inject constructor(
 
    private val listMenus = ArrayList<MenuItem>()
       .apply {
-         add(MenuItem(1, R.drawable.ic_employees, "Employees", R.id.employeesFragment))
-         add(MenuItem(2, R.drawable.ic_sales, "Sales", R.id.salesFragment))
-         add(MenuItem(3, R.drawable.ic_ingredients, "Ingredients", R.id.ingredientsFragment))
-         add(MenuItem(4, R.drawable.ic_products, "Products", R.id.productsFragment))
-         add(MenuItem(5, R.drawable.ic_clients, "Clients", R.id.clientsFragment))
-         add(MenuItem(6, R.drawable.ic_circle_truck, "Drivers", R.id.driversFragment))
+         add(MenuItem(1, R.drawable.ic_employees_bulk, "Employees", R.id.employeesFragment))
+         add(MenuItem(2, R.drawable.ic_sales_bulk, "Sales", R.id.salesFragment))
+         add(MenuItem(3, R.drawable.ic_ingredients_bulk, "Ingredients", R.id.ingredientsFragment))
+         add(MenuItem(4, R.drawable.ic_products_bulk, "Products", R.id.productsFragment))
+         add(MenuItem(5, R.drawable.ic_clients_bulk, "Clients", R.id.clientsFragment))
+         add(MenuItem(6, R.drawable.ic_drivers_bulk, "Drivers", R.id.driversFragment))
       }
 
    init {

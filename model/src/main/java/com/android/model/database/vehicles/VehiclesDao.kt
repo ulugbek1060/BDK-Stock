@@ -4,17 +4,15 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
+import com.android.model.database.BaseDao
 import com.android.model.database.vehicles.entity.VehicleModelRoomEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface VehiclesDao {
-
-   @Insert(onConflict = REPLACE)
-   fun save(list: List<VehicleModelRoomEntity>)
+interface VehiclesDao : BaseDao<VehicleModelRoomEntity> {
 
    @Query("DELETE FROM vehicle")
-   fun clear()
+   suspend fun clear()
 
    @Query("SELECT * FROM vehicle")
    fun getVehicles(): Flow<List<VehicleModelRoomEntity>?>

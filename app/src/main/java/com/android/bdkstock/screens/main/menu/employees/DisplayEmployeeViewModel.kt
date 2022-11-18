@@ -33,7 +33,7 @@ class DisplayEmployeeViewModel @Inject constructor(
    private val _showChangesDialog = MutableUnitLiveEvent()
    val showChangesDialog = _showChangesDialog.liveData()
 
-   private val _jobsEntity = MutableLiveData<Results<List<JobEntity>?>>(Pending())
+   private val _jobsEntity = MutableLiveData<List<JobEntity>>(emptyList())
    val jobsEntity = _jobsEntity.liveData()
 
    private val _employeeEntity = MutableLiveData<EmployeeEntity>()
@@ -50,8 +50,8 @@ class DisplayEmployeeViewModel @Inject constructor(
 
    init {
       viewModelScope.safeLaunch {
-         jobsRepository.getJobs().collectLatest {
-            _jobsEntity.value = it
+         jobsRepository.getJobs().collectLatest { result ->
+            if (result is Success) _jobsEntity.value = result.value ?: emptyList()
          }
       }
       getInitialDateOfEmployee()

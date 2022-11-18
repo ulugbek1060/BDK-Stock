@@ -17,9 +17,7 @@ inline fun <reified T : Any, reified B : ViewBinding> pagingAdapter(
 
 class PagingAdapterBridge<T : Any>(
    private val delegate: AdapterDelegate<T>
-) : PagingDataAdapter<T, BindingHolder>(
-   delegate.itemCallback()
-) {
+) : PagingDataAdapter<T, BindingHolder>(delegate.itemCallback()) {
 
    override fun onBindViewHolder(holder: BindingHolder, position: Int) {
       // please note, NULL values are not supported!

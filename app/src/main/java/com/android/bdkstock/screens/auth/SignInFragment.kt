@@ -66,7 +66,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
    private fun observeNavigation() {
       viewModel.navigate.observeEvent(viewLifecycleOwner) {
-         findNavController().navigate(R.id.action_signInFragment_to_activityFragment, null,
+         findNavController().navigate(R.id.action_signInFragment_to_actionsFragment, null,
             navOptions {
                anim {
                   enter = R.anim.enter

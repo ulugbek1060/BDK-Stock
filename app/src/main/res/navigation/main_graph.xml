@@ -12,7 +12,7 @@
     tools:layout="@layout/fragment_sign_in">
 
     <action
-      android:id="@+id/action_signInFragment_to_activityFragment"
+      android:id="@+id/action_signInFragment_to_actionsFragment"
       app:destination="@id/actionsFragment"
       app:enterAnim="@anim/enter"
       app:exitAnim="@anim/exit"
@@ -28,7 +28,7 @@
     tools:layout="@layout/fragment_actions">
 
     <action
-      android:id="@+id/action_activityFragment_to_displayEmployeeFragment"
+      android:id="@+id/action_actionsFragment_to_displayEmployeeFragment"
       app:destination="@id/displayEmployeeFragment"
       app:enterAnim="@anim/enter"
       app:exitAnim="@anim/exit"
@@ -36,7 +36,7 @@
       app:popExitAnim="@anim/pop_exit" />
 
     <action
-      android:id="@+id/action_activityFragment_to_registerEmployeeFragment"
+      android:id="@+id/action_actionsFragment_to_registerEmployeeFragment"
       app:destination="@id/registerEmployeeFragment"
       app:enterAnim="@anim/enter"
       app:exitAnim="@anim/exit"
@@ -44,7 +44,7 @@
       app:popExitAnim="@anim/pop_exit" />
 
     <action
-      android:id="@+id/action_activityFragment_to_registerDriverFragment"
+      android:id="@+id/action_actionsFragment_to_registerDriverFragment"
       app:destination="@id/registerDriverFragment"
       app:enterAnim="@anim/enter"
       app:exitAnim="@anim/exit"
@@ -52,12 +52,19 @@
       app:popExitAnim="@anim/pop_exit" />
 
     <action
-      android:id="@+id/action_activityFragment_to_displayDriverFragment"
+      android:id="@+id/action_actionsFragment_to_displayDriverFragment"
       app:destination="@id/displayDriverFragment"
       app:enterAnim="@anim/enter"
       app:exitAnim="@anim/exit"
       app:popEnterAnim="@anim/pop_enter"
       app:popExitAnim="@anim/pop_exit" />
+    <action
+      android:id="@+id/action_actionsFragment_to_searchEmployeeFragment"
+      app:destination="@id/searchEmployeeFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit"/>
 
   </fragment>
   <fragment
@@ -93,6 +100,19 @@
       android:name="driverEntity"
       app:argType="com.android.model.repository.drivers.entity.DriverEntity" />
 
+  </fragment>
+  <fragment
+    android:id="@+id/searchEmployeeFragment"
+    android:name="com.android.bdkstock.screens.main.menu.employees.SearchEmployeeFragment"
+    android:label="fragment_search_employee"
+    tools:layout="@layout/fragment_search_employee" >
+    <action
+      android:id="@+id/action_searchEmployeeFragment_to_displayEmployeeFragment"
+      app:destination="@id/displayEmployeeFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit"/>
   </fragment>
 
 </navigation>

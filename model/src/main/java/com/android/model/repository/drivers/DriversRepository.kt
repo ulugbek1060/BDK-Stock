@@ -75,7 +75,7 @@ class DriversRepository @Inject constructor(
       },
       saveFetchedResult = { modelsList ->
          appDatabase.withTransaction {
-            appDatabase.getVehiclesDao().save(
+            appDatabase.getVehiclesDao().insert(
                modelsList.map { it.toVehicleRoomEntity() }
             )
          }
@@ -88,7 +88,11 @@ class DriversRepository @Inject constructor(
       }
    }
 
-   fun getDrivers(query: String): Flow<PagingData<DriverEntity>> {
+   fun getDriversFromLocal() {
+
+   }
+
+   fun getDriversForSearch(query: String): Flow<PagingData<DriverEntity>> {
       val loader: DriverPageLoader = { pageIndex ->
          driversSource.getDrivers(query, pageIndex, PAGE_SIZE)
       }

@@ -10,7 +10,8 @@
 
 <!--  my colors-->
 
-  <color name="color_item_background">#FFFAFAFF</color>
+  <color name="color_item_background">#F9F9FE</color>
+  <color name="color_background_fill">#FFFFFFFF</color>
   <color name="blue">#FF0066FF</color>
   <color name="purple">#FF5932EA</color>
   <color name="green">#FF00AC4F</color>
@@ -27,5 +28,5 @@
   <color name="text_color">#CC000000</color>
   <color name="sub_text_color">#FF979797</color>
   <color name="text_color_light">#FF32324D</color>
-  <color name="line">#1A000000</color>
+  <color name="line">#DBDBE0</color>
 </resources>

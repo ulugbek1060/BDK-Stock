@@ -137,16 +137,14 @@ class DisplayEmployeeFragment : BaseFragment(R.layout.fragment_display_employee)
    }
 
    private fun setupJobTitle() = lifecycleScope.launchWhenStarted {
-      viewModel.jobsEntity.observeResults(this@DisplayEmployeeFragment, binding.progressJobTitle) { jobs ->
-            val list = jobs ?: emptyList()
-            val adapter =
-               ArrayAdapter(requireContext(), R.layout.auto_complete_item_job_title, list)
-            binding.autoCompleteJobTitle.setAdapter(adapter)
+      viewModel.jobsEntity.observe(viewLifecycleOwner) { list ->
+         val adapter = ArrayAdapter(requireContext(), R.layout.auto_complete_item_job_title, list)
+         binding.autoCompleteJobTitle.setAdapter(adapter)
 
-            binding.autoCompleteJobTitle.setOnItemClickListener { _, _, position, _ ->
-               viewModel.setJobEntity(list[position])
-            }
+         binding.autoCompleteJobTitle.setOnItemClickListener { _, _, position, _ ->
+            viewModel.setJobEntity(list[position])
          }
+      }
    }
 
    private fun saveEmployeeWithChanges() {
@@ -207,12 +205,12 @@ class DisplayEmployeeFragment : BaseFragment(R.layout.fragment_display_employee)
          binding.inputLayoutPasswordConfirm.isEnabled = state.isChangesEnable
          binding.inputLayoutJobTitle.isEnabled = state.isChangesEnable
 
-         // change buttons style
-         binding.containerSaveButton.setBackgroundColor(state.getButtonSaveColor(requireContext()))
+         // colors
+//         binding.containerSaveButton.setBackgroundColor(state.getButtonSaveColor(requireContext()))
          binding.buttonEdit.setTextColor(state.getToggleButtonColor(requireContext()))
          binding.buttonEdit.setText(state.getToggleButtonText(requireContext()))
 
-         // show errors
+         // error messages
          binding.inputLayoutName.error = getNameError(state.emptyFirstnameError)
          binding.inputLayoutSurname.error = getSurnameError(state.emptyLastnameError)
          binding.inputLayoutAddress.error = getAddressError(state.emptyAddressError)
@@ -220,8 +218,9 @@ class DisplayEmployeeFragment : BaseFragment(R.layout.fragment_display_employee)
          binding.inputLayoutPassword.error = getPasswordError(state.emptyPasswordError)
          binding.inputLayoutPasswordConfirm.error = getPasswordError(state.passwordMismatch)
 
-         // show progress
-         binding.containerButtons.isVisible = !state.isProgressActive
+         // visibility
+         binding.buttonSave.isVisible = state.isChangesEnable && !state.isProgressActive
+         binding.buttonDelete.isVisible = state.isChangesEnable && !state.isProgressActive
          binding.lottiProgress.isVisible = state.isProgressActive
       }
    }

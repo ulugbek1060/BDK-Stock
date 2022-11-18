@@ -53,4 +53,8 @@
   <string name="edit_driver_message">Вы хотите редактировать поля водителя?</string>
   <string name="driver">Водиель</string>
   <string name="clients">Клиенты</string>
+  <string name="retry">Повторить</string>
+  <string name="user_logged_out">Пользователь вышел из системы</string>
+  <string name="try_again_to_sign_in">Попробуйте еще раз войти в приложение</string>
+  <string name="sign_in">войти</string>
 </resources>

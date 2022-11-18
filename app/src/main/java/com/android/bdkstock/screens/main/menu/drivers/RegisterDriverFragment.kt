@@ -9,6 +9,7 @@ import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentRegisterDriverBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.views.findTopNavController
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -79,7 +80,7 @@ class RegisterDriverFragment : BaseFragment(R.layout.fragment_register_driver) {
    private fun navigateToDetailFrag() {
       viewModel.navigateToDisplayFrag.observeEvent(viewLifecycleOwner) {
          findTopNavController().popBackStack()
-         val args = ActionsFragmentDirections.actionActivityFragmentToDisplayDriverFragment(it)
+         val args = ActionsFragmentDirections.actionActionsFragmentToDisplayDriverFragment(it)
          findTopNavController().navigate(args)
       }
    }

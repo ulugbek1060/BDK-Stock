@@ -2,6 +2,8 @@ package com.android.model.repository.account
 
 import com.android.model.database.account.AccountDao
 import com.android.model.database.employees.EmployeesDao
+import com.android.model.database.jobs.JobsDao
+import com.android.model.database.vehicles.VehiclesDao
 import com.android.model.repository.account.entity.AccountEntity
 import com.android.model.repository.base.BaseRepository
 import com.android.model.repository.settings.AppSettings
@@ -18,7 +20,9 @@ class AccountRepository @Inject constructor(
    private val accountSource: AccountSource,
    private val appSettings: AppSettings,
    private val accountDao: AccountDao,
-   private val employeeDao: EmployeesDao
+   private val employeeDao: EmployeesDao,
+   private val jobsDao: JobsDao,
+   private val vehiclesDao: VehiclesDao
 ) : BaseRepository() {
 
    private val TAG = this.javaClass.simpleName
@@ -43,20 +47,13 @@ class AccountRepository @Inject constructor(
       if (password.isBlank()) throw EmptyFieldException(Field.Password)
 
       // if there is error throws
-      try {
+      wrapExceptions {
          val accountEntity = accountSource.signIn(phoneNumber, password)
 
          appSettings.setCurrentToken(accountEntity.token)
 
          // save user data to database
          accountDao.insert(accountEntity.toUserRoomEntity())
-
-      } catch (e: Exception) {
-         throw if (e is BackendException && e.code == 401) {
-            AuthException(e)
-         } else {
-            throw e
-         }
       }
    }
 
@@ -76,5 +73,7 @@ class AccountRepository @Inject constructor(
       appSettings.setCurrentToken(null)
       accountDao.delete()
       employeeDao.clear()
+      jobsDao.clear()
+      vehiclesDao.clear()
    }
 }

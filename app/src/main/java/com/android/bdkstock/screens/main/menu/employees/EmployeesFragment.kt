@@ -1,31 +1,34 @@
 package com.android.bdkstock.screens.main.menu.employees
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentEmployeesBinding
 import com.android.bdkstock.databinding.RecyclerItemEmployeeBinding
 import com.android.bdkstock.databinding.RecyclerItemShimmerBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
-import com.android.bdkstock.screens.main.base.simpleScan
 import com.android.bdkstock.views.DefaultLoadStateAdapter
+import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.views.pagingAdapter
 import com.android.model.repository.employees.entity.EmployeeEntity
+import com.android.model.utils.AuthException
+import com.android.model.utils.gone
+import com.android.model.utils.observeEvent
 import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -40,8 +43,10 @@ class EmployeesFragment : BaseFragment(R.layout.fragment_employees) {
 
    private val TAG = this.javaClass.simpleName
 
+   @SuppressLint("SetTextI18n")
    private val adapter = pagingAdapter<EmployeeEntity, RecyclerItemEmployeeBinding> {
       areItemsSame = { oldCat, newCat -> oldCat.id == newCat.id }
+      areContentsSame = { oldItem, newItem -> oldItem == newItem }
       bind { employee ->
          tvFullname.text = "${employee.firstname}, ${employee.lastname}"
          tvPhoneNumber.text = "+${employee.phoneNumber}"
@@ -50,15 +55,9 @@ class EmployeesFragment : BaseFragment(R.layout.fragment_employees) {
       listeners {
          root.onClick { employee ->
             val args =
-               ActionsFragmentDirections.actionActivityFragmentToDisplayEmployeeFragment(employee)
+               ActionsFragmentDirections.actionActionsFragmentToDisplayEmployeeFragment(employee)
             findTopNavController().navigate(args)
          }
-      }
-   }
-
-   private val shimmerAdapter = simpleAdapter<Any, RecyclerItemShimmerBinding> {
-      bind {
-         root.startShimmer()
       }
    }
 
@@ -76,22 +75,28 @@ class EmployeesFragment : BaseFragment(R.layout.fragment_employees) {
       setupRefreshLayout()
 
       handleViewVisibility()
-      handleScrollingTop()
 
-      binding.extendedFab.setOnClickListener { navigateToRegisterFrag() }
+      observeAuthError()
+
+      binding.extendedFab.setOnClickListener { fabOnClick() }
+
+      binding.buttonSearch.setOnClickListener { searchOnClick() }
    }
 
-   private fun navigateToRegisterFrag() {
+   private fun searchOnClick() {
+      findTopNavController().navigate(R.id.action_actionsFragment_to_searchEmployeeFragment)
+   }
+
+   private fun fabOnClick() {
       findTopNavController().navigate(
-         R.id.action_activityFragment_to_registerEmployeeFragment,
+         R.id.action_actionsFragment_to_registerEmployeeFragment,
       )
    }
 
    private fun observeEmployees() = lifecycleScope.launch {
-      viewModel.employeesFlow
-         .collectLatest {
-            adapter.submitData(it)
-         }
+      viewModel.employeesFlow.collectLatest {
+         adapter.submitData(it)
+      }
    }
 
    private fun setupRefreshLayout() {
@@ -104,23 +109,72 @@ class EmployeesFragment : BaseFragment(R.layout.fragment_employees) {
       layoutManager = LinearLayoutManager(requireContext())
       binding.recyclerEmployees.layoutManager = layoutManager
 
-      binding.recyclerEmployees.adapter = adapter
+      binding.recyclerEmployees.adapter = adapter.withLoadStateHeaderAndFooter(
+         footer = DefaultLoadStateAdapter(binding.refreshLayout) { adapter.retry() },
+         header = DefaultLoadStateAdapter(binding.refreshLayout) { adapter.retry() }
+      )
 
-      (binding.recyclerEmployees.itemAnimator as? DefaultItemAnimator)
-         ?.supportsChangeAnimations = false
+      binding.recyclerEmployees.itemAnimator = null
 
-      lifecycleScope.launchWhenStarted {
-         waitForLoad()
-         val footerAdapter = DefaultLoadStateAdapter(binding.refreshLayout) { adapter.retry() }
-         val adapterWithLoadState = adapter.withLoadStateFooter(footerAdapter)
-         binding.recyclerEmployees.adapter = adapterWithLoadState
+      setFabBehaviorOnRecycler()
+   }
+
+   private fun setFabBehaviorOnRecycler() {
+      binding.recyclerEmployees.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            if (dy > 0 && binding.extendedFab.isVisible) {
+               binding.extendedFab.hide()
+            } else if (dy < 0 && !binding.extendedFab.isVisible) {
+               binding.extendedFab.show()
+            }
+         }
+      })
+   }
+
+   private fun handleViewVisibility() = lifecycleScope.launch {
+      getRefreshLoadStateFlow().collectLatest { loadState ->
+
+         binding.recyclerShimmerLoading.isVisible = loadState == LoadState.Loading
+         binding.recyclerEmployees.isVisible = loadState != LoadState.Loading
+
+         if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
+            binding.refreshLayout.isRefreshing = false
+
+         handleAuthError(loadState)
       }
    }
 
-   private suspend fun waitForLoad() {
-      adapter.onPagesUpdatedFlow
-         .map { adapter.itemCount }
-         .first { it > 0 }
+   private fun handleAuthError(refresh: LoadState) {
+      if (refresh is LoadState.Error && refresh.error is AuthException) {
+         viewModel.showAuthError()
+      }
+   }
+
+   private fun getRefreshLoadStateFlow(): Flow<LoadState> {
+      return adapter.loadStateFlow.map { it.refresh }
+   }
+
+   private fun observeAuthError() {
+      viewModel.showAuthError.observeEvent(viewLifecycleOwner) {
+         AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.user_logged_out))
+            .setMessage(getString(R.string.try_again_to_sign_in))
+            .setNegativeButton(getString(R.string.sign_in)) { _, _ ->
+               viewModel.restart()
+            }
+            .setCancelable(false)
+            .create()
+            .show()
+      }
+   }
+
+   // -- Progressbar with shimmer layout
+
+   private val shimmerAdapter = simpleAdapter<Any, RecyclerItemShimmerBinding> {
+      bind {
+         root.startShimmer()
+      }
    }
 
    private fun setupShimmerLoading() {
@@ -128,43 +182,4 @@ class EmployeesFragment : BaseFragment(R.layout.fragment_employees) {
       binding.recyclerShimmerLoading.layoutManager = LinearLayoutManager(requireContext())
       binding.recyclerShimmerLoading.adapter = shimmerAdapter
    }
-
-   private fun handleViewVisibility() = lifecycleScope.launch {
-      getRefreshLoadStateFlow()
-         .simpleScan(count = 3)
-         .collectLatest { (beforePrevious, previous, current) ->
-//            binding.recyclerEmployees.isInvisible = current is LoadState.Error
-//                || previous is LoadState.Error
-//                || (beforePrevious is LoadState.Error
-//                && previous is LoadState.NotLoading
-//                && current is LoadState.Loading)
-
-            binding.recyclerShimmerLoading.isVisible = current is LoadState.Loading
-                || previous is LoadState.Loading
-                || (beforePrevious is LoadState.Loading && previous is LoadState.NotLoading && current is LoadState.Loading)
-
-            if (binding.refreshLayout.isRefreshing && (current is LoadState.NotLoading || current is LoadState.Error)) {
-               binding.refreshLayout.isRefreshing = false
-            }
-         }
-   }
-
-   private fun handleScrollingTop() = lifecycleScope.launch {
-      getRefreshLoadStateFlow()
-         .simpleScan(count = 2)
-         .collect { (previousState, currentState) ->
-            if (previousState is LoadState.Loading
-               && currentState is LoadState.NotLoading
-            ) {
-               delay(200)
-               binding.recyclerEmployees.scrollToPosition(0)
-            }
-         }
-   }
-
-   private fun getRefreshLoadStateFlow(): Flow<LoadState> {
-      return adapter.loadStateFlow
-         .map { it.refresh }
-   }
-
 }

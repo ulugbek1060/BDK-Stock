@@ -29,17 +29,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
    private fun observeLogoutActions() {
       viewModel.doLogoutActions.observeEvent(viewLifecycleOwner) {
          Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-         findTopNavController().navigate(R.id.signInFragment, null, navOptions {
-            anim {
-               enter = R.anim.enter
-               exit = R.anim.exit
-               popEnter = R.anim.pop_enter
-               popExit = R.anim.pop_exit
-            }
-            popUpTo(R.id.actionsFragment) {
-               inclusive = true
-            }
-         })
+         viewModel.restart()
       }
    }
 }

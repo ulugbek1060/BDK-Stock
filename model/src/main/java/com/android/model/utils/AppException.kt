@@ -15,6 +15,8 @@ class AccountAlreadyExistsException(cause: Throwable) : AppException(cause = cau
 // BackendException with statusCode=401 is usually mapped to this exception
 class AuthException(cause: Throwable) : AppException(cause = cause)
 
+class PageNotFoundException(cause: Throwable) : AppException(cause = cause)
+
 class InvalidCredentialsException(cause: Exception) : AppException(cause = cause)
 
 class ConnectionException(cause: Throwable) : AppException(cause = cause)

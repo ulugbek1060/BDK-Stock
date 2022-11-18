@@ -7,7 +7,7 @@
   tools:context=".screens.main.menu.drivers.DriversFragment">
 
   <TextView
-    android:id="@+id/tv_title_employees"
+    android:id="@+id/tv_title_drivers"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:fontFamily="@font/font_bold"
@@ -20,6 +20,15 @@
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/line"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintBottom_toBottomOf="@id/tv_title_drivers"/>
+
+
   <ImageButton
     android:id="@+id/button_search"
     android:layout_width="wrap_content"
@@ -28,9 +37,9 @@
     android:background="@android:color/transparent"
     android:contentDescription="@string/search"
     android:src="@drawable/ic_search"
-    app:layout_constraintBottom_toBottomOf="@id/tv_title_employees"
-    app:layout_constraintRight_toRightOf="@id/tv_title_employees"
-    app:layout_constraintTop_toTopOf="@id/tv_title_employees" />
+    app:layout_constraintBottom_toBottomOf="@id/tv_title_drivers"
+    app:layout_constraintRight_toRightOf="@id/tv_title_drivers"
+    app:layout_constraintTop_toTopOf="@id/tv_title_drivers" />
 
 
   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -40,7 +49,7 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_title_employees">
+    app:layout_constraintTop_toBottomOf="@id/tv_title_drivers">
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recycler_drivers"
@@ -58,7 +67,7 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_title_employees"
+    app:layout_constraintTop_toBottomOf="@id/tv_title_drivers"
     tools:listitem="@layout/recycler_item_driver" />
 
   <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

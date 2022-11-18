@@ -2,20 +2,13 @@ package com.android.model.database.employees
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import androidx.room.Transaction
+import com.android.model.database.BaseDao
 import com.android.model.database.employees.entity.EmployeeRoomEntity
 
 @Dao
-interface EmployeesDao {
-
-   /**
-    * Insert (or replace by ID) a list of Employees.
-    */
-   @Insert(onConflict = REPLACE)
-   suspend fun save(employees: List<EmployeeRoomEntity>)
+interface EmployeesDao : BaseDao<EmployeeRoomEntity> {
 
    @Query("SELECT * FROM employee")
    fun getEmployees(): PagingSource<Int, EmployeeRoomEntity>
@@ -33,13 +26,6 @@ interface EmployeesDao {
    @Transaction
    suspend fun refresh(employees: List<EmployeeRoomEntity>) {
       clear()
-      save(employees)
-   }
-
-   /**
-    * Convenient call for saving one Launch entity.
-    */
-   suspend fun save(launch: EmployeeRoomEntity) {
-      save(listOf(launch))
+      insert(employees)
    }
 }

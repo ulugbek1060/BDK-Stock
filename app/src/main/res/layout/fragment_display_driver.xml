@@ -7,7 +7,7 @@
   tools:context=".screens.main.menu.drivers.DisplayDriverFragment">
 
   <TextView
-    android:id="@+id/tv_title_profile"
+    android:id="@+id/tv_title_driver"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:fontFamily="@font/font_bold"
@@ -20,6 +20,14 @@
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/line"
+    app:layout_constraintBottom_toBottomOf="@id/tv_title_driver"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent" />
+
   <TextView
     android:id="@+id/button_edit"
     android:layout_width="wrap_content"
@@ -31,9 +39,9 @@
     android:padding="@dimen/dimen_large"
     android:text="@string/edit"
     android:textColor="@color/blue"
-    app:layout_constraintBottom_toBottomOf="@id/tv_title_profile"
+    app:layout_constraintBottom_toBottomOf="@id/tv_title_driver"
     app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="@id/tv_title_profile" />
+    app:layout_constraintTop_toTopOf="@id/tv_title_driver" />
 
   <androidx.core.widget.NestedScrollView
     android:id="@+id/scroll_view"
@@ -42,7 +50,7 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_title_profile">
+    app:layout_constraintTop_toBottomOf="@id/tv_title_driver">
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
@@ -52,15 +60,15 @@
         android:id="@+id/iv_avatar"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_marginTop="@dimen/dimen_extra"
         android:contentDescription="@string/user"
         android:gravity="center"
-        android:src="@drawable/ic_circle_truck"
+        android:src="@drawable/ic_drivers"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
-
 
       <androidx.cardview.widget.CardView
         android:id="@+id/button_call"

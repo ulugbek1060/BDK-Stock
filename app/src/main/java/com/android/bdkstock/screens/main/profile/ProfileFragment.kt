@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentProfileBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.views.navigate
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,6 +26,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
          binding.inputAddress.setText(it.address)
       }
 
-      binding.buttonSettings.setOnClickListener { navigate(R.id.action_profileFragment_to_settingsFragment) }
+      binding.buttonSettings.setOnClickListener {
+         navigate(R.id.action_profileFragment_to_settingsFragment)
+      }
    }
 }

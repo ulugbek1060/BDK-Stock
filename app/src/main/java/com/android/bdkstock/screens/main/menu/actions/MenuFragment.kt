@@ -1,8 +1,10 @@
-package com.android.bdkstock.screens.main.menu
+package com.android.bdkstock.screens.main.menu.actions
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentMenuBinding
@@ -26,7 +28,14 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
       }
       listeners {
          root.onClick {
-            navigate(it.fragmentId)
+            findNavController().navigate(it.fragmentId, null, navOptions {
+               anim {
+                  enter = R.anim.enter
+                  exit = R.anim.exit
+                  popExit = R.anim.pop_enter
+                  popExit = R.anim.pop_exit
+               }
+            })
          }
       }
    }

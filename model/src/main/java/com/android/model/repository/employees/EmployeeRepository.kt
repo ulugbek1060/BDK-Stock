@@ -2,6 +2,7 @@ package com.android.model.repository.employees
 
 import androidx.paging.*
 import com.android.model.database.employees.EmployeesDao
+import com.android.model.repository.base.BaseRepository
 import com.android.model.repository.base.Repository
 import com.android.model.repository.employees.entity.EmployeeEntity
 import com.android.model.utils.AuthException
@@ -15,9 +16,7 @@ import javax.inject.Inject
 class EmployeeRepository @Inject constructor(
    private val employeesSource: EmployeesSource,
    private val employeesDao: EmployeesDao
-) : Repository {
-
-   private val TAG = this.javaClass.simpleName
+) : BaseRepository(), Repository {
 
    suspend fun registerEmployee(
       firstname: String,
@@ -33,7 +32,7 @@ class EmployeeRepository @Inject constructor(
       if (address.isBlank()) throw EmptyFieldException(Field.Address)
       if (jobId == null) throw EmptyFieldException(Field.Job)
 
-      return try {
+      return wrapExceptions {
          employeesSource.registerEmployee(
             firstname = firstname,
             lastname = lastname,
@@ -41,31 +40,26 @@ class EmployeeRepository @Inject constructor(
             address = address,
             jobId = jobId
          )
-      } catch (e: Exception) {
-         if (e is BackendException && e.code == 401) {
-            throw AuthException(e)
-         } else {
-            throw e
-         }
       }
    }
 
    @OptIn(ExperimentalPagingApi::class)
-   fun getEmployeesFromLocal(
-      query: String
-   ): Flow<PagingData<EmployeeEntity>> {
-      val remoteLoader: EmployeesRemotePageLoader = { pageIndex ->
-         employeesSource.getEmployees(query, pageIndex, PAGE_SIZE)
-      }
+   fun getEmployeesFromLocal(): Flow<PagingData<EmployeeEntity>> {
       val localLoader: EmployeesLocalLoader = {
          employeesDao
+      }
+      val remoteLoader: EmployeesRemotePageLoader = { pageIndex ->
+         employeesSource.getEmployees(null, pageIndex, PAGE_SIZE)
       }
       return Pager(
          config = PagingConfig(
             pageSize = PAGE_SIZE,
             initialLoadSize = PAGE_SIZE
          ),
-         remoteMediator = EmployeesRemoteMediator(localLoader, remoteLoader),
+         remoteMediator = EmployeesRemoteMediator(
+            localLoader = localLoader,
+            remoteLoader = remoteLoader
+         ),
          pagingSourceFactory = { employeesDao.getEmployees() }
       )
          .flow
@@ -111,25 +105,19 @@ class EmployeeRepository @Inject constructor(
       }
    }
 
-
-   fun getEmployees(
+   fun getEmployeeFromRemote(
       query: String
    ): Flow<PagingData<EmployeeEntity>> {
+      val loader: EmployeesPageLoader = { pageIndex ->
+         employeesSource.searchBy(query, pageIndex, PAGE_SIZE)
+      }
       return Pager(
          config = PagingConfig(
             pageSize = PAGE_SIZE,
             enablePlaceholders = false
          ),
          pagingSourceFactory = {
-            EmployeesPagingSource(object : EmployeesPagingSource.EmployeesPageLoader {
-               override suspend fun getEmployees(pageIndex: Int): List<EmployeeEntity> {
-                  return employeesSource.getEmployees(
-                     query = query,
-                     pageIndex = pageIndex,
-                     pageSize = PAGE_SIZE
-                  )
-               }
-            })
+            EmployeesPagingSource(loader)
          }
       ).flow
    }

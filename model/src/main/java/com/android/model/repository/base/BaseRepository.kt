@@ -53,3 +53,57 @@ open class BaseRepository {
    }.flowOn(Dispatchers.IO)
 
 }
+
+//--------------------------------------------------------------------------
+//
+//abstract class NetworkBoundResource<ResultType, RequestType> {
+//
+//    fun invoke(): Flow<Resource<ResultType>> = flow {
+//        val rawData = loadFromDb()
+//
+//        if (shouldFetch(rawData)) {
+//            fetchDataFromServer()
+//                .onStart { emit(Resource.loading(rawData)) } // emit() causing issue
+//                .catch { emit(Resource.error(it, null)) } // emit() causing issue
+//                .collectLatest { }
+//        }
+//    }
+//
+//    // Save API response result into the database
+//    protected abstract suspend fun cacheInDb(items: RequestType)
+//
+//    // Need to fetch data from server or not.
+//    protected abstract fun shouldFetch(data: ResultType?): Boolean
+//
+//    // Show cached data from the database.
+//    protected abstract suspend fun loadFromDb(): ResultType
+//
+//    // Fetch the data from server.
+//    protected abstract suspend fun fetchDataFromServer(): Flow<ApiResponse<List<Category>>>
+//
+//    // when the fetch fails.
+//    protected open fun onFetchFailed() {}
+//}
+
+// in repository
+//    fun getCategories(): Flow<Resource<List<Category>>> {
+//        return object : NetworkBoundResource<List<Category>, List<Category>>() {
+//
+//            override suspend fun cacheInDb(items: List<Category>) {
+//                withContext(Dispatchers.IO) { database.getCategories().insert(items) }
+//            }
+//
+//            override fun shouldFetch(data: List<Category>?): Boolean {
+//                return true
+//            }
+//
+//            override suspend fun loadFromDb(): List<Category> {
+//                return withContext(Dispatchers.IO) { database.getCategories().read() }
+//            }
+//
+//            override suspend fun fetchDataFromServer(): Flow<ApiResponse<List<Category>>> {
+//                return flow { emit(RetrofitModule.getCategories()) }
+//            }
+//
+//        }.invoke()
+//    }

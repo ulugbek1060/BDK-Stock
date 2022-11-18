@@ -1,4 +1,4 @@
-package com.android.bdkstock.screens.main.menu
+package com.android.bdkstock.screens.main.menu.actions
 
 import androidx.annotation.DrawableRes
 

@@ -140,14 +140,14 @@ class DisplayDriverFragment : BaseFragment(R.layout.fragment_display_driver) {
          binding.inputLayoutVehicle.error = state.getVehicleErrorMessage(requireContext())
 
          //colors
-         binding.containerSaveButton.setBackgroundColor(state.getButtonSaveColor(requireContext()))
+//         binding.containerSaveButton.setBackgroundColor(state.getButtonSaveColor(requireContext()))
          binding.buttonEdit.setTextColor(state.getToggleButtonColor(requireContext()))
 
          //text
          binding.buttonEdit.setText(state.getToggleButtonText(requireContext()))
 
          //visibility
-         binding.containerButtons.isVisible = !state.isInProgress
+         binding.buttonSave.isVisible = state.isChangeableEnable && !state.isInProgress
          binding.lottiProgress.isVisible = state.isInProgress
       }
    }

@@ -9,7 +9,7 @@ data class Job(
    val id: Long, // 1
    @SerializedName("name")
    val name: String, // Admin
-) {
+) : java.io.Serializable {
 
    fun toJobEntity() = JobEntity(
       id = id,
