@@ -1,11 +1,11 @@
-package com.android.source.network.drivers
+package com.android.source.network.account.drivers
 
 import com.android.model.repository.drivers.DriversSource
 import com.android.model.repository.drivers.entity.DriverEntity
 import com.android.model.repository.drivers.entity.VehicleModelEntity
 import com.android.source.network.base.BaseNetworkSource
-import com.android.source.network.drivers.entity.create.DriverCreateRequestEntity
-import com.android.source.network.drivers.entity.update.DriverUpdateRequestEntity
+import com.android.source.network.account.drivers.entity.create.DriverCreateRequestEntity
+import com.android.source.network.account.drivers.entity.update.DriverUpdateRequestEntity
 import javax.inject.Inject
 
 class DriversSourceImpl @Inject constructor(
@@ -24,15 +24,15 @@ class DriversSourceImpl @Inject constructor(
          automodelId = autoModelId,
          avtoNumber = regNumber
       )
-      val response = driversApi.createDriver(body).driver
+      val driver = driversApi.createDriver(body).driver
       DriverEntity(
-         id = response.id,
-         driverFullName = response.name,
-         phoneNumber = response.phoneNumber,
-         autoRegNumber = response.avtoNumber,
+         id = driver.id,
+         driverFullName = driver.name,
+         phoneNumber = driver.phoneNumber,
+         autoRegNumber = driver.avtoNumber,
          vehicle = VehicleModelEntity(
-            id = response.model.id,
-            name = response.model.name
+            id = driver.model.id,
+            name = driver.model.name
          )
       )
    }
@@ -56,22 +56,22 @@ class DriversSourceImpl @Inject constructor(
    }
 
    override suspend fun getDriverById(driverId: Long): DriverEntity = wrapNetworkException {
-      val response = driversApi.getDriverById(id = driverId).driverInfo
+      val driver = driversApi.getDriverById(id = driverId).driverInfo
       DriverEntity(
-         id = response.id,
-         driverFullName = response.name,
-         phoneNumber = response.phoneNumber,
-         autoRegNumber = response.avtoNumber,
+         id = driver.id,
+         driverFullName = driver.name,
+         phoneNumber = driver.phoneNumber,
+         autoRegNumber = driver.avtoNumber,
          vehicle = VehicleModelEntity(
-            id = response.automodelId
+            id = driver.automodelId
          ),
-         isDeleted = response.isDelete,
-         createdAt = response.createdAt,
-         updatedAt = response.updatedAt
+         isDeleted = driver.isDelete,
+         createdAt = driver.createdAt,
+         updatedAt = driver.updatedAt
       )
    }
 
-   override suspend fun getModelsList(): List<VehicleModelEntity> = wrapNetworkException {
+   override suspend fun getVehiclesModelsList(): List<VehicleModelEntity> = wrapNetworkException {
       driversApi.getVehicleModels().modelsList.map { vehicleModel ->
          VehicleModelEntity(
             id = vehicleModel.id,
@@ -81,11 +81,29 @@ class DriversSourceImpl @Inject constructor(
    }
 
    override suspend fun getDrivers(
+      pageIndex: Int,
+      pageSize: Int
+   ): List<DriverEntity> = wrapNetworkException {
+      driversApi.getDriversList(pageIndex, pageSize).driverList.map { driver ->
+         DriverEntity(
+            id = driver.id,
+            driverFullName = driver.name,
+            phoneNumber = driver.phoneNumber,
+            autoRegNumber = driver.avtoNumber,
+            vehicle = VehicleModelEntity(
+               id = driver.model.id,
+               name = driver.model.name
+            )
+         )
+      }
+   }
+
+   override suspend fun getDriversByQuery(
       search: String,
       pageIndex: Int,
       pageSize: Int
    ): List<DriverEntity> = wrapNetworkException {
-      driversApi.getDriversList(search, pageIndex, pageSize).driverList.map { driver ->
+      driversApi.getDriversByQuery(search, pageIndex, pageSize).driverList.map { driver ->
          DriverEntity(
             id = driver.id,
             driverFullName = driver.name,

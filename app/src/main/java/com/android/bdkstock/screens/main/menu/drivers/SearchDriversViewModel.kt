@@ -1,4 +1,4 @@
-package com.android.bdkstock.screens.main.menu.employees
+package com.android.bdkstock.screens.main.menu.drivers
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asFlow
@@ -7,8 +7,8 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
-import com.android.model.repository.employees.EmployeeRepository
-import com.android.model.repository.employees.entity.EmployeeEntity
+import com.android.model.repository.drivers.DriversRepository
+import com.android.model.repository.drivers.entity.DriverEntity
 import com.android.model.utils.MutableUnitLiveEvent
 import com.android.model.utils.liveData
 import com.android.model.utils.publishEvent
@@ -23,8 +23,8 @@ import javax.inject.Inject
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 @HiltViewModel
-class SearchEmployeeViewModel @Inject constructor(
-   private val employeeRepository: EmployeeRepository,
+class SearchDriversViewModel @Inject constructor(
+   private val driversRepository: DriversRepository,
    accountRepository: AccountRepository,
    savedStateHandle: SavedStateHandle
 ) : BaseViewModel(accountRepository) {
@@ -35,14 +35,18 @@ class SearchEmployeeViewModel @Inject constructor(
    private val _errorEvent = MutableUnitLiveEvent()
    val errorEvent = _errorEvent.liveData()
 
-   private val _query = savedStateHandle.getLiveData(EMPLOYEE_QUERY_KEY, "")
+   private val _query = savedStateHandle.getLiveData(QUERY_DRIVER_KEY, "")
 
-   val employeesFlow: Flow<PagingData<EmployeeEntity>> = _query.asFlow()
+   var driversFlow: Flow<PagingData<DriverEntity>> = _query.asFlow()
       .debounce(500)
       .flatMapLatest {
-         employeeRepository.getEmployeeFromRemote(it)
+         driversRepository.getDriversByQuery(it)
       }
       .cachedIn(viewModelScope)
+
+   init {
+      _invalidate.publishEvent()
+   }
 
    fun setQuery(searchBy: String) {
 
@@ -51,13 +55,14 @@ class SearchEmployeeViewModel @Inject constructor(
 
       if (_query.requireValue() != searchBy)
          _query.value = searchBy
+
    }
 
-   fun showAuthError() {
+   fun showAuthError(){
       _errorEvent.publishEvent()
    }
 
    private companion object {
-      const val EMPLOYEE_QUERY_KEY = "employee_key"
+      const val QUERY_DRIVER_KEY = "query_driver"
    }
 }

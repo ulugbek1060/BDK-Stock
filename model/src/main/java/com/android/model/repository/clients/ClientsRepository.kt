@@ -49,24 +49,31 @@ class ClientsRepository @Inject constructor(
       clientSource.getClientById(clientId)
    }
 
-   suspend fun getClients(
-      query: String
-   ): Flow<PagingData<ClientEntity>> {
+   fun getClientsList(): Flow<PagingData<ClientEntity>> {
       val loader: ClientLoader = { pageIndex ->
-         clientSource.getClients(
-            query = query,
-            pageIndex = pageIndex,
-            pageSize = DEFAULT_PAGE_SIZE
-         )
+         clientSource.getClientsList(pageIndex = pageIndex, pageSize = DEFAULT_PAGE_SIZE)
       }
       return Pager(
          config = PagingConfig(
             pageSize = DEFAULT_PAGE_SIZE,
             enablePlaceholders = false
          ),
-         pagingSourceFactory = {
-            ClientsPagingSource(loader)
-         }
+         pagingSourceFactory = { ClientsPagingSource(loader) }
+      ).flow
+   }
+
+   fun getClientsByQuery(
+      query: String
+   ): Flow<PagingData<ClientEntity>> {
+      val loader: ClientLoader = { pageIndex ->
+         clientSource.getClientsByQuery(query, pageIndex = pageIndex, pageSize = DEFAULT_PAGE_SIZE)
+      }
+      return Pager(
+         config = PagingConfig(
+            pageSize = DEFAULT_PAGE_SIZE,
+            enablePlaceholders = false
+         ),
+         pagingSourceFactory = { ClientsPagingSource(loader) }
       ).flow
    }
 

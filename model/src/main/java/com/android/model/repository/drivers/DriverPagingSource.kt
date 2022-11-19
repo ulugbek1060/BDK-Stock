@@ -3,6 +3,9 @@ package com.android.model.repository.drivers
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.android.model.repository.drivers.entity.DriverEntity
+import com.android.model.utils.AuthException
+import com.android.model.utils.BackendException
+import com.android.model.utils.PageNotFoundException
 
 typealias DriverPageLoader = suspend (pageIndex: Int) -> List<DriverEntity>
 
@@ -27,7 +30,13 @@ class DriverPagingSource(
             nextKey = if (list.isEmpty()) null else pageIndex + 1
          )
       } catch (e: Exception) {
-         LoadResult.Error(e)
+         if (e is BackendException && e.code == 401) {
+            LoadResult.Error(AuthException(e))
+         } else if (e is BackendException && e.code == 404) {
+            LoadResult.Error(PageNotFoundException(e))
+         } else {
+            LoadResult.Error(e)
+         }
       }
    }
 

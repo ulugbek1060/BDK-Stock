@@ -14,37 +14,31 @@ import retrofit2.http.*
 
 interface EmployeesApi {
 
+   @Headers("Content-Type: application/json", "Accept: application/json")
    @GET("api/user/get")
    suspend fun getEmployees(
       @Query("search") query: String?,
       @Query("page") pageIndex: Int,
-      @Query("count") pageSize: Int,
-      @Header(HEADER_KEY_CONTENT_TYPE) type: String = HEADER_VALUE_CONTENT_TYPE,
-      @Header(HEADER_KEY_ACCEPT) accept: String = HEADER_VALUE_ACCEPT
+      @Query("count") pageSize: Int
    ): EmployeesResponseEntity
 
+   @Headers("Content-Type: application/json", "Accept: application/json")
    @GET("api/user/get")
    suspend fun getEmployeesSearchBy(
       @Query("search") query: String?,
       @Query("page") pageIndex: Int,
-      @Query("count") pageSize: Int,
-      @Header(HEADER_KEY_CONTENT_TYPE) type: String = HEADER_VALUE_CONTENT_TYPE,
-      @Header(HEADER_KEY_ACCEPT) accept: String = HEADER_VALUE_ACCEPT
+      @Query("count") pageSize: Int
    ): EmployeeSearchByResponseEntity
 
+   @Headers("Content-Type: application/json", "Accept: application/json")
    @POST("api/user/update/{id}")
    suspend fun updateEmployee(
       @Path("id") id: Long,
-      @Body body: UpdateEmployeeRequestEntity,
-      @Header(HEADER_KEY_CONTENT_TYPE) type: String = HEADER_VALUE_CONTENT_TYPE,
-      @Header(HEADER_KEY_ACCEPT) accept: String = HEADER_VALUE_ACCEPT
+      @Body body: UpdateEmployeeRequestEntity
    ): UpdateEmployeeResponseEntity
 
+   @Headers("Content-Type: application/json", "Accept: application/json")
    @POST("api/register")
-   suspend fun registerEmployee(
-      @Body body: RegisterEmployeeRequestEntity,
-      @Header(HEADER_KEY_CONTENT_TYPE) type: String = HEADER_VALUE_CONTENT_TYPE,
-      @Header(HEADER_KEY_ACCEPT) accept: String = HEADER_VALUE_ACCEPT
-   ): RegisterEmployeeResponseEntity
+   suspend fun registerEmployee(@Body body: RegisterEmployeeRequestEntity): RegisterEmployeeResponseEntity
 
 }

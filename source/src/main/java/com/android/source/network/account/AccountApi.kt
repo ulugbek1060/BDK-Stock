@@ -7,25 +7,15 @@ import com.android.model.utils.Const.HEADER_VALUE_CONTENT_TYPE
 import com.android.source.network.account.entity.logout.LogoutSuccessResponse
 import com.android.source.network.account.entity.signin.SignInRequestEntity
 import com.android.source.network.account.entity.signin.SignInResponseEntity
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface AccountApi {
 
+   @Headers("Content-Type: application/json", "Accept: application/json")
    @POST("api/login")
-   suspend fun signIn(
-      @Body body: SignInRequestEntity,
-      @Header(HEADER_KEY_CONTENT_TYPE) type: String = HEADER_VALUE_CONTENT_TYPE,
-      @Header(HEADER_KEY_ACCEPT) accept: String = HEADER_VALUE_ACCEPT
-   ): SignInResponseEntity
+   suspend fun signIn(@Body body: SignInRequestEntity): SignInResponseEntity
 
+   @Headers("Content-Type: application/json", "Accept: application/json")
    @GET("api/user/logout")
-   suspend fun logout(
-      @Header(HEADER_KEY_CONTENT_TYPE) type: String = HEADER_VALUE_CONTENT_TYPE,
-      @Header(HEADER_KEY_ACCEPT) accept: String = HEADER_VALUE_ACCEPT
-   ): LogoutSuccessResponse
-
-
+   suspend fun logout(): LogoutSuccessResponse
 }

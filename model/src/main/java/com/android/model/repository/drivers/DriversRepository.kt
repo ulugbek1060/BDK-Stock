@@ -71,7 +71,7 @@ class DriversRepository @Inject constructor(
          appDatabase.getVehiclesDao().getVehicles()
       },
       fetch = {
-         driversSource.getModelsList()
+         driversSource.getVehiclesModelsList()
       },
       saveFetchedResult = { modelsList ->
          appDatabase.withTransaction {
@@ -92,9 +92,22 @@ class DriversRepository @Inject constructor(
 
    }
 
-   fun getDriversForSearch(query: String): Flow<PagingData<DriverEntity>> {
+   fun getDriversList(): Flow<PagingData<DriverEntity>> {
       val loader: DriverPageLoader = { pageIndex ->
-         driversSource.getDrivers(query, pageIndex, PAGE_SIZE)
+         driversSource.getDrivers(pageIndex, PAGE_SIZE)
+      }
+      return Pager(
+         config = PagingConfig(
+            pageSize = PAGE_SIZE,
+            enablePlaceholders = false
+         ),
+         pagingSourceFactory = { DriverPagingSource(loader) }
+      ).flow
+   }
+
+   fun getDriversByQuery(query: String): Flow<PagingData<DriverEntity>> {
+      val loader: DriverPageLoader = { pageIndex ->
+         driversSource.getDriversByQuery(query, pageIndex, PAGE_SIZE)
       }
       return Pager(
          config = PagingConfig(

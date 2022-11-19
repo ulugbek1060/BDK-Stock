@@ -1,4 +1,4 @@
-package com.android.bdkstock.screens.main.menu.employees
+package com.android.bdkstock.screens.main.menu.drivers
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -8,51 +8,47 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentSearchEmployeeBinding
-import com.android.bdkstock.databinding.RecyclerItemEmployeeBinding
+import com.android.bdkstock.databinding.FragmentSearchDriversBinding
+import com.android.bdkstock.databinding.RecyclerItemDriverBinding
 import com.android.bdkstock.databinding.RecyclerItemShimmerBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.views.pagingAdapter
-import com.android.bdkstock.views.textChanges
-import com.android.model.repository.employees.entity.EmployeeEntity
+import com.android.model.repository.drivers.entity.DriverEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.PageNotFoundException
 import com.android.model.utils.observeEvent
 import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchEmployeeFragment : BaseFragment(R.layout.fragment_search_employee) {
+class SearchDriversFragment : BaseFragment(R.layout.fragment_search_drivers) {
 
-   private val TAG = "SearchEmployeeFragment"
-
-   override val viewModel by viewModels<SearchEmployeeViewModel>()
-   private lateinit var binding: FragmentSearchEmployeeBinding
+   override val viewModel by viewModels<SearchDriversViewModel>()
+   private lateinit var binding: FragmentSearchDriversBinding
    private lateinit var layoutManager: LinearLayoutManager
 
    @SuppressLint("SetTextI18n")
-   private val adapter = pagingAdapter<EmployeeEntity, RecyclerItemEmployeeBinding> {
-      areItemsSame = { oldCat, newCat -> oldCat.id == newCat.id }
+   private val adapter = pagingAdapter<DriverEntity, RecyclerItemDriverBinding> {
+      areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
       areContentsSame = { oldItem, newItem -> oldItem == newItem }
-      bind { employee ->
-         tvFullname.text = "${employee.firstname}, ${employee.lastname}"
-         tvPhoneNumber.text = "+${employee.phoneNumber}"
-         tvJobTitle.text = employee.job.name
+      bind { driver ->
+         tvFullname.text = driver.driverFullName
+         tvPhoneNumber.text = "+${driver.phoneNumber}"
       }
       listeners {
-         root.onClick { employee ->
+         root.onClick { driver ->
             val args =
-               SearchEmployeeFragmentDirections.actionSearchEmployeeFragmentToDisplayEmployeeFragment(
-                  employee
+               SearchDriversFragmentDirections.actionSearchDriverFragmentToDisplayDriverFragment(
+                  driver
                )
             findTopNavController().navigate(args)
          }
@@ -65,15 +61,14 @@ class SearchEmployeeFragment : BaseFragment(R.layout.fragment_search_employee) {
    }
 
    private fun observeEmployees() = lifecycleScope.launch {
-      viewModel.employeesFlow.collectLatest {
+      viewModel.driversFlow.collectLatest {
          adapter.submitData(it)
       }
    }
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentSearchEmployeeBinding.bind(view)
-
+      binding = FragmentSearchDriversBinding.bind(view)
 
       setupRecycler()
       setupShimmerLoading()
@@ -82,7 +77,7 @@ class SearchEmployeeFragment : BaseFragment(R.layout.fragment_search_employee) {
       observeAuthError()
       invalidateAdapter()
 
-      addTextWatchListener()
+      setupSearchBar()
    }
 
    private fun invalidateAdapter() {
@@ -95,7 +90,8 @@ class SearchEmployeeFragment : BaseFragment(R.layout.fragment_search_employee) {
       adapter.loadStateFlow.map { it.refresh }
          .collectLatest { loadState ->
             binding.recyclerShimmerLoading.isVisible = loadState == LoadState.Loading
-            binding.recyclerEmployees.isVisible = loadState != LoadState.Loading
+            binding.recyclerDrivers.isVisible = loadState != LoadState.Loading
+
             handleErrorMessage(loadState)
          }
    }
@@ -108,24 +104,27 @@ class SearchEmployeeFragment : BaseFragment(R.layout.fragment_search_employee) {
       }
    }
 
-   @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-   private fun addTextWatchListener() {
-      binding.inputQuery
-         .textChanges()
-         .debounce(500)
-         .onEach { viewModel.setQuery(it.toString()) }
-         .launchIn(lifecycleScope)
+   private fun setupSearchBar() {
+      binding.searchBar.apply {
+         textListener = {
+            viewModel.setQuery(it)
+         }
+         backListener = {
+            findNavController().popBackStack()
+         }
+      }
    }
 
    private fun setupRecycler() = binding.apply {
       layoutManager = LinearLayoutManager(requireContext())
-      recyclerEmployees.layoutManager = layoutManager
-      recyclerEmployees.adapter = adapter
-      recyclerEmployees.itemAnimator = null
+      recyclerDrivers.layoutManager = layoutManager
+      recyclerDrivers.adapter = adapter
+      recyclerDrivers.itemAnimator = null
    }
 
+
    private fun observeAuthError() {
-      viewModel.showAuthError.observeEvent(viewLifecycleOwner) {
+      viewModel.errorEvent.observeEvent(viewLifecycleOwner) {
          AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.user_logged_out))
             .setMessage(getString(R.string.try_again_to_sign_in))
@@ -140,12 +139,7 @@ class SearchEmployeeFragment : BaseFragment(R.layout.fragment_search_employee) {
 
    // -- Progressbar with shimmer layout
 
-   private val shimmerAdapter = simpleAdapter<Any, RecyclerItemShimmerBinding> {
-      bind {
-         root.startShimmer()
-      }
-   }
-
+   private val shimmerAdapter = simpleAdapter<Any, RecyclerItemShimmerBinding> {}
    private fun setupShimmerLoading() {
       shimmerAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8))
       binding.recyclerShimmerLoading.layoutManager = LinearLayoutManager(requireContext())

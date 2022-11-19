@@ -30,7 +30,6 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
       }
 
       viewModel.showAuthErrorAndRestart.observeEvent(viewLifecycleOwner) {
-         Toast.makeText(requireContext(), R.string.auth_error, Toast.LENGTH_SHORT).show()
          logout()
       }
    }

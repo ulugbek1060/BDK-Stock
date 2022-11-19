@@ -1,11 +1,11 @@
-package com.android.source.network.drivers.entity.getdriver
+package com.android.source.network.account.drivers.entity.create
 
 
 import com.google.gson.annotations.SerializedName
 
-data class DriverInfoResponseEntity(
+data class DriverCreateResponseEntity(
    @SerializedName("data")
-   val driverInfo: DriverInfo,
+   val driver: Driver,
    @SerializedName("ok")
    val ok: Boolean // true
 )

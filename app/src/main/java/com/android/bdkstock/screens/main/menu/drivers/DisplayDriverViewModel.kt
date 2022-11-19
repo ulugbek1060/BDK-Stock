@@ -204,15 +204,19 @@ class DisplayDriverViewModel @Inject constructor(
          else context.getColor(R.color.grey)
 
       fun getNameErrorMessage(context: Context) =
-         if (emptyNameError) context.getString(R.string.error_empty_name) else null
+         if (emptyNameError) context.getString(R.string.error_empty_name)
+         else null
 
       fun getPhoneNumberErrorMessage(context: Context) =
-         if (emptyNameError) context.getString(R.string.error_empty_phone_number) else null
+         if (emptyNameError) context.getString(R.string.error_empty_phone_number)
+         else null
 
       fun getVehicleErrorMessage(context: Context) =
-         if (emptyNameError) context.getString(R.string.error_empty_vehicle) else null
+         if (emptyNameError) context.getString(R.string.error_empty_vehicle)
+         else null
 
       fun getRegNumberErrorMessage(context: Context) =
-         if (emptyNameError) context.getString(R.string.error_empty_reg_number) else null
+         if (emptyNameError) context.getString(R.string.error_empty_reg_number)
+         else null
    }
 }

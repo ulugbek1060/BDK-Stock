@@ -9,7 +9,7 @@ import com.android.model.repository.settings.AppSettings
 import com.android.model.repository.settings.SharedPreferencesAppSettings
 import com.android.source.network.account.AccountSourceImpl
 import com.android.source.network.clients.ClientsSourceImpl
-import com.android.source.network.drivers.DriversSourceImpl
+import com.android.source.network.account.drivers.DriversSourceImpl
 import com.android.source.network.employees.EmployeesSourceIml
 import com.android.source.network.job.JobSourceImpl
 import dagger.Binds

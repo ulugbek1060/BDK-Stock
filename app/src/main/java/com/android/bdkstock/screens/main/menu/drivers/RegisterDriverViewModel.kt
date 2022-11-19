@@ -23,7 +23,7 @@ class RegisterDriverViewModel @Inject constructor(
    private val _vehicles = MutableLiveData<List<VehicleModelEntity>?>(emptyList())
    val vehicles = _vehicles.liveData()
 
-   private val _selectedVehicle = MutableLiveData(VehicleModelEntity(id = null))
+   private val _selectedVehicle = MutableLiveData(VehicleModelEntity())
    val selectedVehicle = _selectedVehicle.liveData()
 
    private val _state = MutableLiveData(State())

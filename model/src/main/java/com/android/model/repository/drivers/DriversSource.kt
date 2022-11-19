@@ -52,7 +52,6 @@ interface DriversSource {
       driverId: Long
    ): DriverEntity
 
-
    /**
     * @throws InvalidCredentialsException
     * @throws ConnectionException
@@ -60,12 +59,18 @@ interface DriversSource {
     * @throws ParseBackendResponseException
     * @throws JsonParseException
     */
-   suspend fun getModelsList(): List<VehicleModelEntity>
-
+   suspend fun getVehiclesModelsList(): List<VehicleModelEntity>
 
    /**
+    * @throws BackendException
     * @throws Exception
     */
-   suspend fun getDrivers(search: String, pageIndex: Int, pageSize: Int): List<DriverEntity>
+   suspend fun getDrivers(pageIndex: Int, pageSize: Int): List<DriverEntity>
+
+   /**
+    * @throws BackendException
+    * @throws Exception
+    */
+   suspend fun getDriversByQuery(search: String, pageIndex: Int, pageSize: Int): List<DriverEntity>
 
 }

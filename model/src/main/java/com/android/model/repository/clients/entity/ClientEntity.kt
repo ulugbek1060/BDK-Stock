@@ -7,4 +7,4 @@ data class ClientEntity(
    val address: String? = null,
    val createdAt: String? = null,
    val updatedAt: String? = null
-)
+) : java.io.Serializable

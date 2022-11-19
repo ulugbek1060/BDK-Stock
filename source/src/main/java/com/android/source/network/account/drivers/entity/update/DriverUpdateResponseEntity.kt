@@ -1,4 +1,4 @@
-package com.android.source.network.drivers.entity.update
+package com.android.source.network.account.drivers.entity.update
 
 
 import com.google.gson.annotations.SerializedName

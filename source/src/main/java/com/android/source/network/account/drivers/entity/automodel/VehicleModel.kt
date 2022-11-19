@@ -1,4 +1,4 @@
-package com.android.source.network.drivers.entity.automodel
+package com.android.source.network.account.drivers.entity.automodel
 
 
 import com.google.gson.annotations.SerializedName

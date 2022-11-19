@@ -1,14 +1,17 @@
 package com.android.bdkstock.screens.main.menu.drivers
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navOptions
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentDriversBinding
 import com.android.bdkstock.databinding.RecyclerItemDriverBinding
@@ -19,6 +22,8 @@ import com.android.bdkstock.views.DefaultLoadStateAdapter
 import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.views.pagingAdapter
 import com.android.model.repository.drivers.entity.DriverEntity
+import com.android.model.utils.AuthException
+import com.android.model.utils.observeEvent
 import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -39,6 +44,8 @@ class DriversFragment : BaseFragment(R.layout.fragment_drivers) {
 
    @SuppressLint("SetTextI18n")
    private val adapter = pagingAdapter<DriverEntity, RecyclerItemDriverBinding> {
+      areItemsSame = {  oldItem, newItem-> oldItem.id == newItem.id}
+      areContentsSame = { oldItem, newItem -> oldItem == newItem }
       bind { driver ->
          tvFullname.text = driver.driverFullName
          tvPhoneNumber.text = "+${driver.phoneNumber}"
@@ -67,13 +74,33 @@ class DriversFragment : BaseFragment(R.layout.fragment_drivers) {
       super.onViewCreated(view, savedInstanceState)
       binding = FragmentDriversBinding.bind(view)
 
-      setupRecycler()
+      setupRecyclerView()
       setupShimmerLoading()
+      observeErrorEvent()
 
       setupRefreshLayout()
       handleViewVisibility()
 
       binding.extendedFab.setOnClickListener { fabOnClick() }
+      binding.buttonSearch.setOnClickListener { searchOnClick() }
+   }
+
+   private fun searchOnClick() {
+      findTopNavController().navigate(R.id.action_actionsFragment_to_searchDriverFragment)
+   }
+
+   private fun observeErrorEvent() {
+      viewModel.errorEvent.observeEvent(viewLifecycleOwner) {
+         AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.user_logged_out))
+            .setMessage(getString(R.string.try_again_to_sign_in))
+            .setNegativeButton(getString(R.string.sign_in)) { _, _ ->
+               viewModel.restart()
+            }
+            .setCancelable(false)
+            .create()
+            .show()
+      }
    }
 
    private fun fabOnClick() {
@@ -87,16 +114,31 @@ class DriversFragment : BaseFragment(R.layout.fragment_drivers) {
       })
    }
 
-   private fun setupRecycler() {
+   private fun setupRecyclerView() {
       layoutManager = LinearLayoutManager(requireContext())
       binding.recyclerDrivers.layoutManager = layoutManager
       binding.recyclerDrivers.adapter = adapter.withLoadStateHeaderAndFooter(
-         footer = DefaultLoadStateAdapter { adapter.retry() },
-         header = DefaultLoadStateAdapter { adapter.retry() }
+         footer = DefaultLoadStateAdapter(binding.refreshLayout) { adapter.retry() },
+         header = DefaultLoadStateAdapter(binding.refreshLayout) { adapter.retry() }
       )
 
       (binding.recyclerDrivers.itemAnimator as? DefaultItemAnimator)
          ?.supportsChangeAnimations = false
+
+      setFabBehaviorOnRecycler()
+   }
+
+   private fun setFabBehaviorOnRecycler() {
+      binding.recyclerDrivers.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            if (dy > 0 && binding.extendedFab.isVisible) {
+               binding.extendedFab.hide()
+            } else if (dy < 0 && !binding.extendedFab.isVisible) {
+               binding.extendedFab.show()
+            }
+         }
+      })
    }
 
    private fun setupRefreshLayout() {
@@ -107,7 +149,19 @@ class DriversFragment : BaseFragment(R.layout.fragment_drivers) {
 
    private fun handleViewVisibility() = lifecycleScope.launch {
       getRefreshLoadStateFlow().collectLatest { loadState ->
+         binding.recyclerDrivers.isVisible = loadState != LoadState.Loading
+         binding.recyclerShimmerLoading.isVisible = loadState == LoadState.Loading
 
+         if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
+            binding.refreshLayout.isRefreshing = false
+
+         handleError(loadState)
+      }
+   }
+
+   private fun handleError(loadState: LoadState) {
+      if (loadState is LoadState.Error && loadState.error is AuthException) {
+         viewModel.showAuthError()
       }
    }
 
@@ -119,16 +173,10 @@ class DriversFragment : BaseFragment(R.layout.fragment_drivers) {
 
    // -- Progress with shimmer layout
 
-   private val shimmerAdapter = simpleAdapter<Any, RecyclerItemShimmerBinding> {
-      bind {
-         root.startShimmer()
-      }
-   }
-
+   private val shimmerAdapter = simpleAdapter<Any, RecyclerItemShimmerBinding> {}
    private fun setupShimmerLoading() {
       shimmerAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8))
       binding.recyclerShimmerLoading.layoutManager = LinearLayoutManager(requireContext())
       binding.recyclerShimmerLoading.adapter = shimmerAdapter
    }
-
 }

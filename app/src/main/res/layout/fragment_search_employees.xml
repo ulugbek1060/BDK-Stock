@@ -4,44 +4,18 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".screens.main.menu.employees.SearchEmployeeFragment">
+  tools:context=".screens.main.menu.employees.SearchEmployeesFragment">
 
-  <TextView
-    android:id="@+id/tv_title_employees"
+  <com.android.bdkstock.views.SearchBar
+    android:id="@+id/search_bar"
     android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:fontFamily="@font/font_bold"
-    android:padding="@dimen/dimen_extra"
-    android:text="@string/employees"
-    android:textColor="@color/text_color"
-    android:textSize="@dimen/text_size_big"
-    android:textStyle="bold"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-  <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/input_layout_query"
-    style="@style/TextInputLayoutStyle"
-    android:layout_width="match_parent"
+    app:layout_constraintTop_toTopOf="parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen_small"
-    app:hintAnimationEnabled="false"
-    app:hintEnabled="false"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_title_employees"
-    app:startIconDrawable="@drawable/ic_search">
-
-    <com.google.android.material.textfield.TextInputEditText
-      android:id="@+id/input_query"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:hint="@string/search"
-      android:imeOptions="actionSearch"
-      android:maxLines="1" />
-
-  </com.google.android.material.textfield.TextInputLayout>
+    app:search_hint="@string/search"
+    app:startIconDrawable="@drawable/ic_search" />
 
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/recycler_employees"
@@ -51,7 +25,7 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/input_layout_query"
+    app:layout_constraintTop_toBottomOf="@id/search_bar"
     tools:listitem="@layout/recycler_item_employee" />
 
   <androidx.recyclerview.widget.RecyclerView
@@ -62,7 +36,7 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/input_layout_query"
+    app:layout_constraintTop_toBottomOf="@id/search_bar"
     tools:listitem="@layout/recycler_item_shimmer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

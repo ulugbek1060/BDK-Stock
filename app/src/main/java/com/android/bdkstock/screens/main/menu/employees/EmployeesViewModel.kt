@@ -26,15 +26,15 @@ class EmployeesViewModel @Inject constructor(
    savedStateHandle: SavedStateHandle
 ) : BaseViewModel(repository) {
 
-   private val _showAuthError = MutableUnitLiveEvent()
-   val showAuthError = _showAuthError.liveData()
+   private val _errorEvent = MutableUnitLiveEvent()
+   val errorEvent = _errorEvent.liveData()
 
    val employeesFlow: Flow<PagingData<EmployeeEntity>> = employeesRepository
       .getEmployeesFromLocal()
       .cachedIn(viewModelScope)
 
    fun showAuthError() {
-      _showAuthError.publishEvent()
+      _errorEvent.publishEvent()
    }
 
 }
