@@ -85,7 +85,7 @@ class RegisterDriverViewModel @Inject constructor(
 
    private fun publishEmptyFields(e: EmptyFieldException) {
       _state.value = _state.requireValue().copy(
-         emptyNameError = e.field == Field.FulLName,
+         emptyNameError = e.field == Field.FullName,
          emptyPhoneNumberError = e.field == Field.PhoneNumber,
          emptyVehicleError = e.field == Field.VehicleModel,
          emptyRegNumberError = e.field == Field.RegNumber

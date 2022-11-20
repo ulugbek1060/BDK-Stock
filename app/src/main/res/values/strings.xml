@@ -14,6 +14,8 @@
   <string name="error_empty_name">вам нужно указать имя</string>
   <string name="error_empty_surname">вам нужно указать фамилю</string>
   <string name="error_empty_address">вам нужно указать адрес</string>
+  <string name="error_empty_vehicle">Вам необходимо выбрать авто</string>
+  <string name="error_empty_reg_number">вам нужно указать номео авто</string>
 
 
   <string name="unknown_error">Ой что-то пошло не так!!!</string>
@@ -47,8 +49,6 @@
   <string name="register_driver">Зарегистрировать водителя</string>
   <string name="vehicle">Автомобиль</string>
   <string name="registration_number_of_vehicle">Регистрационный номер автомобиля</string>
-  <string name="error_empty_vehicle">Вам необходимо выбрать авто</string>
-  <string name="error_empty_reg_number">вам нужно указать номео авто</string>
   <string name="editing">Редактирование</string>
   <string name="edit_driver_message">Вы хотите редактировать поля водителя?</string>
   <string name="driver">Водиель</string>
@@ -62,4 +62,34 @@
   <string name="recent_searches">Recent searches</string>
   <string name="register_client">Зарегистрировать клиента</string>
   <string name="client">Клиент</string>
+  <string name="income">Приход</string>
+  <string name="expense">Расход</string>
+  <string name="ingredients">Ингредиенты</string>
+  <string name="accepted">Принял:</string>
+  <string name="weight">масса:</string>
+
+  <string name="m_01">Янв</string>
+  <string name="m_01_full">Яанварь</string>
+  <string name="m_02">Фев</string>
+  <string name="m_02_full">Февраль</string>
+  <string name="m_03">Мар</string>
+  <string name="m_03_full">Март</string>
+  <string name="m_04">Апр</string>
+  <string name="m_04_full">Апрель</string>
+  <string name="m_05">Мая</string>
+  <string name="m_05_full">Май</string>
+  <string name="m_06">Июн</string>
+  <string name="m_06_full">Июнь</string>
+  <string name="m_07">Июл</string>
+  <string name="m_07_full">Июль</string>
+  <string name="m_08">Авг</string>
+  <string name="m_08_full">Август</string>
+  <string name="m_09">Сен</string>
+  <string name="m_09_full">Сентябрь</string>
+  <string name="m_10">Окт</string>
+  <string name="m_10_full">Октябрь</string>
+  <string name="m_11">Ной</string>
+  <string name="m_11_full">Ноябрь</string>
+  <string name="m_12">Дек</string>
+  <string name="m_12_full">Декабрь</string>
 </resources>

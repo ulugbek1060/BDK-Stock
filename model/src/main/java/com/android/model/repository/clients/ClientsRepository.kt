@@ -1,9 +1,9 @@
 package com.android.model.repository.clients
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.android.model.repository.base.BasePageSource
 import com.android.model.repository.base.BaseRepository
+import com.android.model.repository.base.DataLoader
 import com.android.model.repository.clients.entity.ClientEntity
 import com.android.model.utils.EmptyFieldException
 import com.android.model.utils.Field
@@ -19,7 +19,7 @@ class ClientsRepository @Inject constructor(
       phoneNumber: String,
       address: String
    ): ClientEntity {
-      if (fullName.isBlank()) throw EmptyFieldException(Field.FulLName)
+      if (fullName.isBlank()) throw EmptyFieldException(Field.FullName)
       if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PhoneNumber)
       if (address.isBlank()) throw EmptyFieldException(Field.Address)
       return wrapExceptions {
@@ -35,7 +35,7 @@ class ClientsRepository @Inject constructor(
       phoneNumber: String,
       address: String
    ): String {
-      if (fullName.isBlank()) throw EmptyFieldException(Field.FulLName)
+      if (fullName.isBlank()) throw EmptyFieldException(Field.FullName)
       if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PhoneNumber)
       if (address.isBlank()) throw EmptyFieldException(Field.Address)
       return wrapExceptions {
@@ -49,32 +49,18 @@ class ClientsRepository @Inject constructor(
       clientSource.getClientById(clientId)
    }
 
-   fun getClientsList(): Flow<PagingData<ClientEntity>> {
-      val loader: ClientLoader = { pageIndex ->
+   fun getClientsList(): Flow<PagingData<ClientEntity>> = getPagerData {
+      val loader: DataLoader<ClientEntity> = { pageIndex ->
          clientSource.getClientsList(pageIndex = pageIndex, pageSize = DEFAULT_PAGE_SIZE)
       }
-      return Pager(
-         config = PagingConfig(
-            pageSize = DEFAULT_PAGE_SIZE,
-            enablePlaceholders = false
-         ),
-         pagingSourceFactory = { ClientsPagingSource(loader) }
-      ).flow
+      BasePageSource(loader)
    }
 
-   fun getClientsByQuery(
-      query: String
-   ): Flow<PagingData<ClientEntity>> {
-      val loader: ClientLoader = { pageIndex ->
+   fun getClientsByQuery(query: String): Flow<PagingData<ClientEntity>> = getPagerData {
+      val loader: DataLoader<ClientEntity> = { pageIndex ->
          clientSource.getClientsByQuery(query, pageIndex = pageIndex, pageSize = DEFAULT_PAGE_SIZE)
       }
-      return Pager(
-         config = PagingConfig(
-            pageSize = DEFAULT_PAGE_SIZE,
-            enablePlaceholders = false
-         ),
-         pagingSourceFactory = { ClientsPagingSource(loader) }
-      ).flow
+      BasePageSource(loader)
    }
 
    private companion object {

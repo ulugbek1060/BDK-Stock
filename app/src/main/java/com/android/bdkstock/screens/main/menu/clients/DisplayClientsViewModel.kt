@@ -96,7 +96,7 @@ class DisplayClientsViewModel @Inject constructor(
 
    private fun publishEmptyFields(e: EmptyFieldException) {
       _state.value = _state.requireValue().copy(
-         emptyFullName = e.field == Field.FulLName,
+         emptyFullName = e.field == Field.FullName,
          emptyPhoneNumber = e.field == Field.PhoneNumber,
          emptyAddress = e.field == Field.Address,
       )

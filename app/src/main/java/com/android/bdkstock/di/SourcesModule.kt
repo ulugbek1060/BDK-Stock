@@ -4,13 +4,15 @@ import com.android.model.repository.account.AccountSource
 import com.android.model.repository.clients.ClientSource
 import com.android.model.repository.drivers.DriversSource
 import com.android.model.repository.employees.EmployeesSource
+import com.android.model.repository.ingredients.IngredientsSource
 import com.android.model.repository.jobs.JobSource
 import com.android.model.repository.settings.AppSettings
 import com.android.model.repository.settings.SharedPreferencesAppSettings
 import com.android.source.network.account.AccountSourceImpl
 import com.android.source.network.clients.ClientsSourceImpl
-import com.android.source.network.account.drivers.DriversSourceImpl
+import com.android.source.network.drivers.DriversSourceImpl
 import com.android.source.network.employees.EmployeesSourceIml
+import com.android.source.network.ingredients.IngredientsSourceImpl
 import com.android.source.network.job.JobSourceImpl
 import dagger.Binds
 import dagger.Module
@@ -50,5 +52,10 @@ abstract class SourcesModule {
    abstract fun bindsClientsSource(
       clientsSource: ClientsSourceImpl
    ): ClientSource
+
+   @Binds
+   abstract fun bindsIngredientsSource(
+      ingredientsImpl: IngredientsSourceImpl
+   ): IngredientsSource
 
 }

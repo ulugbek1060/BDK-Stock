@@ -1,11 +1,11 @@
 package com.android.source.network.clients
 
 import com.android.source.network.clients.entity.clientlist.ClientListResponseEntity
-import com.android.source.network.clients.entity.create.ClientCreateRequestEntity
-import com.android.source.network.clients.entity.create.ClientCreateResponseEntity
+import com.android.source.network.clients.entity.createclients.ClientCreateRequestEntity
+import com.android.source.network.clients.entity.createclients.ClientCreateResponseEntity
 import com.android.source.network.clients.entity.getclient.ClientByIdResponseEntity
-import com.android.source.network.clients.entity.update.ClientUpdateRequestEntity
-import com.android.source.network.clients.entity.update.ClientUpdateResponseEntity
+import com.android.source.network.clients.entity.updateclients.ClientUpdateRequestEntity
+import com.android.source.network.clients.entity.updateclients.ClientUpdateResponseEntity
 import retrofit2.http.*
 
 interface ClientsApi {

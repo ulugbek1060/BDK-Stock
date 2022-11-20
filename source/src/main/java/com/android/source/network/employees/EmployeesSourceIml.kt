@@ -4,8 +4,8 @@ import com.android.model.repository.employees.EmployeesSource
 import com.android.model.repository.employees.entity.EmployeeEntity
 import com.android.model.repository.jobs.entity.JobEntity
 import com.android.source.network.base.BaseNetworkSource
-import com.android.source.network.employees.entity.register.RegisterEmployeeRequestEntity
-import com.android.source.network.employees.entity.update.UpdateEmployeeRequestEntity
+import com.android.source.network.employees.entity.registeremplyees.RegisterEmployeeRequestEntity
+import com.android.source.network.employees.entity.updateemployees.UpdateEmployeeRequestEntity
 import javax.inject.Inject
 
 class EmployeesSourceIml @Inject constructor(

@@ -3,8 +3,8 @@ package com.android.source.network.clients
 import com.android.model.repository.clients.ClientSource
 import com.android.model.repository.clients.entity.ClientEntity
 import com.android.source.network.base.BaseNetworkSource
-import com.android.source.network.clients.entity.create.ClientCreateRequestEntity
-import com.android.source.network.clients.entity.update.ClientUpdateRequestEntity
+import com.android.source.network.clients.entity.createclients.ClientCreateRequestEntity
+import com.android.source.network.clients.entity.updateclients.ClientUpdateRequestEntity
 import javax.inject.Inject
 
 class ClientsSourceImpl @Inject constructor(

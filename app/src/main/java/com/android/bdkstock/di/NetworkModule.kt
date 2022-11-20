@@ -4,8 +4,9 @@ import android.util.Log
 import com.android.model.repository.settings.AppSettings
 import com.android.source.network.account.AccountApi
 import com.android.source.network.clients.ClientsApi
-import com.android.source.network.account.drivers.DriversApi
+import com.android.source.network.drivers.DriversApi
 import com.android.source.network.employees.EmployeesApi
+import com.android.source.network.ingredients.IngredientsApi
 import com.android.source.network.job.JobApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -105,5 +106,11 @@ class NetworkModule {
    @Singleton
    fun provideClientsApi(retrofit: Retrofit): ClientsApi {
       return retrofit.create(ClientsApi::class.java)
+   }
+
+   @Provides
+   @Singleton
+   fun provideIngredientsApi(retrofit: Retrofit): IngredientsApi {
+      return retrofit.create(IngredientsApi::class.java)
    }
 }

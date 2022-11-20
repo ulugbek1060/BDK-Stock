@@ -1,11 +1,11 @@
 package com.android.model.repository.drivers
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.room.withTransaction
 import com.android.model.database.AppDatabase
+import com.android.model.repository.base.BasePageSource
 import com.android.model.repository.base.BaseRepository
+import com.android.model.repository.base.DataLoader
 import com.android.model.repository.drivers.entity.DriverEntity
 import com.android.model.utils.EmptyFieldException
 import com.android.model.utils.Field
@@ -24,7 +24,7 @@ class DriversRepository @Inject constructor(
       vehicleModelId: Int?,
       regNumber: String
    ): DriverEntity {
-      if (fullName.isBlank()) throw EmptyFieldException(Field.FulLName)
+      if (fullName.isBlank()) throw EmptyFieldException(Field.FullName)
       if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PhoneNumber)
       if (vehicleModelId == null) throw EmptyFieldException(Field.VehicleModel)
       if (regNumber.isBlank()) throw EmptyFieldException(Field.RegNumber)
@@ -46,7 +46,7 @@ class DriversRepository @Inject constructor(
       autoModelId: Int?,
       regNumber: String
    ): String {
-      if (fullName.isBlank()) throw EmptyFieldException(Field.FulLName)
+      if (fullName.isBlank()) throw EmptyFieldException(Field.FullName)
       if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PhoneNumber)
       if (autoModelId == null) throw EmptyFieldException(Field.VehicleModel)
       if (regNumber.isBlank()) throw EmptyFieldException(Field.RegNumber)
@@ -88,34 +88,18 @@ class DriversRepository @Inject constructor(
       }
    }
 
-   fun getDriversFromLocal() {
-
-   }
-
-   fun getDriversList(): Flow<PagingData<DriverEntity>> {
-      val loader: DriverPageLoader = { pageIndex ->
+   fun getDriversList(): Flow<PagingData<DriverEntity>> = getPagerData {
+      val loader: DataLoader<DriverEntity> = { pageIndex ->
          driversSource.getDrivers(pageIndex, PAGE_SIZE)
       }
-      return Pager(
-         config = PagingConfig(
-            pageSize = PAGE_SIZE,
-            enablePlaceholders = false
-         ),
-         pagingSourceFactory = { DriverPagingSource(loader) }
-      ).flow
+      BasePageSource(loader)
    }
 
-   fun getDriversByQuery(query: String): Flow<PagingData<DriverEntity>> {
-      val loader: DriverPageLoader = { pageIndex ->
+   fun getDriversByQuery(query: String): Flow<PagingData<DriverEntity>> = getPagerData {
+      val loader: DataLoader<DriverEntity> = { pageIndex ->
          driversSource.getDriversByQuery(query, pageIndex, PAGE_SIZE)
       }
-      return Pager(
-         config = PagingConfig(
-            pageSize = PAGE_SIZE,
-            enablePlaceholders = false
-         ),
-         pagingSourceFactory = { DriverPagingSource(loader) }
-      ).flow
+      BasePageSource(loader)
    }
 
    companion object {

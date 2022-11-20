@@ -2,7 +2,9 @@ package com.android.model.repository.employees
 
 import androidx.paging.*
 import com.android.model.database.employees.EmployeesDao
+import com.android.model.repository.base.BasePageSource
 import com.android.model.repository.base.BaseRepository
+import com.android.model.repository.base.DataLoader
 import com.android.model.repository.base.Repository
 import com.android.model.repository.employees.entity.EmployeeEntity
 import com.android.model.utils.AuthException
@@ -105,21 +107,11 @@ class EmployeeRepository @Inject constructor(
       }
    }
 
-   fun getEmployeeFromRemote(
-      query: String
-   ): Flow<PagingData<EmployeeEntity>> {
-      val loader: EmployeesPageLoader = { pageIndex ->
+   fun getEmployeeFromRemote(query: String): Flow<PagingData<EmployeeEntity>> = getPagerData {
+      val loader: DataLoader<EmployeeEntity> = { pageIndex ->
          employeesSource.searchBy(query, pageIndex, PAGE_SIZE)
       }
-      return Pager(
-         config = PagingConfig(
-            pageSize = PAGE_SIZE,
-            enablePlaceholders = false
-         ),
-         pagingSourceFactory = {
-            EmployeesPagingSource(loader)
-         }
-      ).flow
+      BasePageSource(loader)
    }
 
    private companion object {

@@ -82,7 +82,7 @@
     tools:layout="@layout/fragment_financial" />
   <fragment
     android:id="@+id/ingredientsFragment"
-    android:name="com.android.bdkstock.screens.main.menu.IngredientsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.ingredients.IngredientsFragment"
     android:label="fragment_ingredients"
     tools:layout="@layout/fragment_ingredients" />
   <fragment

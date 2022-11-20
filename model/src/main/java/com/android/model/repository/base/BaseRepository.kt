@@ -1,5 +1,8 @@
 package com.android.model.repository.base
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.android.model.utils.*
 import com.google.gson.JsonParseException
 import kotlinx.coroutines.Dispatchers
@@ -51,6 +54,23 @@ open class BaseRepository {
       }
       emitAll(flow)
    }.flowOn(Dispatchers.IO)
+
+
+   inline fun <T : Any> getPagerData(
+      crossinline pagingFactory: () -> BasePageSource<T>
+   ): Flow<PagingData<T>> {
+      return Pager(
+         config = PagingConfig(
+            pageSize = DEFAULT_PAGE_SIZE,
+            enablePlaceholders = false
+         ),
+         pagingSourceFactory = { pagingFactory() }
+      ).flow
+   }
+
+   companion object {
+      const val DEFAULT_PAGE_SIZE = 10
+   }
 
 }
 

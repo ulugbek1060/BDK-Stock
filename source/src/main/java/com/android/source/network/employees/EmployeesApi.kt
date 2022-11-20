@@ -1,18 +1,18 @@
 package com.android.source.network.employees
 
-import com.android.model.utils.Const.HEADER_KEY_ACCEPT
-import com.android.model.utils.Const.HEADER_KEY_CONTENT_TYPE
-import com.android.model.utils.Const.HEADER_VALUE_ACCEPT
-import com.android.model.utils.Const.HEADER_VALUE_CONTENT_TYPE
-import com.android.source.network.employees.entity.get.EmployeesResponseEntity
-import com.android.source.network.employees.entity.register.RegisterEmployeeRequestEntity
-import com.android.source.network.employees.entity.register.RegisterEmployeeResponseEntity
-import com.android.source.network.employees.entity.searchby.EmployeeSearchByResponseEntity
-import com.android.source.network.employees.entity.update.UpdateEmployeeRequestEntity
-import com.android.source.network.employees.entity.update.UpdateEmployeeResponseEntity
+import com.android.source.network.employees.entity.employeeslist.EmployeesResponseEntity
+import com.android.source.network.employees.entity.registeremplyees.RegisterEmployeeRequestEntity
+import com.android.source.network.employees.entity.registeremplyees.RegisterEmployeeResponseEntity
+import com.android.source.network.employees.entity.searchbyemployees.EmployeeSearchByResponseEntity
+import com.android.source.network.employees.entity.updateemployees.UpdateEmployeeRequestEntity
+import com.android.source.network.employees.entity.updateemployees.UpdateEmployeeResponseEntity
 import retrofit2.http.*
 
 interface EmployeesApi {
+
+   @Headers("Content-Type: application/json", "Accept: application/json")
+   @POST("api/register")
+   suspend fun registerEmployee(@Body body: RegisterEmployeeRequestEntity): RegisterEmployeeResponseEntity
 
    @Headers("Content-Type: application/json", "Accept: application/json")
    @GET("api/user/get")
@@ -36,9 +36,4 @@ interface EmployeesApi {
       @Path("id") id: Long,
       @Body body: UpdateEmployeeRequestEntity
    ): UpdateEmployeeResponseEntity
-
-   @Headers("Content-Type: application/json", "Accept: application/json")
-   @POST("api/register")
-   suspend fun registerEmployee(@Body body: RegisterEmployeeRequestEntity): RegisterEmployeeResponseEntity
-
 }

@@ -1,8 +1,8 @@
 package com.android.model.utils
 
 enum class Field {
-    FulLName,
-    RegNumber,
+    FullName,
+    RegNumber, // automobile registration model
     VehicleModel,
     PhoneNumber,
     Password,
@@ -10,5 +10,9 @@ enum class Field {
     Firstname,
     Lastname,
     Address,
-    Job
+    Job,
+    IngredientName,
+    IngredientUnit,
+    Amount,
+    Comments
 }
