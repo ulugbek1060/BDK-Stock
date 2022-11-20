@@ -81,7 +81,18 @@
       app:popExitAnim="@anim/pop_exit" />
     <action
       android:id="@+id/action_actionsFragment_to_displayClientsFragment"
-      app:destination="@id/displayClientsFragment" />
+      app:destination="@id/displayClientsFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
+    <action
+      android:id="@+id/action_actionsFragment_to_searchClientsFragment"
+      app:destination="@id/searchClientsFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
 
   </fragment>
   <fragment
@@ -147,7 +158,7 @@
     android:id="@+id/registerClientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.clients.RegisterClientsFragment"
     android:label="fragment_register_clients"
-    tools:layout="@layout/fragment_register_clients"/>
+    tools:layout="@layout/fragment_register_clients" />
   <fragment
     android:id="@+id/displayClientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.clients.DisplayClientsFragment"
@@ -156,6 +167,19 @@
     <argument
       android:name="clientEntity"
       app:argType="com.android.model.repository.clients.entity.ClientEntity" />
+  </fragment>
+  <fragment
+    android:id="@+id/searchClientsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.clients.SearchClientsFragment"
+    android:label="fragment_search_clients"
+    tools:layout="@layout/fragment_search_clients">
+    <action
+      android:id="@+id/action_searchClientsFragment_to_displayClientsFragment"
+      app:destination="@id/displayClientsFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit"/>
   </fragment>
 
 </navigation>

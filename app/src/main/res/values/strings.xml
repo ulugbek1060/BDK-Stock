@@ -61,4 +61,5 @@
   <string name="right_icon_button">button right</string>
   <string name="recent_searches">Recent searches</string>
   <string name="register_client">Зарегистрировать клиента</string>
+  <string name="client">Клиент</string>
 </resources>

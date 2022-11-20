@@ -3,6 +3,352 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   tools:context=".screens.main.menu.clients.DisplayClientsFragment">
+
+  <TextView
+    android:id="@+id/tv_title_driver"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:fontFamily="@font/font_bold"
+    android:padding="@dimen/dimen_extra"
+    android:text="@string/client"
+    android:textColor="@color/text_color"
+    android:textSize="@dimen/text_size_big"
+    android:textStyle="bold"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/line"
+    app:layout_constraintBottom_toBottomOf="@id/tv_title_driver"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent" />
+
+  <TextView
+    android:id="@+id/button_edit"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:button="@android:color/transparent"
+    android:checked="false"
+    android:fontFamily="@font/font_bold"
+    android:padding="@dimen/dimen_large"
+    android:text="@string/edit"
+    android:textColor="@color/blue"
+    app:layout_constraintBottom_toBottomOf="@id/tv_title_driver"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="@id/tv_title_driver" />
+
+  <androidx.core.widget.NestedScrollView
+    android:id="@+id/scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/tv_title_driver">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <ImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="@dimen/dimen_extra"
+        android:contentDescription="@string/user"
+        android:gravity="center"
+        android:src="@drawable/ic_clients"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0" />
+
+      <androidx.cardview.widget.CardView
+        android:id="@+id/button_call"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dimen_extra"
+        android:layout_marginEnd="@dimen/dimen_small"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardCornerRadius="@dimen/corner_big"
+        app:cardElevation="0dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/button_message"
+        app:layout_constraintTop_toBottomOf="@id/iv_avatar">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/white_green"
+          android:gravity="center"
+          android:orientation="vertical"
+          android:padding="@dimen/dimen_extra">
+
+          <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/call"
+            android:src="@drawable/ic_call" />
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/call" />
+
+        </LinearLayout>
+
+      </androidx.cardview.widget.CardView>
+
+      <androidx.cardview.widget.CardView
+        android:id="@+id/button_message"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dimen_small"
+        android:layout_marginTop="@dimen/dimen_extra"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardCornerRadius="@dimen/corner_big"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/button_call"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toRightOf="@id/button_call"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_avatar">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/white_yellow"
+          android:gravity="center"
+          android:orientation="vertical"
+          android:padding="@dimen/dimen_small">
+
+          <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/message"
+            android:src="@drawable/ic_message" />
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/message" />
+
+        </LinearLayout>
+
+      </androidx.cardview.widget.CardView>
+
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_name"
+        style="@style/TextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_extra"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:enabled="false"
+        android:hint="@string/name"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@id/input_layout_phone_number"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_call"
+        app:startIconDrawable="@drawable/ic_person_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/input_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:imeOptions="actionNext"
+          android:lines="1" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_phone_number"
+        style="@style/TextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:enabled="false"
+        android:hint="@string/phone_number"
+        app:counterEnabled="true"
+        app:counterMaxLength="9"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@id/input_layout_address"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_layout_name"
+        app:prefixText="+998"
+        app:startIconDrawable="@drawable/ic_call">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/input_phone_number"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:imeOptions="actionNext"
+          android:inputType="number"
+          android:lines="1" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_address"
+        style="@style/TextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:enabled="false"
+        android:hint="@string/address"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@id/container_frame"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_layout_phone_number"
+        app:startIconDrawable="@drawable/ic_location_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/input_address"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:imeOptions="actionNext"
+          android:lines="1" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <FrameLayout
+        android:id="@+id/container_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_layout_address">
+
+        <LinearLayout
+          android:id="@+id/container_buttons"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen_large"
+          android:layout_marginTop="20dp"
+          android:layout_marginEnd="@dimen/dimen_large"
+          android:orientation="horizontal"
+          android:visibility="visible">
+
+          <androidx.cardview.widget.CardView
+            android:id="@+id/button_delete"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="0dp">
+
+            <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/red">
+
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center">
+
+                <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:ellipsize="end"
+                  android:fontFamily="@font/font_regular"
+                  android:lines="1"
+                  android:text="@string/delete"
+                  android:textColor="@color/white"
+                  android:textSize="16sp"
+                  android:textStyle="bold" />
+
+              </LinearLayout>
+
+            </FrameLayout>
+
+          </androidx.cardview.widget.CardView>
+
+          <androidx.cardview.widget.CardView
+            android:id="@+id/button_save"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="0dp">
+
+            <FrameLayout
+              android:id="@+id/container_save_button"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/blue">
+
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+
+                android:gravity="center">
+
+                <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:ellipsize="end"
+                  android:fontFamily="@font/font_regular"
+                  android:lines="1"
+                  android:text="@string/save"
+                  android:textColor="@color/white"
+                  android:textSize="16sp"
+                  android:textStyle="bold" />
+
+              </LinearLayout>
+
+            </FrameLayout>
+
+          </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
+          android:id="@+id/lotti_progress"
+          android:layout_width="match_parent"
+          android:layout_height="45dp"
+          android:visibility="gone"
+          app:lottie_autoPlay="true"
+          app:lottie_loop="true"
+          app:lottie_rawRes="@raw/loading" />
+
+      </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </androidx.core.widget.NestedScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

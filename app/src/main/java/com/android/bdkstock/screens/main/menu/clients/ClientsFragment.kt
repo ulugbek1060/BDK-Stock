@@ -43,7 +43,8 @@ class ClientsFragment : BaseFragment(R.layout.fragment_clients) {
       }
       listeners {
          root.onClick {
-            // TODO: navigate to display client
+            val args = ActionsFragmentDirections.actionActionsFragmentToDisplayClientsFragment(it)
+            findTopNavController().navigate(args)
          }
       }
    }
@@ -77,7 +78,7 @@ class ClientsFragment : BaseFragment(R.layout.fragment_clients) {
    }
 
    private fun searchOnClick() {
-      // TODO: Navigate to search view
+      findTopNavController().navigate(R.id.action_actionsFragment_to_searchClientsFragment)
    }
 
    private fun fabOnClick() {

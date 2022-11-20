@@ -44,7 +44,7 @@ class DisplayDriverViewModel @Inject constructor(
    val showSuccessMessage = _showSuccessMessage.liveData()
 
    init {
-      getInitialData()
+      getInitialValue()
       viewModelScope.safeLaunch {
          driversRepository.getVehicleModelsList().collectLatest { result ->
             if (result is Success) _vehicles.value = result.value
@@ -54,7 +54,7 @@ class DisplayDriverViewModel @Inject constructor(
       }
    }
 
-   private fun getInitialData() = try {
+   private fun getInitialValue() = try {
       val entity = _currentDriver.driverEntity
       val phoneNumber = formatPhoneNumber(entity.phoneNumber)
       val vehicle = entity.vehicle
@@ -91,7 +91,7 @@ class DisplayDriverViewModel @Inject constructor(
             showSuccessMessage(message)
 
             // update driver fields
-            setDriverFields(fullName, phoneNumber, regNumber)
+            setDriverData(fullName, phoneNumber, regNumber)
 
          } catch (e: EmptyFieldException) {
             publishEmptyFields(e)
@@ -101,7 +101,7 @@ class DisplayDriverViewModel @Inject constructor(
       }
    }
 
-   private fun setDriverFields(fullName: String, phoneNumber: String, regNumber: String) {
+   private fun setDriverData(fullName: String, phoneNumber: String, regNumber: String) {
       _driver.value = _driver.requireValue().copy(
          driverFullName = fullName,
          phoneNumber = phoneNumber,
@@ -128,7 +128,7 @@ class DisplayDriverViewModel @Inject constructor(
       _state.value = _state.requireValue().copy(
          isChangeableEnable = false
       )
-      getInitialData()
+      getInitialValue()
    }
 
    fun setVehicle(vehicle: VehicleModelEntity) {
@@ -198,10 +198,6 @@ class DisplayDriverViewModel @Inject constructor(
       fun getToggleButtonText(context: Context) =
          if (isChangeableEnable) context.getString(R.string.cancel)
          else context.getString(R.string.edit)
-
-      fun getButtonSaveColor(context: Context) =
-         if (isChangeableEnable) context.getColor(R.color.blue)
-         else context.getColor(R.color.grey)
 
       fun getNameErrorMessage(context: Context) =
          if (emptyNameError) context.getString(R.string.error_empty_name)

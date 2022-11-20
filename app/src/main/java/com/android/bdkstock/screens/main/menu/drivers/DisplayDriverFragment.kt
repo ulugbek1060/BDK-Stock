@@ -46,7 +46,7 @@ class DisplayDriverFragment : BaseFragment(R.layout.fragment_display_driver) {
       showSuggestionDialog()
       observeSuccessMessage()
 
-      binding.buttonSave.setOnClickListener { updateDriverClick() }
+      binding.buttonSave.setOnClickListener { saveClick() }
       binding.buttonEdit.setOnClickListener { toggleClick() }
       binding.buttonCall.setOnClickListener { callClick() }
       binding.buttonMessage.setOnClickListener { messageClick() }
@@ -96,7 +96,7 @@ class DisplayDriverFragment : BaseFragment(R.layout.fragment_display_driver) {
       viewModel.toggleChangeableState()
    }
 
-   private fun updateDriverClick() {
+   private fun saveClick() {
       viewModel.updateDriver(
          fullName = binding.inputName.text.toString(),
          phoneNumber = "998${binding.inputPhoneNumber.text.toString()}",
@@ -127,7 +127,7 @@ class DisplayDriverFragment : BaseFragment(R.layout.fragment_display_driver) {
 
    private fun observeState() {
       viewModel.state.observe(viewLifecycleOwner) { state ->
-         //enable state
+         //enable
          binding.inputLayoutName.isEnabled = state.isChangeableEnable
          binding.inputLayoutPhoneNumber.isEnabled = state.isChangeableEnable
          binding.inputLayoutRegNumber.isEnabled = state.isChangeableEnable
