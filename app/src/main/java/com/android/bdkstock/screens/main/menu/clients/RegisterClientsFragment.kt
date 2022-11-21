@@ -47,17 +47,17 @@ class RegisterClientsFragment : BaseFragment(R.layout.fragment_register_clients)
 
    private fun observeState() {
       viewModel.state.observe(viewLifecycleOwner) { state ->
-         //enable
+         // enable
          binding.inputLayoutName.isEnabled = !state.isInProgress
          binding.inputLayoutPhoneNumber.isEnabled = !state.isInProgress
          binding.inputLayoutAddress.isEnabled = !state.isInProgress
 
-         //error
+         // error
          binding.inputLayoutName.error = state.getFullNameErrorMessage(requireContext())
          binding.inputLayoutPhoneNumber.error = state.getPhoneNumberErrorMessage(requireContext())
          binding.inputLayoutAddress.error = state.getAddressErrorMessage(requireContext())
 
-         //visibility
+         // visibility
          binding.buttonSave.isVisible = !state.isInProgress
          binding.lottiProgress.isVisible = state.isInProgress
       }

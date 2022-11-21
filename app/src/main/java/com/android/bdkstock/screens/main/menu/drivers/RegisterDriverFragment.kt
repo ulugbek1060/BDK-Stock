@@ -30,7 +30,7 @@ class RegisterDriverFragment : BaseFragment(R.layout.fragment_register_driver) {
 
       navigateToDetailFrag()
 
-      binding.buttonSave.setOnClickListener { registerDriver() }
+      binding.buttonSave.setOnClickListener { saveOnClick() }
    }
 
    private fun observeVehicles() {
@@ -63,7 +63,7 @@ class RegisterDriverFragment : BaseFragment(R.layout.fragment_register_driver) {
       }
    }
 
-   private fun registerDriver() {
+   private fun saveOnClick() {
       viewModel.registerDriver(
          fullName = binding.inputName.text.toString(),
          phoneNumber = "998${binding.inputPhoneNumber.text.toString()}",

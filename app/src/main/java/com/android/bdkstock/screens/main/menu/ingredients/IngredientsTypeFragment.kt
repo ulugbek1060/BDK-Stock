@@ -1,5 +1,6 @@
-package com.android.bdkstock.screens.main.menu.clients
+package com.android.bdkstock.screens.main.menu.ingredients
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
@@ -8,17 +9,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentClientsBinding
-import com.android.bdkstock.databinding.ProgressItemSmallerBinding
-import com.android.bdkstock.databinding.RecyclerItemClientBinding
-import com.android.bdkstock.screens.main.ActionsFragmentDirections
+import com.android.bdkstock.databinding.FragmentIngredientsTypeBinding
+import com.android.bdkstock.databinding.ProgressItemBiggerBinding
+import com.android.bdkstock.databinding.RecyclerItemIngredientBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.DefaultLoadStateAdapter
 import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.views.pagingAdapter
-import com.android.model.repository.clients.entity.ClientEntity
+import com.android.model.repository.ingredients.entity.IngredientEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.observeEvent
 import com.elveum.elementadapter.simpleAdapter
@@ -28,22 +27,23 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ClientsFragment : BaseFragment(R.layout.fragment_clients) {
+class IngredientsTypeFragment : BaseFragment(R.layout.fragment_ingredients_type) {
 
-   override val viewModel by viewModels<ClientsViewModel>()
-   private lateinit var binding: FragmentClientsBinding
+   override val viewModel by viewModels<IngredientsTypeViewModel>()
+   private lateinit var binding: FragmentIngredientsTypeBinding
    private lateinit var layoutManager: LinearLayoutManager
 
-   private val adapter = pagingAdapter<ClientEntity, RecyclerItemClientBinding> {
-      areItemsSame = { oldItem, newItem -> oldItem.clientId == newItem.clientId }
-      areContentsSame = { oldItem, newItem -> oldItem == newItem }
-      bind { client ->
-         tvFullname.text = client.fullName
-         tvPhoneNumber.text = client.phoneNumber
+   @SuppressLint("SetTextI18n")
+   private val adapter = pagingAdapter<IngredientEntity, RecyclerItemIngredientBinding> {
+      areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
+      bind { ingredient ->
+         tvName.text = ingredient.name
+         tvAmount.text = "${ingredient.amount} ${ingredient.unit}"
       }
       listeners {
          root.onClick {
-            val args = ActionsFragmentDirections.actionActionsFragmentToDisplayClientsFragment(it)
+            val args = IngredientsTypeFragmentDirections
+               .actionIngredientsTypeFragmentToDisplayIngredientsFragment(it)
             findTopNavController().navigate(args)
          }
       }
@@ -51,20 +51,20 @@ class ClientsFragment : BaseFragment(R.layout.fragment_clients) {
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
-      observeClients()
+      observeIngredients()
    }
 
-   private fun observeClients() = lifecycleScope.launch {
-      viewModel.clientFlow.collectLatest {
+   private fun observeIngredients() = lifecycleScope.launch {
+      viewModel.ingredientsFlow.collectLatest {
          adapter.submitData(it)
       }
    }
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentClientsBinding.bind(view)
+      binding = FragmentIngredientsTypeBinding.bind(view)
 
-      setupShimmerLoading()
+      setupProgress()
       setupRecyclerView()
       setupRefreshLayout()
 
@@ -72,51 +72,34 @@ class ClientsFragment : BaseFragment(R.layout.fragment_clients) {
 
       observeAuthError()
 
-      binding.extendedFab.setOnClickListener { fabOnClick() }
-
-      binding.buttonSearch.setOnClickListener { searchOnClick() }
+      binding.back.setOnClickListener { backOnClick() }
+      binding.extendedFab.setOnClickListener { addOnClick() }
    }
 
-   private fun searchOnClick() {
-      findTopNavController().navigate(R.id.action_actionsFragment_to_searchClientsFragment)
+   private fun addOnClick() {
+      findTopNavController().navigate(R.id.action_ingredientsTypeFragment_to_addIngredientsFragment)
    }
 
-   private fun fabOnClick() {
-      val args = ActionsFragmentDirections.actionActionsFragmentToRegisterClientsFragment()
-      findTopNavController().navigate(args)
+   private fun backOnClick() {
+      findTopNavController().popBackStack()
+   }
+
+   private fun setupRecyclerView() = binding.apply {
+      layoutManager = LinearLayoutManager(requireContext())
+      binding.recyclerIngredients.layoutManager = layoutManager
+
+      binding.recyclerIngredients.adapter = adapter.withLoadStateHeaderAndFooter(
+         footer = DefaultLoadStateAdapter(binding.refreshLayout) { adapter.retry() },
+         header = DefaultLoadStateAdapter(binding.refreshLayout) { adapter.retry() }
+      )
+
+      binding.recyclerIngredients.itemAnimator = null
    }
 
    private fun setupRefreshLayout() {
       binding.refreshLayout.setOnRefreshListener {
          adapter.refresh()
       }
-   }
-
-   private fun setupRecyclerView() = binding.apply {
-      layoutManager = LinearLayoutManager(requireContext())
-      binding.recyclerClients.layoutManager = layoutManager
-
-      binding.recyclerClients.adapter = adapter.withLoadStateHeaderAndFooter(
-         footer = DefaultLoadStateAdapter(binding.refreshLayout) { adapter.retry() },
-         header = DefaultLoadStateAdapter(binding.refreshLayout) { adapter.retry() }
-      )
-
-      binding.recyclerClients.itemAnimator = null
-
-      setFabBehaviorOnRecycler()
-   }
-
-   private fun setFabBehaviorOnRecycler() {
-      binding.recyclerClients.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            super.onScrolled(recyclerView, dx, dy)
-            if (dy > 0 && binding.extendedFab.isVisible) {
-               binding.extendedFab.hide()
-            } else if (dy < 0 && !binding.extendedFab.isVisible) {
-               binding.extendedFab.show()
-            }
-         }
-      })
    }
 
    private fun handleViewVisibility() = lifecycleScope.launch {
@@ -126,7 +109,7 @@ class ClientsFragment : BaseFragment(R.layout.fragment_clients) {
          .collectLatest { loadState ->
 
             binding.recyclerProgress.isVisible = loadState == LoadState.Loading
-            binding.recyclerClients.isVisible = loadState != LoadState.Loading
+            binding.refreshLayout.isVisible = loadState != LoadState.Loading
 
             if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
                binding.refreshLayout.isRefreshing = false
@@ -157,10 +140,10 @@ class ClientsFragment : BaseFragment(R.layout.fragment_clients) {
 
    // -- Progress with shimmer layout
 
-   private val shimmerAdapter = simpleAdapter<Any, ProgressItemSmallerBinding> {}
-   private fun setupShimmerLoading() {
-      shimmerAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+   private val progressAdapter = simpleAdapter<Any, ProgressItemBiggerBinding> {}
+   private fun setupProgress() {
+      progressAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
       binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
-      binding.recyclerProgress.adapter = shimmerAdapter
+      binding.recyclerProgress.adapter = progressAdapter
    }
 }

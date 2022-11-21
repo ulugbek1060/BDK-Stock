@@ -55,7 +55,7 @@ class RegisterDriverViewModel @Inject constructor(
          )
          navigateSuccessfully(driver)
       } catch (e: EmptyFieldException) {
-         publishEmptyFields(e)
+         showEmptyFields(e)
       } finally {
          hideProgress()
       }
@@ -83,7 +83,7 @@ class RegisterDriverViewModel @Inject constructor(
       )
    }
 
-   private fun publishEmptyFields(e: EmptyFieldException) {
+   private fun showEmptyFields(e: EmptyFieldException) {
       _state.value = _state.requireValue().copy(
          emptyNameError = e.field == Field.FullName,
          emptyPhoneNumberError = e.field == Field.PhoneNumber,

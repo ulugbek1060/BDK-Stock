@@ -4,34 +4,33 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".screens.main.menu.clients.ClientsFragment">
-
+  tools:context=".screens.main.menu.ingredients.IngredientsTypeFragment">
 
   <TextView
-    android:id="@+id/tv_title_employees"
+    android:id="@+id/tv_title"
     android:layout_width="0dp"
-    android:layout_height="wrap_content"
+    android:layout_height="?attr/actionBarSize"
     android:fontFamily="@font/font_bold"
-    android:padding="@dimen/dimen_extra"
-    android:text="@string/clients"
+    android:gravity="center_vertical"
+    android:text="@string/ingredients"
     android:textColor="@color/text_color"
     android:textSize="@dimen/text_size_big"
     android:textStyle="bold"
-    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintLeft_toRightOf="@id/back"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
-  <ImageButton
-    android:id="@+id/button_search"
+  <ImageView
+    android:id="@+id/back"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/dimen_large"
+    android:layout_height="?attr/actionBarSize"
     android:background="?attr/selectableItemBackgroundBorderless"
-    android:contentDescription="@string/search"
-    android:src="@drawable/ic_search"
-    app:layout_constraintBottom_toBottomOf="@id/tv_title_employees"
-    app:layout_constraintRight_toRightOf="@id/tv_title_employees"
-    app:layout_constraintTop_toTopOf="@id/tv_title_employees" />
+    android:contentDescription="@string/back"
+    android:paddingHorizontal="@dimen/dimen_big"
+    android:src="@drawable/ic_arrow_left"
+    app:layout_constraintBottom_toBottomOf="@id/tv_title"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     android:id="@+id/refresh_layout"
@@ -40,13 +39,13 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_title_employees">
+    app:layout_constraintTop_toBottomOf="@id/tv_title">
 
     <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recycler_clients"
+      android:id="@+id/recycler_ingredients"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      tools:listitem="@layout/recycler_item_employee" />
+      tools:listitem="@layout/recycler_item_ingredient"  />
 
   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -58,14 +57,13 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_title_employees"
-    tools:listitem="@layout/progress_item_smaller" />
+    app:layout_constraintTop_toBottomOf="@id/tv_title"/>
 
   <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
     android:id="@+id/extended_fab"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
+    android:layout_margin="@dimen/dimen_big"
     android:contentDescription="@string/add"
     android:text="@string/add"
     android:textColor="@color/white"

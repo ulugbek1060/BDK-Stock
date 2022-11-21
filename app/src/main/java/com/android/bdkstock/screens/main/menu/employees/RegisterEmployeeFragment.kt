@@ -28,7 +28,7 @@ class RegisterEmployeeFragment : BaseFragment(R.layout.fragment_register_employe
 
       fetchJobTitle()
 
-      binding.buttonSave.setOnClickListener { saveEmployeeAction() }
+      binding.buttonSave.setOnClickListener { saveOnClick() }
    }
 
    private fun observeNavigation() {
@@ -52,7 +52,7 @@ class RegisterEmployeeFragment : BaseFragment(R.layout.fragment_register_employe
       }
    }
 
-   private fun saveEmployeeAction() {
+   private fun saveOnClick() {
       viewModel.registerEmployee(
          firstname = binding.inputName.text.toString(),
          lastname = binding.inputSurname.text.toString(),

@@ -22,17 +22,8 @@ interface IngredientsSource {
     * @throws BackendException
     * @throws ParseBackendResponseException
     */
-   suspend fun getIngredients(pageIndex: Int, pageSize: Int): List<IngredientEntity>
-
-   /**
-    * Fetches list of Ingredients with page index and page size like items size
-    * and by query inserted by user
-    * @throws ConnectionException
-    * @throws BackendException
-    * @throws ParseBackendResponseException
-    */
-   suspend fun getIngredientsByQuery(
-      query: String,
+   suspend fun getIngredients(
+      query: String?,
       pageIndex: Int,
       pageSize: Int
    ): List<IngredientEntity>
@@ -57,18 +48,11 @@ interface IngredientsSource {
     * @throws ParseBackendResponseException
     */
    suspend fun getExpensesAndIncomesOfIngredients(
-      pageIndex: Int,
-      pageSize: Int
-   ): List<IngredientExOrInEntity>
-
-   /**
-    * Fetches actions of Ingredients expenses and incomes with pagination by query inserted by users
-    * @throws ConnectionException
-    * @throws BackendException
-    * @throws ParseBackendResponseException
-    */
-   suspend fun getExpensesAndIncomesOfIngredientsByQuery(
-      query: String,
+      query: String?,
+      operationsStatus: String?,
+      fromDate: String?,
+      toDate: String?,
+      ingredientId: Int?,
       pageIndex: Int,
       pageSize: Int
    ): List<IngredientExOrInEntity>

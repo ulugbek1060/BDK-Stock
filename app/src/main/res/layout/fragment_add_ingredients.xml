@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".screens.main.menu.ingredients.AddIngredientsFragment">
+
+  <TextView
+    android:id="@+id/tv_title"
+    android:layout_width="0dp"
+    android:layout_height="?attr/actionBarSize"
+    android:fontFamily="@font/font_bold"
+    android:gravity="center_vertical"
+    android:text="@string/ingredients"
+    android:textColor="@color/text_color"
+    android:textSize="@dimen/text_size_big"
+    android:textStyle="bold"
+    app:layout_constraintLeft_toRightOf="@id/back"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <ImageView
+    android:id="@+id/back"
+    android:layout_width="wrap_content"
+    android:layout_height="?attr/actionBarSize"
+    android:contentDescription="@string/back"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:paddingHorizontal="@dimen/dimen_big"
+    android:src="@drawable/ic_arrow_left"
+    app:layout_constraintBottom_toBottomOf="@id/tv_title"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/input_layout_name"
+    style="@style/TextInputLayoutStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dimen_large"
+    android:layout_marginTop="@dimen/dimen_extra"
+    android:layout_marginRight="@dimen/dimen_large"
+    android:hint="@string/name"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+    <com.google.android.material.textfield.TextInputEditText
+      android:id="@+id/input_name"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:imeOptions="actionNext"
+      android:lines="1" />
+
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/input_layout_unit"
+    style="@style/TextInputLayoutStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dimen_large"
+    android:layout_marginTop="@dimen/dimen_large"
+    android:layout_marginRight="@dimen/dimen_large"
+    android:hint="@string/unit"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/input_layout_name">
+
+    <com.google.android.material.textfield.TextInputEditText
+      android:id="@+id/input_unit"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:imeOptions="actionNext"
+      android:inputType="number"
+      android:lines="1" />
+
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <FrameLayout
+    android:id="@+id/container_frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dimen_large"
+    android:layout_marginRight="@dimen/dimen_large"
+    android:layout_marginBottom="@dimen/dimen_extra"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent">
+
+    <androidx.cardview.widget.CardView
+      android:id="@+id/button_save"
+      android:layout_width="match_parent"
+      android:layout_height="45dp"
+      android:clickable="true"
+      android:focusable="true"
+      android:visibility="visible"
+      app:cardCornerRadius="6dp"
+      app:cardElevation="0dp">
+
+      <FrameLayout
+        android:id="@+id/container_save_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blue">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="?attr/selectableItemBackground"
+          android:gravity="center">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_regular"
+            android:lines="1"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        </LinearLayout>
+
+      </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <com.airbnb.lottie.LottieAnimationView
+      android:id="@+id/lotti_progress"
+      android:layout_width="match_parent"
+      android:layout_height="45dp"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/input_layout_job_title"
+      app:lottie_autoPlay="true"
+      app:lottie_loop="true"
+      app:lottie_rawRes="@raw/loading" />
+
+  </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

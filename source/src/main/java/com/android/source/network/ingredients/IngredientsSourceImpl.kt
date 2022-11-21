@@ -30,9 +30,17 @@ class IngredientsSourceImpl @Inject constructor(
          )
       }
 
-   override suspend fun getIngredients(pageIndex: Int, pageSize: Int): List<IngredientEntity> =
+   override suspend fun getIngredients(
+      query: String?,
+      pageIndex: Int,
+      pageSize: Int,
+   ): List<IngredientEntity> =
       wrapNetworkException {
-         ingredientsApi.getIngredients(pageIndex, pageSize).data.list.map { ingredient ->
+         ingredientsApi.getIngredients(
+            query = query,
+            pageIndex = pageIndex,
+            pageSize = pageSize
+         ).data.list.map { ingredient ->
             IngredientEntity(
                id = ingredient.id,
                amount = ingredient.amount,
@@ -44,24 +52,6 @@ class IngredientsSourceImpl @Inject constructor(
             )
          }
       }
-
-   override suspend fun getIngredientsByQuery(
-      query: String,
-      pageIndex: Int,
-      pageSize: Int
-   ): List<IngredientEntity> = wrapNetworkException {
-      ingredientsApi.getIngredientsByQuery(query, pageIndex, pageSize).data.list.map { ingredient ->
-         IngredientEntity(
-            id = ingredient.id,
-            amount = ingredient.amount,
-            name = ingredient.name,
-            unit = ingredient.unit,
-            createdAt = ingredient.createdAt,
-            updatedAt = ingredient.updatedAt,
-            isDeleted = ingredient.isDeleted
-         )
-      }
-   }
 
    override suspend fun addExpensesAndIncomesOfIngredient(
       ingredientId: Int,
@@ -90,34 +80,20 @@ class IngredientsSourceImpl @Inject constructor(
    }
 
    override suspend fun getExpensesAndIncomesOfIngredients(
+      query: String?,
+      operationsStatus: String?,
+      fromDate: String?,
+      toDate: String?,
+      ingredientId: Int?,
       pageIndex: Int,
       pageSize: Int
    ): List<IngredientExOrInEntity> = wrapNetworkException {
       ingredientsApi.getExpensesAndIncomesIngredient(
-         pageIndex = pageIndex,
-         pageSize = pageSize
-      ).expansesAndIncomesList.map { ingredientAction ->
-         IngredientExOrInEntity(
-            id = ingredientAction.id,
-            name = ingredientAction.name,
-            amount = ingredientAction.amount,
-            comment = ingredientAction.comment,
-            creator = ingredientAction.userId,
-            status = ingredientAction.status,
-            unit = ingredientAction.unit,
-            createdAt = ingredientAction.createdAt,
-            updatedAt = ingredientAction.updatedAt
-         )
-      }
-   }
-
-   override suspend fun getExpensesAndIncomesOfIngredientsByQuery(
-      query: String,
-      pageIndex: Int,
-      pageSize: Int
-   ): List<IngredientExOrInEntity> = wrapNetworkException {
-      ingredientsApi.getExpensesAndIncomesIngredientByQuery(
          query = query,
+         operationsStatus = operationsStatus,
+         fromDate = fromDate,
+         toDate = toDate,
+         ingredientId = ingredientId,
          pageIndex = pageIndex,
          pageSize = pageSize
       ).expansesAndIncomesList.map { ingredientAction ->

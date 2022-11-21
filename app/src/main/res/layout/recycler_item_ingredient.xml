@@ -4,146 +4,50 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:layout_margin="8dp"
+  android:layout_margin="@dimen/dimen_small"
   android:clickable="true"
   android:focusable="true"
-  android:background="@color/color_background_fill"
   android:foreground="?attr/selectableItemBackground"
   app:cardCornerRadius="@dimen/corner_big"
-  app:cardElevation="15dp">
+  app:cardElevation="2dp">
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/dimen_big">
+    android:background="@color/item_color"
+    android:padding="@dimen/dimen_extra">
 
     <TextView
-      android:id="@+id/tv_ingredient"
+      android:id="@+id/tv_name"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/dimen_normal"
-      android:fontFamily="@font/font_regular"
-      android:text="@string/ingredients"
-      android:textColor="@color/text_color"
-      android:textSize="16sp"
-      android:textStyle="bold"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/container_status" />
-
-    <TextView
-      android:id="@+id/tv_creator_hint"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/dimen_normal"
-      android:fontFamily="@font/font_regular"
-      android:text="@string/accepted"
-      android:textColor="@color/sub_text_color"
-      android:textSize="16sp"
-      android:textStyle="bold"
-      app:layout_constraintLeft_toLeftOf="@id/tv_ingredient"
-      app:layout_constraintTop_toBottomOf="@id/tv_ingredient" />
-
-    <TextView
-      android:id="@+id/tv_creator"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen_small"
       android:ellipsize="end"
-      android:fontFamily="@font/font_regular"
+      android:fontFamily="@font/font_black"
       android:maxLines="1"
-      android:textColor="@color/text_color"
-      android:textSize="16sp"
+      android:textColor="@color/text_color_light"
+      android:textSize="20sp"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
       android:textStyle="bold"
-      app:layout_constraintBottom_toBottomOf="@id/tv_creator_hint"
-      app:layout_constraintLeft_toRightOf="@id/tv_creator_hint"
-      app:layout_constraintTop_toTopOf="@id/tv_creator_hint"
-      tools:text="Akmal" />
-
-    <TextView
-      android:id="@+id/tv_created_date"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:fontFamily="@font/font_regular"
-      android:text="@string/ingredients"
-      android:textColor="@color/text_color"
-      android:textSize="16sp"
-      android:textStyle="bold"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-      android:id="@+id/tv_amount_hint"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="@dimen/dimen_small"
-      android:fontFamily="@font/font_regular"
-      android:text="@string/weight"
-      android:textColor="@color/sub_text_color"
-      android:textSize="16sp"
-      android:textStyle="bold"
-      app:layout_constraintBottom_toBottomOf="@id/tv_amount"
-      app:layout_constraintRight_toLeftOf="@id/tv_amount"
-      app:layout_constraintTop_toTopOf="@id/tv_amount" />
+      tools:text="Kepak" />
 
     <TextView
       android:id="@+id/tv_amount"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/dimen_normal"
-      android:fontFamily="@font/font_regular"
-      android:text="@string/ingredients"
+      android:ellipsize="end"
+      android:fontFamily="@font/font_black"
+      android:maxLines="1"
       android:textColor="@color/text_color"
-      android:textSize="16sp"
-      android:textStyle="bold"
+      android:gravity="end"
+      android:textSize="20sp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/tv_creator_hint" />
-
-
-    <androidx.cardview.widget.CardView
-      android:id="@+id/container_status"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      app:cardCornerRadius="16dp"
-      app:cardElevation="0dp"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
-
-      <FrameLayout
-        android:id="@+id/container_frame_status"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white_purple"
-        android:paddingStart="@dimen/dimen_large"
-        android:paddingTop="@dimen/dimen_small"
-        android:paddingEnd="@dimen/dimen_large"
-        android:paddingBottom="@dimen/dimen_small">
-
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:gravity="center">
-
-          <TextView
-            android:id="@+id/tv_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/font_regular"
-            android:lines="1"
-            android:textColor="@color/purple"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            tools:text="Manager" />
-
-        </LinearLayout>
-
-      </FrameLayout>
-
-    </androidx.cardview.widget.CardView>
+      app:layout_constraintLeft_toRightOf="@id/tv_name"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:text="1200000.00 kg" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.cardview.widget.CardView>

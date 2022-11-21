@@ -104,8 +104,8 @@ class DisplayEmployeeFragment : BaseFragment(R.layout.fragment_display_employee)
 
       observeChangesDialogEvent()
 
-      binding.buttonSave.setOnClickListener { saveEmployeeWithChanges() }
-      binding.buttonEdit.setOnCheckedChangeListener { _, isChecked -> toggleChangesAction(isChecked) }
+      binding.buttonSave.setOnClickListener { saveOnClick() }
+      binding.buttonEdit.setOnCheckedChangeListener { _, isChecked -> toggleOnClick(isChecked) }
       binding.buttonDelete.setOnClickListener { }
 
       binding.buttonCall.setOnClickListener {
@@ -147,7 +147,7 @@ class DisplayEmployeeFragment : BaseFragment(R.layout.fragment_display_employee)
       }
    }
 
-   private fun saveEmployeeWithChanges() {
+   private fun saveOnClick() {
       viewModel.updateEmployee(
          newFirstname = binding.inputName.text.toString(),
          newLastname = binding.inputSurname.text.toString(),
@@ -223,7 +223,7 @@ class DisplayEmployeeFragment : BaseFragment(R.layout.fragment_display_employee)
       }
    }
 
-   private fun toggleChangesAction(checkState: Boolean) {
+   private fun toggleOnClick(checkState: Boolean) {
       viewModel.setChangeableState(checkState)
    }
 }

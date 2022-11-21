@@ -93,6 +93,20 @@
       app:exitAnim="@anim/exit"
       app:popEnterAnim="@anim/pop_enter"
       app:popExitAnim="@anim/pop_exit" />
+    <action
+      android:id="@+id/action_actionsFragment_to_ingredientsTypeFragment"
+      app:destination="@id/ingredientsTypeFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
+    <action
+      android:id="@+id/action_actionsFragment_to_importIngredientFragment"
+      app:destination="@id/importIngredientFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit"/>
 
   </fragment>
   <fragment
@@ -179,7 +193,52 @@
       app:enterAnim="@anim/enter"
       app:exitAnim="@anim/exit"
       app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit"/>
+      app:popExitAnim="@anim/pop_exit" />
+  </fragment>
+
+  <fragment
+    android:id="@+id/addIngredientsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.ingredients.AddIngredientsFragment"
+    android:label="fragment_add_ingredients"
+    tools:layout="@layout/fragment_add_ingredients" />
+
+  <fragment
+    android:id="@+id/ingredientsTypeFragment"
+    android:name="com.android.bdkstock.screens.main.menu.ingredients.IngredientsTypeFragment"
+    android:label="fragment_ingredients_type"
+    tools:layout="@layout/fragment_ingredients_type">
+    <action
+      android:id="@+id/action_ingredientsTypeFragment_to_addIngredientsFragment"
+      app:destination="@id/addIngredientsFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
+    <action
+      android:id="@+id/action_ingredientsTypeFragment_to_displayIngredientsFragment"
+      app:destination="@id/displayIngredientsFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
+  </fragment>
+
+  <dialog
+    android:id="@+id/displayIngredientsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.ingredients.DisplayIngredientsFragment"
+    android:label="fragment_display_ingredients"
+    tools:layout="@layout/fragment_display_ingredients">
+
+    <argument
+      android:name="ingredientEntity"
+      app:argType="com.android.model.repository.ingredients.entity.IngredientEntity" />
+  </dialog>
+  <fragment
+    android:id="@+id/importIngredientFragment"
+    android:name="com.android.bdkstock.screens.main.menu.ingredients.ImportIngredientFragment"
+    android:label="fragment_import_ingredient"
+    tools:layout="@layout/fragment_import_ingredient" >
+
   </fragment>
 
 </navigation>

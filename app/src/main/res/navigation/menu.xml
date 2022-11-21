@@ -42,15 +42,8 @@
       app:popEnterAnim="@anim/pop_enter"
       app:popExitAnim="@anim/pop_exit" />
     <action
-      android:id="@+id/action_menuFragment_to_financialFragment"
-      app:destination="@id/financialFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
-    <action
       android:id="@+id/action_menuFragment_to_ingredientsFragment"
-      app:destination="@id/ingredientsFragment"
+      app:destination="@id/ingredientsOperationsFragment"
       app:enterAnim="@anim/enter"
       app:exitAnim="@anim/exit"
       app:popEnterAnim="@anim/pop_enter"
@@ -69,6 +62,9 @@
       app:exitAnim="@anim/exit"
       app:popEnterAnim="@anim/pop_enter"
       app:popExitAnim="@anim/pop_exit" />
+    <action
+      android:id="@+id/action_menuFragment_to_ingredientsOperationFragment"
+      app:destination="@id/ingredientsOperationsFragment" />
   </fragment>
   <fragment
     android:id="@+id/employeesFragment"
@@ -76,15 +72,10 @@
     android:label="fragment_employees"
     tools:layout="@layout/fragment_employees" />
   <fragment
-    android:id="@+id/financialFragment"
-    android:name="com.android.bdkstock.screens.main.menu.FinancialFragment"
-    android:label="fragment_financial"
-    tools:layout="@layout/fragment_financial" />
-  <fragment
-    android:id="@+id/ingredientsFragment"
-    android:name="com.android.bdkstock.screens.main.menu.ingredients.IngredientsFragment"
+    android:id="@+id/ingredientsOperationsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.ingredients.IngredientsOperationsFragment"
     android:label="fragment_ingredients"
-    tools:layout="@layout/fragment_ingredients" />
+    tools:layout="@layout/fragment_ingredients_operations" />
   <fragment
     android:id="@+id/productsFragment"
     android:name="com.android.bdkstock.screens.main.menu.ProductsFragment"

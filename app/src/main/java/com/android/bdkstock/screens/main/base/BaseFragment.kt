@@ -96,7 +96,7 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
             ""
          }
       }
-      "$day $txtMonth, $year"
+      "$day $txtMonth $year"
    } catch (e: Exception) {
       this
    }

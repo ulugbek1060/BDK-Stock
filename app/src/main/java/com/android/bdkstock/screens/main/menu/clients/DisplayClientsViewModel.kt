@@ -67,7 +67,7 @@ class DisplayClientsViewModel @Inject constructor(
          setDriverData(fullName, phoneNumber, address)
 
       } catch (e: EmptyFieldException) {
-         publishEmptyFields(e)
+         showEmptyFields(e)
       } finally {
          hideProgress()
       }
@@ -94,7 +94,7 @@ class DisplayClientsViewModel @Inject constructor(
       getInitialValue()
    }
 
-   private fun publishEmptyFields(e: EmptyFieldException) {
+   private fun showEmptyFields(e: EmptyFieldException) {
       _state.value = _state.requireValue().copy(
          emptyFullName = e.field == Field.FullName,
          emptyPhoneNumber = e.field == Field.PhoneNumber,

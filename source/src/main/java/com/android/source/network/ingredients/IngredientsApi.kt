@@ -16,21 +16,6 @@ interface IngredientsApi {
       @Body body: CreateIngredientRequestEntity
    ): CreateIngredientResponseEntity
 
-   @Headers("Content-Type: application/json", "Accept: application/json")
-   @GET("api/meterial/get")
-   suspend fun getIngredients(
-      @Query("page") pageIndex: Int,
-      @Query("count") pageSize: Int
-   ): IngredientsListResponseEntity
-
-   @Headers("Content-Type: application/json", "Accept: application/json")
-   @GET("api/meterial/get")
-   suspend fun getIngredientsByQuery(
-      @Query("search") query: String,
-      @Query("page") pageIndex: Int,
-      @Query("count") pageSize: Int
-   ): IngredientsListResponseEntity
-
    /**
     *  Расход -> expense
     *  Приход -> income
@@ -45,14 +30,20 @@ interface IngredientsApi {
    @GET("api/meterial/index")
    suspend fun getExpensesAndIncomesIngredient(
       @Query("page") pageIndex: Int,
-      @Query("count") pageSize: Int
+      @Query("count") pageSize: Int,
+      @Query("search") query: String?,
+      @Query("status") operationsStatus: String?,
+      @Query("dateFrom") fromDate: String?,
+      @Query("dateTo") toDate: String?,
+      @Query("material_id") ingredientId: Int?
    ): ExpensesAndIncomesListResponseEntity
 
    @Headers("Content-Type: application/json", "Accept: application/json")
-   @GET("api/meterial/index")
-   suspend fun getExpensesAndIncomesIngredientByQuery(
-      @Query("search") query: String,
+   @GET("api/meterial/get")
+   suspend fun getIngredients(
+      @Query("search") query: String?,
       @Query("page") pageIndex: Int,
       @Query("count") pageSize: Int
-   ): ExpensesAndIncomesListResponseEntity
+   ): IngredientsListResponseEntity
+
 }

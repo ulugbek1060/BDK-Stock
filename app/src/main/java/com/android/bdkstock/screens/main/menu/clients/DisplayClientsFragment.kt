@@ -33,26 +33,26 @@ class DisplayClientsFragment : BaseFragment(R.layout.fragment_display_clients) {
       observeSuggestionDialog()
       observeSuccessMessage()
 
-      binding.buttonSave.setOnClickListener { saveClick() }
-      binding.buttonEdit.setOnClickListener { toggleClick() }
-      binding.buttonCall.setOnClickListener { callClick() }
-      binding.buttonMessage.setOnClickListener { messageClick() }
+      binding.buttonSave.setOnClickListener { saveOnClick() }
+      binding.buttonEdit.setOnClickListener { toggleOnClick() }
+      binding.buttonCall.setOnClickListener { callOnClick() }
+      binding.buttonMessage.setOnClickListener { messageOnClick() }
 
    }
 
-   private fun messageClick() {
+   private fun messageOnClick() {
       requestMessagePermissionLauncher.launch(Manifest.permission.SEND_SMS)
    }
 
-   private fun callClick() {
+   private fun callOnClick() {
       requestCallPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
    }
 
-   private fun toggleClick() {
+   private fun toggleOnClick() {
       viewModel.toggleChangeableState()
    }
 
-   private fun saveClick() {
+   private fun saveOnClick() {
       viewModel.updateClient(
          fullName = binding.inputName.text.toString(),
          phoneNumber = "998${binding.inputPhoneNumber.text.toString()}",

@@ -5,6 +5,8 @@
   <string name="password">Пароль</string>
   <string name="log_in">Войти</string>
   <string name="logo">Logo</string>
+
+
   <string name="connection_error">Нет подключения к Интернету</string>
   <string name="internal_exception">Внутренняя ошибка</string>
   <string name="auth_error">auth error</string>
@@ -16,6 +18,8 @@
   <string name="error_empty_address">вам нужно указать адрес</string>
   <string name="error_empty_vehicle">Вам необходимо выбрать авто</string>
   <string name="error_empty_reg_number">вам нужно указать номео авто</string>
+  <string name="error_empty_unit">вам нужно указать ед. изм ингредиента</string>
+  <string name="error_empty_comment">вам нужно написать комментарий</string>
 
 
   <string name="unknown_error">Ой что-то пошло не так!!!</string>
@@ -92,4 +96,7 @@
   <string name="m_11_full">Ноябрь</string>
   <string name="m_12">Дек</string>
   <string name="m_12_full">Декабрь</string>
+  <string name="back">вернуть</string>
+  <string name="unit">Ед. изм</string>
+  <string name="error_empty_amount">нужно написать вес продукта</string>
 </resources>

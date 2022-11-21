@@ -27,16 +27,15 @@ class IngredientsRepository @Inject constructor(
       }
    }
 
-   fun getIngredientsList(): Flow<PagingData<IngredientEntity>> = getPagerData {
+   fun getIngredientsList(
+      query: String? = null
+   ): Flow<PagingData<IngredientEntity>> = getPagerData {
       val loader: DataLoader<IngredientEntity> = { pageIndex ->
-         ingredientsSource.getIngredients(pageIndex, DEFAULT_PAGE_SIZE)
-      }
-      BasePageSource(loader)
-   }
-
-   fun getIngredientsListByQuery(query: String): Flow<PagingData<IngredientEntity>> = getPagerData {
-      val loader: DataLoader<IngredientEntity> = { pageIndex ->
-         ingredientsSource.getIngredientsByQuery(query, pageIndex, DEFAULT_PAGE_SIZE)
+         ingredientsSource.getIngredients(
+            query = query,
+            pageIndex = pageIndex,
+            pageSize = DEFAULT_PAGE_SIZE
+         )
       }
       BasePageSource(loader)
    }
@@ -61,23 +60,24 @@ class IngredientsRepository @Inject constructor(
       }
    }
 
-   fun getExpensesAndIncomesOfIngredients(): Flow<PagingData<IngredientExOrInEntity>> =
-      getPagerData {
-         val loader: DataLoader<IngredientExOrInEntity> = { pageIndex ->
-            ingredientsSource.getExpensesAndIncomesOfIngredients(pageIndex, DEFAULT_PAGE_SIZE)
-         }
-         BasePageSource(loader)
+   fun getExpensesAndIncomesOfIngredients(
+      query: String? = null,
+      operationsStatus: String? = null,
+      fromDate: String? = null,
+      toDate: String? = null,
+      ingredientId: Int? = null,
+   ): Flow<PagingData<IngredientExOrInEntity>> = getPagerData {
+      val loader: DataLoader<IngredientExOrInEntity> = { pageIndex ->
+         ingredientsSource.getExpensesAndIncomesOfIngredients(
+            query = query,
+            operationsStatus = operationsStatus,
+            fromDate = fromDate,
+            toDate = toDate,
+            ingredientId = ingredientId,
+            pageIndex = pageIndex,
+            pageSize = DEFAULT_PAGE_SIZE
+         )
       }
-
-   fun getExpensesAndIncomesOfIngredientsByQuery(query: String): Flow<PagingData<IngredientExOrInEntity>> =
-      getPagerData {
-         val loader: DataLoader<IngredientExOrInEntity> = { pageIndex ->
-            ingredientsSource.getExpensesAndIncomesOfIngredientsByQuery(
-               query = query,
-               pageIndex = pageIndex,
-               pageSize = DEFAULT_PAGE_SIZE
-            )
-         }
-         BasePageSource(loader)
-      }
+      BasePageSource(loader)
+   }
 }

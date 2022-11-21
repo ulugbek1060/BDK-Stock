@@ -14,8 +14,8 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentSearchEmployeesBinding
+import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemEmployeeBinding
-import com.android.bdkstock.databinding.RecyclerItemShimmerBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.views.pagingAdapter
@@ -40,7 +40,7 @@ class SearchEmployeesFragment : BaseFragment(R.layout.fragment_search_employees)
 
    @SuppressLint("SetTextI18n")
    private val adapter = pagingAdapter<EmployeeEntity, RecyclerItemEmployeeBinding> {
-      areItemsSame = {  oldItem, newItem-> oldItem.id == newItem.id}
+      areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
       areContentsSame = { oldItem, newItem -> oldItem == newItem }
       bind { employee ->
          tvFullname.text = "${employee.firstname}, ${employee.lastname}"
@@ -93,7 +93,7 @@ class SearchEmployeesFragment : BaseFragment(R.layout.fragment_search_employees)
    private fun handleUiVisibility() = lifecycleScope.launch {
       adapter.loadStateFlow.map { it.refresh }
          .collectLatest { loadState ->
-            binding.recyclerShimmerLoading.isVisible = loadState == LoadState.Loading
+            binding.recyclerProgress.isVisible = loadState == LoadState.Loading
             binding.recyclerEmployees.isVisible = loadState != LoadState.Loading
 
             handleErrorMessage(loadState)
@@ -142,10 +142,10 @@ class SearchEmployeesFragment : BaseFragment(R.layout.fragment_search_employees)
 
    // -- Progressbar with shimmer layout
 
-   private val shimmerAdapter = simpleAdapter<Any, RecyclerItemShimmerBinding> {}
+   private val shimmerAdapter = simpleAdapter<Any, ProgressItemSmallerBinding> {}
    private fun setupShimmerLoading() {
       shimmerAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8))
-      binding.recyclerShimmerLoading.layoutManager = LinearLayoutManager(requireContext())
-      binding.recyclerShimmerLoading.adapter = shimmerAdapter
+      binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
+      binding.recyclerProgress.adapter = shimmerAdapter
    }
 }

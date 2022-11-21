@@ -4,7 +4,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  tools:context=".screens.main.menu.ingredients.IngredientsFragment">
+  tools:context=".screens.main.menu.ingredients.IngredientsOperationsFragment">
 
   <TextView
     android:id="@+id/tv_title"
@@ -21,6 +21,7 @@
     app:layout_constraintTop_toTopOf="parent" />
 
   <androidx.cardview.widget.CardView
+    android:id="@+id/button_filter"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/dimen_normal"
@@ -35,7 +36,6 @@
       android:background="@color/blue">
 
       <ImageButton
-        android:id="@+id/button_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -58,9 +58,13 @@
     app:layout_constraintTop_toBottomOf="@id/tv_title">
 
     <androidx.cardview.widget.CardView
+      android:id="@+id/button_income"
       android:layout_width="match_parent"
       android:layout_height="45dp"
-      android:layout_margin="8dp"
+      android:layout_marginLeft="@dimen/dimen_normal"
+      android:layout_marginTop="@dimen/dimen_normal"
+      android:layout_marginRight="@dimen/dimen_small"
+      android:layout_marginBottom="@dimen/dimen_normal"
       android:layout_weight="1"
       android:clickable="true"
       android:focusable="true"
@@ -97,9 +101,13 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+      android:id="@+id/button_expense"
       android:layout_width="match_parent"
       android:layout_height="45dp"
-      android:layout_margin="8dp"
+      android:layout_marginLeft="@dimen/dimen_small"
+      android:layout_marginTop="@dimen/dimen_normal"
+      android:layout_marginRight="@dimen/dimen_small"
+      android:layout_marginBottom="@dimen/dimen_normal"
       android:layout_weight="1"
       android:clickable="true"
       android:focusable="true"
@@ -136,9 +144,13 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+      android:id="@+id/button_add"
       android:layout_width="match_parent"
       android:layout_height="45dp"
-      android:layout_margin="8dp"
+      android:layout_marginStart="@dimen/dimen_small"
+      android:layout_marginTop="@dimen/dimen_normal"
+      android:layout_marginEnd="@dimen/dimen_normal"
+      android:layout_marginBottom="@dimen/dimen_normal"
       android:layout_weight="1"
       android:clickable="true"
       android:focusable="true"
@@ -196,9 +208,20 @@
       android:id="@+id/recycler_ingredients"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      tools:listitem="@layout/recycler_item_ingredient" />
+      tools:listitem="@layout/recycler_item_ingredient_operation" />
 
   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recycler_progress"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/buttons_container"
+    tools:listitem="@layout/progress_item_smaller" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
