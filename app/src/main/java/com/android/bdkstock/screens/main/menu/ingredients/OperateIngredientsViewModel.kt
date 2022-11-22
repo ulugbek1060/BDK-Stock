@@ -2,9 +2,8 @@ package com.android.bdkstock.screens.main.menu.ingredients
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
@@ -13,14 +12,17 @@ import com.android.model.repository.ingredients.entity.IngredientEntity
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
 import com.android.model.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
-class ImportIngredientViewModel @Inject constructor(
+class OperateIngredientsViewModel @Inject constructor(
    private val ingredientsRepository: IngredientsRepository,
-   accountRepository: AccountRepository
+   accountRepository: AccountRepository,
+   savedStateHandle: SavedStateHandle,
 ) : BaseViewModel(accountRepository) {
+
+   private val _operationId = OperateIngredientsFragmentArgs
+      .fromSavedStateHandle(savedStateHandle).operationId
 
    private val _state = MutableLiveData(State())
    val state = _state.liveData()
@@ -31,11 +33,13 @@ class ImportIngredientViewModel @Inject constructor(
    private val _selectedIngredient = MutableLiveData<IngredientEntity>()
    val selectedIngredient = _selectedIngredient.liveData()
 
-   val ingredientsList: Flow<PagingData<IngredientEntity>> = ingredientsRepository
-      .getIngredientsList()
-      .cachedIn(viewModelScope)
+   init {
+      _state.value = _state.requireValue().copy(
+         operationId = _operationId
+      )
+   }
 
-   fun importIngredient(
+   fun operateIngredient(
       amount: String,
       comment: String
    ) = viewModelScope.safeLaunch {
@@ -43,7 +47,7 @@ class ImportIngredientViewModel @Inject constructor(
       try {
          val importedIngredient =
             ingredientsRepository.addExpensesAndIncomesOfIngredient(
-               statusOfActions = STATE_IMPORT,
+               statusOfActions = _operationId,
                ingredientId = getIngredientId(),
                amount = amount,
                comments = comment
@@ -90,8 +94,15 @@ class ImportIngredientViewModel @Inject constructor(
       val isInProgress: Boolean = false,
       val emptyName: Boolean = false,
       val emptyAmount: Boolean = false,
-      val emptyComment: Boolean = false
+      val emptyComment: Boolean = false,
+      val operationId: Int? = null
    ) {
+
+      fun getTitle(context: Context) =
+         if (operationId == IngredientsOperationsFragment.OPERATION_INCOME)
+            context.getString(R.string.income)
+         else
+            context.getString(R.string.expense)
 
       fun getNameErrorMessage(context: Context) =
          if (emptyName) context.getString(R.string.error_empty_name)
@@ -106,7 +117,4 @@ class ImportIngredientViewModel @Inject constructor(
          else null
    }
 
-   private companion object {
-      const val STATE_IMPORT = 0
-   }
 }

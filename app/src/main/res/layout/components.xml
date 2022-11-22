@@ -8,11 +8,11 @@
 
   <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
-    android:layout_height="45dp"
+    android:layout_height="48dp"
     android:layout_margin="8dp"
-    app:cardCornerRadius="6dp"
     android:clickable="true"
     android:focusable="true"
+    app:cardCornerRadius="6dp"
     app:cardElevation="0dp">
 
     <FrameLayout

@@ -9,23 +9,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentDisplayIngredientsBinding
 import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
+import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.DefaultLoadStateAdapter
+import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.views.pagingAdapter
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class DisplayIngredientsFragment :
-   BottomSheetDialogFragment(R.layout.fragment_display_ingredients) {
+class DisplayIngredientsFragment : BaseFragment(R.layout.fragment_display_ingredients) {
 
-   private val viewModel by viewModels<DisplayIngredientsViewModel>()
+   override val viewModel by viewModels<DisplayIngredientsViewModel>()
    private lateinit var binding: FragmentDisplayIngredientsBinding
    private lateinit var layoutManager: LinearLayoutManager
-
-   override fun getTheme() = R.style.CustomBottomSheetDialogTheme
 
    @SuppressLint("SetTextI18n")
    private val adapter =
@@ -54,7 +52,9 @@ class DisplayIngredientsFragment :
          }
          listeners {
             root.onClick {
-
+               val args = DisplayIngredientsFragmentDirections
+                  .actionDisplayIngredientsFragmentToDisplayOperationsFragment(it)
+               findTopNavController().navigate(args)
             }
          }
       }
@@ -67,6 +67,7 @@ class DisplayIngredientsFragment :
       observeIngredients()
       observeIngredientFields()
 
+      binding.back.setOnClickListener { findTopNavController().popBackStack() }
    }
 
    private fun observeIngredients() = lifecycleScope.launch {
@@ -74,7 +75,6 @@ class DisplayIngredientsFragment :
          adapter.submitData(it)
       }
    }
-
 
    private fun observeIngredientFields() {
       viewModel.ingredientEntity.observe(viewLifecycleOwner) { ingredient ->

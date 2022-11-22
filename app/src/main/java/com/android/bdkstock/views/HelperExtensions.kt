@@ -1,11 +1,14 @@
 package com.android.bdkstock.views
 
-import android.content.Context
+import android.content.res.Resources
+import android.graphics.Rect
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import androidx.annotation.CheckResult
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
@@ -66,4 +69,32 @@ fun EditText.textChanges(): Flow<CharSequence?> {
       awaitClose { removeTextChangedListener(listener) }
    }.onStart { emit(text) }
 }
+
+
+/**
+ * Call this method (in onActivityCreated or later) to set
+ * the width of the dialog to a percentage of the current
+ * screen width.
+ */
+fun DialogFragment.setWidthAndHeightPercent(percentageWidth: Int, percentageHeight: Int) {
+   val percentWidth = percentageWidth.toFloat() / 100
+   val percentHeight = percentageHeight.toFloat() / 100
+   val dm = Resources.getSystem().displayMetrics
+   val rect = dm.run { Rect(0, 0, widthPixels, heightPixels) }
+   val width = rect.width() * percentWidth
+   val height = rect.height() * percentHeight
+   dialog?.window?.setLayout(width.toInt(), height.toInt())
+}
+
+/**
+ * Call this method (in onActivityCreated or later)
+ * to make the dialog near-full screen.
+ */
+fun DialogFragment.setFullScreen() {
+   dialog?.window?.setLayout(
+      ViewGroup.LayoutParams.MATCH_PARENT,
+      ViewGroup.LayoutParams.WRAP_CONTENT
+   )
+}
+
 

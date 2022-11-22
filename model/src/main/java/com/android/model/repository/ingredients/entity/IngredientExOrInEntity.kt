@@ -1,7 +1,5 @@
 package com.android.model.repository.ingredients.entity
 
-import com.google.gson.annotations.SerializedName
-
 data class IngredientExOrInEntity(
    val id: Long,
    val name: String,
@@ -12,4 +10,4 @@ data class IngredientExOrInEntity(
    val unit: String,
    val createdAt: String,
    val updatedAt: String,
-)
+) : java.io.Serializable

@@ -13,6 +13,7 @@ import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentIngredientsOperationsBinding
 import com.android.bdkstock.databinding.ProgressItemBiggerBinding
 import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
+import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.DefaultLoadStateAdapter
 import com.android.bdkstock.views.findTopNavController
@@ -60,7 +61,9 @@ class IngredientsOperationsFragment : BaseFragment(R.layout.fragment_ingredients
          }
          listeners {
             root.onClick {
-
+               val args = ActionsFragmentDirections
+                  .actionActionsFragmentToDisplayOperationsFragment(it)
+               findTopNavController().navigate(args)
             }
          }
       }
@@ -95,19 +98,26 @@ class IngredientsOperationsFragment : BaseFragment(R.layout.fragment_ingredients
    }
 
    private fun filterOnClick() {
-      // TODO: need to initialize filter
+      val args = ActionsFragmentDirections
+         .actionActionsFragmentToFilterOperationsFragment()
+      findTopNavController().navigate(args)
    }
 
    private fun addOnClick() {
-      findTopNavController().navigate(R.id.action_actionsFragment_to_ingredientsTypeFragment)
+      findTopNavController()
+         .navigate(R.id.action_actionsFragment_to_ingredientsTypeFragment)
    }
 
    private fun expenseOnClick() {
-      // TODO: need to initialize expense
+      val args = ActionsFragmentDirections
+         .actionActionsFragmentToOperateIngredientsFragment(OPERATION_EXPENSE)
+      findTopNavController().navigate(args)
    }
 
    private fun incomeOnClick() {
-      // TODO: need to initialize income
+      val args = ActionsFragmentDirections
+         .actionActionsFragmentToOperateIngredientsFragment(OPERATION_INCOME)
+      findTopNavController().navigate(args)
    }
 
    private fun setupRecyclerView() = binding.apply {
@@ -171,5 +181,10 @@ class IngredientsOperationsFragment : BaseFragment(R.layout.fragment_ingredients
       progressAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
       binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
       binding.recyclerProgress.adapter = progressAdapter
+   }
+
+   companion object {
+      const val OPERATION_INCOME = 0
+      const val OPERATION_EXPENSE = 1
    }
 }

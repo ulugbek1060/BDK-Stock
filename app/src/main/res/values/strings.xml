@@ -70,7 +70,7 @@
   <string name="expense">Расход</string>
   <string name="ingredients">Ингредиенты</string>
   <string name="accepted">Принял:</string>
-  <string name="weight">масса:</string>
+  <string name="weight">Масса</string>
 
   <string name="m_01">Янв</string>
   <string name="m_01_full">Яанварь</string>
@@ -99,4 +99,8 @@
   <string name="back">вернуть</string>
   <string name="unit">Ед. изм</string>
   <string name="error_empty_amount">нужно написать вес продукта</string>
+  <string name="comments">Комментарии</string>
+
+  <string name="inport">Импорт</string>
+
 </resources>
