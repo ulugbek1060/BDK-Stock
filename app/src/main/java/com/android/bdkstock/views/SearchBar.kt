@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.onStart
 
-@OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 class SearchBar @JvmOverloads constructor(
    context: Context,
    attrs: AttributeSet? = null,

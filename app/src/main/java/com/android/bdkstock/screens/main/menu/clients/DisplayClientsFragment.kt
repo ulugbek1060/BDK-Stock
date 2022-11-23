@@ -13,20 +13,21 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.android.bdkstock.R
+import com.android.bdkstock.databinding.FragmentClientsBinding
 import com.android.bdkstock.databinding.FragmentDisplayClientsBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DisplayClientsFragment : BaseFragment(R.layout.fragment_display_clients) {
+class DisplayClientsFragment :
+   BaseFragment<DisplayClientsViewModel, FragmentDisplayClientsBinding>() {
 
    override val viewModel by viewModels<DisplayClientsViewModel>()
-   private lateinit var binding: FragmentDisplayClientsBinding
+   override fun getViewBinding() = FragmentDisplayClientsBinding.inflate(layoutInflater)
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentDisplayClientsBinding.bind(view)
 
       observeState()
       observeClientFields()

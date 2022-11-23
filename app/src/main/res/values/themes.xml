@@ -23,8 +23,18 @@
     <item name="android:statusBarColor">@color/blue</item>
   </style>
 
+  <!--  dialog fragment background-->
   <style name="MyDialog" parent="Base.Theme.AppCompat.Light.Dialog">
     <item name="android:windowBackground">@android:color/transparent</item>
+  </style>
+
+  <!--  bottom sheet dialog background-->
+  <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+    <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+  </style>
+
+  <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+    <item name="android:background">@android:color/transparent</item>
   </style>
 
 </resources>

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentClientsBinding
+import com.android.bdkstock.databinding.FragmentMenuBinding
 import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemClientBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
@@ -28,11 +29,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ClientsFragment : BaseFragment(R.layout.fragment_clients) {
+class ClientsFragment : BaseFragment<ClientsViewModel, FragmentClientsBinding>() {
 
    override val viewModel by viewModels<ClientsViewModel>()
-   private lateinit var binding: FragmentClientsBinding
    private lateinit var layoutManager: LinearLayoutManager
+   override fun getViewBinding() = FragmentClientsBinding.inflate(layoutInflater)
 
    private val adapter = pagingAdapter<ClientEntity, RecyclerItemClientBinding> {
       areItemsSame = { oldItem, newItem -> oldItem.clientId == newItem.clientId }
@@ -62,7 +63,6 @@ class ClientsFragment : BaseFragment(R.layout.fragment_clients) {
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentClientsBinding.bind(view)
 
       setupShimmerLoading()
       setupRecyclerView()

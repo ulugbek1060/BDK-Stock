@@ -3,6 +3,7 @@ package com.android.bdkstock.screens.main.menu.ingredients
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -28,11 +29,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class IngredientsOperationsFragment : BaseFragment(R.layout.fragment_ingredients_operations) {
+class IngredientsOperationsFragment :
+   BaseFragment<IngredientsOperationsViewModel, FragmentIngredientsOperationsBinding>() {
 
    override val viewModel by viewModels<IngredientsOperationsViewModel>()
-   private lateinit var binding: FragmentIngredientsOperationsBinding
    private lateinit var layoutManager: LinearLayoutManager
+   override fun getViewBinding() = FragmentIngredientsOperationsBinding.inflate(layoutInflater)
+
+   private val TAG = "IngredientsOperationsFr"
 
    @SuppressLint("SetTextI18n")
    private val adapter =
@@ -57,7 +61,7 @@ class IngredientsOperationsFragment : BaseFragment(R.layout.fragment_ingredients
             tvIngredient.text = ingredient.name
             tvCreator.text = ingredient.creator
             tvCreatedDate.text = ingredient.createdAt.formatDate(root.context)
-            tvAmount.text = "${ingredient.amount} ${ingredient.unit}"
+            tvAmount.text = ": ${ingredient.amount} ${ingredient.unit}"
          }
          listeners {
             root.onClick {
@@ -81,7 +85,6 @@ class IngredientsOperationsFragment : BaseFragment(R.layout.fragment_ingredients
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentIngredientsOperationsBinding.bind(view)
 
       setupProgress()
       setupRecyclerView()
@@ -91,16 +94,36 @@ class IngredientsOperationsFragment : BaseFragment(R.layout.fragment_ingredients
 
       observeAuthError()
 
+      observeFilterResult()
+
+      navigateToFilterFrag()
+
       binding.buttonIncome.setOnClickListener { incomeOnClick() }
       binding.buttonExpense.setOnClickListener { expenseOnClick() }
       binding.buttonAdd.setOnClickListener { addOnClick() }
       binding.buttonFilter.setOnClickListener { filterOnClick() }
    }
 
+   private fun navigateToFilterFrag() {
+      viewModel.navigateToFilterFrag.observeEvent(viewLifecycleOwner) { filter ->
+         val args = ActionsFragmentDirections
+            .actionActionsFragmentToFilterOperationsFragment(filter)
+         findTopNavController().navigate(args)
+      }
+   }
+
+   private fun observeFilterResult() {
+      findTopNavController()
+         .currentBackStackEntry
+         ?.savedStateHandle
+         ?.getLiveData<FilterOperations>(FILTER_DATA_KEY)
+         ?.observe(viewLifecycleOwner) {
+            viewModel.setFilterData(it)
+         }
+   }
+
    private fun filterOnClick() {
-      val args = ActionsFragmentDirections
-         .actionActionsFragmentToFilterOperationsFragment()
-      findTopNavController().navigate(args)
+      viewModel.toFilterFrag()
    }
 
    private fun addOnClick() {
@@ -174,6 +197,11 @@ class IngredientsOperationsFragment : BaseFragment(R.layout.fragment_ingredients
       }
    }
 
+   override fun onDestroy() {
+      super.onDestroy()
+      Log.d(TAG, "onDestroy: ")
+   }
+
    // -- Progress with shimmer layout
 
    private val progressAdapter = simpleAdapter<Any, ProgressItemBiggerBinding> {}
@@ -183,8 +211,9 @@ class IngredientsOperationsFragment : BaseFragment(R.layout.fragment_ingredients
       binding.recyclerProgress.adapter = progressAdapter
    }
 
-   companion object {
+   private companion object {
       const val OPERATION_INCOME = 0
       const val OPERATION_EXPENSE = 1
+      const val FILTER_DATA_KEY = "filter_data"
    }
 }

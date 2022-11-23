@@ -13,6 +13,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
+import com.android.bdkstock.databinding.FragmentRegisterEmployeeBinding
 import com.android.bdkstock.databinding.FragmentSearchEmployeesBinding
 import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemEmployeeBinding
@@ -30,13 +31,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchEmployeesFragment : BaseFragment(R.layout.fragment_search_employees) {
-
-   private val TAG = "SearchEmployeeFragment"
+class SearchEmployeesFragment :
+   BaseFragment<SearchEmployeeViewModel, FragmentSearchEmployeesBinding>() {
 
    override val viewModel by viewModels<SearchEmployeeViewModel>()
-   private lateinit var binding: FragmentSearchEmployeesBinding
    private lateinit var layoutManager: LinearLayoutManager
+   override fun getViewBinding() = FragmentSearchEmployeesBinding.inflate(layoutInflater)
 
    @SuppressLint("SetTextI18n")
    private val adapter = pagingAdapter<EmployeeEntity, RecyclerItemEmployeeBinding> {
@@ -71,8 +71,6 @@ class SearchEmployeesFragment : BaseFragment(R.layout.fragment_search_employees)
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentSearchEmployeesBinding.bind(view)
-
 
       setupRecycler()
       setupShimmerLoading()

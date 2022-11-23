@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.android.bdkstock.R
+import com.android.bdkstock.databinding.FragmentIngredientsTypeBinding
 import com.android.bdkstock.databinding.FragmentOperateIngredientsBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.findTopNavController
@@ -12,14 +13,14 @@ import com.android.model.repository.ingredients.entity.IngredientEntity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OperateIngredientsFragment : BaseFragment(R.layout.fragment_operate_ingredients) {
+class OperateIngredientsFragment :
+   BaseFragment<OperateIngredientsViewModel, FragmentOperateIngredientsBinding>() {
 
    override val viewModel by viewModels<OperateIngredientsViewModel>()
-   private lateinit var binding: FragmentOperateIngredientsBinding
+   override fun getViewBinding() = FragmentOperateIngredientsBinding.inflate(layoutInflater)
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentOperateIngredientsBinding.bind(view)
 
       observeState()
       observeIngredient()
@@ -74,12 +75,12 @@ class OperateIngredientsFragment : BaseFragment(R.layout.fragment_operate_ingred
 
          // enable
          binding.inputLayoutIngredient.isEnabled = !state.isInProgress
-         binding.inputLayoutWeight.isEnabled = !state.isInProgress
+         binding.inputAmount.isEnabled = !state.isInProgress
          binding.inputLayoutComment.isEnabled = !state.isInProgress
 
          // error
          binding.inputLayoutIngredient.error = state.getNameErrorMessage(requireContext())
-         binding.inputLayoutWeight.error = state.getAmountErrorMessage(requireContext())
+         binding.inputAmount.error = state.getAmountErrorMessage(requireContext())
          binding.inputLayoutComment.error = state.getCommentErrorMessage(requireContext())
 
          // visibility

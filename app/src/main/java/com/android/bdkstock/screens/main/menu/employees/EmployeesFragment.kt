@@ -11,6 +11,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
+import com.android.bdkstock.databinding.FragmentDisplayEmployeeBinding
 import com.android.bdkstock.databinding.FragmentEmployeesBinding
 import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemEmployeeBinding
@@ -33,11 +34,11 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 @FlowPreview
 @AndroidEntryPoint
-class EmployeesFragment : BaseFragment(R.layout.fragment_employees) {
+class EmployeesFragment : BaseFragment<EmployeesViewModel, FragmentEmployeesBinding>() {
 
-   private lateinit var binding: FragmentEmployeesBinding
    override val viewModel by viewModels<EmployeesViewModel>()
    private lateinit var layoutManager: LinearLayoutManager
+   override fun getViewBinding() = FragmentEmployeesBinding.inflate(layoutInflater)
 
    private val TAG = this.javaClass.simpleName
 
@@ -72,7 +73,6 @@ class EmployeesFragment : BaseFragment(R.layout.fragment_employees) {
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentEmployeesBinding.bind(view)
 
       setupShimmerLoading()
       setupRecyclerView()

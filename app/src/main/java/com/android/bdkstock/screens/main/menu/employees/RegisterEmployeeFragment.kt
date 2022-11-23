@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.android.bdkstock.R
+import com.android.bdkstock.databinding.FragmentEmployeesBinding
 import com.android.bdkstock.databinding.FragmentRegisterEmployeeBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
@@ -14,14 +15,14 @@ import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterEmployeeFragment : BaseFragment(R.layout.fragment_register_employee) {
+class RegisterEmployeeFragment :
+   BaseFragment<RegisterEmployeeViewModel, FragmentRegisterEmployeeBinding>() {
 
-   private lateinit var binding: FragmentRegisterEmployeeBinding
    override val viewModel by viewModels<RegisterEmployeeViewModel>()
+   override fun getViewBinding() = FragmentRegisterEmployeeBinding.inflate(layoutInflater)
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentRegisterEmployeeBinding.bind(view)
 
       observeState()
       observeNavigation()

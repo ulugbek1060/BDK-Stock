@@ -62,7 +62,7 @@ class IngredientsRepository @Inject constructor(
 
    fun getExpensesAndIncomesOfIngredients(
       query: String? = null,
-      operationsStatus: String? = null,
+      operationsStatus: Int? = null,
       fromDate: String? = null,
       toDate: String? = null,
       ingredientId: Int? = null,

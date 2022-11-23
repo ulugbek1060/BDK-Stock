@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
+import com.android.bdkstock.databinding.FragmentDisplayDriverBinding
 import com.android.bdkstock.databinding.FragmentDriversBinding
 import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemDriverBinding
@@ -36,11 +37,11 @@ import kotlinx.coroutines.launch
 @FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class DriversFragment : BaseFragment(R.layout.fragment_drivers) {
+class DriversFragment : BaseFragment<DriversViewModel, FragmentDriversBinding>() {
 
    override val viewModel by viewModels<DriversViewModel>()
-   private lateinit var binding: FragmentDriversBinding
    private lateinit var layoutManager: LinearLayoutManager
+   override fun getViewBinding() = FragmentDriversBinding.inflate(layoutInflater)
 
    @SuppressLint("SetTextI18n")
    private val adapter = pagingAdapter<DriverEntity, RecyclerItemDriverBinding> {
@@ -72,7 +73,6 @@ class DriversFragment : BaseFragment(R.layout.fragment_drivers) {
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentDriversBinding.bind(view)
 
       setupRecyclerView()
       setupShimmerLoading()

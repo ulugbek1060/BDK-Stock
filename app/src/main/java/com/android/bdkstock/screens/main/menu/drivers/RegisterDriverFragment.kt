@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.android.bdkstock.R
+import com.android.bdkstock.databinding.FragmentDriversBinding
 import com.android.bdkstock.databinding.FragmentRegisterDriverBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
@@ -14,14 +15,14 @@ import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterDriverFragment : BaseFragment(R.layout.fragment_register_driver) {
+class RegisterDriverFragment :
+   BaseFragment<RegisterDriverViewModel, FragmentRegisterDriverBinding>() {
 
    override val viewModel by viewModels<RegisterDriverViewModel>()
-   private lateinit var binding: FragmentRegisterDriverBinding
+   override fun getViewBinding() = FragmentRegisterDriverBinding.inflate(layoutInflater)
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentRegisterDriverBinding.bind(view)
 
       observeState()
 

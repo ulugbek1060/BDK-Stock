@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
+import com.android.bdkstock.databinding.FragmentIngredientsOperationsBinding
 import com.android.bdkstock.databinding.FragmentIngredientsTypeBinding
 import com.android.bdkstock.databinding.ProgressItemBiggerBinding
 import com.android.bdkstock.databinding.RecyclerItemIngredientBinding
@@ -27,11 +28,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class IngredientsTypeFragment : BaseFragment(R.layout.fragment_ingredients_type) {
+class IngredientsTypeFragment :
+   BaseFragment<IngredientsTypeViewModel, FragmentIngredientsTypeBinding>() {
 
    override val viewModel by viewModels<IngredientsTypeViewModel>()
-   private lateinit var binding: FragmentIngredientsTypeBinding
    private lateinit var layoutManager: LinearLayoutManager
+   override fun getViewBinding() = FragmentIngredientsTypeBinding.inflate(layoutInflater)
 
    @SuppressLint("SetTextI18n")
    private val adapter = pagingAdapter<IngredientEntity, RecyclerItemIngredientBinding> {
@@ -62,7 +64,6 @@ class IngredientsTypeFragment : BaseFragment(R.layout.fragment_ingredients_type)
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentIngredientsTypeBinding.bind(view)
 
       setupProgress()
       setupRecyclerView()

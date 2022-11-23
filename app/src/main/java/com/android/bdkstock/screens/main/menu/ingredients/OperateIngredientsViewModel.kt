@@ -99,7 +99,7 @@ class OperateIngredientsViewModel @Inject constructor(
    ) {
 
       fun getTitle(context: Context) =
-         if (operationId == IngredientsOperationsFragment.OPERATION_INCOME)
+         if (operationId == OPERATION_INCOME)
             context.getString(R.string.income)
          else
             context.getString(R.string.expense)
@@ -117,4 +117,7 @@ class OperateIngredientsViewModel @Inject constructor(
          else null
    }
 
+   private companion object {
+      const val OPERATION_INCOME = 0
+   }
 }

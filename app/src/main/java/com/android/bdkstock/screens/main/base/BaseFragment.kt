@@ -2,18 +2,31 @@ package com.android.bdkstock.screens.main.base
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.navOptions
+import androidx.viewbinding.ViewBinding
 import com.android.bdkstock.R
 import com.android.bdkstock.views.findTopNavController
 import com.android.model.utils.observeEvent
 
-abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
+abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewBinding> : Fragment() {
 
-   abstract val viewModel: BaseViewModel
+   protected abstract val viewModel: BaseViewModel
+   private var _binding: Binding? = null
+   protected val binding get() = _binding!!
+
+   override fun onCreateView(
+      inflater: LayoutInflater,
+      container: ViewGroup?,
+      savedInstanceState: Bundle?
+   ): View? {
+      _binding = getViewBinding()
+      return _binding!!.root
+   }
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
@@ -48,6 +61,8 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
          }
       })
    }
+
+   abstract fun getViewBinding(): Binding
 
    fun String.formatDate(context: Context): String = try {
       //2022-11-20T10:19:25.000000Z
@@ -99,5 +114,10 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
       "$day $txtMonth $year"
    } catch (e: Exception) {
       this
+   }
+
+   override fun onDestroyView() {
+      _binding = null
+      super.onDestroyView()
    }
 }

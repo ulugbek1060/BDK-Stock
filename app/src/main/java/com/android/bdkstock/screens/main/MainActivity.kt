@@ -24,8 +24,10 @@ class MainActivity : AppCompatActivity() {
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
-      binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
+      binding = ActivityMainBinding.inflate(layoutInflater)
+      setContentView(binding.root)
 
+      Log.d(TAG, "onCreate: ")
       val navHost =
          supportFragmentManager.findFragmentById(R.id.fragment_main_container) as NavHostFragment
       navController = navHost.navController
@@ -74,5 +76,15 @@ class MainActivity : AppCompatActivity() {
 
    override fun onSupportNavigateUp(): Boolean {
       return navController.navigateUp() || super.onSupportNavigateUp()
+   }
+
+   override fun onStart() {
+      super.onStart()
+      Log.d(TAG, "onStart: ")
+   }
+
+   override fun onDestroy() {
+      super.onDestroy()
+      Log.d(TAG, "onDestroy: ")
    }
 }

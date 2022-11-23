@@ -286,7 +286,11 @@
     android:id="@+id/filterOperationsFragment"
     android:name="com.android.bdkstock.screens.main.menu.ingredients.FilterOperationsFragment"
     android:label="fragment_filter_operations"
-    tools:layout="@layout/fragment_filter_operations" />
+    tools:layout="@layout/fragment_filter_operations" >
+    <argument
+      android:name="filterData"
+      app:argType="com.android.bdkstock.screens.main.menu.ingredients.FilterOperations" />
+  </dialog>
   <dialog
     android:id="@+id/displayOperationsFragment"
     android:name="com.android.bdkstock.screens.main.menu.ingredients.DisplayOperationsFragment"

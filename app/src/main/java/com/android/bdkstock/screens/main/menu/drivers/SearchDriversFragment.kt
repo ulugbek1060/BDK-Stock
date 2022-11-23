@@ -13,6 +13,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
+import com.android.bdkstock.databinding.FragmentRegisterDriverBinding
 import com.android.bdkstock.databinding.FragmentSearchDriversBinding
 import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemDriverBinding
@@ -30,11 +31,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchDriversFragment : BaseFragment(R.layout.fragment_search_drivers) {
+class SearchDriversFragment : BaseFragment<SearchDriversViewModel, FragmentSearchDriversBinding>() {
 
    override val viewModel by viewModels<SearchDriversViewModel>()
-   private lateinit var binding: FragmentSearchDriversBinding
    private lateinit var layoutManager: LinearLayoutManager
+   override fun getViewBinding() = FragmentSearchDriversBinding.inflate(layoutInflater)
 
    @SuppressLint("SetTextI18n")
    private val adapter = pagingAdapter<DriverEntity, RecyclerItemDriverBinding> {
@@ -68,7 +69,6 @@ class SearchDriversFragment : BaseFragment(R.layout.fragment_search_drivers) {
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentSearchDriversBinding.bind(view)
 
       setupRecycler()
       setupShimmerLoading()

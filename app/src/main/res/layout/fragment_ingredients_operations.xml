@@ -10,7 +10,6 @@
     android:id="@+id/tv_title"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:fontFamily="@font/font_bold"
     android:padding="@dimen/dimen_extra"
     android:text="@string/ingredients"
     android:textColor="@color/text_color"
@@ -26,12 +25,12 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/dimen_normal"
-    android:background="?attr/selectableItemBackgroundBorderless"
+    android:background="@drawable/background_blue"
     android:contentDescription="@string/search"
     android:padding="@dimen/dimen_normal"
-    android:src="@drawable/ic_filter_search"
     app:layout_constraintBottom_toBottomOf="@id/tv_title"
     app:layout_constraintRight_toRightOf="@id/tv_title"
+    android:src="@drawable/ic_filter"
     app:layout_constraintTop_toTopOf="@id/tv_title" />
 
   <LinearLayout
@@ -72,14 +71,12 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_add"
             android:ellipsize="end"
-            android:fontFamily="@font/font_regular"
             android:lines="1"
             android:text="@string/income"
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            app:drawableStartCompat="@drawable/ic_add" />
 
         </LinearLayout>
 
@@ -115,14 +112,12 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_remove"
             android:ellipsize="end"
-            android:fontFamily="@font/font_regular"
             android:lines="1"
             android:text="@string/expense"
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            app:drawableStartCompat="@drawable/ic_remove" />
 
         </LinearLayout>
 
@@ -159,12 +154,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:fontFamily="@font/font_regular"
             android:lines="1"
             android:text="@string/add"
             android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
 
         </LinearLayout>
 

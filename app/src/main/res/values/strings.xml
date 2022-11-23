@@ -102,5 +102,11 @@
   <string name="comments">Комментарии</string>
 
   <string name="inport">Импорт</string>
+  <string name="ingredient">Игредиенть</string>
+  <string name="all">Все</string>
+  <string name="from_date">с даты</string>
+  <string name="to_date">на дату</string>
+  <string name="clear">Очистить</string>
+  <string name="apply">Филтровать</string>
 
 </resources>

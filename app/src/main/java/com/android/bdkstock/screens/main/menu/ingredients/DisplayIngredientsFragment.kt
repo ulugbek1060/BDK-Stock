@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
+import com.android.bdkstock.databinding.FragmentAddIngredientsBinding
 import com.android.bdkstock.databinding.FragmentDisplayIngredientsBinding
 import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
@@ -19,11 +20,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class DisplayIngredientsFragment : BaseFragment(R.layout.fragment_display_ingredients) {
+class DisplayIngredientsFragment :
+   BaseFragment<DisplayIngredientsViewModel, FragmentDisplayIngredientsBinding>() {
 
    override val viewModel by viewModels<DisplayIngredientsViewModel>()
-   private lateinit var binding: FragmentDisplayIngredientsBinding
    private lateinit var layoutManager: LinearLayoutManager
+   override fun getViewBinding() = FragmentDisplayIngredientsBinding.inflate(layoutInflater)
 
    @SuppressLint("SetTextI18n")
    private val adapter =
@@ -61,7 +63,6 @@ class DisplayIngredientsFragment : BaseFragment(R.layout.fragment_display_ingred
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentDisplayIngredientsBinding.bind(view)
 
       setupRecyclerView()
       observeIngredients()

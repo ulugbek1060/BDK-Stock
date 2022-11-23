@@ -15,15 +15,17 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentDisplayDriverBinding
+import com.android.bdkstock.databinding.FragmentSearchClientsBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DisplayDriverFragment : BaseFragment(R.layout.fragment_display_driver) {
+class DisplayDriverFragment :
+   BaseFragment<DisplayDriverViewModel, FragmentDisplayDriverBinding>() {
 
    override val viewModel by viewModels<DisplayDriverViewModel>()
-   private lateinit var binding: FragmentDisplayDriverBinding
+   override fun getViewBinding() = FragmentDisplayDriverBinding.inflate(layoutInflater)
 
    private val requestCallPermissionLauncher = registerForActivityResult(
       ActivityResultContracts.RequestPermission(),
@@ -37,7 +39,6 @@ class DisplayDriverFragment : BaseFragment(R.layout.fragment_display_driver) {
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentDisplayDriverBinding.bind(view)
 
       observeState()
       observeVehicles()

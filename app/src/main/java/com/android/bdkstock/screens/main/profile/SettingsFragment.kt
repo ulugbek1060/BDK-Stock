@@ -6,20 +6,21 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.navOptions
 import com.android.bdkstock.R
+import com.android.bdkstock.databinding.FragmentProfileBinding
 import com.android.bdkstock.databinding.FragmentSettingsBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
+class SettingsFragment :
+   BaseFragment<SettingsViewModel, FragmentSettingsBinding>() {
 
-   private lateinit var binding: FragmentSettingsBinding
    override val viewModel by viewModels<SettingsViewModel>()
+   override fun getViewBinding() = FragmentSettingsBinding.inflate(layoutInflater)
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentSettingsBinding.bind(view)
 
       observeLogoutActions()
 

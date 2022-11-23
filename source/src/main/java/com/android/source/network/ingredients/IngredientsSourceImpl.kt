@@ -81,7 +81,7 @@ class IngredientsSourceImpl @Inject constructor(
 
    override suspend fun getExpensesAndIncomesOfIngredients(
       query: String?,
-      operationsStatus: String?,
+      operationsStatus: Int?,
       fromDate: String?,
       toDate: String?,
       ingredientId: Int?,

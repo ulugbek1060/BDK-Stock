@@ -16,17 +16,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentDisplayEmployeeBinding
+import com.android.bdkstock.databinding.FragmentSearchDriversBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DisplayEmployeeFragment : BaseFragment(R.layout.fragment_display_employee) {
+class DisplayEmployeeFragment :
+   BaseFragment<DisplayEmployeeViewModel, FragmentDisplayEmployeeBinding>() {
 
-   private lateinit var binding: FragmentDisplayEmployeeBinding
    override val viewModel by viewModels<DisplayEmployeeViewModel>()
-
-   private val TAG = this.javaClass.simpleName
+   override fun getViewBinding() = FragmentDisplayEmployeeBinding.inflate(layoutInflater)
 
    private val requestMessagePermissionLauncher = registerForActivityResult(
       ActivityResultContracts.RequestPermission(),
@@ -93,7 +93,6 @@ class DisplayEmployeeFragment : BaseFragment(R.layout.fragment_display_employee)
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentDisplayEmployeeBinding.bind(view)
 
       fetchEmployee()
       setupJobTitle()

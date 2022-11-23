@@ -14,11 +14,11 @@ import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MenuFragment : BaseFragment(R.layout.fragment_menu) {
+class MenuFragment : BaseFragment<MenuViewModel, FragmentMenuBinding>() {
 
-   private lateinit var binding: FragmentMenuBinding
    private lateinit var gridLayoutManager: GridLayoutManager
    override val viewModel by viewModels<MenuViewModel>()
+   override fun getViewBinding() = FragmentMenuBinding.inflate(layoutInflater)
 
    private val adapter = simpleAdapter<MenuItem, RecyclerItemMenuBinding> {
       areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
@@ -42,7 +42,6 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentMenuBinding.bind(view)
 
       setUpRecyclerView()
       observeMenusList()

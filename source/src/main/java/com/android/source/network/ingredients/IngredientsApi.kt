@@ -32,7 +32,7 @@ interface IngredientsApi {
       @Query("page") pageIndex: Int,
       @Query("count") pageSize: Int,
       @Query("search") query: String?,
-      @Query("status") operationsStatus: String?,
+      @Query("status") operationsStatus: Int?,
       @Query("dateFrom") fromDate: String?,
       @Query("dateTo") toDate: String?,
       @Query("material_id") ingredientId: Int?

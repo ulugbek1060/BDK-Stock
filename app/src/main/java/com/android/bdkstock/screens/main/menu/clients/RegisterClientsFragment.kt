@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.android.bdkstock.R
+import com.android.bdkstock.databinding.FragmentDisplayClientsBinding
 import com.android.bdkstock.databinding.FragmentRegisterClientsBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
@@ -13,14 +13,14 @@ import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterClientsFragment : BaseFragment(R.layout.fragment_register_clients) {
+class RegisterClientsFragment :
+   BaseFragment<RegisterClientsViewModel, FragmentRegisterClientsBinding>() {
 
    override val viewModel by viewModels<RegisterClientsViewModel>()
-   private lateinit var binding: FragmentRegisterClientsBinding
+   override fun getViewBinding() = FragmentRegisterClientsBinding.inflate(layoutInflater)
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentRegisterClientsBinding.bind(view)
 
       observeState()
 

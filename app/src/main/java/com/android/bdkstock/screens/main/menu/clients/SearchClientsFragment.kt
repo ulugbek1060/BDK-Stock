@@ -13,6 +13,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
+import com.android.bdkstock.databinding.FragmentRegisterClientsBinding
 import com.android.bdkstock.databinding.FragmentSearchClientsBinding
 import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemDriverBinding
@@ -30,11 +31,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchClientsFragment : BaseFragment(R.layout.fragment_search_clients) {
+class SearchClientsFragment : BaseFragment<SearchClientsViewModel, FragmentSearchClientsBinding>() {
 
    override val viewModel by viewModels<SearchClientsViewModel>()
-   private lateinit var binding: FragmentSearchClientsBinding
    private lateinit var layoutManager: LinearLayoutManager
+   override fun getViewBinding() = FragmentSearchClientsBinding.inflate(layoutInflater)
 
    @SuppressLint("SetTextI18n")
    private val adapter = pagingAdapter<ClientEntity, RecyclerItemDriverBinding> {
@@ -66,7 +67,6 @@ class SearchClientsFragment : BaseFragment(R.layout.fragment_search_clients) {
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      binding = FragmentSearchClientsBinding.bind(view)
 
       setupRecycler()
       setupShimmerLoading()
