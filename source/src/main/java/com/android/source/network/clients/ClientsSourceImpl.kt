@@ -61,27 +61,11 @@ class ClientsSourceImpl @Inject constructor(
    }
 
    override suspend fun getClientsList(
+      query: String?,
       pageIndex: Int,
       pageSize: Int
    ): List<ClientEntity> = wrapNetworkException {
-      clientsApi.getClients(pageIndex, pageSize).clients.clients.map {
-         ClientEntity(
-            clientId = it.id,
-            fullName = it.name,
-            phoneNumber = it.phoneNumber,
-            address = it.address,
-            createdAt = it.createdAt,
-            updatedAt = it.updatedAt
-         )
-      }
-   }
-
-   override suspend fun getClientsByQuery(
-      query: String,
-      pageIndex: Int,
-      pageSize: Int
-   ): List<ClientEntity> = wrapNetworkException {
-      clientsApi.getClientsByQuery(query, pageIndex, pageSize).clients.clients.map {
+      clientsApi.getClients(query = query, pageIndex, pageSize).clients.clients.map {
          ClientEntity(
             clientId = it.id,
             fullName = it.name,

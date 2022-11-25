@@ -47,10 +47,4 @@ interface EmployeesSource {
       job: Int
    ): String // message
 
-   suspend fun searchBy(
-      query: String?,
-      pageIndex: Int,
-      pageSize: Int
-   ): List<EmployeeEntity>
-
 }

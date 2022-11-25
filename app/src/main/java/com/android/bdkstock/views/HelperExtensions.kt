@@ -19,9 +19,7 @@ import com.android.bdkstock.R
 import com.android.model.utils.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.*
 
 
 fun Fragment.navigate(destinationId: Int) {
@@ -96,5 +94,14 @@ fun DialogFragment.setFullScreen() {
       ViewGroup.LayoutParams.WRAP_CONTENT
    )
 }
+
+//fun <T> Flow<T>.asResult(): Flow<Result<T>> {
+//   return this
+//      .map<T, Result<T>> {
+//         Result.Success(it)
+//      }
+//      .onStart { emit(Result.Loading) }
+//      .catch { emit(Result.Error(it)) }
+//}
 
 

@@ -6,14 +6,13 @@
   <dimen name="dimen_big">16dp</dimen>
   <dimen name="dimen_extra">20dp</dimen>
 
-  <dimen name="corner_small">6dp</dimen>
-  <dimen name="corner_normal">12dp</dimen>
-  <dimen name="corner_big">18dp</dimen>
-  <dimen name="corner_extra">24dp</dimen>
+  <dimen name="corner_small">2dp</dimen>
+  <dimen name="corner_normal">4dp</dimen>
+  <dimen name="corner_big">6dp</dimen>
+  <dimen name="corner_extra">8dp</dimen>
 
   <dimen name="text_size_small">12sp</dimen>
   <dimen name="text_size_normal">16sp</dimen>
   <dimen name="text_size_big">20sp</dimen>
   <dimen name="text_size_extra">22sp</dimen>
-  <dimen name="margin_recycler_item_regular">8dp</dimen>
 </resources>

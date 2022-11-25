@@ -49,18 +49,15 @@ class ClientsRepository @Inject constructor(
       clientSource.getClientById(clientId)
    }
 
-   fun getClientsList(): Flow<PagingData<ClientEntity>> = getPagerData {
+   fun getClientsList(query: String? = null): Flow<PagingData<ClientEntity>> = getPagerData {
       val loader: DataLoader<ClientEntity> = { pageIndex ->
-         clientSource.getClientsList(pageIndex = pageIndex, pageSize = DEFAULT_PAGE_SIZE)
+         clientSource.getClientsList(
+            query = query,
+            pageIndex = pageIndex,
+            pageSize = DEFAULT_PAGE_SIZE
+         )
       }
-      BasePageSource(loader)
-   }
-
-   fun getClientsByQuery(query: String): Flow<PagingData<ClientEntity>> = getPagerData {
-      val loader: DataLoader<ClientEntity> = { pageIndex ->
-         clientSource.getClientsByQuery(query, pageIndex = pageIndex, pageSize = DEFAULT_PAGE_SIZE)
-      }
-      BasePageSource(loader)
+      BasePageSource(loader = loader, defaultPageSize = DEFAULT_PAGE_SIZE)
    }
 
    private companion object {

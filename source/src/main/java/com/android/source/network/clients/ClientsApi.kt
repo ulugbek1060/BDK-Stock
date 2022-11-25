@@ -25,14 +25,7 @@ interface ClientsApi {
    @Headers("Content-Type: application/json", "Accept: application/json")
    @GET("api/client/get")
    suspend fun getClients(
-      @Query("page") pageIndex: Int,
-      @Query("count") pageSize: Int,
-   ): ClientListResponseEntity
-
-   @Headers("Content-Type: application/json", "Accept: application/json")
-   @GET("api/client/get")
-   suspend fun getClientsByQuery(
-      @Query("search") search: String,
+      @Query("search") query: String?,
       @Query("page") pageIndex: Int,
       @Query("count") pageSize: Int,
    ): ClientListResponseEntity

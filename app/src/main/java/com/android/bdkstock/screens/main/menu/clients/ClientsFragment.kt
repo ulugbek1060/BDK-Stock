@@ -2,16 +2,22 @@ package com.android.bdkstock.screens.main.menu.clients
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentClientsBinding
-import com.android.bdkstock.databinding.FragmentMenuBinding
 import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemClientBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
@@ -24,16 +30,25 @@ import com.android.model.utils.AuthException
 import com.android.model.utils.observeEvent
 import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class ClientsFragment : BaseFragment<ClientsViewModel, FragmentClientsBinding>() {
+class ClientsFragment :
+   BaseFragment<ClientsViewModel, FragmentClientsBinding>(),
+   SearchView.OnQueryTextListener{
+
+   private val TAG = "ClientsFragment"
 
    override val viewModel by viewModels<ClientsViewModel>()
    private lateinit var layoutManager: LinearLayoutManager
    override fun getViewBinding() = FragmentClientsBinding.inflate(layoutInflater)
+   private lateinit var searchView: SearchView
 
    private val adapter = pagingAdapter<ClientEntity, RecyclerItemClientBinding> {
       areItemsSame = { oldItem, newItem -> oldItem.clientId == newItem.clientId }
@@ -74,11 +89,23 @@ class ClientsFragment : BaseFragment<ClientsViewModel, FragmentClientsBinding>()
 
       binding.extendedFab.setOnClickListener { fabOnClick() }
 
-      binding.buttonSearch.setOnClickListener { searchOnClick() }
+      requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
    }
 
-   private fun searchOnClick() {
-      findTopNavController().navigate(R.id.action_actionsFragment_to_searchClientsFragment)
+   private val menuProvider = object : MenuProvider {
+      override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+         menuInflater.inflate(R.menu.menu_search, menu)
+         val myActionMenuItem = menu.findItem(R.id.search)
+         searchView = myActionMenuItem.actionView as SearchView
+         searchView.setOnQueryTextListener(this@ClientsFragment)
+         searchView.setOnSearchClickListener {
+            viewModel.setQuery(viewModel.getQuery().toString())
+         }
+      }
+
+      override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+         return false
+      }
    }
 
    private fun fabOnClick() {
@@ -119,7 +146,7 @@ class ClientsFragment : BaseFragment<ClientsViewModel, FragmentClientsBinding>()
       })
    }
 
-   private fun handleViewVisibility() = lifecycleScope.launch {
+   private fun handleViewVisibility() = lifecycleScope.launchWhenStarted {
       adapter
          .loadStateFlow
          .map { it.refresh }
@@ -163,4 +190,14 @@ class ClientsFragment : BaseFragment<ClientsViewModel, FragmentClientsBinding>()
       binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
       binding.recyclerProgress.adapter = shimmerAdapter
    }
+
+   override fun onQueryTextSubmit(query: String?): Boolean {
+      return true
+   }
+
+   override fun onQueryTextChange(newText: String?): Boolean {
+      viewModel.setQuery(newText)
+      return true
+   }
+
 }

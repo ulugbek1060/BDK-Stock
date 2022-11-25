@@ -81,29 +81,11 @@ class DriversSourceImpl @Inject constructor(
    }
 
    override suspend fun getDrivers(
+      query: String?,
       pageIndex: Int,
       pageSize: Int
    ): List<DriverEntity> = wrapNetworkException {
-      driversApi.getDriversList(pageIndex, pageSize).driverList.map { driver ->
-         DriverEntity(
-            id = driver.id,
-            driverFullName = driver.name,
-            phoneNumber = driver.phoneNumber,
-            autoRegNumber = driver.avtoNumber,
-            vehicle = VehicleModelEntity(
-               id = driver.model.id,
-               name = driver.model.name
-            )
-         )
-      }
-   }
-
-   override suspend fun getDriversByQuery(
-      search: String,
-      pageIndex: Int,
-      pageSize: Int
-   ): List<DriverEntity> = wrapNetworkException {
-      driversApi.getDriversByQuery(search, pageIndex, pageSize).driverList.map { driver ->
+      driversApi.getDriversList(query = query, pageIndex, pageSize).driverList.map { driver ->
          DriverEntity(
             id = driver.id,
             driverFullName = driver.name,

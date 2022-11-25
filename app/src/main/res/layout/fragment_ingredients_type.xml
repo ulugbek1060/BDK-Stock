@@ -6,58 +6,24 @@
   android:layout_height="match_parent"
   tools:context=".screens.main.menu.ingredients.IngredientsTypeFragment">
 
-  <TextView
-    android:id="@+id/tv_title"
-    android:layout_width="0dp"
-    android:layout_height="?attr/actionBarSize"
-    android:fontFamily="@font/font_bold"
-    android:gravity="center_vertical"
-    android:text="@string/ingredients"
-    android:textColor="@color/text_color"
-    android:textSize="@dimen/text_size_big"
-    android:textStyle="bold"
-    app:layout_constraintLeft_toRightOf="@id/back"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-  <ImageView
-    android:id="@+id/back"
-    android:layout_width="wrap_content"
-    android:layout_height="?attr/actionBarSize"
-    android:background="?attr/selectableItemBackgroundBorderless"
-    android:contentDescription="@string/back"
-    android:paddingHorizontal="@dimen/dimen_big"
-    android:src="@drawable/ic_arrow_left"
-    app:layout_constraintBottom_toBottomOf="@id/tv_title"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     android:id="@+id/refresh_layout"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_title">
+    android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recycler_ingredients"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      tools:listitem="@layout/recycler_item_ingredient"  />
+      tools:listitem="@layout/recycler_item_ingredient" />
 
   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/recycler_progress"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:visibility="gone"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_title"/>
+    android:layout_height="match_parent"
+    android:visibility="gone" />
 
   <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
     android:id="@+id/extended_fab"
@@ -67,7 +33,7 @@
     android:contentDescription="@string/add"
     android:text="@string/add"
     android:textColor="@color/white"
-    app:backgroundTint="@color/blue"
+    app:backgroundTint="?attr/colorPrimary"
     app:icon="@drawable/ic_add"
     app:iconTint="@color/white"
     app:layout_constraintBottom_toBottomOf="parent"

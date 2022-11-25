@@ -88,18 +88,11 @@ class DriversRepository @Inject constructor(
       }
    }
 
-   fun getDriversList(): Flow<PagingData<DriverEntity>> = getPagerData {
+   fun getDriversList(query: String? = null): Flow<PagingData<DriverEntity>> = getPagerData {
       val loader: DataLoader<DriverEntity> = { pageIndex ->
-         driversSource.getDrivers(pageIndex, PAGE_SIZE)
+         driversSource.getDrivers(query = query, pageIndex, PAGE_SIZE)
       }
-      BasePageSource(loader)
-   }
-
-   fun getDriversByQuery(query: String): Flow<PagingData<DriverEntity>> = getPagerData {
-      val loader: DataLoader<DriverEntity> = { pageIndex ->
-         driversSource.getDriversByQuery(query, pageIndex, PAGE_SIZE)
-      }
-      BasePageSource(loader)
+      BasePageSource(loader = loader, defaultPageSize = DEFAULT_PAGE_SIZE)
    }
 
    companion object {

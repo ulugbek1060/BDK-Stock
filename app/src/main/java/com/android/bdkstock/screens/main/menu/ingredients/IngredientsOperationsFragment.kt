@@ -4,10 +4,17 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.ui.onNavDestinationSelected
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
@@ -27,6 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.io.Serializable
 
 @AndroidEntryPoint
 class IngredientsOperationsFragment :
@@ -35,8 +43,6 @@ class IngredientsOperationsFragment :
    override val viewModel by viewModels<IngredientsOperationsViewModel>()
    private lateinit var layoutManager: LinearLayoutManager
    override fun getViewBinding() = FragmentIngredientsOperationsBinding.inflate(layoutInflater)
-
-   private val TAG = "IngredientsOperationsFr"
 
    @SuppressLint("SetTextI18n")
    private val adapter =
@@ -96,19 +102,24 @@ class IngredientsOperationsFragment :
 
       observeFilterResult()
 
-      navigateToFilterFrag()
-
       binding.buttonIncome.setOnClickListener { incomeOnClick() }
       binding.buttonExpense.setOnClickListener { expenseOnClick() }
       binding.buttonAdd.setOnClickListener { addOnClick() }
-      binding.buttonFilter.setOnClickListener { filterOnClick() }
+
+      requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
+
    }
 
-   private fun navigateToFilterFrag() {
-      viewModel.navigateToFilterFrag.observeEvent(viewLifecycleOwner) { filter ->
-         val args = ActionsFragmentDirections
-            .actionActionsFragmentToFilterOperationsFragment(filter)
-         findTopNavController().navigate(args)
+   private val menuProvider = object : MenuProvider {
+      override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+         menuInflater.inflate(R.menu.menu_filter, menu)
+      }
+
+      override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+         if (menuItem.itemId == R.id.filter){
+            // TODO: open filter dialog
+         }
+         return false
       }
    }
 
@@ -120,10 +131,6 @@ class IngredientsOperationsFragment :
          ?.observe(viewLifecycleOwner) {
             viewModel.setFilterData(it)
          }
-   }
-
-   private fun filterOnClick() {
-      viewModel.toFilterFrag()
    }
 
    private fun addOnClick() {
@@ -197,11 +204,6 @@ class IngredientsOperationsFragment :
       }
    }
 
-   override fun onDestroy() {
-      super.onDestroy()
-      Log.d(TAG, "onDestroy: ")
-   }
-
    // -- Progress with shimmer layout
 
    private val progressAdapter = simpleAdapter<Any, ProgressItemBiggerBinding> {}
@@ -216,4 +218,10 @@ class IngredientsOperationsFragment :
       const val OPERATION_EXPENSE = 1
       const val FILTER_DATA_KEY = "filter_data"
    }
+
+   data class FilterOperations(
+      val status: Int? = null,
+      val fromDate: String? = null,
+      val toDate: String? = null
+   ) : Serializable
 }

@@ -15,7 +15,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentDisplayDriverBinding
-import com.android.bdkstock.databinding.FragmentSearchClientsBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DisplayDriverFragment :
    BaseFragment<DisplayDriverViewModel, FragmentDisplayDriverBinding>() {
+
+   // TODO: initialize edit button
 
    override val viewModel by viewModels<DisplayDriverViewModel>()
    override fun getViewBinding() = FragmentDisplayDriverBinding.inflate(layoutInflater)
@@ -48,7 +49,7 @@ class DisplayDriverFragment :
       observeSuccessMessage()
 
       binding.buttonSave.setOnClickListener { saveOnClick() }
-      binding.buttonEdit.setOnClickListener { toggleOnClick() }
+//      binding.buttonEdit.setOnClickListener { toggleOnClick() }
       binding.buttonCall.setOnClickListener { callOnClick() }
       binding.buttonMessage.setOnClickListener { messageOnClick() }
    }
@@ -142,10 +143,10 @@ class DisplayDriverFragment :
 
          //colors
 //         binding.containerSaveButton.setBackgroundColor(state.getButtonSaveColor(requireContext()))
-         binding.buttonEdit.setTextColor(state.getToggleButtonColor(requireContext()))
+//         binding.buttonEdit.setTextColor(state.getToggleButtonColor(requireContext()))
 
          //text
-         binding.buttonEdit.setText(state.getToggleButtonText(requireContext()))
+//         binding.buttonEdit.setText(state.getToggleButtonText(requireContext()))
 
          //visibility
          binding.buttonSave.isVisible = state.isChangeableEnable && !state.isInProgress

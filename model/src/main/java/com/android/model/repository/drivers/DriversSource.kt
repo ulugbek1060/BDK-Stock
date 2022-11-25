@@ -65,12 +65,5 @@ interface DriversSource {
     * @throws BackendException
     * @throws Exception
     */
-   suspend fun getDrivers(pageIndex: Int, pageSize: Int): List<DriverEntity>
-
-   /**
-    * @throws BackendException
-    * @throws Exception
-    */
-   suspend fun getDriversByQuery(search: String, pageIndex: Int, pageSize: Int): List<DriverEntity>
-
+   suspend fun getDrivers(query: String?, pageIndex: Int, pageSize: Int): List<DriverEntity>
 }

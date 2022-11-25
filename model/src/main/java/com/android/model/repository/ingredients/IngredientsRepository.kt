@@ -37,7 +37,7 @@ class IngredientsRepository @Inject constructor(
             pageSize = DEFAULT_PAGE_SIZE
          )
       }
-      BasePageSource(loader)
+      BasePageSource(loader = loader, defaultPageSize = DEFAULT_PAGE_SIZE)
    }
 
    suspend fun addExpensesAndIncomesOfIngredient(
@@ -78,6 +78,6 @@ class IngredientsRepository @Inject constructor(
             pageSize = DEFAULT_PAGE_SIZE
          )
       }
-      BasePageSource(loader)
+      BasePageSource(loader, defaultPageSize = DEFAULT_PAGE_SIZE)
    }
 }

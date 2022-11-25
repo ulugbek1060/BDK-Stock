@@ -13,8 +13,7 @@ import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SettingsFragment :
-   BaseFragment<SettingsViewModel, FragmentSettingsBinding>() {
+class SettingsFragment : BaseFragment<SettingsViewModel, FragmentSettingsBinding>() {
 
    override val viewModel by viewModels<SettingsViewModel>()
    override fun getViewBinding() = FragmentSettingsBinding.inflate(layoutInflater)

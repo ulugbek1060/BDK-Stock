@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentAddIngredientsBinding
 import com.android.bdkstock.databinding.FragmentDisplayIngredientsBinding
 import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
@@ -22,6 +21,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class DisplayIngredientsFragment :
    BaseFragment<DisplayIngredientsViewModel, FragmentDisplayIngredientsBinding>() {
+
 
    override val viewModel by viewModels<DisplayIngredientsViewModel>()
    private lateinit var layoutManager: LinearLayoutManager
@@ -67,8 +67,6 @@ class DisplayIngredientsFragment :
       setupRecyclerView()
       observeIngredients()
       observeIngredientFields()
-
-      binding.back.setOnClickListener { findTopNavController().popBackStack() }
    }
 
    private fun observeIngredients() = lifecycleScope.launch {

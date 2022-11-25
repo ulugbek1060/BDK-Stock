@@ -12,8 +12,6 @@ class EmployeesSourceIml @Inject constructor(
    private val employeesApi: EmployeesApi
 ) : BaseNetworkSource(), EmployeesSource {
 
-   private val TAG = this.javaClass.simpleName
-
    override suspend fun registerEmployee(
       firstname: String,
       lastname: String,
@@ -42,31 +40,6 @@ class EmployeesSourceIml @Inject constructor(
       )
    }
 
-   override suspend fun getEmployees(
-      query: String?,
-      pageIndex: Int,
-      pageSize: Int
-   ): List<EmployeeEntity> = wrapNetworkException {
-      employeesApi.getEmployees(
-         query = query,
-         pageIndex = pageIndex,
-         pageSize = pageSize
-      ).data.map { employee ->
-
-         EmployeeEntity(
-            address = employee.address,
-            firstname = employee.firstname,
-            id = employee.id,
-            job = JobEntity(
-               id = employee.job.id,
-               name = employee.job.name
-            ),
-            lastname = employee.lastname,
-            phoneNumber = employee.phoneNumber
-         )
-      }
-   }
-
    override suspend fun updateEmployee(
       id: Long,
       firstname: String,
@@ -87,16 +60,17 @@ class EmployeesSourceIml @Inject constructor(
       employeesApi.updateEmployee(id, body).message
    }
 
-   override suspend fun searchBy(
+   override suspend fun getEmployees(
       query: String?,
       pageIndex: Int,
       pageSize: Int
    ): List<EmployeeEntity> = wrapNetworkException {
-      employeesApi.getEmployeesSearchBy(
+      employeesApi.getEmployees(
          query = query,
          pageIndex = pageIndex,
          pageSize = pageSize
       ).data.map { employee ->
+
          EmployeeEntity(
             address = employee.address,
             firstname = employee.firstname,

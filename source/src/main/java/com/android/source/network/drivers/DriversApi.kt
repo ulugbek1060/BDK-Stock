@@ -38,15 +38,7 @@ interface DriversApi {
 
    @GET("api/driver/get")
    suspend fun getDriversList(
-      @Query("page") pageIndex: Int,
-      @Query("count") pageSize: Int,
-      @Header(HEADER_KEY_CONTENT_TYPE) type: String = HEADER_VALUE_CONTENT_TYPE,
-      @Header(Const.HEADER_KEY_ACCEPT) accept: String = HEADER_VALUE_ACCEPT
-   ): DriversListResponseEntity
-
-   @GET("api/driver/get")
-   suspend fun getDriversByQuery(
-      @Query("search") query: String,
+      @Query("search") query: String?,
       @Query("page") pageIndex: Int,
       @Query("count") pageSize: Int,
       @Header(HEADER_KEY_CONTENT_TYPE) type: String = HEADER_VALUE_CONTENT_TYPE,

@@ -3,9 +3,15 @@ package com.android.bdkstock.screens.main.menu.drivers
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navOptions
 import androidx.paging.LoadState
@@ -13,7 +19,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentDisplayDriverBinding
 import com.android.bdkstock.databinding.FragmentDriversBinding
 import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemDriverBinding
@@ -37,7 +42,9 @@ import kotlinx.coroutines.launch
 @FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class DriversFragment : BaseFragment<DriversViewModel, FragmentDriversBinding>() {
+class DriversFragment :
+   BaseFragment<DriversViewModel, FragmentDriversBinding>(),
+   SearchView.OnQueryTextListener {
 
    override val viewModel by viewModels<DriversViewModel>()
    private lateinit var layoutManager: LinearLayoutManager
@@ -45,7 +52,7 @@ class DriversFragment : BaseFragment<DriversViewModel, FragmentDriversBinding>()
 
    @SuppressLint("SetTextI18n")
    private val adapter = pagingAdapter<DriverEntity, RecyclerItemDriverBinding> {
-      areItemsSame = {  oldItem, newItem-> oldItem.id == newItem.id}
+      areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
       areContentsSame = { oldItem, newItem -> oldItem == newItem }
       bind { driver ->
          tvFullname.text = driver.driverFullName
@@ -82,11 +89,21 @@ class DriversFragment : BaseFragment<DriversViewModel, FragmentDriversBinding>()
       handleViewVisibility()
 
       binding.extendedFab.setOnClickListener { fabOnClick() }
-      binding.buttonSearch.setOnClickListener { searchOnClick() }
+
+      requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
    }
 
-   private fun searchOnClick() {
-      findTopNavController().navigate(R.id.action_actionsFragment_to_searchDriverFragment)
+   private val menuProvider = object : MenuProvider {
+      override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+         menuInflater.inflate(R.menu.menu_search, menu)
+         val myActionMenuItem = menu.findItem(R.id.search)
+         val searchView = myActionMenuItem.actionView as SearchView
+         searchView.setOnQueryTextListener(this@DriversFragment)
+      }
+
+      override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+         return false
+      }
    }
 
    private fun observeErrorEvent() {
@@ -147,7 +164,7 @@ class DriversFragment : BaseFragment<DriversViewModel, FragmentDriversBinding>()
       }
    }
 
-   private fun handleViewVisibility() = lifecycleScope.launch {
+   private fun handleViewVisibility() = lifecycleScope.launchWhenStarted {
       getRefreshLoadStateFlow().collectLatest { loadState ->
          binding.recyclerDrivers.isVisible = loadState != LoadState.Loading
          binding.recyclerProgress.isVisible = loadState == LoadState.Loading
@@ -178,5 +195,14 @@ class DriversFragment : BaseFragment<DriversViewModel, FragmentDriversBinding>()
       shimmerAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8))
       binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
       binding.recyclerProgress.adapter = shimmerAdapter
+   }
+
+   override fun onQueryTextSubmit(query: String?): Boolean {
+      return true
+   }
+
+   override fun onQueryTextChange(newText: String?): Boolean {
+      viewModel.setQuery(newText)
+      return true
    }
 }

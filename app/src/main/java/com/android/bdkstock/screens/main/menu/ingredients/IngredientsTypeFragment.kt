@@ -73,16 +73,11 @@ class IngredientsTypeFragment :
 
       observeAuthError()
 
-      binding.back.setOnClickListener { backOnClick() }
       binding.extendedFab.setOnClickListener { addOnClick() }
    }
 
    private fun addOnClick() {
       findTopNavController().navigate(R.id.action_ingredientsTypeFragment_to_addIngredientsFragment)
-   }
-
-   private fun backOnClick() {
-      findTopNavController().popBackStack()
    }
 
    private fun setupRecyclerView() = binding.apply {

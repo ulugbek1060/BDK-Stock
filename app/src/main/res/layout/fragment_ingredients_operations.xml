@@ -1,47 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:orientation="vertical"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   tools:context=".screens.main.menu.ingredients.IngredientsOperationsFragment">
-
-  <TextView
-    android:id="@+id/tv_title"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/dimen_extra"
-    android:text="@string/ingredients"
-    android:textColor="@color/text_color"
-    android:textSize="@dimen/text_size_big"
-    android:textStyle="bold"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-
-  <ImageButton
-    android:id="@+id/button_filter"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/dimen_normal"
-    android:background="@drawable/background_blue"
-    android:contentDescription="@string/search"
-    android:padding="@dimen/dimen_normal"
-    app:layout_constraintBottom_toBottomOf="@id/tv_title"
-    app:layout_constraintRight_toRightOf="@id/tv_title"
-    android:src="@drawable/ic_filter"
-    app:layout_constraintTop_toTopOf="@id/tv_title" />
 
   <LinearLayout
     android:id="@+id/buttons_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingBottom="@dimen/dimen_small"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_title">
+    android:orientation="horizontal">
 
     <androidx.cardview.widget.CardView
       android:id="@+id/button_income"
@@ -167,22 +137,10 @@
 
   </LinearLayout>
 
-  <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="@color/line"
-    app:layout_constraintBottom_toBottomOf="@id/buttons_container"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent" />
-
   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     android:id="@+id/refresh_layout"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/buttons_container">
+    android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recycler_ingredients"
@@ -195,13 +153,9 @@
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/recycler_progress"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
+    android:layout_height="match_parent"
     android:visibility="gone"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/buttons_container"
     tools:listitem="@layout/progress_item_smaller" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

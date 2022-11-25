@@ -16,7 +16,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentDisplayEmployeeBinding
-import com.android.bdkstock.databinding.FragmentSearchDriversBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +23,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DisplayEmployeeFragment :
    BaseFragment<DisplayEmployeeViewModel, FragmentDisplayEmployeeBinding>() {
+
+   // TODO: initialize edit button
 
    override val viewModel by viewModels<DisplayEmployeeViewModel>()
    override fun getViewBinding() = FragmentDisplayEmployeeBinding.inflate(layoutInflater)
@@ -104,7 +105,7 @@ class DisplayEmployeeFragment :
       observeChangesDialogEvent()
 
       binding.buttonSave.setOnClickListener { saveOnClick() }
-      binding.buttonEdit.setOnCheckedChangeListener { _, isChecked -> toggleOnClick(isChecked) }
+//      binding.buttonEdit.setOnCheckedChangeListener { _, isChecked -> toggleOnClick(isChecked) }
       binding.buttonDelete.setOnClickListener { }
 
       binding.buttonCall.setOnClickListener {
@@ -121,7 +122,7 @@ class DisplayEmployeeFragment :
          AlertDialog.Builder(requireContext())
             .setTitle(R.string.edit)
             .setMessage(R.string.edit_user_details)
-            .setNegativeButton(R.string.no) { _, _ -> binding.buttonEdit.isChecked = false }
+//            .setNegativeButton(R.string.no) { _, _ -> binding.buttonEdit.isChecked = false }
             .setPositiveButton(R.string.yes) { _, _ -> viewModel.enableChangeableState() }
             .create()
             .show()
@@ -204,8 +205,8 @@ class DisplayEmployeeFragment :
          binding.inputLayoutJobTitle.isEnabled = state.isChangesEnable
 
          // colors
-         binding.buttonEdit.setTextColor(state.getToggleButtonColor(requireContext()))
-         binding.buttonEdit.setText(state.getToggleButtonText(requireContext()))
+//         binding.buttonEdit.setTextColor(state.getToggleButtonColor(requireContext()))
+//         binding.buttonEdit.setText(state.getToggleButtonText(requireContext()))
 
          // error messages
          binding.inputLayoutName.error = state.getNameError(requireContext())

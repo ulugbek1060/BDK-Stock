@@ -108,5 +108,6 @@
   <string name="to_date">на дату</string>
   <string name="clear">Очистить</string>
   <string name="apply">Филтровать</string>
+  <string name="filter">Филтеровать</string>
 
 </resources>

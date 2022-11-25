@@ -24,7 +24,6 @@
   <fragment
     android:id="@+id/actionsFragment"
     android:name="com.android.bdkstock.screens.main.ActionsFragment"
-    android:label="fragment_activity"
     tools:layout="@layout/fragment_actions">
 
     <action
@@ -58,20 +57,7 @@
       app:exitAnim="@anim/exit"
       app:popEnterAnim="@anim/pop_enter"
       app:popExitAnim="@anim/pop_exit" />
-    <action
-      android:id="@+id/action_actionsFragment_to_searchEmployeeFragment"
-      app:destination="@id/searchEmployeeFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
-    <action
-      android:id="@+id/action_actionsFragment_to_searchDriverFragment"
-      app:destination="@id/searchDriverFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
+
     <action
       android:id="@+id/action_actionsFragment_to_registerClientsFragment"
       app:destination="@id/registerClientsFragment"
@@ -82,13 +68,6 @@
     <action
       android:id="@+id/action_actionsFragment_to_displayClientsFragment"
       app:destination="@id/displayClientsFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
-    <action
-      android:id="@+id/action_actionsFragment_to_searchClientsFragment"
-      app:destination="@id/searchClientsFragment"
       app:enterAnim="@anim/enter"
       app:exitAnim="@anim/exit"
       app:popEnterAnim="@anim/pop_enter"
@@ -109,20 +88,15 @@
       app:popExitAnim="@anim/pop_exit" />
 
     <action
-      android:id="@+id/action_actionsFragment_to_filterOperationsFragment"
-      app:destination="@id/filterOperationsFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit"/>
-
-    <action
       android:id="@+id/action_actionsFragment_to_displayOperationsFragment"
       app:destination="@id/displayOperationsFragment"
       app:enterAnim="@anim/enter"
       app:exitAnim="@anim/exit"
       app:popEnterAnim="@anim/pop_enter"
       app:popExitAnim="@anim/pop_exit" />
+    <action
+      android:id="@+id/action_actionsFragment_to_settingsFragment"
+      app:destination="@id/settingsFragment" />
 
   </fragment>
 
@@ -160,31 +134,7 @@
       app:argType="com.android.model.repository.drivers.entity.DriverEntity" />
 
   </fragment>
-  <fragment
-    android:id="@+id/searchEmployeeFragment"
-    android:name="com.android.bdkstock.screens.main.menu.employees.SearchEmployeesFragment"
-    android:label="fragment_search_employee"
-    tools:layout="@layout/fragment_search_employees">
-    <action
-      android:id="@+id/action_searchEmployeeFragment_to_displayEmployeeFragment"
-      app:destination="@id/displayEmployeeFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
-  </fragment>
-  <fragment
-    android:id="@+id/searchDriverFragment"
-    android:name="com.android.bdkstock.screens.main.menu.drivers.SearchDriversFragment"
-    android:label="SearchDriverFragment">
-    <action
-      android:id="@+id/action_searchDriverFragment_to_displayDriverFragment"
-      app:destination="@id/displayDriverFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
-  </fragment>
+
   <fragment
     android:id="@+id/registerClientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.clients.RegisterClientsFragment"
@@ -198,19 +148,6 @@
     <argument
       android:name="clientEntity"
       app:argType="com.android.model.repository.clients.entity.ClientEntity" />
-  </fragment>
-  <fragment
-    android:id="@+id/searchClientsFragment"
-    android:name="com.android.bdkstock.screens.main.menu.clients.SearchClientsFragment"
-    android:label="fragment_search_clients"
-    tools:layout="@layout/fragment_search_clients">
-    <action
-      android:id="@+id/action_searchClientsFragment_to_displayClientsFragment"
-      app:destination="@id/displayClientsFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
   </fragment>
 
   <fragment
@@ -262,36 +199,14 @@
     android:name="com.android.bdkstock.screens.main.menu.ingredients.OperateIngredientsFragment"
     android:label="fragment_operations_ingredient"
     tools:layout="@layout/fragment_operate_ingredients">
-
-    <action
-      android:id="@+id/action_operateIngredientsFragment_to_ingredientSelectionFragment"
-      app:destination="@id/ingredientSelectionFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
-
     <argument
       android:name="operationId"
       android:defaultValue="0"
       app:argType="integer" />
 
   </fragment>
-  <dialog
-    android:id="@+id/ingredientSelectionFragment"
-    android:name="com.android.bdkstock.screens.main.menu.ingredients.IngredientSelectionFragment"
-    android:label="fragment_ingredient_selection"
-    tools:layout="@layout/fragment_ingredient_selection" />
-  <dialog
-    android:id="@+id/filterOperationsFragment"
-    android:name="com.android.bdkstock.screens.main.menu.ingredients.FilterOperationsFragment"
-    android:label="fragment_filter_operations"
-    tools:layout="@layout/fragment_filter_operations" >
-    <argument
-      android:name="filterData"
-      app:argType="com.android.bdkstock.screens.main.menu.ingredients.FilterOperations" />
-  </dialog>
-  <dialog
+
+  <fragment
     android:id="@+id/displayOperationsFragment"
     android:name="com.android.bdkstock.screens.main.menu.ingredients.DisplayOperationsFragment"
     android:label="fragment_display_operations"
@@ -299,6 +214,12 @@
     <argument
       android:name="operationIngredient"
       app:argType="com.android.model.repository.ingredients.entity.IngredientExOrInEntity" />
-  </dialog>
+  </fragment>
+
+  <fragment
+    android:id="@+id/settingsFragment"
+    android:name="com.android.bdkstock.screens.main.profile.SettingsFragment"
+    android:label="fragment_settings"
+    tools:layout="@layout/fragment_settings" />
 
 </navigation>

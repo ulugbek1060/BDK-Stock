@@ -16,6 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class OperateIngredientsFragment :
    BaseFragment<OperateIngredientsViewModel, FragmentOperateIngredientsBinding>() {
 
+   // TODO: 1. initialize title 2.ingredients lis for select
+
    override val viewModel by viewModels<OperateIngredientsViewModel>()
    override fun getViewBinding() = FragmentOperateIngredientsBinding.inflate(layoutInflater)
 
@@ -25,13 +27,10 @@ class OperateIngredientsFragment :
       observeState()
       observeIngredient()
 
-      fetchResultFromSelection()
-
       observeNavigateBack()
 
       binding.buttonSave.setOnClickListener { saveOnClick() }
       binding.inputIngredient.setOnClickListener { ingredientOnClick() }
-      binding.back.setOnClickListener { findTopNavController().popBackStack() }
    }
 
    private fun observeNavigateBack() {
@@ -47,18 +46,8 @@ class OperateIngredientsFragment :
       }
    }
 
-   private fun fetchResultFromSelection() {
-      findTopNavController().currentBackStackEntry
-         ?.savedStateHandle
-         ?.getLiveData<IngredientEntity>(IngredientSelectionFragment.SELECTED_INGREDIENT_KEY)
-         ?.observe(viewLifecycleOwner) {
-            viewModel.setIngredient(it)
-         }
-   }
-
    private fun ingredientOnClick() {
-      findTopNavController()
-         .navigate(R.id.action_operateIngredientsFragment_to_ingredientSelectionFragment)
+
    }
 
    private fun saveOnClick() {
@@ -70,8 +59,6 @@ class OperateIngredientsFragment :
 
    private fun observeState() {
       viewModel.state.observe(viewLifecycleOwner) { state ->
-         // set title
-         binding.tvTitle.text = state.getTitle(requireContext())
 
          // enable
          binding.inputLayoutIngredient.isEnabled = !state.isInProgress

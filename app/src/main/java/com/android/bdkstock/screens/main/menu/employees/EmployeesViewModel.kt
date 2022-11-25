@@ -1,6 +1,7 @@
 package com.android.bdkstock.screens.main.menu.employees
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -15,26 +16,40 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 @FlowPreview
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class EmployeesViewModel @Inject constructor(
-   private val repository: AccountRepository,
    private val employeesRepository: EmployeeRepository,
-   savedStateHandle: SavedStateHandle
+   savedStateHandle: SavedStateHandle,
+   repository: AccountRepository
 ) : BaseViewModel(repository) {
 
    private val _errorEvent = MutableUnitLiveEvent()
    val errorEvent = _errorEvent.liveData()
 
-   val employeesFlow: Flow<PagingData<EmployeeEntity>> = employeesRepository
-      .getEmployeesFromLocal()
+   private val _query = savedStateHandle.getLiveData(EMPLOYEES_QUERY_KEY, "")
+
+   val employeesFlow: Flow<PagingData<EmployeeEntity>> = _query.asFlow()
+      .flatMapLatest {
+         employeesRepository.getEmployeeFromRemote(it)
+      }
       .cachedIn(viewModelScope)
 
    fun showAuthError() {
       _errorEvent.publishEvent()
    }
 
+   fun setQuery(query: String?) {
+      if (_query.value == query) return
+
+      _query.value = query
+   }
+
+   private companion object {
+      const val EMPLOYEES_QUERY_KEY = "employees_query"
+   }
 }

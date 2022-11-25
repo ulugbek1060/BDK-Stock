@@ -49,12 +49,5 @@ interface ClientSource {
     * @throws BackendException
     * @throws Exception
     */
-   suspend fun getClientsList(pageIndex: Int, pageSize: Int): List<ClientEntity>
-
-   /**
-    * @throws BackendException
-    * @throws Exception
-    */
-   suspend fun getClientsByQuery(query: String, pageIndex: Int, pageSize: Int): List<ClientEntity>
-
+   suspend fun getClientsList(query: String?, pageIndex: Int, pageSize: Int): List<ClientEntity>
 }

@@ -23,6 +23,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class DisplayClientsFragment :
    BaseFragment<DisplayClientsViewModel, FragmentDisplayClientsBinding>() {
 
+
+   // TODO: need to initialize edit button with menu
+
    override val viewModel by viewModels<DisplayClientsViewModel>()
    override fun getViewBinding() = FragmentDisplayClientsBinding.inflate(layoutInflater)
 
@@ -35,7 +38,7 @@ class DisplayClientsFragment :
       observeSuccessMessage()
 
       binding.buttonSave.setOnClickListener { saveOnClick() }
-      binding.buttonEdit.setOnClickListener { toggleOnClick() }
+//      binding.buttonEdit.setOnClickListener { toggleOnClick() }
       binding.buttonCall.setOnClickListener { callOnClick() }
       binding.buttonMessage.setOnClickListener { messageOnClick() }
 
@@ -105,10 +108,10 @@ class DisplayClientsFragment :
          binding.inputLayoutAddress.error = state.getAddressErrorMessage(requireContext())
 
          // color
-         binding.buttonEdit.setTextColor(state.getToggleButtonColor(requireContext()))
+//         binding.buttonEdit.setTextColor(state.getToggleButtonColor(requireContext()))
 
          // text
-         binding.buttonEdit.setText(state.getToggleButtonText(requireContext()))
+//         binding.buttonEdit.setText(state.getToggleButtonText(requireContext()))
 
          //visibility
          binding.buttonSave.isVisible = state.isChangeableEnable && !state.isInProgress

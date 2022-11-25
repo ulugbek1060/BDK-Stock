@@ -6,6 +6,7 @@ import com.android.model.repository.drivers.DriversSource
 import com.android.model.repository.employees.EmployeesSource
 import com.android.model.repository.ingredients.IngredientsSource
 import com.android.model.repository.jobs.JobSource
+import com.android.model.repository.products.ProductsSource
 import com.android.model.repository.settings.AppSettings
 import com.android.model.repository.settings.SharedPreferencesAppSettings
 import com.android.source.network.account.AccountSourceImpl
@@ -14,11 +15,10 @@ import com.android.source.network.drivers.DriversSourceImpl
 import com.android.source.network.employees.EmployeesSourceIml
 import com.android.source.network.ingredients.IngredientsSourceImpl
 import com.android.source.network.job.JobSourceImpl
+import com.android.source.network.products.ProductsSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.components.FragmentComponent
 import dagger.hilt.components.SingletonComponent
 
 @Module
@@ -59,5 +59,10 @@ abstract class SourcesModule {
    abstract fun bindsIngredientsSource(
       ingredientsImpl: IngredientsSourceImpl
    ): IngredientsSource
+
+   @Binds
+   abstract fun bindsProductsSource(
+      productsSourceImpl: ProductsSourceImpl
+   ): ProductsSource
 
 }

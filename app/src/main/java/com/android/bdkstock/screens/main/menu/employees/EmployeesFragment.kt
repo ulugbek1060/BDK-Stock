@@ -3,15 +3,20 @@ package com.android.bdkstock.screens.main.menu.employees
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentDisplayEmployeeBinding
 import com.android.bdkstock.databinding.FragmentEmployeesBinding
 import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemEmployeeBinding
@@ -31,16 +36,17 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
+
 @ExperimentalCoroutinesApi
 @FlowPreview
 @AndroidEntryPoint
-class EmployeesFragment : BaseFragment<EmployeesViewModel, FragmentEmployeesBinding>() {
+class EmployeesFragment :
+   BaseFragment<EmployeesViewModel, FragmentEmployeesBinding>(),
+   SearchView.OnQueryTextListener {
 
    override val viewModel by viewModels<EmployeesViewModel>()
    private lateinit var layoutManager: LinearLayoutManager
    override fun getViewBinding() = FragmentEmployeesBinding.inflate(layoutInflater)
-
-   private val TAG = this.javaClass.simpleName
 
    @SuppressLint("SetTextI18n")
    private val adapter = pagingAdapter<EmployeeEntity, RecyclerItemEmployeeBinding> {
@@ -84,11 +90,21 @@ class EmployeesFragment : BaseFragment<EmployeesViewModel, FragmentEmployeesBind
 
       binding.extendedFab.setOnClickListener { fabOnClick() }
 
-      binding.buttonSearch.setOnClickListener { searchOnClick() }
+      requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
    }
 
-   private fun searchOnClick() {
-      findTopNavController().navigate(R.id.action_actionsFragment_to_searchEmployeeFragment)
+
+   private val menuProvider = object : MenuProvider {
+      override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+         menuInflater.inflate(R.menu.menu_search, menu)
+         val myActionMenuItem = menu.findItem(R.id.search)
+         val searchView = myActionMenuItem.actionView as SearchView
+         searchView.setOnQueryTextListener(this@EmployeesFragment)
+      }
+
+      override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+         return false
+      }
    }
 
    private fun fabOnClick() {
@@ -128,7 +144,7 @@ class EmployeesFragment : BaseFragment<EmployeesViewModel, FragmentEmployeesBind
       })
    }
 
-   private fun handleViewVisibility() = lifecycleScope.launch {
+   private fun handleViewVisibility() = lifecycleScope.launchWhenStarted {
       adapter
          .loadStateFlow
          .map { it.refresh }
@@ -171,5 +187,14 @@ class EmployeesFragment : BaseFragment<EmployeesViewModel, FragmentEmployeesBind
       shimmerAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8))
       binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
       binding.recyclerProgress.adapter = shimmerAdapter
+   }
+
+   override fun onQueryTextSubmit(query: String?): Boolean {
+      return true
+   }
+
+   override fun onQueryTextChange(newText: String?): Boolean {
+      viewModel.setQuery(newText)
+      return true
    }
 }

@@ -5,9 +5,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.android.bdkstock.databinding.FragmentAddIngredientsBinding
-import com.android.bdkstock.databinding.FragmentSearchEmployeesBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
-import com.android.bdkstock.views.findTopNavController
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,7 +24,6 @@ class AddIngredientsFragment :
       observeNavigation()
 
       binding.buttonSave.setOnClickListener { saveOnClick() }
-      binding.back.setOnClickListener { findTopNavController().popBackStack() }
    }
 
    private fun saveOnClick() {

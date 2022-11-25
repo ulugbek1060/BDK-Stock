@@ -24,11 +24,7 @@ class IngredientsOperationsViewModel @Inject constructor(
    private val _errorEvent = MutableUnitLiveEvent()
    val errorEvent = _errorEvent.liveData()
 
-   private val _navigateToFilterFrag =
-      MutableLiveEvent<FilterOperations>()
-   val navigateToFilterFrag = _navigateToFilterFrag.liveData()
-
-   private val _filterData = MutableLiveData(FilterOperations())
+   private val _filterData = MutableLiveData(IngredientsOperationsFragment.FilterOperations())
 
    val ingredientsExAndInFlow = _filterData
       .asFlow()
@@ -41,7 +37,7 @@ class IngredientsOperationsViewModel @Inject constructor(
       }
       .cachedIn(viewModelScope)
 
-   fun setFilterData(filterData: FilterOperations) {
+   fun setFilterData(filterData: IngredientsOperationsFragment.FilterOperations) {
       _filterData.value = filterData
    }
 
@@ -49,7 +45,5 @@ class IngredientsOperationsViewModel @Inject constructor(
       _errorEvent.publishEvent()
    }
 
-   fun toFilterFrag() {
-      _navigateToFilterFrag.publishEvent(_filterData.requireValue())
-   }
+   fun getFilterData() = _filterData.requireValue()
 }
