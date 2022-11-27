@@ -5,6 +5,7 @@ import com.android.source.network.ingredients.entity.addexpenseorincome.AddExOrI
 import com.android.source.network.ingredients.entity.createingredient.CreateIngredientRequestEntity
 import com.android.source.network.ingredients.entity.createingredient.CreateIngredientResponseEntity
 import com.android.source.network.ingredients.entity.expenseandincomelist.ExpensesAndIncomesListResponseEntity
+import com.android.source.network.ingredients.entity.ingredient.GetIngredientListResponse
 import com.android.source.network.ingredients.entity.ingredientslist.IngredientsListResponseEntity
 import retrofit2.http.*
 
@@ -45,5 +46,9 @@ interface IngredientsApi {
       @Query("page") pageIndex: Int,
       @Query("count") pageSize: Int
    ): IngredientsListResponseEntity
+
+   @Headers("Content-Type: application/json", "Accept: application/json")
+   @GET("api/meterial/select")
+   suspend fun getIngredientList(): GetIngredientListResponse
 
 }

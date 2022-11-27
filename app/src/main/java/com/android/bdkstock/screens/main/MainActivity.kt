@@ -1,8 +1,11 @@
 package com.android.bdkstock.screens.main
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.provider.CalendarContract.Colors
 import android.util.Log
 import android.view.View
 import android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT
@@ -42,6 +45,8 @@ class MainActivity : AppCompatActivity() {
 
       onNavControllerActivated(navController)
 
+      supportActionBar?.elevation = 0f
+
       if (savedInstanceState == null) prepareRootNavGraph(checkSign(), navController)
       else prepareRestorationRootNavGraph(savedInstanceState, navController)
 
@@ -74,8 +79,6 @@ class MainActivity : AppCompatActivity() {
       NavController.OnDestinationChangedListener { _, destination, arguments ->
          supportActionBar?.title = prepareTitle(destination.label, arguments)
          supportActionBar?.setDisplayHomeAsUpEnabled(!isStartDestination(destination))
-         Log.d(TAG, "destinationListener: ${destination.label}")
-         Log.d(TAG, "destinationListener: ${!isStartDestination(destination)}")
       }
 
    private fun prepareRootNavGraph(isSignedIn: Boolean, navController: NavController) {

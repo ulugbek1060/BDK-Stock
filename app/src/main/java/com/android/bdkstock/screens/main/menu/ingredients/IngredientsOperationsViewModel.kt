@@ -1,6 +1,5 @@
 package com.android.bdkstock.screens.main.menu.ingredients
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
@@ -8,10 +7,14 @@ import androidx.paging.cachedIn
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.ingredients.IngredientsRepository
-import com.android.model.utils.*
+import com.android.model.utils.MutableUnitLiveEvent
+import com.android.model.utils.liveData
+import com.android.model.utils.publishEvent
+import com.android.model.utils.requireValue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapLatest
+import java.io.Serializable
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -24,7 +27,8 @@ class IngredientsOperationsViewModel @Inject constructor(
    private val _errorEvent = MutableUnitLiveEvent()
    val errorEvent = _errorEvent.liveData()
 
-   private val _filterData = MutableLiveData(IngredientsOperationsFragment.FilterOperations())
+   private val _filterData = MutableLiveData(FilterOperations())
+   val filterData = _filterData.liveData()
 
    val ingredientsExAndInFlow = _filterData
       .asFlow()
@@ -37,13 +41,23 @@ class IngredientsOperationsViewModel @Inject constructor(
       }
       .cachedIn(viewModelScope)
 
-   fun setFilterData(filterData: IngredientsOperationsFragment.FilterOperations) {
-      _filterData.value = filterData
-   }
-
    fun showAuthError() {
       _errorEvent.publishEvent()
    }
 
-   fun getFilterData() = _filterData.requireValue()
+   fun setFilterData(query: String?, status: Int?, fromDate: String?, toDate: String?) {
+      _filterData.value = _filterData.requireValue().copy(
+         query = query,
+         status = status,
+         fromDate = fromDate,
+         toDate = toDate
+      )
+   }
+
+   data class FilterOperations(
+      val query: String? = null,
+      val status: Int? = null,
+      val fromDate: String? = null,
+      val toDate: String? = null
+   ) : Serializable
 }

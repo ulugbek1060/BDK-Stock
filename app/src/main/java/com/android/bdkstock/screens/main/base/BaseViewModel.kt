@@ -6,6 +6,8 @@ import com.android.bdkstock.R
 import com.android.model.repository.account.AccountRepository
 import com.android.model.utils.*
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 open class BaseViewModel(private val accountRepository: AccountRepository) : ViewModel() {
@@ -43,16 +45,11 @@ open class BaseViewModel(private val accountRepository: AccountRepository) : Vie
       _showAuthErrorAndRestart.publishEvent()
    }
 
+   fun <T> Flow<T>.handleException(): Flow<T> = catch { e ->
+      if (e is BackendException && e.code == 401) {
+         _showAuthErrorAndRestart.publishEvent()
+      } else {
+         _showErrorMessageResEvent.publishEvent(R.string.internal_exception)
+      }
+   }
 }
-
-//fun <T> Flow<T>.handleException(): Flow<T> = flow {
-//      try {
-//         collectLatest { emit(it) }
-//      } catch (e: AuthException) {
-//         e.printStackTrace()
-//         _showAuthErrorAndRestart.publishEvent()
-//      } catch (e: Throwable) {
-//         e.printStackTrace()
-//         _showErrorMessageResEvent.publishEvent(R.string.internal_exception)
-//      }
-//   }

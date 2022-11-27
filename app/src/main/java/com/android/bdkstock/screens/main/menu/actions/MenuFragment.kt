@@ -48,15 +48,67 @@ class MenuFragment : BaseFragment<MenuViewModel, FragmentMenuBinding>() {
    }
 
    private fun observeMenusList() {
-      viewModel.menuItems.observe(viewLifecycleOwner) {
-         adapter.submitList(it)
-      }
+
    }
 
    private fun setUpRecyclerView() {
+      adapter.submitList(listMenus)
       gridLayoutManager = GridLayoutManager(requireContext(), 2)
       binding.recyclerMenu.layoutManager = gridLayoutManager
       binding.recyclerMenu.adapter = adapter
    }
+
+   private val listMenus = ArrayList<MenuItem>()
+      .apply {
+         add(
+            MenuItem(
+               1,
+               R.drawable.ic_employees_bulk,
+               requireContext().getString(R.string.employees),
+               R.id.employeesFragment
+            )
+         )
+         add(
+            MenuItem(
+               2,
+               R.drawable.ic_sales_bulk,
+               "Sales",
+               R.id.salesFragment
+            )
+         )
+         add(
+            MenuItem(
+               3,
+               R.drawable.ic_ingredients_bulk,
+               requireContext().getString(R.string.ingredients),
+               R.id.ingredientsOperationsFragment
+            )
+         )
+         add(
+            MenuItem(
+               4,
+               R.drawable.ic_products_bulk,
+               "Products",
+               R.id.productsFragment
+            )
+         )
+         add(
+            MenuItem(
+               5,
+               R.drawable.ic_clients_bulk,
+               requireContext().getString(R.string.clients),
+               R.id.clientsFragment
+            )
+         )
+         add(
+            MenuItem(
+               6,
+               R.drawable.ic_drivers_bulk,
+               requireContext().getString(R.string.drivers),
+               R.id.driversFragment
+            )
+         )
+      }
+
 }
 

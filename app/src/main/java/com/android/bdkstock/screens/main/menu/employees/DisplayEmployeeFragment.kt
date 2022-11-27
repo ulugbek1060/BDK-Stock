@@ -7,24 +7,29 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentDisplayEmployeeBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.views.findTopNavController
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DisplayEmployeeFragment :
    BaseFragment<DisplayEmployeeViewModel, FragmentDisplayEmployeeBinding>() {
-
-   // TODO: initialize edit button
 
    override val viewModel by viewModels<DisplayEmployeeViewModel>()
    override fun getViewBinding() = FragmentDisplayEmployeeBinding.inflate(layoutInflater)
@@ -105,7 +110,6 @@ class DisplayEmployeeFragment :
       observeChangesDialogEvent()
 
       binding.buttonSave.setOnClickListener { saveOnClick() }
-//      binding.buttonEdit.setOnCheckedChangeListener { _, isChecked -> toggleOnClick(isChecked) }
       binding.buttonDelete.setOnClickListener { }
 
       binding.buttonCall.setOnClickListener {
@@ -115,14 +119,27 @@ class DisplayEmployeeFragment :
       binding.buttonMessage.setOnClickListener {
          requestMessagePermissionLauncher.launch(Manifest.permission.SEND_SMS)
       }
+
+      requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
+   }
+
+   private val menuProvider = object : MenuProvider {
+      override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+         menuInflater.inflate(R.menu.menu_edit, menu)
+      }
+
+      override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+         if (menuItem.itemId == R.id.edit) viewModel.toggleChangeableState()
+         return false
+      }
    }
 
    private fun observeChangesDialogEvent() {
-      viewModel.showChangesDialog.observeEvent(viewLifecycleOwner) {
+      viewModel.showSuggestionDialog.observeEvent(viewLifecycleOwner) {
          AlertDialog.Builder(requireContext())
             .setTitle(R.string.edit)
             .setMessage(R.string.edit_user_details)
-//            .setNegativeButton(R.string.no) { _, _ -> binding.buttonEdit.isChecked = false }
+            .setNegativeButton(R.string.no) { _, _ -> viewModel.disableChangeableState() }
             .setPositiveButton(R.string.yes) { _, _ -> viewModel.enableChangeableState() }
             .create()
             .show()
@@ -196,17 +213,16 @@ class DisplayEmployeeFragment :
       viewModel.state.observe(viewLifecycleOwner) { state ->
 
          // enable fields
-         binding.inputLayoutName.isEnabled = state.isChangesEnable
-         binding.inputLayoutSurname.isEnabled = state.isChangesEnable
-         binding.inputLayoutPhoneNumber.isEnabled = state.isChangesEnable
-         binding.inputLayoutAddress.isEnabled = state.isChangesEnable
-         binding.inputLayoutPassword.isEnabled = state.isChangesEnable
-         binding.inputLayoutPasswordConfirm.isEnabled = state.isChangesEnable
-         binding.inputLayoutJobTitle.isEnabled = state.isChangesEnable
+         binding.inputLayoutName.isEnabled = state.isChangeableEnable
+         binding.inputLayoutSurname.isEnabled = state.isChangeableEnable
+         binding.inputLayoutAddress.isEnabled = state.isChangeableEnable
+         binding.inputLayoutPhoneNumber.isEnabled = state.isChangeableEnable
+         binding.inputLayoutPassword.isEnabled = state.isChangeableEnable
+         binding.inputLayoutJobTitle.isEnabled = state.isChangeableEnable
+         binding.inputLayoutPasswordConfirm.isEnabled = state.isChangeableEnable
 
-         // colors
-//         binding.buttonEdit.setTextColor(state.getToggleButtonColor(requireContext()))
-//         binding.buttonEdit.setText(state.getToggleButtonText(requireContext()))
+         binding.buttonSave.isEnabled = state.isChangeableEnable
+         binding.buttonDelete.isEnabled = state.isChangeableEnable
 
          // error messages
          binding.inputLayoutName.error = state.getNameError(requireContext())
@@ -217,14 +233,10 @@ class DisplayEmployeeFragment :
          binding.inputLayoutPasswordConfirm.error = state.getPasswordError(requireContext())
 
          // visibility
-         binding.buttonSave.isVisible = state.isChangesEnable && !state.isProgressActive
-         binding.buttonDelete.isVisible = state.isChangesEnable && !state.isProgressActive
+         binding.buttonSave.isVisible = state.isChangeableEnable && !state.isProgressActive
+         binding.buttonDelete.isVisible = state.isChangeableEnable && !state.isProgressActive
          binding.lottiProgress.isVisible = state.isProgressActive
       }
-   }
-
-   private fun toggleOnClick(checkState: Boolean) {
-      viewModel.setChangeableState(checkState)
    }
 }
 

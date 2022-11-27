@@ -69,7 +69,7 @@
   <string name="income">Приход</string>
   <string name="expense">Расход</string>
   <string name="ingredients">Ингредиенты</string>
-  <string name="accepted">Принял:</string>
+  <string name="accepted">Принял</string>
   <string name="weight">Масса</string>
 
   <string name="m_01">Янв</string>
@@ -109,5 +109,9 @@
   <string name="clear">Очистить</string>
   <string name="apply">Филтровать</string>
   <string name="filter">Филтеровать</string>
+  <string name="register_employee">Зарегистрировать сотрудника</string>
+  <string name="add_ingredients">Добавить ингредиенты</string>
+  <string name="operation_on_ingredients">Операции с ингредиентами</string>
+  <string name="operation">Операция</string>
 
 </resources>

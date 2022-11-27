@@ -103,30 +103,31 @@
   <fragment
     android:id="@+id/displayEmployeeFragment"
     android:name="com.android.bdkstock.screens.main.menu.employees.DisplayEmployeeFragment"
-    android:label="fragment_display_employee"
+    android:label="@string/employee"
     tools:layout="@layout/fragment_display_employee">
 
     <argument
       android:name="employeeEntity"
       app:argType="com.android.model.repository.employees.entity.EmployeeEntity" />
+
   </fragment>
 
   <fragment
     android:id="@+id/registerEmployeeFragment"
     android:name="com.android.bdkstock.screens.main.menu.employees.RegisterEmployeeFragment"
-    android:label="fragment_register_employee"
+    android:label="@string/register_employee"
     tools:layout="@layout/fragment_register_employee"/>
 
   <fragment
     android:id="@+id/registerDriverFragment"
     android:name="com.android.bdkstock.screens.main.menu.drivers.RegisterDriverFragment"
-    android:label="fragment_register_driver"
+    android:label="@string/register_driver"
     tools:layout="@layout/fragment_register_driver"/>
 
   <fragment
     android:id="@+id/displayDriverFragment"
     android:name="com.android.bdkstock.screens.main.menu.drivers.DisplayDriverFragment"
-    android:label="fragment_display_driver"
+    android:label="@string/driver"
     tools:layout="@layout/fragment_display_driver">
 
     <argument
@@ -138,12 +139,12 @@
   <fragment
     android:id="@+id/registerClientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.clients.RegisterClientsFragment"
-    android:label="fragment_register_clients"
+    android:label="@string/register_client"
     tools:layout="@layout/fragment_register_clients" />
   <fragment
     android:id="@+id/displayClientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.clients.DisplayClientsFragment"
-    android:label="fragment_display_clients"
+    android:label="@string/client"
     tools:layout="@layout/fragment_display_clients">
     <argument
       android:name="clientEntity"
@@ -153,13 +154,13 @@
   <fragment
     android:id="@+id/addIngredientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.ingredients.AddIngredientsFragment"
-    android:label="fragment_add_ingredients"
+      android:label="@string/add_ingredients"
     tools:layout="@layout/fragment_add_ingredients" />
 
   <fragment
     android:id="@+id/ingredientsTypeFragment"
     android:name="com.android.bdkstock.screens.main.menu.ingredients.IngredientsTypeFragment"
-    android:label="fragment_ingredients_type"
+    android:label="@string/ingredients"
     tools:layout="@layout/fragment_ingredients_type">
     <action
       android:id="@+id/action_ingredientsTypeFragment_to_addIngredientsFragment"
@@ -180,7 +181,7 @@
   <fragment
     android:id="@+id/displayIngredientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.ingredients.DisplayIngredientsFragment"
-    android:label="fragment_display_ingredients"
+    android:label="@string/operation_on_ingredients"
     tools:layout="@layout/fragment_display_ingredients">
 
     <argument
@@ -197,7 +198,7 @@
   <fragment
     android:id="@+id/operateIngredientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.ingredients.OperateIngredientsFragment"
-    android:label="fragment_operations_ingredient"
+    android:label="@string/operation"
     tools:layout="@layout/fragment_operate_ingredients">
     <argument
       android:name="operationId"
@@ -209,7 +210,7 @@
   <fragment
     android:id="@+id/displayOperationsFragment"
     android:name="com.android.bdkstock.screens.main.menu.ingredients.DisplayOperationsFragment"
-    android:label="fragment_display_operations"
+    android:label="@string/operation"
     tools:layout="@layout/fragment_display_operations">
     <argument
       android:name="operationIngredient"

@@ -31,35 +31,6 @@
         app:layout_constraintTop_toBottomOf="@id/container_status" />
 
       <TextView
-        android:id="@+id/tv_creator_hint"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_normal"
-        android:background="@color/item_color"
-        android:fontFamily="@font/font_regular"
-        android:textColor="@color/sub_text_color"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="@id/tv_ingredient"
-        app:layout_constraintTop_toBottomOf="@id/tv_ingredient" />
-
-      <TextView
-        android:id="@+id/tv_creator"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_small"
-        android:ellipsize="end"
-        android:background="@color/item_color"
-        android:fontFamily="@font/font_regular"
-        android:maxLines="1"
-        android:textColor="@color/text_color"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/tv_creator_hint"
-        app:layout_constraintLeft_toRightOf="@id/tv_creator_hint"
-        app:layout_constraintTop_toTopOf="@id/tv_creator_hint" />
-
-      <TextView
         android:id="@+id/tv_created_date"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -70,21 +41,6 @@
         android:background="@color/item_color"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-      <TextView
-        android:id="@+id/tv_amount_hint"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dimen_small"
-        android:background="@color/item_color"
-        android:fontFamily="@font/font_regular"
-        android:textColor="@color/sub_text_color"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/tv_amount"
-        app:layout_constraintRight_toLeftOf="@id/tv_amount"
-        app:layout_constraintTop_toTopOf="@id/tv_amount" />
 
       <TextView
         android:id="@+id/tv_amount"
@@ -98,7 +54,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_creator_hint" />
+        app:layout_constraintTop_toBottomOf="@id/tv_ingredient" />
 
 
       <androidx.cardview.widget.CardView

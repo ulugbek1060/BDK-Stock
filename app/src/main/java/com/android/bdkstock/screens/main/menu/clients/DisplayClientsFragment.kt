@@ -7,11 +7,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentClientsBinding
 import com.android.bdkstock.databinding.FragmentDisplayClientsBinding
@@ -22,9 +27,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DisplayClientsFragment :
    BaseFragment<DisplayClientsViewModel, FragmentDisplayClientsBinding>() {
-
-
-   // TODO: need to initialize edit button with menu
 
    override val viewModel by viewModels<DisplayClientsViewModel>()
    override fun getViewBinding() = FragmentDisplayClientsBinding.inflate(layoutInflater)
@@ -38,22 +40,28 @@ class DisplayClientsFragment :
       observeSuccessMessage()
 
       binding.buttonSave.setOnClickListener { saveOnClick() }
-//      binding.buttonEdit.setOnClickListener { toggleOnClick() }
       binding.buttonCall.setOnClickListener { callOnClick() }
       binding.buttonMessage.setOnClickListener { messageOnClick() }
 
+      requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
    }
 
+   private val menuProvider = object : MenuProvider {
+      override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+         menuInflater.inflate(R.menu.menu_edit, menu)
+      }
+
+      override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+         if (menuItem.itemId == R.id.edit) viewModel.toggleChangeableState()
+         return false
+      }
+   }
    private fun messageOnClick() {
       requestMessagePermissionLauncher.launch(Manifest.permission.SEND_SMS)
    }
 
    private fun callOnClick() {
       requestCallPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
-   }
-
-   private fun toggleOnClick() {
-      viewModel.toggleChangeableState()
    }
 
    private fun saveOnClick() {
@@ -106,12 +114,6 @@ class DisplayClientsFragment :
          binding.inputLayoutName.error = state.getFullNameErrorMessage(requireContext())
          binding.inputLayoutPhoneNumber.error = state.getPhoneNumberErrorMessage(requireContext())
          binding.inputLayoutAddress.error = state.getAddressErrorMessage(requireContext())
-
-         // color
-//         binding.buttonEdit.setTextColor(state.getToggleButtonColor(requireContext()))
-
-         // text
-//         binding.buttonEdit.setText(state.getToggleButtonText(requireContext()))
 
          //visibility
          binding.buttonSave.isVisible = state.isChangeableEnable && !state.isInProgress

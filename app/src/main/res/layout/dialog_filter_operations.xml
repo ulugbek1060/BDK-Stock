@@ -1,199 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_height="wrap_content"
-  tools:context=".screens.main.menu.ingredients.FilterOperationsFragment">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  app:cardCornerRadius="@dimen/corner_normal">
 
-  <View
-    android:id="@+id/thumb"
-    android:layout_width="50dp"
-    android:layout_height="6dp"
-    android:layout_marginTop="@dimen/dimen_large"
-    android:background="@drawable/thumb"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-  <RadioGroup
-    android:id="@+id/radio_group"
+  <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
-    android:layout_height="45dp"
-    android:layout_marginLeft="@dimen/dimen_large"
-    android:layout_marginTop="@dimen/dimen_extra"
-    android:layout_marginRight="@dimen/dimen_large"
-    android:checkedButton="@id/button_all"
-    android:orientation="horizontal"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/thumb">
+    android:layout_height="match_parent">
 
-    <RadioButton
-      android:id="@+id/button_all"
-      android:layout_width="wrap_content"
-      android:layout_height="45dp"
-      android:layout_weight="1"
-      android:tag="-1"
-      android:background="@drawable/toggle_button_selection"
-      android:button="@android:color/transparent"
-      android:gravity="center"
-      android:text="@string/all"
-      android:textColor="@drawable/toggle_text_selection"
-      android:textSize="16sp" />
-
-    <RadioButton
-      android:id="@+id/button_income"
-      android:layout_width="wrap_content"
-      android:layout_height="45dp"
-      android:layout_weight="1"
-      android:tag="0"
-      android:background="@drawable/toggle_button_selection"
-      android:button="@android:color/transparent"
-      android:gravity="center"
-      android:text="@string/income"
-      android:textColor="@drawable/toggle_text_selection"
-      android:textSize="16sp" />
-
-    <RadioButton
-      android:id="@+id/button_expense"
-      android:layout_width="wrap_content"
-      android:layout_height="45dp"
-      android:layout_weight="1"
-      android:tag="1"
-      android:background="@drawable/toggle_button_selection"
-      android:button="@android:color/transparent"
-      android:gravity="center"
-      android:text="@string/expense"
-      android:textColor="@drawable/toggle_text_selection"
-      android:textSize="16sp" />
-
-  </RadioGroup>
-
-  <TextView
-    android:id="@+id/tv_from_date"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/dimen_large"
-    android:layout_marginTop="@dimen/dimen_big"
-    android:layout_marginEnd="@dimen/dimen_large"
-    android:background="@drawable/search_bar_background"
-    android:padding="@dimen/dimen_large"
-    android:hint="@string/from_date"
-    android:textColor="@color/text_color"
-    android:textSize="16sp"
-    app:drawableEndCompat="@drawable/ic_calendar"
-    app:layout_constraintBottom_toTopOf="@id/tv_to_date"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/radio_group" />
-
-  <TextView
-    android:id="@+id/tv_to_date"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/dimen_large"
-    android:layout_marginTop="@dimen/dimen_big"
-    android:layout_marginEnd="@dimen/dimen_large"
-    android:background="@drawable/search_bar_background"
-    android:padding="@dimen/dimen_large"
-    android:hint="@string/to_date"
-    android:textColor="@color/text_color"
-    android:textSize="16sp"
-    app:drawableEndCompat="@drawable/ic_calendar"
-    app:layout_constraintBottom_toTopOf="@id/button_clear"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_from_date" />
-
-  <androidx.cardview.widget.CardView
-    android:id="@+id/button_clear"
-    android:layout_width="0dp"
-    android:layout_height="48dp"
-    android:layout_marginStart="@dimen/dimen_large"
-    android:layout_marginTop="@dimen/dimen_big"
-    android:layout_marginEnd="@dimen/dimen_normal"
-    android:layout_marginBottom="@dimen/dimen_large"
-    android:clickable="true"
-    android:focusable="true"
-    app:cardCornerRadius="@dimen/dimen_normal"
-    app:cardElevation="0dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toLeftOf="@id/button_apply"
-    app:layout_constraintTop_toBottomOf="@id/tv_to_date">
-
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/red">
+      android:layout_height="match_parent">
 
-      <LinearLayout
+      <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_large"
+        android:padding="@dimen/dimen_large"
+        android:text="@string/filter"
+        android:textColor="@color/on_area_txt_color"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/input_layout_query"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_query"
+        style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackground"
-        android:gravity="center">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_large"
+        android:hint="query"
+        app:endIconMode="clear_text"
+        app:layout_constraintBottom_toTopOf="@id/radio_group"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title">
 
-        <TextView
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/input_query"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:imeOptions="actionNext" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="@dimen/dimen_large"
+        android:checkedButton="@id/button_all"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/input_layout_from_date"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_layout_query">
+
+        <RadioButton
+          android:id="@+id/button_all"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:ellipsize="end"
-          android:fontFamily="@font/font_regular"
-          android:lines="1"
-          android:text="@string/cancel"
-          android:textColor="@color/white"
-          android:textSize="16sp"
-          android:textStyle="bold" />
+          android:layout_weight="1"
+          android:buttonTint="?attr/colorPrimary"
+          android:gravity="center"
+          android:text="@string/all"
+          android:textSize="16sp" />
 
-      </LinearLayout>
-
-    </FrameLayout>
-
-  </androidx.cardview.widget.CardView>
-
-  <androidx.cardview.widget.CardView
-    android:id="@+id/button_apply"
-    android:layout_width="0dp"
-    android:layout_height="48dp"
-    android:layout_marginStart="@dimen/dimen_normal"
-    android:layout_marginTop="@dimen/dimen_large"
-    android:layout_marginEnd="@dimen/dimen_large"
-    android:layout_marginBottom="@dimen/dimen_large"
-    android:clickable="true"
-    android:focusable="true"
-    app:cardCornerRadius="@dimen/dimen_normal"
-    app:cardElevation="0dp"
-    app:layout_constraintBottom_toBottomOf="@id/button_clear"
-    app:layout_constraintLeft_toRightOf="@id/button_clear"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="@id/button_clear">
-
-    <FrameLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/blue">
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackground"
-        android:gravity="center">
-
-        <TextView
+        <RadioButton
+          android:id="@+id/button_income"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:ellipsize="end"
-          android:fontFamily="@font/font_regular"
-          android:lines="1"
-          android:text="@string/apply"
-          android:textColor="@color/white"
-          android:textSize="16sp"
-          android:textStyle="bold" />
+          android:layout_weight="1"
+          android:buttonTint="?attr/colorPrimary"
+          android:gravity="center"
+          android:text="@string/income"
+          android:textSize="16sp" />
 
-      </LinearLayout>
+        <RadioButton
+          android:id="@+id/button_expense"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:buttonTint="?attr/colorPrimary"
+          android:gravity="center"
+          android:text="@string/expense"
+          android:textSize="16sp" />
 
-    </FrameLayout>
+      </RadioGroup>
 
-  </androidx.cardview.widget.CardView>
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_from_date"
+        style="@style/TextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_large"
+        android:hint="@string/from_date"
+        app:endIconDrawable="@drawable/ic_calendar"
+        app:endIconMode="custom"
+        app:layout_constraintBottom_toTopOf="@id/input_layout_to_date"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radio_group">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/input_from_date"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:imeOptions="actionNext" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_to_date"
+        style="@style/TextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_large"
+        android:hint="@string/to_date"
+        app:endIconDrawable="@drawable/ic_calendar"
+        app:endIconMode="custom"
+        app:layout_constraintBottom_toTopOf="@id/button_clear"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_layout_from_date">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/input_to_date"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:imeOptions="actionDone" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <Button
+        android:id="@+id/button_clear"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:layout_marginEnd="@dimen/dimen_normal"
+        android:layout_marginBottom="@dimen/dimen_normal"
+        android:text="@string/cancel"
+        android:textAllCaps="false"
+        android:textColor="@color/text_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/button_apply"
+        app:layout_constraintTop_toBottomOf="@id/input_layout_to_date" />
+
+      <Button
+        android:id="@+id/button_apply"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_normal"
+        android:layout_marginEnd="@dimen/dimen_large"
+        android:layout_marginBottom="@dimen/dimen_normal"
+        android:text="@string/filter"
+        android:textAllCaps="false"
+        android:textColor="@color/surface_txt_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/button_clear"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/button_clear" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </androidx.core.widget.NestedScrollView>
+
+</androidx.cardview.widget.CardView>

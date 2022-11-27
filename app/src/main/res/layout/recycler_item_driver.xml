@@ -9,7 +9,7 @@
   android:focusable="true"
   android:foreground="?attr/selectableItemBackground"
   app:cardCornerRadius="@dimen/corner_big"
-  app:cardElevation="1dp">
+  app:cardElevation="0dp">
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -22,6 +22,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:contentDescription="truck"
+      android:alpha="0.5"
       android:src="@drawable/ic_drivers"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintLeft_toLeftOf="parent"

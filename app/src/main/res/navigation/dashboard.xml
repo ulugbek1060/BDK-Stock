@@ -8,12 +8,12 @@
   <fragment
     android:id="@+id/clientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.clients.ClientsFragment"
-    android:label="fragment_clients"
+    android:label="@string/clients"
     tools:layout="@layout/fragment_clients" />
   <fragment
     android:id="@+id/driversFragment"
     android:name="com.android.bdkstock.screens.main.menu.drivers.DriversFragment"
-    android:label="fragment_drivers"
+    android:label="@string/drivers"
     tools:layout="@layout/fragment_drivers" />
   <fragment
     android:id="@+id/menuFragment"
@@ -69,12 +69,12 @@
   <fragment
     android:id="@+id/employeesFragment"
     android:name="com.android.bdkstock.screens.main.menu.employees.EmployeesFragment"
-    android:label="fragment_employees"
+    android:label="@string/employees"
     tools:layout="@layout/fragment_employees" />
   <fragment
     android:id="@+id/ingredientsOperationsFragment"
     android:name="com.android.bdkstock.screens.main.menu.ingredients.IngredientsOperationsFragment"
-    android:label="fragment_ingredients"
+    android:label="@string/ingredients"
     tools:layout="@layout/fragment_ingredients_operations" />
   <fragment
     android:id="@+id/productsFragment"

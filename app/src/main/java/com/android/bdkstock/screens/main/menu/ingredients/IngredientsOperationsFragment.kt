@@ -3,21 +3,19 @@ package com.android.bdkstock.screens.main.menu.ingredients
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.ui.onNavDestinationSelected
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
+import com.android.bdkstock.databinding.DialogFilterOperationsBinding
 import com.android.bdkstock.databinding.FragmentIngredientsOperationsBinding
 import com.android.bdkstock.databinding.ProgressItemBiggerBinding
 import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
@@ -30,11 +28,14 @@ import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.observeEvent
 import com.elveum.elementadapter.simpleAdapter
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import java.io.Serializable
+import java.text.SimpleDateFormat
+import java.util.*
 
 @AndroidEntryPoint
 class IngredientsOperationsFragment :
@@ -50,9 +51,6 @@ class IngredientsOperationsFragment :
          areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
          bind { ingredient ->
             // status
-            val statusColor =
-               if (ingredient.status == "1") root.context.getColor(R.color.white_red)
-               else root.context.getColor(R.color.white_green)
             val statusTextColor =
                if (ingredient.status == "1") root.context.getColor(R.color.red)
                else root.context.getColor(R.color.green)
@@ -62,7 +60,6 @@ class IngredientsOperationsFragment :
 
             tvStatus.text = statusText
             tvStatus.setTextColor(statusTextColor)
-            containerFrameStatus.setBackgroundColor(statusColor)
 
             tvIngredient.text = ingredient.name
             tvCreator.text = ingredient.creator
@@ -89,6 +86,7 @@ class IngredientsOperationsFragment :
       }
    }
 
+   @SuppressLint("UseCompatLoadingForDrawables")
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
@@ -102,6 +100,18 @@ class IngredientsOperationsFragment :
 
       observeFilterResult()
 
+      binding.buttonIncome.setCompoundDrawablesWithIntrinsicBounds(
+         requireContext().getDrawable(R.drawable.ic_add),
+         null,
+         null,
+         null
+      )
+      binding.buttonExpense.setCompoundDrawablesWithIntrinsicBounds(
+         requireContext().getDrawable(R.drawable.ic_remove),
+         null,
+         null,
+         null
+      )
       binding.buttonIncome.setOnClickListener { incomeOnClick() }
       binding.buttonExpense.setOnClickListener { expenseOnClick() }
       binding.buttonAdd.setOnClickListener { addOnClick() }
@@ -117,20 +127,13 @@ class IngredientsOperationsFragment :
 
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
          if (menuItem.itemId == R.id.filter){
-            // TODO: open filter dialog
+            manipulateFilter()
          }
          return false
       }
    }
 
    private fun observeFilterResult() {
-      findTopNavController()
-         .currentBackStackEntry
-         ?.savedStateHandle
-         ?.getLiveData<FilterOperations>(FILTER_DATA_KEY)
-         ?.observe(viewLifecycleOwner) {
-            viewModel.setFilterData(it)
-         }
    }
 
    private fun addOnClick() {
@@ -168,7 +171,7 @@ class IngredientsOperationsFragment :
       }
    }
 
-   private fun handleViewVisibility() = lifecycleScope.launch {
+   private fun handleViewVisibility() = lifecycleScope.launchWhenStarted {
       adapter
          .loadStateFlow
          .map { it.refresh }
@@ -213,15 +216,94 @@ class IngredientsOperationsFragment :
       binding.recyclerProgress.adapter = progressAdapter
    }
 
+   // -- filter dialog
+
+   fun manipulateFilter() {
+
+      val dialog = AlertDialog.Builder(requireContext()).create()
+
+      dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+      val dialogBinding = DialogFilterOperationsBinding.inflate(layoutInflater)
+      dialog.setView(dialogBinding.root)
+
+      var status: Int? = null
+
+      dialogBinding.buttonClear.setOnClickListener {
+         viewModel.setFilterData(null, null, null, null)
+         dialog.dismiss()
+      }
+
+      dialogBinding.buttonApply.setOnClickListener {
+         viewModel.setFilterData(
+            query = dialogBinding.inputQuery.text.toString(),
+            fromDate = dialogBinding.inputFromDate.text.toString(),
+            toDate = dialogBinding.inputToDate.text.toString(),
+            status = status,
+         )
+         dialog.dismiss()
+      }
+
+      dialogBinding.buttonAll.setOnClickListener { status = null }
+      dialogBinding.buttonExpense.setOnClickListener { status = OPERATION_EXPENSE }
+      dialogBinding.buttonIncome.setOnClickListener { status = OPERATION_INCOME }
+
+      dialogBinding.inputLayoutFromDate.setEndIconOnClickListener {
+         getCalendarDialog(
+            requireContext().getString(R.string.from_date),
+            dialogBinding.inputFromDate
+         )
+      }
+
+      dialogBinding.inputLayoutToDate.setEndIconOnClickListener {
+         getCalendarDialog(
+            requireContext().getString(R.string.to_date),
+            dialogBinding.inputToDate
+         )
+      }
+
+      viewModel.filterData.observe(viewLifecycleOwner) { filterData ->
+
+         status = filterData.status
+
+         dialogBinding.radioGroup.check(getCheckId(filterData.status))
+         dialogBinding.inputQuery.setText(filterData.query)
+         dialogBinding.inputFromDate.setText(filterData.fromDate)
+         dialogBinding.inputToDate.setText(filterData.toDate)
+      }
+
+
+      dialog.show()
+   }
+
+   // -- calendar dialog
+
+   @SuppressLint("SimpleDateFormat")
+   private fun getCalendarDialog(title: String, inputFromDate: TextInputEditText) {
+      val datePicker = MaterialDatePicker.Builder.datePicker()
+         .setTitleText(title)
+         .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+         .build()
+      datePicker.addOnPositiveButtonClickListener { timeMiles ->
+         val formatter = SimpleDateFormat("dd/MM/yyyy")
+         val date = formatter.format(Date(timeMiles))
+         inputFromDate.setText(date)
+      }
+      datePicker.addOnNegativeButtonClickListener {
+         inputFromDate.setText("")
+         datePicker.dismiss()
+      }
+      datePicker.show(parentFragmentManager, "tag")
+   }
+
+   private fun getCheckId(state: Int?) = when (state) {
+      1 -> R.id.button_expense
+      0 -> R.id.button_income
+      else -> R.id.button_all
+   }
+
    private companion object {
       const val OPERATION_INCOME = 0
       const val OPERATION_EXPENSE = 1
-      const val FILTER_DATA_KEY = "filter_data"
    }
-
-   data class FilterOperations(
-      val status: Int? = null,
-      val fromDate: String? = null,
-      val toDate: String? = null
-   ) : Serializable
 }

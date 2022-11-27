@@ -3,6 +3,7 @@ package com.android.source.network.ingredients
 import com.android.model.repository.ingredients.IngredientsSource
 import com.android.model.repository.ingredients.entity.IngredientEntity
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
+import com.android.model.repository.ingredients.entity.SimpleIngredient
 import com.android.source.network.base.BaseNetworkSource
 import com.android.source.network.ingredients.entity.addexpenseorincome.AddExOrInIngredientRequestEntity
 import com.android.source.network.ingredients.entity.createingredient.CreateIngredientRequestEntity
@@ -107,6 +108,16 @@ class IngredientsSourceImpl @Inject constructor(
             unit = ingredientAction.unit,
             createdAt = ingredientAction.createdAt,
             updatedAt = ingredientAction.updatedAt
+         )
+      }
+   }
+
+   override suspend fun getIngredientList(): List<SimpleIngredient> = wrapNetworkException {
+      ingredientsApi.getIngredientList().list.map {
+         SimpleIngredient(
+            id = it.id,
+            name = it.name,
+            unit = it.unit
          )
       }
    }

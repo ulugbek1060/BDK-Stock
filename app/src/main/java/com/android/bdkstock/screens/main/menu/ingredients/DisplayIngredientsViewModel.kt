@@ -11,7 +11,9 @@ import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.ingredients.IngredientsRepository
 import com.android.model.repository.ingredients.entity.IngredientEntity
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
+import com.android.model.utils.MutableUnitLiveEvent
 import com.android.model.utils.liveData
+import com.android.model.utils.publishEvent
 import com.android.model.utils.requireValue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,6 +28,9 @@ class DisplayIngredientsViewModel @Inject constructor(
    accountRepository: AccountRepository,
    savedStateHandle: SavedStateHandle
 ) : BaseViewModel(accountRepository) {
+
+   private val _errorEvent = MutableUnitLiveEvent()
+   val errorEvent = _errorEvent.liveData()
 
    private val _currentIngredient = DisplayIngredientsFragmentArgs
       .fromSavedStateHandle(savedStateHandle)
@@ -51,6 +56,10 @@ class DisplayIngredientsViewModel @Inject constructor(
             .getExpensesAndIncomesOfIngredients(ingredientId = it.toInt())
       }
       .cachedIn(viewModelScope)
+
+   fun showAuthError() {
+      _errorEvent.publishEvent()
+   }
 
    private companion object {
       const val INGREDIENT_ID = "ingredient_id"

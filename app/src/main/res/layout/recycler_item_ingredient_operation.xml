@@ -9,7 +9,7 @@
   android:focusable="true"
   android:foreground="?attr/selectableItemBackground"
   app:cardCornerRadius="@dimen/corner_big"
-  app:cardElevation="2dp">
+  app:cardElevation="5dp">
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -22,24 +22,21 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/dimen_normal"
-      android:fontFamily="@font/font_regular"
       android:text="@string/ingredients"
       android:textColor="@color/text_color"
       android:textSize="16sp"
       android:textStyle="bold"
       app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/container_status" />
+      app:layout_constraintTop_toBottomOf="@id/tv_status" />
 
     <TextView
       android:id="@+id/tv_creator_hint"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/dimen_normal"
-      android:fontFamily="@font/font_regular"
       android:text="@string/accepted"
       android:textColor="@color/sub_text_color"
       android:textSize="16sp"
-      android:textStyle="bold"
       app:layout_constraintLeft_toLeftOf="@id/tv_ingredient"
       app:layout_constraintTop_toBottomOf="@id/tv_ingredient" />
 
@@ -49,7 +46,6 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/dimen_small"
       android:ellipsize="end"
-      android:fontFamily="@font/font_regular"
       android:maxLines="1"
       android:textColor="@color/text_color"
       android:textSize="16sp"
@@ -63,11 +59,9 @@
       android:id="@+id/tv_created_date"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:fontFamily="@font/font_regular"
       android:text="@string/ingredients"
-      android:textColor="@color/text_color"
+      android:textColor="@color/sub_text_color"
       android:textSize="16sp"
-      android:textStyle="bold"
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
@@ -77,11 +71,9 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginEnd="@dimen/dimen_small"
-      android:fontFamily="@font/font_regular"
       android:text="@string/weight"
       android:textColor="@color/sub_text_color"
       android:textSize="16sp"
-      android:textStyle="bold"
       app:layout_constraintBottom_toBottomOf="@id/tv_amount"
       app:layout_constraintRight_toLeftOf="@id/tv_amount"
       app:layout_constraintTop_toTopOf="@id/tv_amount" />
@@ -91,7 +83,6 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/dimen_normal"
-      android:fontFamily="@font/font_regular"
       android:text="@string/ingredients"
       android:textColor="@color/text_color"
       android:textSize="16sp"
@@ -100,48 +91,16 @@
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toBottomOf="@id/tv_creator_hint" />
 
-
-    <androidx.cardview.widget.CardView
-      android:id="@+id/container_status"
+    <TextView
+      android:id="@+id/tv_status"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      app:cardCornerRadius="16dp"
-      app:cardElevation="0dp"
+      android:text="@string/income"
+      android:textColor="@color/green"
+      android:textStyle="bold"
+      android:textSize="18sp"
       app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
-
-      <FrameLayout
-        android:id="@+id/container_frame_status"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white_purple"
-        android:paddingStart="@dimen/dimen_large"
-        android:paddingTop="@dimen/dimen_small"
-        android:paddingEnd="@dimen/dimen_large"
-        android:paddingBottom="@dimen/dimen_small">
-
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:gravity="center">
-
-          <TextView
-            android:id="@+id/tv_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/font_regular"
-            android:lines="1"
-            android:textColor="@color/purple"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            tools:text="Manager" />
-
-        </LinearLayout>
-
-      </FrameLayout>
-
-    </androidx.cardview.widget.CardView>
+      app:layout_constraintTop_toTopOf="parent" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

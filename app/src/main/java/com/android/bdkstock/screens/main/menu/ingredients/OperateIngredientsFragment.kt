@@ -2,21 +2,20 @@ package com.android.bdkstock.screens.main.menu.ingredients
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentIngredientsTypeBinding
 import com.android.bdkstock.databinding.FragmentOperateIngredientsBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.findTopNavController
-import com.android.model.repository.ingredients.entity.IngredientEntity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class OperateIngredientsFragment :
    BaseFragment<OperateIngredientsViewModel, FragmentOperateIngredientsBinding>() {
-
-   // TODO: 1. initialize title 2.ingredients lis for select
 
    override val viewModel by viewModels<OperateIngredientsViewModel>()
    override fun getViewBinding() = FragmentOperateIngredientsBinding.inflate(layoutInflater)
@@ -26,11 +25,27 @@ class OperateIngredientsFragment :
 
       observeState()
       observeIngredient()
-
       observeNavigateBack()
 
+      setupIngredientsList()
+
       binding.buttonSave.setOnClickListener { saveOnClick() }
-      binding.inputIngredient.setOnClickListener { ingredientOnClick() }
+
+
+   }
+
+
+   private fun setupIngredientsList() = lifecycleScope.launchWhenStarted {
+      viewModel.getIngredientList.collectLatest { ingredientsList ->
+         val adapter =
+            ArrayAdapter(requireContext(), R.layout.auto_complete_item_job_title, ingredientsList)
+
+         binding.inputIngredient.setAdapter(adapter)
+
+         binding.inputIngredient.setOnItemClickListener { _, _, position, _ ->
+            viewModel.setIngredient(ingredientsList[position])
+         }
+      }
    }
 
    private fun observeNavigateBack() {
@@ -44,10 +59,6 @@ class OperateIngredientsFragment :
          binding.inputIngredient.setText(it.name)
          binding.inputWeight.setText(it.unit)
       }
-   }
-
-   private fun ingredientOnClick() {
-
    }
 
    private fun saveOnClick() {
@@ -72,7 +83,10 @@ class OperateIngredientsFragment :
 
          // visibility
          binding.buttonSave.isVisible = !state.isInProgress
-         binding.lottiProgress.isVisible = state.isInProgress
+         binding.progress.isVisible = state.isInProgress
+
+         binding.tvIndicator.text = state.getStatusText(requireContext())
+         binding.tvIndicator.setBackgroundColor(state.getBackgroundColor(requireContext()))
       }
    }
 }

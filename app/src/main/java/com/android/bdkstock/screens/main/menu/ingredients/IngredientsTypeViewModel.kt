@@ -21,7 +21,7 @@ class IngredientsTypeViewModel @Inject constructor(
    val errorEvent = _errorEvent.liveData()
 
    val ingredientsFlow = ingredientsRepository
-      .getIngredientsList()
+      .getIngredientsList(null)
       .cachedIn(viewModelScope)
 
    fun showAuthError() {

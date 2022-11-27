@@ -10,8 +10,10 @@ import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.ingredients.IngredientsRepository
 import com.android.model.repository.ingredients.entity.IngredientEntity
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
+import com.android.model.repository.ingredients.entity.SimpleIngredient
 import com.android.model.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,12 +32,16 @@ class OperateIngredientsViewModel @Inject constructor(
    private val _navigateToDisplay = MutableLiveEvent<IngredientExOrInEntity>()
    val navigateToDisplay = _navigateToDisplay.liveData()
 
-   private val _selectedIngredient = MutableLiveData<IngredientEntity>()
+   private val _selectedIngredient = MutableLiveData<SimpleIngredient>()
    val selectedIngredient = _selectedIngredient.liveData()
+
+   val getIngredientList: Flow<List<SimpleIngredient>> = ingredientsRepository
+      .getIngredientsList()
+      .handleException()
 
    init {
       _state.value = _state.requireValue().copy(
-         operationId = _operationId
+         status = _operationId
       )
    }
 
@@ -60,8 +66,8 @@ class OperateIngredientsViewModel @Inject constructor(
       }
    }
 
-   fun setIngredient(ingredientEntity: IngredientEntity) {
-      _selectedIngredient.value = ingredientEntity
+   fun setIngredient(ingredient: SimpleIngredient) {
+      _selectedIngredient.value = ingredient
    }
 
    private fun successAndNavigateToDisplay(importedIngredient: IngredientExOrInEntity) {
@@ -88,21 +94,15 @@ class OperateIngredientsViewModel @Inject constructor(
       )
    }
 
-   private fun getIngredientId() = _selectedIngredient.requireValue().id.toInt()
+   private fun getIngredientId() = _selectedIngredient.requireValue().id
 
    data class State(
       val isInProgress: Boolean = false,
       val emptyName: Boolean = false,
       val emptyAmount: Boolean = false,
       val emptyComment: Boolean = false,
-      val operationId: Int? = null
+      val status: Int? = null
    ) {
-
-      fun getTitle(context: Context) =
-         if (operationId == OPERATION_INCOME)
-            context.getString(R.string.income)
-         else
-            context.getString(R.string.expense)
 
       fun getNameErrorMessage(context: Context) =
          if (emptyName) context.getString(R.string.error_empty_name)
@@ -115,6 +115,14 @@ class OperateIngredientsViewModel @Inject constructor(
       fun getCommentErrorMessage(context: Context) =
          if (emptyComment) context.getString(R.string.error_empty_comment)
          else null
+
+      fun getStatusText(context: Context) =
+         if (status == OPERATION_INCOME) context.getString(R.string.income)
+         else context.getString(R.string.expense)
+
+      fun getBackgroundColor(context: Context) =
+         if (status == OPERATION_INCOME) context.getColor(R.color.green)
+         else context.getColor(R.color.red)
    }
 
    private companion object {

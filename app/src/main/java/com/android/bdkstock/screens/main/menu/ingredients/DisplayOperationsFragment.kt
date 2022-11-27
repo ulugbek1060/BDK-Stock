@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentDisplayOperationsBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,34 +22,15 @@ class DisplayOperationsFragment :
    }
 
    @SuppressLint("SetTextI18n")
-   private fun observeOperation() {
-      viewModel.operationEntity.observe(viewLifecycleOwner) {
+   private fun observeOperation() = viewModel.state.observe(viewLifecycleOwner) { state ->
+      binding.tvCreator.setText(state.ingredient?.creator)
+      binding.inputIngredient.setText(state.ingredient?.name)
+      binding.inputAmount.setText(state.ingredient?.amount)
+      binding.inputWeight.setText(state.ingredient?.unit)
+      binding.inputComment.setText(state.ingredient?.comment)
+      binding.tvCreatedDate.setText(state.ingredient?.createdAt)
 
-         binding.tvOperation.text = getStatusText(it.status.toInt())
-         binding.backgroundOperation.setBackgroundColor(getStatusBackground(it.status.toInt()))
-         binding.tvOperation.setTextColor(getTextColor(it.status.toInt()))
-
-         binding.tvCreator.text = it.creator
-         binding.tvIngredient.text = it.name
-         binding.tvAmount.text = "${it.amount} ${it.unit}"
-         binding.tvCreatedDate.text = it.createdAt
-         binding.tvComment.text = it.comment
-      }
-   }
-
-   private fun getStatusText(status: Int) =
-      if (status == OPERATION_INCOME) requireContext().getString(R.string.income)
-      else requireContext().getString(R.string.expense)
-
-   private fun getStatusBackground(status: Int) =
-      if (status == OPERATION_INCOME) requireContext().getColor(R.color.white_green)
-      else requireContext().getColor(R.color.white_red)
-
-   private fun getTextColor(status: Int) =
-      if (status == OPERATION_INCOME) requireContext().getColor(R.color.green)
-      else requireContext().getColor(R.color.red)
-
-   private companion object {
-      const val OPERATION_INCOME = 0
+      binding.tvIndicator.text = state.getStatusText(requireContext())
+      binding.tvIndicator.setBackgroundColor(state.getBackgroundColor(requireContext()))
    }
 }

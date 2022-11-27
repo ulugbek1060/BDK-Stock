@@ -10,6 +10,10 @@
 
 <!--  my colors-->
 
+  <color name="surface_txt_color">#FFFFFF</color>
+  <color name="on_area_txt_color">#202020</color>
+
+
   <color name="background">#FFFFFFFF</color>
   <color name="progress_background_color">#dddddd</color>
   <color name="item_color">#F9F9FE</color>
@@ -31,4 +35,15 @@
   <color name="sub_text_color">#FF979797</color>
   <color name="text_color_light">#FF32324D</color>
   <color name="line">#DBDBE0</color>
+
+  <!--  <selector ...>-->
+  <!--  <item android:color="?attr/colorPrimary" android:state_enabled="true" />-->
+  <!--  <item android:alpha="0.12" android:color="?attr/colorOnSurface" />-->
+  <!--</selector>-->
+  <color name="navy_700_alpha_60">#9937596D</color>
+  <color name="navy_500">#64869B</color>
+  <color name="navy_700">#37596D</color>
+  <color name="navy_900">#073042</color>
+  <color name="green_300">#3DDC84</color>
+    <color name="green_500">#00A956</color>
 </resources>

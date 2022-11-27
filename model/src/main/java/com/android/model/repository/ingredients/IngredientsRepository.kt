@@ -6,9 +6,13 @@ import com.android.model.repository.base.BaseRepository
 import com.android.model.repository.base.DataLoader
 import com.android.model.repository.ingredients.entity.IngredientEntity
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
+import com.android.model.repository.ingredients.entity.SimpleIngredient
 import com.android.model.utils.EmptyFieldException
 import com.android.model.utils.Field
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class IngredientsRepository @Inject constructor(
@@ -80,4 +84,8 @@ class IngredientsRepository @Inject constructor(
       }
       BasePageSource(loader, defaultPageSize = DEFAULT_PAGE_SIZE)
    }
+
+   fun getIngredientsList(): Flow<List<SimpleIngredient>> = channelFlow {
+      send(ingredientsSource.getIngredientList())
+   }.flowOn(Dispatchers.IO)
 }

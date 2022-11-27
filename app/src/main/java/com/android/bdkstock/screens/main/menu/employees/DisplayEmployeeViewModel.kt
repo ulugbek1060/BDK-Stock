@@ -30,8 +30,8 @@ class DisplayEmployeeViewModel @Inject constructor(
    private val _currentEmployee =
       DisplayEmployeeFragmentArgs.fromSavedStateHandle(savedStateHandle)
 
-   private val _showChangesDialog = MutableUnitLiveEvent()
-   val showChangesDialog = _showChangesDialog.liveData()
+   private val _showSuggestionDialog = MutableUnitLiveEvent()
+   val showSuggestionDialog = _showSuggestionDialog.liveData()
 
    private val _jobsEntity = MutableLiveData<List<JobEntity>>(emptyList())
    val jobsEntity = _jobsEntity.liveData()
@@ -54,13 +54,13 @@ class DisplayEmployeeViewModel @Inject constructor(
             if (result is Success) _jobsEntity.value = result.value ?: emptyList()
          }
       }
-      getInitialDateOfEmployee()
+      getInitialValue()
    }
 
    /**
     * 1. initial user data
     */
-   private fun getInitialDateOfEmployee() = try {
+   private fun getInitialValue() = try {
       val phoneNumber = _currentEmployee.employeeEntity.phoneNumber
       val entity = _currentEmployee.employeeEntity.copy(
          phoneNumber = formatPhoneNumber(phoneNumber)
@@ -78,7 +78,6 @@ class DisplayEmployeeViewModel @Inject constructor(
       newPassword: String,
       newPasswordConfirm: String,
    ) = viewModelScope.safeLaunch {
-      if (isChangeable()) {
          showProgress()
          try {
             val message = employeesRepository.updateEmployee(
@@ -98,39 +97,36 @@ class DisplayEmployeeViewModel @Inject constructor(
          } finally {
             hideProgress()
          }
-      }
    }
 
-   fun setChangeableState(checkState: Boolean) {
-      if (checkState) {
-         showDialogEvent()
+   fun toggleChangeableState() {
+      if (!changeableState()) {
+         _showSuggestionDialog.publishEvent()
       } else {
-         _state.value = State(isChangesEnable = false)
-         getInitialDateOfEmployee()
+         disableChangeableState()
       }
    }
 
-   /**
-    * to change job title
-    */
+   fun enableChangeableState() {
+      _state.value = _state.requireValue().copy(
+         isChangeableEnable = true
+      )
+   }
+
+   fun disableChangeableState() {
+      _state.value = _state.requireValue().copy(
+         isChangeableEnable = false
+      )
+      getInitialValue()
+   }
+
    fun setJobEntity(job: JobEntity) {
       _employeeEntity.value = _employeeEntity.requireValue().copy(
          job = job
       )
    }
 
-   fun enableChangeableState() {
-      _state.value = _state.requireValue().copy(
-         isChangesEnable = true
-      )
-   }
-
-   /**
-    * to know change state is active or not
-    */
-   private fun isChangeable(): Boolean = _state.requireValue().isChangesEnable
-
-   private fun showDialogEvent() = _showChangesDialog.publishEvent()
+   private fun changeableState() = _state.requireValue().isChangeableEnable
 
    private fun getEmployeeId() = _employeeEntity.requireValue().id
 
@@ -189,20 +185,9 @@ class DisplayEmployeeViewModel @Inject constructor(
       val emptyPhoneNumberError: Boolean = false,
       val emptyPasswordError: Boolean = false,
       val passwordMismatch: Boolean = false,
-      val isChangesEnable: Boolean = false,
+      val isChangeableEnable: Boolean = false,
       val isProgressActive: Boolean = false
    ) {
-      fun getToggleButtonColor(context: Context) =
-         if (isChangesEnable) context.getColor(R.color.red)
-         else context.getColor(R.color.blue)
-
-      fun getToggleButtonText(context: Context) =
-         if (isChangesEnable) context.getString(R.string.cancel)
-         else context.getString(R.string.edit)
-
-      fun getButtonSaveColor(context: Context) =
-         if (isChangesEnable) context.getColor(R.color.blue)
-         else context.getColor(R.color.grey)
 
       fun getNameError(context: Context) =
          if (emptyFirstnameError) context.getString(R.string.error_empty_name)

@@ -2,6 +2,7 @@ package com.android.model.repository.ingredients
 
 import com.android.model.repository.ingredients.entity.IngredientEntity
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
+import com.android.model.repository.ingredients.entity.SimpleIngredient
 
 interface IngredientsSource {
 
@@ -56,4 +57,12 @@ interface IngredientsSource {
       pageIndex: Int,
       pageSize: Int
    ): List<IngredientExOrInEntity>
+
+   /**
+    * Fetches actions of Ingredients expenses and incomes with pagination
+    * @throws ConnectionException
+    * @throws BackendException
+    * @throws ParseBackendResponseException
+    */
+   suspend fun getIngredientList(): List<SimpleIngredient>
 }

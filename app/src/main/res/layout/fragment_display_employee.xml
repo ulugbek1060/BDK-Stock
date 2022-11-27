@@ -116,7 +116,6 @@
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginTop="@dimen/dimen_extra"
         android:layout_marginRight="@dimen/dimen_large"
-        android:enabled="false"
         android:hint="@string/name"
         app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@id/input_layout_surname"
@@ -141,7 +140,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
-        android:enabled="false"
         android:hint="@string/surname"
         app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@id/input_layout_phone_number"
@@ -166,7 +164,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
-        android:enabled="false"
         android:hint="@string/phone_number"
         app:errorEnabled="true"
         app:counterMaxLength="9"
@@ -194,7 +191,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
-        android:enabled="false"
         android:hint="@string/address"
         app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@id/input_layout_job_title"
@@ -219,7 +215,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
-        android:enabled="false"
         android:hint="@string/job"
         app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@id/input_layout_password"
@@ -259,7 +254,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
-        android:enabled="false"
         android:hint="@string/password"
         app:endIconMode="password_toggle"
         app:errorEnabled="true"
@@ -286,7 +280,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_large"
         android:layout_marginEnd="@dimen/dimen_large"
-        android:enabled="false"
         android:hint="@string/confirm_password"
         app:endIconMode="password_toggle"
         app:errorEnabled="true"
@@ -310,6 +303,7 @@
         android:id="@+id/container_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -319,91 +313,29 @@
           android:id="@+id/container_buttons"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="20dp"
           android:layout_marginStart="@dimen/dimen_large"
           android:layout_marginEnd="@dimen/dimen_large"
           android:orientation="horizontal"
           android:visibility="visible">
 
-          <androidx.cardview.widget.CardView
+          <Button
             android:id="@+id/button_delete"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_margin="4dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="0dp">
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/corner_small"
+            android:text="@string/delete"
+            android:textAllCaps="false" />
 
-            <FrameLayout
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/red">
-
-              <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackground"
-                android:gravity="center">
-
-                <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:ellipsize="end"
-                  android:fontFamily="@font/font_regular"
-                  android:lines="1"
-                  android:text="@string/delete"
-                  android:textColor="@color/white"
-                  android:textSize="16sp"
-                  android:textStyle="bold" />
-
-              </LinearLayout>
-
-            </FrameLayout>
-
-          </androidx.cardview.widget.CardView>
-
-          <androidx.cardview.widget.CardView
+          <Button
             android:id="@+id/button_save"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_margin="4dp"
+            android:layout_width="0dp"
             android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="0dp">
-
-            <FrameLayout
-              android:id="@+id/container_save_button"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/blue">
-
-              <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackground"
-
-                android:gravity="center">
-
-                <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:ellipsize="end"
-                  android:fontFamily="@font/font_regular"
-                  android:lines="1"
-                  android:text="@string/save"
-                  android:textColor="@color/white"
-                  android:textSize="16sp"
-                  android:textStyle="bold" />
-
-              </LinearLayout>
-
-            </FrameLayout>
-
-          </androidx.cardview.widget.CardView>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/corner_small"
+            android:text="@string/save"
+            android:textAllCaps="false" />
 
         </LinearLayout>
 
