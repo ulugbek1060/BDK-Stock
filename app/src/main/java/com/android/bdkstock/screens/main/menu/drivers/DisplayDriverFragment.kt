@@ -126,7 +126,7 @@ class DisplayDriverFragment :
          val vehicles = list ?: emptyList()
 
          val adapter =
-            ArrayAdapter(requireContext(), R.layout.auto_complete_item_job_title, vehicles)
+            ArrayAdapter(requireContext(), R.layout.spinner_item, vehicles)
          binding.autoCompleteVehicle.setAdapter(adapter)
 
          binding.autoCompleteVehicle.setOnItemClickListener { _, _, position, _ ->

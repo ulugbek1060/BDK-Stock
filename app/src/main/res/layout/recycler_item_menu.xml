@@ -4,49 +4,36 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:layout_margin="8dp"
+  android:layout_margin="@dimen/dimen_normal"
   android:clickable="true"
   android:focusable="true"
   android:foreground="?attr/selectableItemBackground"
-  app:cardCornerRadius="@dimen/corner_big"
-  app:cardElevation="0dp">
+  app:cardCornerRadius="@dimen/dimen_normal"
+  app:cardElevation="3dp">
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="0dp"
       android:background="@color/item_color"
+      android:gravity="center"
+      android:orientation="vertical"
+      app:layout_constraintDimensionRatio="1:1"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toTopOf="parent">
 
       <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_decor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-      <!--      <ImageView-->
-      <!--        android:layout_width="wrap_content"-->
-      <!--        android:layout_height="wrap_content"-->
-      <!--        android:rotation="180"-->
-      <!--        android:src="@drawable/ic_decor"-->
-      <!--        app:layout_constraintLeft_toLeftOf="parent"-->
-      <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-      <ImageView
         android:id="@+id/iv_item_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_big"
         android:src="@drawable/ic_employees_bulk"
         app:layout_constraintBottom_toTopOf="@id/tv_item_title"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -54,21 +41,19 @@
 
       <TextView
         android:id="@+id/tv_item_title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_big"
-        android:layout_marginBottom="@dimen/dimen_big"
         android:fontFamily="@font/font_bold"
         android:textColor="@color/text_color_light"
         android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/iv_item_icon"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/iv_item_icon"
+        app:layout_constraintLeft_toLeftOf="@id/iv_item_icon"
+        app:layout_constraintRight_toRightOf="@id/iv_item_icon"
         tools:text="Employees" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

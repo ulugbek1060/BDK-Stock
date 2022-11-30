@@ -1,11 +1,10 @@
 package com.android.bdkstock.screens.main.menu.actions
 
-import androidx.lifecycle.MutableLiveData
-import com.android.bdkstock.R
+import android.app.Application
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
-import com.android.model.utils.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @HiltViewModel

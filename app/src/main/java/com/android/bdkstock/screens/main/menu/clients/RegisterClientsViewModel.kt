@@ -60,9 +60,9 @@ class RegisterClientsViewModel @Inject constructor(
 
    private fun showEmptyFields(e: EmptyFieldException) {
       _state.value = _state.requireValue().copy(
-         emptyFullName = e.field == Field.FullName,
-         emptyPhoneNumber = e.field == Field.PhoneNumber,
-         emptyAddress = e.field == Field.Address,
+         emptyFullName = e.field == Field.FULL_NAME,
+         emptyPhoneNumber = e.field == Field.PHONE_NUMBER,
+         emptyAddress = e.field == Field.ADDRESS,
       )
    }
 

@@ -1,18 +1,20 @@
 package com.android.model.utils
 
 enum class Field {
-    FullName,
-    RegNumber, // automobile registration model
-    VehicleModel,
-    PhoneNumber,
-    Password,
-    MismatchPasswordFields,
-    Firstname,
-    Lastname,
-    Address,
-    Job,
-    IngredientName,
-    IngredientUnit,
-    Amount,
-    Comments
+    FULL_NAME,
+    REG_NUMBER, // automobile registration model
+    VEHICLE_MODEL,
+    PHONE_NUMBER,
+    PASSWORD,
+    MATCH_PASSWORD_FIELDS,
+    FIRSTNAME,
+    LASTNAME,
+    ADDRESS,
+    JOB,
+    NAME,
+    UNIT,
+    AMOUNT,
+    COMMENT,
+    PRICE,
+    EMPTY_INGREDIENT,
 }

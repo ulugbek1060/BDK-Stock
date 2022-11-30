@@ -45,8 +45,8 @@ class AddIngredientsViewModel @Inject constructor(
 
    private fun publishEmptyFields(e: EmptyFieldException) {
       _state.value = _state.requireValue().copy(
-         emptyNameError = e.field == Field.IngredientName,
-         emptyUnitError = e.field == Field.IngredientUnit
+         emptyNameError = e.field == Field.NAME,
+         emptyUnitError = e.field == Field.UNIT
       )
    }
 

@@ -38,7 +38,7 @@ class OperateIngredientsFragment :
    private fun setupIngredientsList() = lifecycleScope.launchWhenStarted {
       viewModel.getIngredientList.collectLatest { ingredientsList ->
          val adapter =
-            ArrayAdapter(requireContext(), R.layout.auto_complete_item_job_title, ingredientsList)
+            ArrayAdapter(requireContext(), R.layout.spinner_item, ingredientsList)
 
          binding.inputIngredient.setAdapter(adapter)
 

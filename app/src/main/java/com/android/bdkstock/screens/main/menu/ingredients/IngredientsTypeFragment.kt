@@ -10,9 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentIngredientsOperationsBinding
 import com.android.bdkstock.databinding.FragmentIngredientsTypeBinding
-import com.android.bdkstock.databinding.ProgressItemBiggerBinding
+import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemIngredientBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.DefaultLoadStateAdapter
@@ -136,7 +135,7 @@ class IngredientsTypeFragment :
 
    // -- Progress with shimmer layout
 
-   private val progressAdapter = simpleAdapter<Any, ProgressItemBiggerBinding> {}
+   private val progressAdapter = simpleAdapter<Any, ProgressItemSmallerBinding> {}
    private fun setupProgress() {
       progressAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
       binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())

@@ -1,5 +1,6 @@
 package com.android.bdkstock.screens.main.menu.actions
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -42,73 +43,55 @@ class MenuFragment : BaseFragment<MenuViewModel, FragmentMenuBinding>() {
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-
       setUpRecyclerView()
-      observeMenusList()
-   }
-
-   private fun observeMenusList() {
-
    }
 
    private fun setUpRecyclerView() {
-      adapter.submitList(listMenus)
+      adapter.submitList(getMenus())
       gridLayoutManager = GridLayoutManager(requireContext(), 2)
       binding.recyclerMenu.layoutManager = gridLayoutManager
       binding.recyclerMenu.adapter = adapter
    }
 
-   private val listMenus = ArrayList<MenuItem>()
-      .apply {
-         add(
-            MenuItem(
-               1,
-               R.drawable.ic_employees_bulk,
-               requireContext().getString(R.string.employees),
-               R.id.employeesFragment
-            )
-         )
-         add(
-            MenuItem(
-               2,
-               R.drawable.ic_sales_bulk,
-               "Sales",
-               R.id.salesFragment
-            )
-         )
-         add(
-            MenuItem(
-               3,
-               R.drawable.ic_ingredients_bulk,
-               requireContext().getString(R.string.ingredients),
-               R.id.ingredientsOperationsFragment
-            )
-         )
-         add(
-            MenuItem(
-               4,
-               R.drawable.ic_products_bulk,
-               "Products",
-               R.id.productsFragment
-            )
-         )
-         add(
-            MenuItem(
-               5,
-               R.drawable.ic_clients_bulk,
-               requireContext().getString(R.string.clients),
-               R.id.clientsFragment
-            )
-         )
-         add(
-            MenuItem(
-               6,
-               R.drawable.ic_drivers_bulk,
-               requireContext().getString(R.string.drivers),
-               R.id.driversFragment
-            )
-         )
-      }
-
+   private fun getMenus(): List<MenuItem> {
+      return listOf(
+         MenuItem(
+            1,
+            R.drawable.ic_employees_bulk,
+            getString(R.string.employees),
+            R.id.employeesFragment
+         ),
+         MenuItem(
+            2,
+            R.drawable.ic_sales_bulk,
+            getString(R.string.sales),
+            R.id.salesFragment
+         ),
+         MenuItem(
+            3,
+            R.drawable.ic_ingredients_bulk,
+            getString(R.string.ingredients),
+            R.id.ingredientsOperationsFragment
+         ),
+         MenuItem(
+            4,
+            R.drawable.ic_products_bulk,
+            getString(R.string.products),
+            R.id.productOperationsListFragment
+         ),
+         MenuItem(
+            5,
+            R.drawable.ic_clients_bulk,
+            getString(R.string.clients),
+            R.id.clientsFragment
+         ),
+         MenuItem(
+            6,
+            R.drawable.ic_drivers_bulk,
+            getString(R.string.drivers),
+            R.id.driversFragment
+         ),
+      )
+   }
 }
 

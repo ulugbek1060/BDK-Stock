@@ -7,7 +7,6 @@ import com.android.model.database.vehicles.VehiclesDao
 import com.android.model.repository.account.entity.AccountEntity
 import com.android.model.repository.base.BaseRepository
 import com.android.model.repository.settings.AppSettings
-import com.android.model.utils.AuthException
 import com.android.model.utils.BackendException
 import com.android.model.utils.EmptyFieldException
 import com.android.model.utils.Field
@@ -25,8 +24,6 @@ class AccountRepository @Inject constructor(
    private val vehiclesDao: VehiclesDao
 ) : BaseRepository() {
 
-   private val TAG = this.javaClass.simpleName
-
    fun isSignedIn(): Boolean {
       // user is signed-in if auth token exists
       return appSettings.getCurrentToken() != null
@@ -43,24 +40,29 @@ class AccountRepository @Inject constructor(
     */
    suspend fun signIn(phoneNumber: String, password: String) {
 
-      if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PhoneNumber)
-      if (password.isBlank()) throw EmptyFieldException(Field.Password)
+      if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PHONE_NUMBER)
+      if (password.isBlank()) throw EmptyFieldException(Field.PASSWORD)
 
       // if there is error throws
       wrapExceptions {
          val accountEntity = accountSource.signIn(phoneNumber, password)
 
-         appSettings.setCurrentToken(accountEntity.token)
+         appSettings.setCurrentToken(accountEntity.accessToken)
 
          // save user data to database
-         accountDao.insert(accountEntity.toUserRoomEntity())
+         saveUserInf()
       }
+   }
+
+   private suspend fun saveUserInf() {
+      val account = accountSource.getUSerInfo()
+      accountDao.insert(account.toUserRoomEntity())
    }
 
    /**
     * Get the account info of the current signed-in user.
     */
-   fun getAccount(): Flow<AccountEntity?> {
+   fun getAccount(): Flow<AccountEntity?>  {
       return accountDao.getAccount().map { it?.toAccountEntity() }
    }
 

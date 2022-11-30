@@ -1,4 +1,4 @@
-package com.android.source.network.account.entity.signin
+package com.android.source.network.account.entity.userinfo
 
 import com.android.source.network.job.entity.Job
 import com.google.gson.annotations.SerializedName

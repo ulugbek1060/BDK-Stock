@@ -19,11 +19,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentDisplayEmployeeBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
-import com.android.bdkstock.views.findTopNavController
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -155,7 +153,7 @@ class DisplayEmployeeFragment :
 
    private fun setupJobTitle() = lifecycleScope.launchWhenStarted {
       viewModel.jobsEntity.observe(viewLifecycleOwner) { list ->
-         val adapter = ArrayAdapter(requireContext(), R.layout.auto_complete_item_job_title, list)
+         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, list)
          binding.autoCompleteJobTitle.setAdapter(adapter)
 
          binding.autoCompleteJobTitle.setOnItemClickListener { _, _, position, _ ->

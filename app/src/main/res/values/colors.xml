@@ -10,12 +10,13 @@
 
 <!--  my colors-->
 
+  <color name="text_color">#0E0E0E</color>
+  <color name="sub_text_color">#FF979797</color>
   <color name="surface_txt_color">#FFFFFF</color>
   <color name="on_area_txt_color">#202020</color>
-
+  <color name="shimmer_effect">#C2C2C2</color>
 
   <color name="background">#FFFFFFFF</color>
-  <color name="progress_background_color">#dddddd</color>
   <color name="item_color">#F9F9FE</color>
   <color name="blue">#FF0066FF</color>
   <color name="purple">#FF5932EA</color>
@@ -31,8 +32,6 @@
   <color name="white_blue">#FFECEDFF</color>
   <color name="white_light">#EAEAEA</color>
 
-  <color name="text_color">#CC000000</color>
-  <color name="sub_text_color">#FF979797</color>
   <color name="text_color_light">#FF32324D</color>
   <color name="line">#DBDBE0</color>
 

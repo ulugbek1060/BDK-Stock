@@ -6,7 +6,6 @@ import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentDriversBinding
 import com.android.bdkstock.databinding.FragmentRegisterDriverBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
@@ -37,7 +36,7 @@ class RegisterDriverFragment :
    private fun observeVehicles() {
       viewModel.vehicles.observe(viewLifecycleOwner) {
          val list = it ?: emptyList()
-         val adapter = ArrayAdapter(requireContext(), R.layout.auto_complete_item_job_title, list)
+         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, list)
 
          binding.autoCompleteVehicle.setAdapter(adapter)
 

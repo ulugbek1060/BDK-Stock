@@ -6,7 +6,6 @@ import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentEmployeesBinding
 import com.android.bdkstock.databinding.FragmentRegisterEmployeeBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
@@ -44,7 +43,7 @@ class RegisterEmployeeFragment :
       viewModel.jobsList.observe(viewLifecycleOwner) { list ->
          binding.autoCompleteJobTitle.setText(null, false)
 
-         val adapter = ArrayAdapter(requireContext(), R.layout.auto_complete_item_job_title, list)
+         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, list)
          binding.autoCompleteJobTitle.setAdapter(adapter)
 
          binding.autoCompleteJobTitle.setOnItemClickListener { _, _, position, _ ->

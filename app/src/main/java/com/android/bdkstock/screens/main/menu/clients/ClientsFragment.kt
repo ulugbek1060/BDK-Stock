@@ -43,8 +43,6 @@ class ClientsFragment :
    BaseFragment<ClientsViewModel, FragmentClientsBinding>(),
    SearchView.OnQueryTextListener{
 
-   private val TAG = "ClientsFragment"
-
    override val viewModel by viewModels<ClientsViewModel>()
    private lateinit var layoutManager: LinearLayoutManager
    override fun getViewBinding() = FragmentClientsBinding.inflate(layoutInflater)

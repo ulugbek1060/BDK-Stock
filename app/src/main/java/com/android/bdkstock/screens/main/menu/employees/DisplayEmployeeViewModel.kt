@@ -154,12 +154,12 @@ class DisplayEmployeeViewModel @Inject constructor(
 
    private fun publishEmptyFieldError(e: EmptyFieldException) {
       _state.value = _state.value?.copy(
-         emptyFirstnameError = e.field == Field.Firstname,
-         emptyLastnameError = e.field == Field.Lastname,
-         emptyAddressError = e.field == Field.Address,
-         emptyPhoneNumberError = e.field == Field.PhoneNumber,
-         emptyPasswordError = e.field == Field.Password,
-         passwordMismatch = e.field == Field.MismatchPasswordFields
+         emptyFirstnameError = e.field == Field.FIRSTNAME,
+         emptyLastnameError = e.field == Field.LASTNAME,
+         emptyAddressError = e.field == Field.ADDRESS,
+         emptyPhoneNumberError = e.field == Field.PHONE_NUMBER,
+         emptyPasswordError = e.field == Field.PASSWORD,
+         passwordMismatch = e.field == Field.MATCH_PASSWORD_FIELDS
       )
    }
 

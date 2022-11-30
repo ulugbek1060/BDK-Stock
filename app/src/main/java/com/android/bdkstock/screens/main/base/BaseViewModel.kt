@@ -46,7 +46,7 @@ open class BaseViewModel(private val accountRepository: AccountRepository) : Vie
    }
 
    fun <T> Flow<T>.handleException(): Flow<T> = catch { e ->
-      if (e is BackendException && e.code == 401) {
+      if (e is AuthException) {
          _showAuthErrorAndRestart.publishEvent()
       } else {
          _showErrorMessageResEvent.publishEvent(R.string.internal_exception)

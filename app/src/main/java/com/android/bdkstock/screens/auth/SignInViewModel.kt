@@ -61,8 +61,8 @@ class SignInViewModel @Inject constructor(
 
    private fun processEmptyFieldException(e: EmptyFieldException) {
       _state.value = _state.requireValue().copy(
-         emptyPasswordError = e.field == Field.Password,
-         emptyPhoneNumberError = e.field == Field.PhoneNumber
+         emptyPasswordError = e.field == Field.PASSWORD,
+         emptyPhoneNumberError = e.field == Field.PHONE_NUMBER
       )
    }
 

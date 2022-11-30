@@ -113,5 +113,7 @@
   <string name="add_ingredients">Добавить ингредиенты</string>
   <string name="operation_on_ingredients">Операции с ингредиентами</string>
   <string name="operation">Операция</string>
+  <string name="sales">Продажи</string>
+  <string name="products">Товары</string>
 
 </resources>

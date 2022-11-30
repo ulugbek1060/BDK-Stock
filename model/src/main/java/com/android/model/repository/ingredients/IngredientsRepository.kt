@@ -23,8 +23,8 @@ class IngredientsRepository @Inject constructor(
       ingredientName: String,
       ingredientUnit: String
    ): IngredientEntity {
-      if (ingredientName.isBlank()) throw EmptyFieldException(Field.IngredientName)
-      if (ingredientUnit.isBlank()) throw EmptyFieldException(Field.IngredientUnit)
+      if (ingredientName.isBlank()) throw EmptyFieldException(Field.NAME)
+      if (ingredientUnit.isBlank()) throw EmptyFieldException(Field.UNIT)
 
       return wrapExceptions {
          ingredientsSource.createIngredients(ingredientName, ingredientUnit)
@@ -50,9 +50,9 @@ class IngredientsRepository @Inject constructor(
       statusOfActions: Int,
       comments: String
    ): IngredientExOrInEntity {
-      if (ingredientId == null) throw EmptyFieldException(Field.IngredientName)
-      if (amount.isBlank()) throw EmptyFieldException(Field.Amount)
-      if (comments.isBlank()) throw EmptyFieldException(Field.Comments)
+      if (ingredientId == null) throw EmptyFieldException(Field.NAME)
+      if (amount.isBlank()) throw EmptyFieldException(Field.AMOUNT)
+      if (comments.isBlank()) throw EmptyFieldException(Field.COMMENT)
 
       return wrapExceptions {
          ingredientsSource.addExpensesAndIncomesOfIngredient(
@@ -86,6 +86,6 @@ class IngredientsRepository @Inject constructor(
    }
 
    fun getIngredientsList(): Flow<List<SimpleIngredient>> = channelFlow {
-      send(ingredientsSource.getIngredientList())
+      send(wrapExceptions { ingredientsSource.getIngredientList() })
    }.flowOn(Dispatchers.IO)
 }

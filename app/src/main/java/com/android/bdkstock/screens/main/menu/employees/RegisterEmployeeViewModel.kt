@@ -78,10 +78,10 @@ class RegisterEmployeeViewModel @Inject constructor(
 
    private fun publishEmptyFields(e: EmptyFieldException) {
       _state.value = _state.requireValue().copy(
-         emptyFirstname = e.field == Field.Firstname,
-         emptyLastname = e.field == Field.Firstname,
-         emptyAddress = e.field == Field.Firstname,
-         emptyPhoneNumber = e.field == Field.Firstname,
+         emptyFirstname = e.field == Field.FIRSTNAME,
+         emptyLastname = e.field == Field.FIRSTNAME,
+         emptyAddress = e.field == Field.FIRSTNAME,
+         emptyPhoneNumber = e.field == Field.FIRSTNAME,
       )
    }
 

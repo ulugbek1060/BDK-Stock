@@ -19,9 +19,9 @@ class ClientsRepository @Inject constructor(
       phoneNumber: String,
       address: String
    ): ClientEntity {
-      if (fullName.isBlank()) throw EmptyFieldException(Field.FullName)
-      if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PhoneNumber)
-      if (address.isBlank()) throw EmptyFieldException(Field.Address)
+      if (fullName.isBlank()) throw EmptyFieldException(Field.FULL_NAME)
+      if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PHONE_NUMBER)
+      if (address.isBlank()) throw EmptyFieldException(Field.ADDRESS)
       return wrapExceptions {
          clientSource.registerClient(
             fullName = fullName, phoneNumber = phoneNumber, address = address
@@ -35,9 +35,9 @@ class ClientsRepository @Inject constructor(
       phoneNumber: String,
       address: String
    ): String {
-      if (fullName.isBlank()) throw EmptyFieldException(Field.FullName)
-      if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PhoneNumber)
-      if (address.isBlank()) throw EmptyFieldException(Field.Address)
+      if (fullName.isBlank()) throw EmptyFieldException(Field.FULL_NAME)
+      if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PHONE_NUMBER)
+      if (address.isBlank()) throw EmptyFieldException(Field.ADDRESS)
       return wrapExceptions {
          clientSource.updateClient(
             clientId, fullName, phoneNumber, address

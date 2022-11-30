@@ -24,10 +24,10 @@ class DriversRepository @Inject constructor(
       vehicleModelId: Int?,
       regNumber: String
    ): DriverEntity {
-      if (fullName.isBlank()) throw EmptyFieldException(Field.FullName)
-      if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PhoneNumber)
-      if (vehicleModelId == null) throw EmptyFieldException(Field.VehicleModel)
-      if (regNumber.isBlank()) throw EmptyFieldException(Field.RegNumber)
+      if (fullName.isBlank()) throw EmptyFieldException(Field.FULL_NAME)
+      if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PHONE_NUMBER)
+      if (vehicleModelId == null) throw EmptyFieldException(Field.VEHICLE_MODEL)
+      if (regNumber.isBlank()) throw EmptyFieldException(Field.REG_NUMBER)
 
       return wrapExceptions {
          driversSource.createDriver(
@@ -46,10 +46,10 @@ class DriversRepository @Inject constructor(
       autoModelId: Int?,
       regNumber: String
    ): String {
-      if (fullName.isBlank()) throw EmptyFieldException(Field.FullName)
-      if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PhoneNumber)
-      if (autoModelId == null) throw EmptyFieldException(Field.VehicleModel)
-      if (regNumber.isBlank()) throw EmptyFieldException(Field.RegNumber)
+      if (fullName.isBlank()) throw EmptyFieldException(Field.FULL_NAME)
+      if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PHONE_NUMBER)
+      if (autoModelId == null) throw EmptyFieldException(Field.VEHICLE_MODEL)
+      if (regNumber.isBlank()) throw EmptyFieldException(Field.REG_NUMBER)
 
       return wrapExceptions {
          driversSource.updateDriver(

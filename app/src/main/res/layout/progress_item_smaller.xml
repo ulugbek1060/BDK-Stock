@@ -9,6 +9,12 @@
     android:layout_height="80dp"
     android:layout_margin="8dp"
     app:cardCornerRadius="@dimen/corner_extra"
-    app:cardElevation="0dp" />
+    app:cardElevation="0dp">
+
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/shimmer_effect" />
+  </androidx.cardview.widget.CardView>
 
 </com.facebook.shimmer.ShimmerFrameLayout>

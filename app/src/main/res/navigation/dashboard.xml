@@ -6,16 +6,6 @@
   app:startDestination="@id/menuFragment">
 
   <fragment
-    android:id="@+id/clientsFragment"
-    android:name="com.android.bdkstock.screens.main.menu.clients.ClientsFragment"
-    android:label="@string/clients"
-    tools:layout="@layout/fragment_clients" />
-  <fragment
-    android:id="@+id/driversFragment"
-    android:name="com.android.bdkstock.screens.main.menu.drivers.DriversFragment"
-    android:label="@string/drivers"
-    tools:layout="@layout/fragment_drivers" />
-  <fragment
     android:id="@+id/menuFragment"
     android:name="com.android.bdkstock.screens.main.menu.actions.MenuFragment"
     android:label="fragment_menu"
@@ -49,13 +39,6 @@
       app:popEnterAnim="@anim/pop_enter"
       app:popExitAnim="@anim/pop_exit" />
     <action
-      android:id="@+id/action_menuFragment_to_productsFragment"
-      app:destination="@id/productsFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
-    <action
       android:id="@+id/action_menuFragment_to_salesFragment"
       app:destination="@id/salesFragment"
       app:enterAnim="@anim/enter"
@@ -64,8 +47,20 @@
       app:popExitAnim="@anim/pop_exit" />
     <action
       android:id="@+id/action_menuFragment_to_ingredientsOperationFragment"
-      app:destination="@id/ingredientsOperationsFragment" />
+      app:destination="@id/ingredientsOperationsFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
+    <action
+      android:id="@+id/action_menuFragment_to_productOperationsListFragment"
+      app:destination="@id/productOperationsListFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
   </fragment>
+
   <fragment
     android:id="@+id/employeesFragment"
     android:name="com.android.bdkstock.screens.main.menu.employees.EmployeesFragment"
@@ -77,14 +72,24 @@
     android:label="@string/ingredients"
     tools:layout="@layout/fragment_ingredients_operations" />
   <fragment
-    android:id="@+id/productsFragment"
-    android:name="com.android.bdkstock.screens.main.menu.products.ProductsFragment"
-    android:label="fragment_products"
-    tools:layout="@layout/fragment_products" />
-  <fragment
     android:id="@+id/salesFragment"
     android:name="com.android.bdkstock.screens.main.menu.sales.SalesFragment"
     android:label="fragment_sales"
     tools:layout="@layout/fragment_sales" />
+  <fragment
+    android:id="@+id/productOperationsListFragment"
+    android:name="com.android.bdkstock.screens.main.menu.products.ProductOperationsListFragment"
+    android:label="@string/products"
+    tools:layout="@layout/fragment_product_operations" />
+  <fragment
+    android:id="@+id/clientsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.clients.ClientsFragment"
+    android:label="@string/clients"
+    tools:layout="@layout/fragment_clients" />
+  <fragment
+    android:id="@+id/driversFragment"
+    android:name="com.android.bdkstock.screens.main.menu.drivers.DriversFragment"
+    android:label="@string/drivers"
+    tools:layout="@layout/fragment_drivers" />
 
 </navigation>

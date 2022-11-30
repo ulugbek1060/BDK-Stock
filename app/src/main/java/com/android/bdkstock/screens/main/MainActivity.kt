@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks
@@ -46,6 +47,8 @@ class MainActivity : AppCompatActivity() {
       onNavControllerActivated(navController)
 
       supportActionBar?.elevation = 0f
+
+      AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
       if (savedInstanceState == null) prepareRootNavGraph(checkSign(), navController)
       else prepareRestorationRootNavGraph(savedInstanceState, navController)

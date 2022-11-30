@@ -25,87 +25,91 @@
         app:layout_constraintVertical_bias="0" />
 
 
-      <androidx.cardview.widget.CardView
-        android:id="@+id/button_call"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/dimen_extra"
-        android:layout_marginEnd="@dimen/dimen_small"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
-        app:cardCornerRadius="@dimen/corner_big"
-        app:cardElevation="0dp"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/button_message"
-        app:layout_constraintTop_toBottomOf="@id/iv_avatar">
+    <androidx.cardview.widget.CardView
+      android:id="@+id/button_call"
+      android:layout_width="wrap_content"
+      android:layout_height="0dp"
+      android:layout_marginTop="@dimen/dimen_extra"
+      android:layout_marginEnd="@dimen/dimen_small"
+      android:clickable="true"
+      android:focusable="true"
+      android:foreground="?attr/selectableItemBackground"
+      app:cardCornerRadius="@dimen/corner_big"
+      app:cardElevation="0dp"
+      app:layout_constraintDimensionRatio="1:1"
+      app:layout_constraintHorizontal_chainStyle="packed"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toLeftOf="@id/button_message"
+      app:layout_constraintTop_toBottomOf="@id/iv_avatar">
 
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="@color/white_green"
-          android:gravity="center"
-          android:orientation="vertical"
-          android:padding="@dimen/dimen_extra">
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/green"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_extra">
 
-          <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/call"
-            android:src="@drawable/ic_call" />
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:contentDescription="@string/call"
+          app:tint="@color/white"
+          android:src="@drawable/ic_call" />
 
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/call" />
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/white"
+          android:text="@string/call" />
 
-        </LinearLayout>
+      </LinearLayout>
 
-      </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-      <androidx.cardview.widget.CardView
-        android:id="@+id/button_message"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/dimen_small"
-        android:layout_marginTop="@dimen/dimen_extra"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
-        app:cardCornerRadius="@dimen/corner_big"
-        app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/button_call"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintLeft_toRightOf="@id/button_call"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_avatar">
+    <androidx.cardview.widget.CardView
+      android:id="@+id/button_message"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginStart="@dimen/dimen_small"
+      android:layout_marginTop="@dimen/dimen_extra"
+      android:clickable="true"
+      android:focusable="true"
+      android:foreground="?attr/selectableItemBackground"
+      app:cardCornerRadius="@dimen/corner_big"
+      app:cardElevation="0dp"
+      app:layout_constraintBottom_toBottomOf="@id/button_call"
+      app:layout_constraintDimensionRatio="1:1"
+      app:layout_constraintLeft_toRightOf="@id/button_call"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/iv_avatar">
 
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="@color/white_yellow"
-          android:gravity="center"
-          android:orientation="vertical"
-          android:padding="@dimen/dimen_small">
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/yellow"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_small">
 
-          <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/message"
-            android:src="@drawable/ic_message" />
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:tint="@color/white"
+          android:contentDescription="@string/message"
+          android:src="@drawable/ic_message" />
 
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/message" />
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:ellipsize="end"
+          android:textColor="@color/white"
+          android:maxLines="1"
+          android:text="@string/message" />
 
-        </LinearLayout>
+      </LinearLayout>
 
-      </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
       <com.google.android.material.textfield.TextInputLayout

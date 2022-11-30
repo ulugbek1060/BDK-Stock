@@ -1,6 +1,7 @@
 package com.android.model.repository.account
 
 import com.android.model.repository.account.entity.AccountEntity
+import com.android.model.repository.account.entity.Token
 
 interface AccountSource {
 
@@ -9,18 +10,27 @@ interface AccountSource {
     * @throws ConnectionException
     * @throws BackendException
     * @throws ParseBackendResponseException
-    * @return JWT-token
     */
-   suspend fun signIn(phoneNumber: String, password: String): AccountEntity
+   suspend fun signIn(phoneNumber: String, password: String): Token
+
+   /**
+    * Fetches user info from local
+    * no arguments
+    *
+    * @throws ConnectionException
+    * @throws BackendException
+    * @throws ParseBackendResponseException
+    */
+   suspend
+
+   fun getUSerInfo(): AccountEntity
 
    /**
     * Execute sign-in request.
     * @throws ConnectionException
     * @throws BackendException
     * @throws ParseBackendResponseException
-    * @return JWT-token
     */
    suspend fun logout(): String
-
 
 }

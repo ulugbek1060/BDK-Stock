@@ -1,7 +1,6 @@
 package com.android.model.repository.employees
 
 import androidx.paging.PagingData
-import com.android.model.database.employees.EmployeesDao
 import com.android.model.repository.base.BasePageSource
 import com.android.model.repository.base.BaseRepository
 import com.android.model.repository.base.DataLoader
@@ -26,11 +25,11 @@ class EmployeeRepository @Inject constructor(
       jobId: Int?
    ): EmployeeEntity {
 
-      if (firstname.isBlank()) throw EmptyFieldException(Field.Firstname)
-      if (lastname.isBlank()) throw EmptyFieldException(Field.Lastname)
-      if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PhoneNumber)
-      if (address.isBlank()) throw EmptyFieldException(Field.Address)
-      if (jobId == null) throw EmptyFieldException(Field.Job)
+      if (firstname.isBlank()) throw EmptyFieldException(Field.FIRSTNAME)
+      if (lastname.isBlank()) throw EmptyFieldException(Field.LASTNAME)
+      if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PHONE_NUMBER)
+      if (address.isBlank()) throw EmptyFieldException(Field.ADDRESS)
+      if (jobId == null) throw EmptyFieldException(Field.JOB)
 
       return wrapExceptions {
          employeesSource.registerEmployee(
@@ -53,13 +52,13 @@ class EmployeeRepository @Inject constructor(
       confirmPassword: String,
       jobId: Int?
    ): String {
-      if (firstname.isBlank()) throw EmptyFieldException(Field.Firstname)
-      if (lastname.isBlank()) throw EmptyFieldException(Field.Lastname)
-      if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PhoneNumber)
-      if (address.isBlank()) throw EmptyFieldException(Field.Address)
-      if (password.isBlank()) throw EmptyFieldException(Field.Password)
-      if (confirmPassword != password) throw EmptyFieldException(Field.MismatchPasswordFields)
-      if (jobId == null) throw throw EmptyFieldException(Field.Job)
+      if (firstname.isBlank()) throw EmptyFieldException(Field.FIRSTNAME)
+      if (lastname.isBlank()) throw EmptyFieldException(Field.LASTNAME)
+      if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PHONE_NUMBER)
+      if (address.isBlank()) throw EmptyFieldException(Field.ADDRESS)
+      if (password.isBlank()) throw EmptyFieldException(Field.PASSWORD)
+      if (confirmPassword != password) throw EmptyFieldException(Field.MATCH_PASSWORD_FIELDS)
+      if (jobId == null) throw throw EmptyFieldException(Field.JOB)
 
       return try {
          employeesSource.updateEmployee(

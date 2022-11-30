@@ -8,7 +8,6 @@ import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.ingredients.IngredientsRepository
-import com.android.model.repository.ingredients.entity.IngredientEntity
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
 import com.android.model.repository.ingredients.entity.SimpleIngredient
 import com.android.model.utils.*
@@ -76,9 +75,9 @@ class OperateIngredientsViewModel @Inject constructor(
 
    private fun showEmptyFields(e: EmptyFieldException) {
       _state.value = _state.requireValue().copy(
-         emptyName = e.field == Field.IngredientName,
-         emptyAmount = e.field == Field.Amount,
-         emptyComment = e.field == Field.Comments
+         emptyName = e.field == Field.NAME,
+         emptyAmount = e.field == Field.AMOUNT,
+         emptyComment = e.field == Field.COMMENT
       )
    }
 

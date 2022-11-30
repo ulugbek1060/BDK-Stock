@@ -49,7 +49,7 @@
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:background="@color/white_green"
+          android:background="@color/green"
           android:gravity="center"
           android:orientation="vertical"
           android:padding="@dimen/dimen_extra">
@@ -58,11 +58,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/call"
+            app:tint="@color/white"
             android:src="@drawable/ic_call" />
 
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:text="@string/call" />
 
         </LinearLayout>
@@ -89,7 +91,7 @@
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:background="@color/white_yellow"
+          android:background="@color/yellow"
           android:gravity="center"
           android:orientation="vertical"
           android:padding="@dimen/dimen_small">
@@ -97,6 +99,7 @@
           <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:tint="@color/white"
             android:contentDescription="@string/message"
             android:src="@drawable/ic_message" />
 
@@ -104,13 +107,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
+            android:textColor="@color/white"
             android:maxLines="1"
             android:text="@string/message" />
 
         </LinearLayout>
 
       </androidx.cardview.widget.CardView>
-
 
       <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_name"
