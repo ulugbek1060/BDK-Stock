@@ -3,46 +3,51 @@ package com.android.bdkstock.screens.main.menu.products
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentProductOperationsBinding
+import com.android.bdkstock.databinding.DialogFilterOperationsBinding
+import com.android.bdkstock.databinding.FragmentProductOperationsListBinding
 import com.android.bdkstock.databinding.ProgressItemBiggerBinding
 import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
+import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.DefaultLoadStateAdapter
+import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.views.pagingAdapter
 import com.android.model.repository.products.entity.ProductOperationEntity
 import com.android.model.utils.AuthException
+import com.android.model.utils.Const.DATE_TIME_INPUT_FORMAT
 import com.android.model.utils.observeEvent
 import com.elveum.elementadapter.simpleAdapter
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
+import java.text.SimpleDateFormat
+import java.util.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class ProductOperationsListFragment :
-   BaseFragment<ProductOperationsListViewModel, FragmentProductOperationsBinding>() {
+   BaseFragment<ProductOperationsListViewModel, FragmentProductOperationsListBinding>() {
 
-   // TODO: initialize filter fields
-
-   private val TAG = this.javaClass.simpleName
+   // TODO: need to fix item card
 
    override val viewModel: ProductOperationsListViewModel by viewModels()
-   override fun getViewBinding() = FragmentProductOperationsBinding.inflate(layoutInflater)
+   override fun getViewBinding() = FragmentProductOperationsListBinding.inflate(layoutInflater)
    private lateinit var layoutManager: LinearLayoutManager
 
    @SuppressLint("SetTextI18n")
@@ -84,6 +89,7 @@ class ProductOperationsListFragment :
       }
    }
 
+   @SuppressLint("UseCompatLoadingForDrawables")
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
@@ -107,14 +113,27 @@ class ProductOperationsListFragment :
          null,
          null
       )
-//      binding.buttonManufacture.setOnClickListener { incomeOnClick() }
-//      binding.buttonExport.setOnClickListener { expenseOnClick() }
-//      binding.buttonShow.setOnClickListener { addOnClick() }
+      binding.buttonManufacture.setOnClickListener { manufactureOnClick() }
+      binding.buttonExport.setOnClickListener { exportOnclick() }
+      binding.buttonShow.setOnClickListener { showOnClick() }
 
-
-//      observeFilterResult()
       requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
+   }
 
+   private fun showOnClick() {
+      findTopNavController().navigate(R.id.action_actionsFragment_to_productsFragment)
+   }
+
+   private fun exportOnclick() {
+      val args = ActionsFragmentDirections
+         .actionActionsFragmentToProductOperationsFragment(EXPORTED_PRODUCT)
+      findTopNavController().navigate(args)
+   }
+
+   private fun manufactureOnClick() {
+      val args = ActionsFragmentDirections
+         .actionActionsFragmentToProductOperationsFragment(MANUFACTURED_PRODUCT)
+      findTopNavController().navigate(args)
    }
 
    private val menuProvider = object : MenuProvider {
@@ -123,12 +142,82 @@ class ProductOperationsListFragment :
       }
 
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-         if (menuItem.itemId == R.id.filter){
-            // TODO: filter button click
-//            manipulateFilter()
-         }
+         if (menuItem.itemId == R.id.filter) showFilterDialog()
          return false
       }
+   }
+
+   private fun showFilterDialog() {
+      val dialog = AlertDialog.Builder(requireContext()).create()
+      dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+      val dialogBinding = DialogFilterOperationsBinding.inflate(layoutInflater)
+      dialog.setView(dialogBinding.root)
+
+      var status: Int? = null
+
+      dialogBinding.buttonClear.setOnClickListener {
+         viewModel.clearFilter()
+         dialog.dismiss()
+      }
+
+      dialogBinding.buttonApply.setOnClickListener {
+         viewModel.setFilterData(
+            query = dialogBinding.inputQuery.text.toString(),
+            fromDate = dialogBinding.inputFromDate.text.toString(),
+            toDate = dialogBinding.inputToDate.text.toString(),
+            status = status,
+         )
+         dialog.dismiss()
+      }
+
+      dialogBinding.buttonAll.setOnClickListener { status = null }
+      dialogBinding.buttonExpense.setOnClickListener { status = EXPORTED_PRODUCT }
+      dialogBinding.buttonIncome.setOnClickListener { status = MANUFACTURED_PRODUCT }
+
+      dialogBinding.inputLayoutFromDate.setEndIconOnClickListener {
+         getCalendarDialog(
+            requireContext().getString(R.string.from_date),
+            dialogBinding.inputFromDate
+         )
+      }
+
+      dialogBinding.inputLayoutToDate.setEndIconOnClickListener {
+         getCalendarDialog(
+            requireContext().getString(R.string.to_date),
+            dialogBinding.inputToDate
+         )
+      }
+
+      viewModel.query.observe(viewLifecycleOwner) { filterData ->
+
+         status = filterData.status
+
+         dialogBinding.radioGroup.check(getCheckId(filterData.status))
+         dialogBinding.inputQuery.setText(filterData.query)
+         dialogBinding.inputFromDate.setText(filterData.fromDate)
+         dialogBinding.inputToDate.setText(filterData.toDate)
+      }
+
+      dialog.show()
+   }
+
+   @SuppressLint("SimpleDateFormat")
+   private fun getCalendarDialog(title: String, inputFromDate: TextInputEditText) {
+      val datePicker = MaterialDatePicker.Builder.datePicker()
+         .setTitleText(title)
+         .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+         .build()
+      datePicker.addOnPositiveButtonClickListener { timeMiles ->
+         val formatter = SimpleDateFormat(DATE_TIME_INPUT_FORMAT)
+         val date = formatter.format(Date(timeMiles))
+         inputFromDate.setText(date)
+      }
+      datePicker.addOnNegativeButtonClickListener {
+         inputFromDate.setText("")
+         datePicker.dismiss()
+      }
+      datePicker.show(parentFragmentManager, "tag")
    }
 
    private fun setupRecyclerView() = binding.apply {
@@ -192,5 +281,16 @@ class ProductOperationsListFragment :
       progressAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
       binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
       binding.recyclerProgress.adapter = progressAdapter
+   }
+
+   private fun getCheckId(state: Int?) = when (state) {
+      1 -> R.id.button_expense
+      0 -> R.id.button_income
+      else -> R.id.button_all
+   }
+
+   private companion object {
+      const val MANUFACTURED_PRODUCT = 0
+      const val EXPORTED_PRODUCT = 1
    }
 }

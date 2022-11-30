@@ -1,5 +1,8 @@
 package com.android.model.utils
 
+/**
+ * Errors connected to fields
+ */
 enum class Field {
     FULL_NAME,
     REG_NUMBER, // automobile registration model
@@ -16,5 +19,6 @@ enum class Field {
     AMOUNT,
     COMMENT,
     PRICE,
-    EMPTY_INGREDIENT,
+    INGREDIENT,
+    PRODUCT
 }

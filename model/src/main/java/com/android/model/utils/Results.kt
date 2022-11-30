@@ -20,6 +20,8 @@ sealed class Results<T> {
       }
    }
 
+
+
    fun getValueOrNull(): T? {
       if (this is Success<T>) return this.value
       return null

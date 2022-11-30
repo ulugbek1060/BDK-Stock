@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ManufacturedOrExportedProduct(
    @SerializedName("id") val id: Long,
+   @SerializedName("product_id") val productId: Long,
    @SerializedName("name") val name: String,
    @SerializedName("amount") val amount: String,
    @SerializedName("unit") val unit: String? = null,

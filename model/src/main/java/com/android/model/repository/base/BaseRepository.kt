@@ -68,10 +68,18 @@ open class BaseRepository {
       ).flow
    }
 
+   fun <T> Flow<T>.asResult(): Flow<Results<T>> {
+      return this
+         .map<T, Results<T>> {
+            Success(it)
+         }
+         .onStart { emit(Pending()) }
+         .catch { emit(Error(it)) }
+   }
+
    companion object {
       const val DEFAULT_PAGE_SIZE = 10
    }
-
 }
 
 //--------------------------------------------------------------------------

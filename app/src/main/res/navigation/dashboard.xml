@@ -74,13 +74,13 @@
   <fragment
     android:id="@+id/salesFragment"
     android:name="com.android.bdkstock.screens.main.menu.sales.SalesFragment"
-    android:label="fragment_sales"
+    android:label="@string/sales"
     tools:layout="@layout/fragment_sales" />
   <fragment
     android:id="@+id/productOperationsListFragment"
     android:name="com.android.bdkstock.screens.main.menu.products.ProductOperationsListFragment"
     android:label="@string/products"
-    tools:layout="@layout/fragment_product_operations" />
+    tools:layout="@layout/fragment_product_operations_list" />
   <fragment
     android:id="@+id/clientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.clients.ClientsFragment"

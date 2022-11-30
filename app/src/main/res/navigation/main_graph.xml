@@ -97,6 +97,12 @@
     <action
       android:id="@+id/action_actionsFragment_to_settingsFragment"
       app:destination="@id/settingsFragment" />
+    <action
+      android:id="@+id/action_actionsFragment_to_productOperationsFragment"
+      app:destination="@id/productOperationsFragment" />
+    <action
+      android:id="@+id/action_actionsFragment_to_productsFragment"
+      app:destination="@id/productsFragment" />
 
   </fragment>
 
@@ -222,5 +228,29 @@
     android:name="com.android.bdkstock.screens.main.profile.SettingsFragment"
     android:label="fragment_settings"
     tools:layout="@layout/fragment_settings" />
+
+  <fragment
+    android:id="@+id/productOperationsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.products.ProductOperationsFragment"
+    android:label="fragment_product_operations"
+    tools:layout="@layout/fragment_product_operations">
+
+    <argument
+      android:name="operationsStatus"
+      app:argType="integer" />
+
+  </fragment>
+
+  <fragment
+    android:id="@+id/successMessageFragment"
+    android:name="com.android.bdkstock.screens.main.menu.SuccessMessageFragment"
+    android:label="@string/message_fragment"
+    tools:layout="@layout/fragment_success_message" />
+
+  <fragment
+    android:id="@+id/productsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.products.ProductsFragment"
+    android:label="@string/products"
+    tools:layout="@layout/fragment_products" />
 
 </navigation>

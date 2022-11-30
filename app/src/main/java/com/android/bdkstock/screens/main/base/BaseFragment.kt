@@ -116,6 +116,8 @@ abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewBinding> : 
       this
    }
 
+
+
    override fun onDestroyView() {
       _binding = null
       super.onDestroyView()

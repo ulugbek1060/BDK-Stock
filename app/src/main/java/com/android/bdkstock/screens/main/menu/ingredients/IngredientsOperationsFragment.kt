@@ -230,7 +230,7 @@ class IngredientsOperationsFragment :
       var status: Int? = null
 
       dialogBinding.buttonClear.setOnClickListener {
-         viewModel.setFilterData(null, null, null, null)
+         viewModel.clearFilter()
          dialog.dismiss()
       }
 
@@ -262,7 +262,7 @@ class IngredientsOperationsFragment :
          )
       }
 
-      viewModel.filterData.observe(viewLifecycleOwner) { filterData ->
+      viewModel.query.observe(viewLifecycleOwner) { filterData ->
 
          status = filterData.status
 

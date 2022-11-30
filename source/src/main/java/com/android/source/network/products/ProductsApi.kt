@@ -8,6 +8,7 @@ import com.android.source.network.products.entity.getingredientsofproduct.Ingred
 import com.android.source.network.products.entity.manufactureorsale.ManufactureProductRequestEntity
 import com.android.source.network.products.entity.manufactureorsale.ManufactureProductResponseEntity
 import com.android.source.network.products.entity.operationslist.ManufacturedOrExportedProductsResponseEntity
+import com.android.source.network.products.entity.productforselection.ProductForSelectionResponseEntity
 import com.android.source.network.products.entity.productlist.ProductListResponseEntity
 import com.android.source.network.products.entity.updateingredientofproduct.ProductUpdateIngredientRequestEntity
 import com.android.source.network.products.entity.updateingredientofproduct.ProductUpdateIngredientResponseEntity
@@ -85,6 +86,6 @@ interface ProductsApi {
    // get products for selection for users
    @Headers("Content-Type: application/json", "Accept: application/json")
    @GET("api/product/select")
-   suspend fun getProductsForSelect(): IngredientsOfProductResponseEntity
+   suspend fun getProductsForSelect(): ProductForSelectionResponseEntity
 
 }

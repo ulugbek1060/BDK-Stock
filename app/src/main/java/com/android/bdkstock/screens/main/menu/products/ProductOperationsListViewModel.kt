@@ -11,6 +11,7 @@ import com.android.model.repository.products.ProductsRepository
 import com.android.model.repository.products.entity.ProductOperationEntity
 import com.android.model.utils.MutableUnitLiveEvent
 import com.android.model.utils.liveData
+import com.android.model.utils.publishEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -29,11 +30,12 @@ class ProductOperationsListViewModel @Inject constructor(
    val errorEvent = _errorEvent.liveData()
 
    private val _query = savedStateHandle.getLiveData(PRODUCTS_FILTER_DATA, ProductsFilterState())
+   val query = _query.liveData()
+
    val operationsFlow: Flow<PagingData<ProductOperationEntity>> = _query.asFlow()
       .flatMapLatest { filter ->
          productsRepository
             .getOperationsList(
-               productId = filter.productId,
                query = filter.query,
                status = filter.status,
                fromDate = filter.fromDate,
@@ -43,21 +45,28 @@ class ProductOperationsListViewModel @Inject constructor(
       .cachedIn(viewModelScope)
 
    fun setFilterData(
-      productId: Long,
-      query: String,
-      status: Int,
-      fromDate: String,
-      toDate: String
+      query: String?,
+      status: Int?,
+      fromDate: String?,
+      toDate: String?
    ) {
-//      _query.value =
+      _query.value = ProductsFilterState(
+         query = query,
+         status = status,
+         fromDate = fromDate,
+         toDate = toDate
+      )
+   }
+
+   fun clearFilter() {
+      _query.value = ProductsFilterState()
    }
 
    fun showAuthError() {
-
+      _errorEvent.publishEvent()
    }
 
    data class ProductsFilterState(
-      val productId: Long? = null,
       val query: String? = null,
       val status: Int? = null,
       val fromDate: String? = null,

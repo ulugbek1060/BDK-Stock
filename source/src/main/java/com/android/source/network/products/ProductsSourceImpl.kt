@@ -1,10 +1,7 @@
 package com.android.source.network.products
 
 import com.android.model.repository.products.ProductsSource
-import com.android.model.repository.products.entity.IngredientItem
-import com.android.model.repository.products.entity.ProductEntity
-import com.android.model.repository.products.entity.ProductOperationEntity
-import com.android.model.repository.products.entity.SimpleIngredientItem
+import com.android.model.repository.products.entity.*
 import com.android.source.network.base.BaseNetworkSource
 import com.android.source.network.products.entity.createproduct.ProductCreateRequestEntity
 import com.android.source.network.products.entity.exportproduct.ExportProductRequestEntity
@@ -47,6 +44,7 @@ class ProductsSourceImpl @Inject constructor(
          name = product.name,
          price = product.price,
          amount = product.amount,
+         unit = product.unit,
          createdAt = product.createdAt,
          updatedAt = product.updatedAt
       )
@@ -75,8 +73,9 @@ class ProductsSourceImpl @Inject constructor(
       ProductEntity(
          id = product.id,
          name = product.name,
-         amount = product.amount,
          price = product.price,
+         amount = product.amount,
+         unit = product.unit,
          createdAt = product.createdAt,
          updatedAt = product.updatedAt
       )
@@ -86,7 +85,7 @@ class ProductsSourceImpl @Inject constructor(
       productId: Long,
       amount: String,
       comment: String
-   ): ProductOperationEntity = wrapNetworkException {
+   ): String = wrapNetworkException {
 
       val body = ManufactureProductRequestEntity(
          productId = productId,
@@ -94,19 +93,19 @@ class ProductsSourceImpl @Inject constructor(
          comment = comment
       )
 
-      val operation = productsApi
+      productsApi
          .manufactureProduct(body)
-         .manufacturedProduct
+         .message
 
-      ProductOperationEntity(
-         id = operation.id,
-         name = operation.name,
-         amount = operation.amount,
-         comment = operation.comment ?: "no comment",
-         unit = operation.unit ?: "undefined unit",
-         status = operation.status,
-         createdAt = operation.createdAt
-      )
+//      ProductOperationEntity(
+//         id = operation.id,
+//         name = operation.name,
+//         amount = operation.amount,
+//         comment = operation.comment ?: "no comment",
+//         unit = operation.unit ?: "undefined unit",
+//         status = operation.status,
+//         createdAt = operation.createdAt
+//      )
    }
 
    override suspend fun updateIngredientOfProducts(
@@ -166,6 +165,7 @@ class ProductsSourceImpl @Inject constructor(
                name = it.name,
                price = it.price,
                amount = it.amount,
+               unit = it.unit,
                createdAt = it.createdAt,
                updatedAt = it.updatedAt
             )
@@ -221,16 +221,16 @@ class ProductsSourceImpl @Inject constructor(
          }
    }
 
-   override suspend fun getProductsForSelect(): List<IngredientItem> = wrapNetworkException {
+   override suspend fun getProductsForSelect(): List<ProductSelectionItem> = wrapNetworkException {
       productsApi
          .getProductsForSelect()
-         .ingredients
+         .productsList
          .map {
-            IngredientItem(
-               ingredientId = it.materialId,
+            ProductSelectionItem(
+               id = it.id,
                name = it.name,
-               amount = it.amount,
-               unit = it.unit
+               unit = it.unit,
+               price = it.price
             )
          }
    }

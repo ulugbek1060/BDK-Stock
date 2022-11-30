@@ -27,10 +27,10 @@ class IngredientsOperationsViewModel @Inject constructor(
    private val _errorEvent = MutableUnitLiveEvent()
    val errorEvent = _errorEvent.liveData()
 
-   private val _filterData = MutableLiveData(FilterOperations())
-   val filterData = _filterData.liveData()
+   private val _query = MutableLiveData(FilterOperations())
+   val query = _query.liveData()
 
-   val ingredientsExAndInFlow = _filterData
+   val ingredientsExAndInFlow = _query
       .asFlow()
       .flatMapLatest { filter ->
          ingredientsRepository.getExpensesAndIncomesOfIngredients(
@@ -46,12 +46,16 @@ class IngredientsOperationsViewModel @Inject constructor(
    }
 
    fun setFilterData(query: String?, status: Int?, fromDate: String?, toDate: String?) {
-      _filterData.value = _filterData.requireValue().copy(
+      _query.value = _query.requireValue().copy(
          query = query,
          status = status,
          fromDate = fromDate,
          toDate = toDate
       )
+   }
+
+   fun clearFilter(){
+      _query.value = FilterOperations()
    }
 
    data class FilterOperations(

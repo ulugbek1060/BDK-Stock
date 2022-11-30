@@ -20,6 +20,7 @@
   <string name="error_empty_reg_number">вам нужно указать номео авто</string>
   <string name="error_empty_unit">вам нужно указать ед. изм ингредиента</string>
   <string name="error_empty_comment">вам нужно написать комментарий</string>
+  <string name="error_empty_product">Вам необходимо выберать подукт</string>
 
 
   <string name="unknown_error">Ой что-то пошло не так!!!</string>
@@ -115,5 +116,8 @@
   <string name="operation">Операция</string>
   <string name="sales">Продажи</string>
   <string name="products">Товары</string>
+  <string name="close">Закрыть</string>
+
+  <string name="message_fragment">Сообщение</string>
 
 </resources>

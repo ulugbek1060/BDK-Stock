@@ -4,7 +4,7 @@ package com.android.model.repository.products.entity
 // status maight be 0 or 1 0 -> manufactured product 1 -> exported product
 data class ProductOperationEntity(
    val id: Long,
-   val name: String,
+   val name: String? = null,
    val amount: String,
    val comment: String,
    val unit: String,

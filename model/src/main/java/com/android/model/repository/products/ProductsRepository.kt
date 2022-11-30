@@ -4,12 +4,10 @@ import androidx.paging.PagingData
 import com.android.model.repository.base.BasePageSource
 import com.android.model.repository.base.BaseRepository
 import com.android.model.repository.base.DataLoader
-import com.android.model.repository.products.entity.IngredientItem
-import com.android.model.repository.products.entity.ProductEntity
-import com.android.model.repository.products.entity.ProductOperationEntity
-import com.android.model.repository.products.entity.SimpleIngredientItem
+import com.android.model.repository.products.entity.*
 import com.android.model.utils.EmptyFieldException
 import com.android.model.utils.Field
+import com.android.model.utils.Results
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -30,7 +28,7 @@ class ProductsRepository @Inject constructor(
       if (name.isBlank()) throw EmptyFieldException(Field.NAME)
       if (unit.isBlank()) throw EmptyFieldException(Field.UNIT)
       if (price.isBlank()) throw EmptyFieldException(Field.PRICE)
-      if (ingredients.isEmpty()) throw EmptyFieldException(Field.EMPTY_INGREDIENT)
+      if (ingredients.isEmpty()) throw EmptyFieldException(Field.INGREDIENT)
 
       return wrapExceptions {
          productsSource.createProducts(
@@ -66,7 +64,7 @@ class ProductsRepository @Inject constructor(
       productId: Long,
       ingredientList: List<SimpleIngredientItem>
    ): String {
-      if (ingredientList.isEmpty()) throw EmptyFieldException(Field.EMPTY_INGREDIENT)
+      if (ingredientList.isEmpty()) throw EmptyFieldException(Field.INGREDIENT)
 
       return wrapExceptions {
          productsSource.updateIngredientOfProducts(
@@ -77,10 +75,11 @@ class ProductsRepository @Inject constructor(
    }
 
    suspend fun manufactureProduct(
-      productId: Long,
+      productId: Long?,
       amount: String,
       comment: String
-   ): ProductOperationEntity {
+   ): String {
+      if (productId == null) throw EmptyFieldException(Field.PRODUCT)
       if (amount.isBlank()) throw EmptyFieldException(Field.AMOUNT)
       if (comment.isBlank()) throw EmptyFieldException(Field.COMMENT)
 
@@ -143,12 +142,16 @@ class ProductsRepository @Inject constructor(
       BasePageSource(loader, DEFAULT_PAGE_SIZE)
    }
 
-   fun getIngredientsOfProduct(productId: Long): Flow<List<IngredientItem>> = flow {
+   fun getIngredientsOfProduct(productId: Long): Flow<Results<List<IngredientItem>>> = flow {
       emit(wrapExceptions { productsSource.getIngredientsOfProduct(productId) })
-   }.flowOn(Dispatchers.IO)
+   }
+      .flowOn(Dispatchers.IO)
+      .asResult()
 
-   fun getProductsForSelect(): Flow<List<IngredientItem>> = flow {
+   fun getProductsForSelect(): Flow<Results<List<ProductSelectionItem>>> = flow {
       emit(wrapExceptions { productsSource.getProductsForSelect() })
-   }.flowOn(Dispatchers.IO)
+   }
+      .flowOn(Dispatchers.IO)
+      .asResult()
 
 }

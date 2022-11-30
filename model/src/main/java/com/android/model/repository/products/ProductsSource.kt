@@ -1,9 +1,6 @@
 package com.android.model.repository.products
 
-import com.android.model.repository.products.entity.IngredientItem
-import com.android.model.repository.products.entity.ProductEntity
-import com.android.model.repository.products.entity.ProductOperationEntity
-import com.android.model.repository.products.entity.SimpleIngredientItem
+import com.android.model.repository.products.entity.*
 
 interface ProductsSource {
 
@@ -42,7 +39,7 @@ interface ProductsSource {
    /**
     * Manufactures Products.
     * Arguments: productId, amount, comment
-    * @return [ProductOperationEntity]
+    * @return [String] success message
     *
     * @throws ConnectionException
     * @throws BackendException
@@ -52,7 +49,7 @@ interface ProductsSource {
       productId: Long,
       amount: String,
       comment: String
-   ): ProductOperationEntity
+   ): String
 
 
    /**
@@ -135,11 +132,11 @@ interface ProductsSource {
    /**
     * Fetch Products for selection.
     * no arguments
-    * @return [IngredientItem] -> [List]
+    * @return [ProductSelectionItem] -> [List]
     *
     * @throws ConnectionException
     * @throws BackendException
     * @throws ParseBackendException
     */
-   suspend fun getProductsForSelect():List<IngredientItem>
+   suspend fun getProductsForSelect(): List<ProductSelectionItem>
 }
