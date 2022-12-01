@@ -29,7 +29,7 @@ class DriversRepository @Inject constructor(
       if (vehicleModelId == null) throw EmptyFieldException(Field.VEHICLE_MODEL)
       if (regNumber.isBlank()) throw EmptyFieldException(Field.REG_NUMBER)
 
-      return wrapExceptions {
+      return suspendRunCatching {
          driversSource.createDriver(
             fullName = fullName,
             phoneNumber = phoneNumber,
@@ -51,7 +51,7 @@ class DriversRepository @Inject constructor(
       if (autoModelId == null) throw EmptyFieldException(Field.VEHICLE_MODEL)
       if (regNumber.isBlank()) throw EmptyFieldException(Field.REG_NUMBER)
 
-      return wrapExceptions {
+      return suspendRunCatching {
          driversSource.updateDriver(
             driverId = driverId,
             fullName = fullName,
@@ -62,7 +62,7 @@ class DriversRepository @Inject constructor(
       }
    }
 
-   suspend fun getDriverById(driverId: Long): DriverEntity = wrapExceptions {
+   suspend fun getDriverById(driverId: Long): DriverEntity = suspendRunCatching {
       driversSource.getDriverById(driverId)
    }
 
@@ -90,12 +90,8 @@ class DriversRepository @Inject constructor(
 
    fun getDriversList(query: String? = null): Flow<PagingData<DriverEntity>> = getPagerData {
       val loader: DataLoader<DriverEntity> = { pageIndex ->
-         driversSource.getDrivers(query = query, pageIndex, PAGE_SIZE)
+         driversSource.getDrivers(query = query, pageIndex, DEFAULT_PAGE_SIZE)
       }
       BasePageSource(loader = loader, defaultPageSize = DEFAULT_PAGE_SIZE)
-   }
-
-   companion object {
-      const val PAGE_SIZE = 10
    }
 }

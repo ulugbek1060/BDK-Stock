@@ -9,12 +9,12 @@ import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.drivers.DriversRepository
 import com.android.model.repository.drivers.entity.DriverEntity
+import com.android.model.utils.Const.DEFAULT_DELAY
 import com.android.model.utils.MutableUnitLiveEvent
 import com.android.model.utils.liveData
 import com.android.model.utils.publishEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
@@ -39,14 +39,20 @@ class DriversViewModel @Inject constructor(
       }
       .cachedIn(viewModelScope)
 
-   fun showAuthError() {
-      _errorEvent.publishEvent()
-   }
+   private var queryJob: Job? = null
 
    fun setQuery(query: String?) {
       if (_query.value == query) return
 
-      _query.value = query
+      queryJob?.cancel()
+      queryJob = viewModelScope.launch {
+         delay(DEFAULT_DELAY)
+         _query.value = query
+      }
+   }
+
+   fun showAuthError() {
+      _errorEvent.publishEvent()
    }
 
    private companion object {

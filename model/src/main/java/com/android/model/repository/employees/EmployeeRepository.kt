@@ -31,7 +31,7 @@ class EmployeeRepository @Inject constructor(
       if (address.isBlank()) throw EmptyFieldException(Field.ADDRESS)
       if (jobId == null) throw EmptyFieldException(Field.JOB)
 
-      return wrapExceptions {
+      return suspendRunCatching {
          employeesSource.registerEmployee(
             firstname = firstname,
             lastname = lastname,
@@ -82,12 +82,8 @@ class EmployeeRepository @Inject constructor(
    fun getEmployeeFromRemote(query: String? = null): Flow<PagingData<EmployeeEntity>> =
       getPagerData {
          val loader: DataLoader<EmployeeEntity> = { pageIndex ->
-            employeesSource.getEmployees(query, pageIndex, PAGE_SIZE)
+            employeesSource.getEmployees(query, pageIndex, DEFAULT_PAGE_SIZE)
          }
          BasePageSource(loader = loader, defaultPageSize = DEFAULT_PAGE_SIZE)
       }
-
-   private companion object {
-      const val PAGE_SIZE = 10
-   }
 }

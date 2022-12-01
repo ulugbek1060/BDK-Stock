@@ -18,7 +18,7 @@ open class BaseRepository {
     * @throws ParseBackendResponseException
     * @throws JsonParseException
     */
-   open suspend fun <T> wrapExceptions(block: suspend () -> T): T {
+   open suspend fun <T> suspendRunCatching(block: suspend () -> T): T {
       return try {
          block.invoke()
       } catch (e: Exception) {

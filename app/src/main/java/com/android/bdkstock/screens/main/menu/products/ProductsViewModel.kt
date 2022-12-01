@@ -1,5 +1,6 @@
 package com.android.bdkstock.screens.main.menu.products
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
@@ -9,14 +10,18 @@ import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.products.ProductsRepository
 import com.android.model.repository.products.entity.ProductEntity
+import com.android.model.utils.Const.DEFAULT_DELAY
 import com.android.model.utils.MutableUnitLiveEvent
 import com.android.model.utils.liveData
 import com.android.model.utils.publishEvent
 import com.android.model.utils.requireValue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -37,11 +42,17 @@ class ProductsViewModel @Inject constructor(
       }
       .cachedIn(viewModelScope)
 
+   private var queryJob: Job? = null
+
    fun setQuery(query: String?) {
 
       if (query == _query.requireValue()) return
 
-      _query.value = query
+      queryJob?.cancel()
+      queryJob = viewModelScope.launch {
+         delay(DEFAULT_DELAY)
+         _query.value = query
+      }
    }
 
    fun showAuthError() {

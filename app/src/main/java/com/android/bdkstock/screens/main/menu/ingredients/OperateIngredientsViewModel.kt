@@ -34,9 +34,8 @@ class OperateIngredientsViewModel @Inject constructor(
    private val _selectedIngredient = MutableLiveData<SimpleIngredient>()
    val selectedIngredient = _selectedIngredient.liveData()
 
-   val getIngredientList: Flow<List<SimpleIngredient>> = ingredientsRepository
+   val getIngredientList: Flow<Results<List<SimpleIngredient>>> = ingredientsRepository
       .getIngredientsList()
-      .handleException()
 
    init {
       _state.value = _state.requireValue().copy(

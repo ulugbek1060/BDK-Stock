@@ -1,6 +1,7 @@
 package com.android.bdkstock.screens.main.menu.products
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -34,10 +35,6 @@ class ProductOperationsViewModel @Inject constructor(
    val state = _state.liveData()
 
    private var selectedProductId: Long? = null
-
-   init {
-      _state.value = State(status = operationStatus)
-   }
 
    fun manufacture(amount: String, comment: String) = viewModelScope.safeLaunch {
       showProgress()

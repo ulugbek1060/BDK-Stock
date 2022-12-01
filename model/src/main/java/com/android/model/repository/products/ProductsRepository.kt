@@ -1,6 +1,7 @@
 package com.android.model.repository.products
 
 import androidx.paging.PagingData
+import com.android.model.di.IoDispatcher
 import com.android.model.repository.base.BasePageSource
 import com.android.model.repository.base.BaseRepository
 import com.android.model.repository.base.DataLoader
@@ -8,14 +9,17 @@ import com.android.model.repository.products.entity.*
 import com.android.model.utils.EmptyFieldException
 import com.android.model.utils.Field
 import com.android.model.utils.Results
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 class ProductsRepository @Inject constructor(
-   private val productsSource: ProductsSource
+   private val productsSource: ProductsSource,
+   @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseRepository() {
 
    suspend fun createProduct(
@@ -30,7 +34,7 @@ class ProductsRepository @Inject constructor(
       if (price.isBlank()) throw EmptyFieldException(Field.PRICE)
       if (ingredients.isEmpty()) throw EmptyFieldException(Field.INGREDIENT)
 
-      return wrapExceptions {
+      return suspendRunCatching {
          productsSource.createProducts(
             name = name,
             unit = unit,
@@ -50,7 +54,7 @@ class ProductsRepository @Inject constructor(
       if (unit.isBlank()) throw EmptyFieldException(Field.UNIT)
       if (price.isBlank()) throw EmptyFieldException(Field.PRICE)
 
-      return wrapExceptions {
+      return suspendRunCatching {
          productsSource.updateProducts(
             productId = productId,
             name = name,
@@ -66,7 +70,7 @@ class ProductsRepository @Inject constructor(
    ): String {
       if (ingredientList.isEmpty()) throw EmptyFieldException(Field.INGREDIENT)
 
-      return wrapExceptions {
+      return suspendRunCatching {
          productsSource.updateIngredientOfProducts(
             productId = productId,
             ingredientList = ingredientList
@@ -83,7 +87,7 @@ class ProductsRepository @Inject constructor(
       if (amount.isBlank()) throw EmptyFieldException(Field.AMOUNT)
       if (comment.isBlank()) throw EmptyFieldException(Field.COMMENT)
 
-      return wrapExceptions {
+      return suspendRunCatching {
          productsSource.manufactureProducts(
             productId = productId,
             amount = amount,
@@ -103,7 +107,7 @@ class ProductsRepository @Inject constructor(
       if (amount.isBlank()) throw EmptyFieldException(Field.AMOUNT)
       if (comment.isBlank()) throw EmptyFieldException(Field.COMMENT)
 
-      return wrapExceptions {
+      return suspendRunCatching {
          productsSource.exportIngredient(
             productId = productId,
             amount = amount,
@@ -143,15 +147,15 @@ class ProductsRepository @Inject constructor(
    }
 
    fun getIngredientsOfProduct(productId: Long): Flow<Results<List<IngredientItem>>> = flow {
-      emit(wrapExceptions { productsSource.getIngredientsOfProduct(productId) })
+      emit(suspendRunCatching { productsSource.getIngredientsOfProduct(productId) })
    }
-      .flowOn(Dispatchers.IO)
+      .flowOn(ioDispatcher)
       .asResult()
 
    fun getProductsForSelect(): Flow<Results<List<ProductSelectionItem>>> = flow {
-      emit(wrapExceptions { productsSource.getProductsForSelect() })
+      emit(suspendRunCatching { productsSource.getProductsForSelect() })
    }
-      .flowOn(Dispatchers.IO)
+      .flowOn(ioDispatcher)
       .asResult()
 
 }

@@ -22,7 +22,7 @@ class ClientsRepository @Inject constructor(
       if (fullName.isBlank()) throw EmptyFieldException(Field.FULL_NAME)
       if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PHONE_NUMBER)
       if (address.isBlank()) throw EmptyFieldException(Field.ADDRESS)
-      return wrapExceptions {
+      return suspendRunCatching {
          clientSource.registerClient(
             fullName = fullName, phoneNumber = phoneNumber, address = address
          )
@@ -38,14 +38,14 @@ class ClientsRepository @Inject constructor(
       if (fullName.isBlank()) throw EmptyFieldException(Field.FULL_NAME)
       if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PHONE_NUMBER)
       if (address.isBlank()) throw EmptyFieldException(Field.ADDRESS)
-      return wrapExceptions {
+      return suspendRunCatching {
          clientSource.updateClient(
             clientId, fullName, phoneNumber, address
          )
       }
    }
 
-   suspend fun getClientById(clientId: Long): ClientEntity = wrapExceptions {
+   suspend fun getClientById(clientId: Long): ClientEntity = suspendRunCatching {
       clientSource.getClientById(clientId)
    }
 
@@ -58,9 +58,5 @@ class ClientsRepository @Inject constructor(
          )
       }
       BasePageSource(loader = loader, defaultPageSize = DEFAULT_PAGE_SIZE)
-   }
-
-   private companion object {
-      const val DEFAULT_PAGE_SIZE = 10
    }
 }

@@ -96,9 +96,6 @@ class ClientsFragment :
          val myActionMenuItem = menu.findItem(R.id.search)
          searchView = myActionMenuItem.actionView as SearchView
          searchView.setOnQueryTextListener(this@ClientsFragment)
-         searchView.setOnSearchClickListener {
-            viewModel.setQuery(viewModel.getQuery().toString())
-         }
       }
 
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {

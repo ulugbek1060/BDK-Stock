@@ -44,7 +44,7 @@ class AccountRepository @Inject constructor(
       if (password.isBlank()) throw EmptyFieldException(Field.PASSWORD)
 
       // if there is error throws
-      wrapExceptions {
+      suspendRunCatching {
          val accountEntity = accountSource.signIn(phoneNumber, password)
 
          appSettings.setCurrentToken(accountEntity.accessToken)

@@ -10,6 +10,8 @@ import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentOperateIngredientsBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.findTopNavController
+import com.android.model.utils.Pending
+import com.android.model.utils.Success
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -30,20 +32,25 @@ class OperateIngredientsFragment :
       setupIngredientsList()
 
       binding.buttonSave.setOnClickListener { saveOnClick() }
-
-
    }
 
-
+   // TODO: setup progressbar
    private fun setupIngredientsList() = lifecycleScope.launchWhenStarted {
-      viewModel.getIngredientList.collectLatest { ingredientsList ->
-         val adapter =
-            ArrayAdapter(requireContext(), R.layout.spinner_item, ingredientsList)
+      viewModel.getIngredientList.collectLatest { result ->
+         when (result) {
+            is Success -> {
+               val list = result.value
+               val adapter =
+                  ArrayAdapter(requireContext(), R.layout.spinner_item, list)
 
-         binding.inputIngredient.setAdapter(adapter)
+               binding.inputIngredient.setAdapter(adapter)
 
-         binding.inputIngredient.setOnItemClickListener { _, _, position, _ ->
-            viewModel.setIngredient(ingredientsList[position])
+               binding.inputIngredient.setOnItemClickListener { _, _, position, _ ->
+                  viewModel.setIngredient(list[position])
+               }
+            }
+            is Pending -> {}
+            else -> {}
          }
       }
    }

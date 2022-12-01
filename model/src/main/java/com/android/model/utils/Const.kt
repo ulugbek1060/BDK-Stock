@@ -11,4 +11,5 @@ object Const {
 
    const val DATE_TIME_INPUT_FORMAT = "dd/MM/yyyy"
    const val DATE_TIME_OUTPUT_FORMAT = "dd/MM/yyyy"
+   const val DEFAULT_DELAY = 500L
 }

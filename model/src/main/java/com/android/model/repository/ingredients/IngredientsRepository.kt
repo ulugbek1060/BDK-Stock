@@ -9,9 +9,11 @@ import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
 import com.android.model.repository.ingredients.entity.SimpleIngredient
 import com.android.model.utils.EmptyFieldException
 import com.android.model.utils.Field
+import com.android.model.utils.Results
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
@@ -26,7 +28,7 @@ class IngredientsRepository @Inject constructor(
       if (ingredientName.isBlank()) throw EmptyFieldException(Field.NAME)
       if (ingredientUnit.isBlank()) throw EmptyFieldException(Field.UNIT)
 
-      return wrapExceptions {
+      return suspendRunCatching {
          ingredientsSource.createIngredients(ingredientName, ingredientUnit)
       }
    }
@@ -54,7 +56,7 @@ class IngredientsRepository @Inject constructor(
       if (amount.isBlank()) throw EmptyFieldException(Field.AMOUNT)
       if (comments.isBlank()) throw EmptyFieldException(Field.COMMENT)
 
-      return wrapExceptions {
+      return suspendRunCatching {
          ingredientsSource.addExpensesAndIncomesOfIngredient(
             ingredientId = ingredientId,
             amount = amount,
@@ -85,7 +87,9 @@ class IngredientsRepository @Inject constructor(
       BasePageSource(loader, defaultPageSize = DEFAULT_PAGE_SIZE)
    }
 
-   fun getIngredientsList(): Flow<List<SimpleIngredient>> = channelFlow {
-      send(wrapExceptions { ingredientsSource.getIngredientList() })
-   }.flowOn(Dispatchers.IO)
+   fun getIngredientsList(): Flow<Results<List<SimpleIngredient>>> = flow {
+      emit(suspendRunCatching { ingredientsSource.getIngredientList() })
+   }
+      .flowOn(Dispatchers.IO)
+      .asResult()
 }
