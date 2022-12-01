@@ -76,7 +76,7 @@ interface ProductsSource {
     * @throws BackendException
     * @throws ParseBackendException
     */
-   suspend fun exportIngredient(
+   suspend fun exportProduct(
       productId: Long,
       amount: String,
       comment: String

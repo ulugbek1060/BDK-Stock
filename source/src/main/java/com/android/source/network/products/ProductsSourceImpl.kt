@@ -128,7 +128,7 @@ class ProductsSourceImpl @Inject constructor(
          .message
    }
 
-   override suspend fun exportIngredient(
+   override suspend fun exportProduct(
       productId: Long,
       amount: String,
       comment: String

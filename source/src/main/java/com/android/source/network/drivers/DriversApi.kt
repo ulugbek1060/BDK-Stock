@@ -15,39 +15,33 @@ import retrofit2.http.*
 
 interface DriversApi {
 
+   @Headers("Content-Type: application/json", "Accept: application/json")
    @POST("api/driver/create")
    suspend fun createDriver(
-      @Body body: DriverCreateRequestEntity,
-      @Header(HEADER_KEY_CONTENT_TYPE) type: String = HEADER_VALUE_CONTENT_TYPE,
-      @Header(Const.HEADER_KEY_ACCEPT) accept: String = HEADER_VALUE_ACCEPT
+      @Body body: DriverCreateRequestEntity
    ): DriverCreateResponseEntity
 
+   @Headers("Content-Type: application/json", "Accept: application/json")
    @POST("api/driver/update")
    suspend fun updateDriver(
       @Body body: DriverUpdateRequestEntity,
-      @Header(HEADER_KEY_CONTENT_TYPE) type: String = HEADER_VALUE_CONTENT_TYPE,
-      @Header(Const.HEADER_KEY_ACCEPT) accept: String = HEADER_VALUE_ACCEPT
    ): DriverUpdateResponseEntity
 
+   @Headers("Content-Type: application/json", "Accept: application/json")
    @GET("api/driver/getById/{id}")
    suspend fun getDriverById(
       @Path("id") id: Long,
-      @Header(HEADER_KEY_CONTENT_TYPE) type: String = HEADER_VALUE_CONTENT_TYPE,
-      @Header(Const.HEADER_KEY_ACCEPT) accept: String = HEADER_VALUE_ACCEPT
    ): DriverInfoResponseEntity
 
+   @Headers("Content-Type: application/json", "Accept: application/json")
    @GET("api/driver/get")
    suspend fun getDriversList(
       @Query("search") query: String?,
       @Query("page") pageIndex: Int,
       @Query("count") pageSize: Int,
-      @Header(HEADER_KEY_CONTENT_TYPE) type: String = HEADER_VALUE_CONTENT_TYPE,
-      @Header(Const.HEADER_KEY_ACCEPT) accept: String = HEADER_VALUE_ACCEPT
    ): DriversListResponseEntity
 
+   @Headers("Content-Type: application/json", "Accept: application/json")
    @GET("api/automodel/list")
-   suspend fun getVehicleModels(
-      @Header(HEADER_KEY_CONTENT_TYPE) type: String = HEADER_VALUE_CONTENT_TYPE,
-      @Header(Const.HEADER_KEY_ACCEPT) accept: String = HEADER_VALUE_ACCEPT
-   ): VehicleModelResponseEntity
+   suspend fun getVehicleModels(): VehicleModelResponseEntity
 }

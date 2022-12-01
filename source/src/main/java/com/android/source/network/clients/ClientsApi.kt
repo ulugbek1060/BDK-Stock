@@ -12,11 +12,15 @@ interface ClientsApi {
 
    @Headers("Content-Type: application/json", "Accept: application/json")
    @POST("api/client/create")
-   suspend fun registerClient(@Body body: ClientCreateRequestEntity): ClientCreateResponseEntity
+   suspend fun registerClient(
+      @Body body: ClientCreateRequestEntity
+   ): ClientCreateResponseEntity
 
    @Headers("Content-Type: application/json", "Accept: application/json")
    @POST("api/client/update")
-   suspend fun updateClient(@Body body: ClientUpdateRequestEntity): ClientUpdateResponseEntity
+   suspend fun updateClient(
+      @Body body: ClientUpdateRequestEntity
+   ): ClientUpdateResponseEntity
 
    @Headers("Content-Type: application/json", "Accept: application/json")
    @GET("api/client/getById/{id}")

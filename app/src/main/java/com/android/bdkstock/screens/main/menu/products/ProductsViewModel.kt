@@ -1,6 +1,5 @@
 package com.android.bdkstock.screens.main.menu.products
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope

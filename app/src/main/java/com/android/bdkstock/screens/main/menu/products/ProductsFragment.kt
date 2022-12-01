@@ -21,6 +21,7 @@ import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemIngredientBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.DefaultLoadStateAdapter
+import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.views.pagingAdapter
 import com.android.model.repository.products.entity.ProductEntity
 import com.android.model.utils.AuthException
@@ -98,7 +99,7 @@ class ProductsFragment :
    }
 
    private fun addOnClick() {
-      // TODO: need to initialize
+      findTopNavController().navigate(R.id.action_productsFragment_to_addProductFragment)
    }
 
    private fun setupRecyclerView() = binding.apply {

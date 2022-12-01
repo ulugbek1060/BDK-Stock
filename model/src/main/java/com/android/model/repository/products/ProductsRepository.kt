@@ -10,12 +10,10 @@ import com.android.model.utils.EmptyFieldException
 import com.android.model.utils.Field
 import com.android.model.utils.Results
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class ProductsRepository @Inject constructor(
    private val productsSource: ProductsSource,
@@ -99,16 +97,17 @@ class ProductsRepository @Inject constructor(
    /**
     * returns success message
     */
-   suspend fun exportIngredient(
-      productId: Long,
+   suspend fun exportProduct(
+      productId: Long?,
       amount: String,
       comment: String
    ): String {
+      if (productId == null) throw EmptyFieldException(Field.PRODUCT)
       if (amount.isBlank()) throw EmptyFieldException(Field.AMOUNT)
       if (comment.isBlank()) throw EmptyFieldException(Field.COMMENT)
 
       return suspendRunCatching {
-         productsSource.exportIngredient(
+         productsSource.exportProduct(
             productId = productId,
             amount = amount,
             comment = comment

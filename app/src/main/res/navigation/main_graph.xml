@@ -232,7 +232,7 @@
   <fragment
     android:id="@+id/productOperationsFragment"
     android:name="com.android.bdkstock.screens.main.menu.products.ProductOperationsFragment"
-    android:label="fragment_product_operations"
+    android:label="@string/operation"
     tools:layout="@layout/fragment_product_operations">
 
     <argument
@@ -251,6 +251,14 @@
     android:id="@+id/productsFragment"
     android:name="com.android.bdkstock.screens.main.menu.products.ProductsFragment"
     android:label="@string/products"
-    tools:layout="@layout/fragment_products" />
+    tools:layout="@layout/fragment_products" >
+    <action
+      android:id="@+id/action_productsFragment_to_addProductFragment"
+      app:destination="@id/addProductFragment" />
+  </fragment>
+  <fragment
+    android:id="@+id/addProductFragment"
+    android:name="com.android.bdkstock.screens.main.menu.products.AddProductFragment"
+    android:label="AddProductFragment" />
 
 </navigation>
