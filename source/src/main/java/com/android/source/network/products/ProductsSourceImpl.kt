@@ -198,6 +198,7 @@ class ProductsSourceImpl @Inject constructor(
                name = it.name,
                amount = it.amount,
                comment = it.comment ?: "no comment something went wrong!!!",
+               creator = it.creator,
                unit = it.unit ?: "undefined unit!!!",
                status = it.status,
                createdAt = it.createdAt

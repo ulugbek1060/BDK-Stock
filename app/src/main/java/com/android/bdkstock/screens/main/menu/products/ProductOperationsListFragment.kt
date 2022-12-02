@@ -12,7 +12,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
@@ -67,13 +66,15 @@ class ProductOperationsListFragment :
             tvStatus.setTextColor(statusTextColor)
 
             tvIngredient.text = ingredient.name
-//            tvCreator.text = ingredient.cre
+            tvCreator.text = ingredient.creator
             tvCreatedDate.text = ingredient.createdAt.formatDate(root.context)
             tvAmount.text = ": ${ingredient.amount} ${ingredient.unit}"
          }
          listeners {
             root.onClick {
-
+               val args = ActionsFragmentDirections
+                     .actionActionsFragmentToDetailOperationsFragment(it)
+               findTopNavController().navigate(args)
             }
          }
       }

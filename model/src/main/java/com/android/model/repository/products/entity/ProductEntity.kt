@@ -1,5 +1,9 @@
 package com.android.model.repository.products.entity
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class ProductEntity(
    val id: Long,
    val name: String,
@@ -8,4 +12,4 @@ data class ProductEntity(
    val amount: String,
    val createdAt: String,
    val updatedAt: String
-)
+) : Parcelable

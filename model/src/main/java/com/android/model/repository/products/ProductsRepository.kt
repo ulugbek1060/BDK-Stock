@@ -94,9 +94,6 @@ class ProductsRepository @Inject constructor(
       }
    }
 
-   /**
-    * returns success message
-    */
    suspend fun exportProduct(
       productId: Long?,
       amount: String,

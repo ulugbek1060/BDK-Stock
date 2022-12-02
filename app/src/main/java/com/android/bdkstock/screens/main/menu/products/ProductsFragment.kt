@@ -52,7 +52,9 @@ class ProductsFragment :
       }
       listeners {
          root.onClick {
-
+            val args = ProductsFragmentDirections
+               .actionProductsFragmentToDisplayProductsFragment(it)
+            findTopNavController().navigate(args)
          }
       }
    }
@@ -166,7 +168,6 @@ class ProductsFragment :
    }
 
    override fun onQueryTextSubmit(query: String?): Boolean {
-//      viewModel.setQuery(query)
       return true
    }
 

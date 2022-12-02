@@ -1,4 +1,4 @@
-package com.android.bdkstock.screens.main.menu.ingredients
+package com.android.bdkstock.screens.main.menu.products
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -10,14 +10,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentDisplayIngredientsBinding
+import com.android.bdkstock.databinding.FragmentDisplayProductsBinding
 import com.android.bdkstock.databinding.ProgressItemBiggerBinding
 import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.screens.main.menu.ingredients.DisplayIngredientsFragmentDirections
 import com.android.bdkstock.views.DefaultLoadStateAdapter
 import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.views.pagingAdapter
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
+import com.android.model.repository.products.entity.ProductOperationEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.observeEvent
 import com.elveum.elementadapter.simpleAdapter
@@ -27,24 +29,24 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class DisplayIngredientsFragment :
-   BaseFragment<DisplayIngredientsViewModel, FragmentDisplayIngredientsBinding>() {
+class DisplayProductsFragment :
+   BaseFragment<DisplayProductsViewModel, FragmentDisplayProductsBinding>() {
 
-   override val viewModel by viewModels<DisplayIngredientsViewModel>()
-   override fun getViewBinding() = FragmentDisplayIngredientsBinding.inflate(layoutInflater)
+   override val viewModel by viewModels<DisplayProductsViewModel>()
+   override fun getViewBinding() = FragmentDisplayProductsBinding.inflate(layoutInflater)
    private lateinit var layoutManager: LinearLayoutManager
 
    @SuppressLint("SetTextI18n")
    private val adapter =
-      pagingAdapter<IngredientExOrInEntity, RecyclerItemIngredientOperationBinding> {
+      pagingAdapter<ProductOperationEntity, RecyclerItemIngredientOperationBinding> {
          areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
          bind { ingredient ->
             // status
             val statusTextColor =
-               if (ingredient.status == "1") root.context.getColor(R.color.red)
+               if (ingredient.status == 1) root.context.getColor(R.color.red)
                else root.context.getColor(R.color.green)
             val statusText =
-               if (ingredient.status == "1") root.context.getString(R.string.expense)
+               if (ingredient.status == 1) root.context.getString(R.string.expense)
                else root.context.getString(R.string.income)
 
             tvStatus.text = statusText
@@ -57,8 +59,8 @@ class DisplayIngredientsFragment :
          }
          listeners {
             root.onClick {
-               val args = DisplayIngredientsFragmentDirections
-                  .actionDisplayIngredientsFragmentToDisplayOperationsFragment(it)
+               val args = DisplayProductsFragmentDirections
+                  .actionDisplayProductsFragmentToDetailOperationsFragment(it)
                findTopNavController().navigate(args)
             }
          }
@@ -69,9 +71,14 @@ class DisplayIngredientsFragment :
       observeIngredients()
    }
 
+   private fun observeIngredients() = lifecycleScope.launch {
+      viewModel.operationsFlow.collectLatest {
+         adapter.submitData(it)
+      }
+   }
+
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-
       setupProgress()
       setupRecyclerView()
       setupRefreshLayout()
@@ -80,12 +87,6 @@ class DisplayIngredientsFragment :
       handleViewVisibility()
 
       observeAuthError()
-   }
-
-   private fun observeIngredients() = lifecycleScope.launch {
-      viewModel.ingredientsOperationsFlow.collectLatest {
-         adapter.submitData(it)
-      }
    }
 
    private fun observeIngredientFields() {
@@ -156,5 +157,4 @@ class DisplayIngredientsFragment :
       binding.progress.layoutManager = LinearLayoutManager(requireContext())
       binding.progress.adapter = progressAdapter
    }
-
 }
