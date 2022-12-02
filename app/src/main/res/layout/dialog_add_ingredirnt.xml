@@ -82,7 +82,7 @@
     android:layout_marginLeft="@dimen/dimen_large"
     android:layout_marginRight="@dimen/dimen_large"
     android:layout_marginBottom="@dimen/dimen_large"
-    android:text="@string/save"
+    android:text="@string/add"
     android:textAllCaps="false"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"

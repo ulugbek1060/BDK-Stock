@@ -29,49 +29,49 @@
     <action
       android:id="@+id/action_actionsFragment_to_displayEmployeeFragment"
       app:destination="@id/displayEmployeeFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
 
     <action
       android:id="@+id/action_actionsFragment_to_registerEmployeeFragment"
       app:destination="@id/registerEmployeeFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
 
     <action
       android:id="@+id/action_actionsFragment_to_registerDriverFragment"
       app:destination="@id/registerDriverFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
 
     <action
       android:id="@+id/action_actionsFragment_to_displayDriverFragment"
       app:destination="@id/displayDriverFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
 
     <action
       android:id="@+id/action_actionsFragment_to_registerClientsFragment"
       app:destination="@id/registerClientsFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit"/>
     <action
       android:id="@+id/action_actionsFragment_to_displayClientsFragment"
       app:destination="@id/displayClientsFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit"/>
     <action
       android:id="@+id/action_actionsFragment_to_ingredientsTypeFragment"
       app:destination="@id/ingredientsTypeFragment"
@@ -82,30 +82,46 @@
     <action
       android:id="@+id/action_actionsFragment_to_operateIngredientsFragment"
       app:destination="@id/operateIngredientsFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit"/>
 
     <action
       android:id="@+id/action_actionsFragment_to_displayOperationsFragment"
       app:destination="@id/displayOperationsFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
     <action
       android:id="@+id/action_actionsFragment_to_settingsFragment"
-      app:destination="@id/settingsFragment" />
+      app:destination="@id/settingsFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit"/>
     <action
       android:id="@+id/action_actionsFragment_to_productOperationsFragment"
-      app:destination="@id/productOperationsFragment" />
+      app:destination="@id/productOperationsFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit"/>
     <action
       android:id="@+id/action_actionsFragment_to_productsFragment"
-      app:destination="@id/productsFragment" />
+      app:destination="@id/productsFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit"/>
     <action
       android:id="@+id/action_actionsFragment_to_detailOperationsFragment"
-      app:destination="@id/detailOperationsFragment" />
+      app:destination="@id/detailOperationsFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit"/>
 
   </fragment>
 
@@ -174,17 +190,17 @@
     <action
       android:id="@+id/action_ingredientsTypeFragment_to_addIngredientsFragment"
       app:destination="@id/addIngredientsFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
     <action
       android:id="@+id/action_ingredientsTypeFragment_to_displayIngredientsFragment"
       app:destination="@id/displayIngredientsFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
   </fragment>
 
   <fragment
@@ -199,10 +215,10 @@
     <action
       android:id="@+id/action_displayIngredientsFragment_to_displayOperationsFragment"
       app:destination="@id/displayOperationsFragment"
-      app:enterAnim="@anim/enter"
-      app:exitAnim="@anim/exit"
-      app:popEnterAnim="@anim/pop_enter"
-      app:popExitAnim="@anim/pop_exit" />
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
   </fragment>
   <fragment
     android:id="@+id/operateIngredientsFragment"
@@ -257,10 +273,18 @@
     tools:layout="@layout/fragment_products" >
     <action
       android:id="@+id/action_productsFragment_to_addProductFragment"
-      app:destination="@id/addProductFragment" />
+      app:destination="@id/addProductFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit"/>
     <action
       android:id="@+id/action_productsFragment_to_displayProductsFragment"
-      app:destination="@id/displayProductsFragment" />
+      app:destination="@id/displayProductsFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit"/>
   </fragment>
   <fragment
     android:id="@+id/addProductFragment"
@@ -286,7 +310,11 @@
       app:argType="com.android.model.repository.products.entity.ProductEntity" />
     <action
       android:id="@+id/action_displayProductsFragment_to_detailOperationsFragment"
-      app:destination="@id/detailOperationsFragment" />
+      app:destination="@id/detailOperationsFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit"/>
   </fragment>
 
 </navigation>

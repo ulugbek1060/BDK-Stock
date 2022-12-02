@@ -121,14 +121,7 @@ class DriversFragment :
    }
 
    private fun fabOnClick() {
-      findTopNavController().navigate(R.id.registerDriverFragment, null, navOptions {
-         anim {
-            enter = R.anim.enter
-            exit = R.anim.exit
-            popEnter = R.anim.pop_enter
-            popExit = R.anim.pop_exit
-         }
-      })
+      findTopNavController().navigate(R.id.action_actionsFragment_to_registerDriverFragment)
    }
 
    private fun setupRecyclerView() {
