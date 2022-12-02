@@ -9,7 +9,7 @@ data class AddExOrInIngredientRequestEntity(
    @SerializedName("comment")
    val comment: String,
    @SerializedName("material_id")
-   val materialId: Int, // 3
+   val materialId: Long, // 3
    @SerializedName("status")
    val status: Int // 0
 )

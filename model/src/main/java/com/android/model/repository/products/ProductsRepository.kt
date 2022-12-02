@@ -5,6 +5,8 @@ import com.android.model.di.IoDispatcher
 import com.android.model.repository.base.BasePageSource
 import com.android.model.repository.base.BaseRepository
 import com.android.model.repository.base.DataLoader
+import com.android.model.repository.ingredients.IngredientsSource
+import com.android.model.repository.ingredients.entity.SimpleIngredient
 import com.android.model.repository.products.entity.*
 import com.android.model.utils.EmptyFieldException
 import com.android.model.utils.Field
@@ -17,6 +19,7 @@ import javax.inject.Inject
 
 class ProductsRepository @Inject constructor(
    private val productsSource: ProductsSource,
+   private val ingredientsSource: IngredientsSource,
    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseRepository() {
 
@@ -25,7 +28,7 @@ class ProductsRepository @Inject constructor(
       unit: String,
       price: String,
       ingredients: List<SimpleIngredientItem>
-   ): ProductEntity {
+   ): String {
 
       if (name.isBlank()) throw EmptyFieldException(Field.NAME)
       if (unit.isBlank()) throw EmptyFieldException(Field.UNIT)
@@ -141,6 +144,12 @@ class ProductsRepository @Inject constructor(
       }
       BasePageSource(loader, DEFAULT_PAGE_SIZE)
    }
+
+   fun getIngredientsForSelect(): Flow<Results<List<SimpleIngredient>>>  = flow{
+      emit(suspendRunCatching { ingredientsSource.getIngredientList() })
+   }
+      .flowOn(ioDispatcher)
+      .asResult()
 
    fun getIngredientsOfProduct(productId: Long): Flow<Results<List<IngredientItem>>> = flow {
       emit(suspendRunCatching { productsSource.getIngredientsOfProduct(productId) })

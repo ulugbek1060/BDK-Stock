@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Ingredient(
     @SerializedName("id")
-    val id: Int, // 3
+    val id: Long, // 3
     @SerializedName("name")
     val name: String, // KOST
     @SerializedName("unit")

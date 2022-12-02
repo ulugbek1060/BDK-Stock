@@ -7,7 +7,7 @@ interface ProductsSource {
    /**
     * Create product.
     * Arguments: name, unit, price, ([SimpleIngredientItem] as list)
-    * @return [ProductEntity]
+    * @return [String] success message
     *
     * @throws ConnectionException
     * @throws BackendException
@@ -18,7 +18,7 @@ interface ProductsSource {
       unit: String,
       price: String,
       ingredients: List<SimpleIngredientItem>
-   ): ProductEntity
+   ): String
 
    /**
     * Updates products.

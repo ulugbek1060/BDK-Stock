@@ -1,11 +1,12 @@
 package com.android.model.repository.ingredients.entity
 
 data class SimpleIngredient(
-   val id: Int,
-   val name: String,
-   val unit: String
+   val id: Long,
+   val name: String? = null,
+   val unit: String? = null
 ){
+   var amount: String? = null
    override fun toString(): String {
-      return name
+      return name ?: "Undefined ingredient name!!!"
    }
 }

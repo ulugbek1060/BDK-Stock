@@ -119,5 +119,11 @@
   <string name="close">Закрыть</string>
 
   <string name="message_fragment">Сообщение</string>
+  <string name="text_product_add_info">Product uchun ishlatiladigan materiallarni tanlang qoshiladigan material shu productning 1kg uchun hisoblanadi</string>
+  <string name="price">Цена</string>
+  <string name="error_empty_price">empty unit error</string>
+  <string name="error_empty_ingredient">empty ingredient error</string>
+  <string name="add_ingredient">Добавить ингредиент</string>
+  <string name="add_product">Добавить товар</string>
 
 </resources>

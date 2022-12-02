@@ -28,11 +28,11 @@ class ProductOperationsFragment :
 
       observeState()
       initProductsList()
-      observeGoBack()
+      observeGoBackEvent()
       binding.buttonSave.setOnClickListener { saveOnClick() }
    }
 
-   private fun observeGoBack() {
+   private fun observeGoBackEvent() {
       viewModel.goBack.observeEvent(viewLifecycleOwner) { message ->
          findTopNavController().popBackStack()
          findTopNavController().navigate(R.id.successMessageFragment, bundleOf("success_message" to message))

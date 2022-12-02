@@ -55,7 +55,7 @@ class IngredientsSourceImpl @Inject constructor(
       }
 
    override suspend fun addExpensesAndIncomesOfIngredient(
-      ingredientId: Int,
+      ingredientId: Long,
       amount: String,
       statusOfActions: Int,
       comments: String

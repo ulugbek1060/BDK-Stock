@@ -20,7 +20,7 @@ class ProductsSourceImpl @Inject constructor(
       unit: String,
       price: String,
       ingredients: List<SimpleIngredientItem>
-   ): ProductEntity = wrapNetworkException {
+   ): String = wrapNetworkException {
 
       val body = ProductCreateRequestEntity(
          name = name,
@@ -35,19 +35,18 @@ class ProductsSourceImpl @Inject constructor(
             }
       )
 
-      val product = productsApi
+      productsApi
          .createProduct(body)
-         .product
-
-      ProductEntity(
-         id = product.id,
-         name = product.name,
-         price = product.price,
-         amount = product.amount,
-         unit = product.unit,
-         createdAt = product.createdAt,
-         updatedAt = product.updatedAt
-      )
+         .message
+//      ProductEntity(
+//         id = product.id,
+//         name = product.name,
+//         price = product.price,
+//         amount = product.amount,
+//         unit = product.unit,
+//         createdAt = product.createdAt,
+//         updatedAt = product.updatedAt
+//      )
    }
 
    override suspend fun updateProducts(
