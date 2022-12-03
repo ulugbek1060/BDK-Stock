@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.navOptions
@@ -43,6 +45,8 @@ abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewBinding> : 
          logout()
       }
    }
+
+
 
    /**
     * Log out without colling (api/user/logout)  if token is unusable

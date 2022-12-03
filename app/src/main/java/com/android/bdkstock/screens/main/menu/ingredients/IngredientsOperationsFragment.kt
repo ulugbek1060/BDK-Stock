@@ -129,7 +129,7 @@ class IngredientsOperationsFragment :
       }
 
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-         if (menuItem.itemId == R.id.filter){
+         if (menuItem.itemId == R.id.filter) {
             manipulateFilter()
          }
          return false

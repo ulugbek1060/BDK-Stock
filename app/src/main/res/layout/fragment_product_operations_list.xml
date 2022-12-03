@@ -35,7 +35,6 @@
           android:layout_marginEnd="@dimen/dimen_small"
           android:layout_weight="1"
           android:backgroundTint="@color/green"
-          android:fontFamily="@font/open_sans_regular"
           android:text="@string/income"
           android:textAllCaps="false" />
 
@@ -47,7 +46,6 @@
           android:layout_marginEnd="@dimen/dimen_small"
           android:layout_weight="1"
           android:backgroundTint="@color/red"
-          android:fontFamily="@font/open_sans_regular"
           android:text="@string/expense"
           android:textAllCaps="false" />
 

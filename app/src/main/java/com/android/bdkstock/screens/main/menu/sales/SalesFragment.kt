@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentSalesBinding
 import com.android.bdkstock.databinding.ProgressItemBiggerBinding
-import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
+import com.android.bdkstock.databinding.RecyclerItemOrderBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.DefaultLoadStateAdapter
 import com.android.bdkstock.views.pagingAdapter
@@ -36,33 +36,38 @@ class SalesFragment : BaseFragment<SalesViewModel, FragmentSalesBinding>() {
    override fun getViewBinding() = FragmentSalesBinding.inflate(layoutInflater)
    private lateinit var layoutManager: LinearLayoutManager
 
-   @SuppressLint("SetTextI18n")
-   private val adapter =
-      pagingAdapter<OrderListItem, RecyclerItemIngredientOperationBinding> {
-         areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
-         bind { ingredient ->
-            // status
-            val statusTextColor =
-               if (ingredient.status == 1) root.context.getColor(R.color.red)
-               else root.context.getColor(R.color.green)
-            val statusText =
-               if (ingredient.status == 1) root.context.getString(R.string.expense)
-               else root.context.getString(R.string.income)
+   @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
+   private val adapter = pagingAdapter<OrderListItem, RecyclerItemOrderBinding> {
+      areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
+      bind { order ->
+         val statusColor =
+            if (order.status == 1) root.context.getColor(R.color.red)
+            else root.context.getColor(R.color.green)
 
-            tvStatus.text = statusText
-            tvStatus.setTextColor(statusTextColor)
+         val statusText =
+            if (order.status == 1) root.context.getString(R.string.expense)
+            else root.context.getString(R.string.income)
 
-//            tvIngredient.text = ingredient.name
-//            tvCreator.text = ingredient.creator
-//            tvCreatedDate.text = ingredient.createdAt.formatDate(root.context)
-//            tvAmount.text = ": ${ingredient.amount} ${ingredient.unit}"
+         val indicatorIcon =
+            if (order.status == 1) root.context.getDrawable(R.drawable.ic_sales)
+            else root.context.getDrawable(R.drawable.ic_time)
+
+         tvStatus.text = statusText
+         tvStatus.setTextColor(statusColor)
+
+         ivIndicator.setImageDrawable(indicatorIcon)
+         ivIndicator.setColorFilter(statusColor)
+
+         tvClient.text = order.client
+         tvCreatedDate.text = order.createdAt
+         tvSum.text = order.summa
          }
          listeners {
             root.onClick {
 
             }
          }
-      }
+   }
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
@@ -75,6 +80,7 @@ class SalesFragment : BaseFragment<SalesViewModel, FragmentSalesBinding>() {
       }
    }
 
+   @SuppressLint("UseCompatLoadingForDrawables")
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
       setupProgress()
@@ -97,6 +103,7 @@ class SalesFragment : BaseFragment<SalesViewModel, FragmentSalesBinding>() {
          null,
          null
       )
+
 //      binding.buttonManufacture.setOnClickListener { manufactureOnClick() }
 //      binding.buttonExport.setOnClickListener { exportOnclick() }
 //      binding.buttonShow.setOnClickListener { showOnClick() }
@@ -234,7 +241,7 @@ class SalesFragment : BaseFragment<SalesViewModel, FragmentSalesBinding>() {
 
    private val progressAdapter = simpleAdapter<Any, ProgressItemBiggerBinding> {}
    private fun setupProgress() {
-      progressAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+      progressAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8))
       binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
       binding.recyclerProgress.adapter = progressAdapter
    }
