@@ -20,5 +20,10 @@ enum class Field {
     COMMENT,
     PRICE,
     INGREDIENT,
-    PRODUCT
+    PRODUCT,
+    EMPTY_CLIENT,
+    EMPTY_DRIVER,
+    EMPTY_ORDER,
+    CASH,
+    CARD
 }

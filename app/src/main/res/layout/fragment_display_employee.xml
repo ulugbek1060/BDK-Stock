@@ -60,6 +60,7 @@
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_regular"
           android:textColor="@color/white"
           android:text="@string/call" />
 
@@ -104,6 +105,7 @@
           android:layout_height="wrap_content"
           android:ellipsize="end"
           android:textColor="@color/white"
+          android:fontFamily="@font/open_sans_regular"
           android:maxLines="1"
           android:text="@string/message" />
 
@@ -145,6 +147,7 @@
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
         android:hint="@string/surname"
+        android:fontFamily="@font/open_sans_regular"
         app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@id/input_layout_phone_number"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -155,6 +158,7 @@
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_surname"
           android:layout_width="match_parent"
+          android:fontFamily="@font/open_sans_regular"
           android:layout_height="wrap_content"
           android:imeOptions="actionNext"
           android:lines="1" />
@@ -171,6 +175,7 @@
         android:hint="@string/phone_number"
         app:errorEnabled="true"
         app:counterMaxLength="9"
+        android:fontFamily="@font/open_sans_regular"
         app:prefixText="+998"
         app:layout_constraintBottom_toTopOf="@id/input_layout_address"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -183,6 +188,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:imeOptions="actionNext"
+          android:fontFamily="@font/open_sans_regular"
           android:inputType="number"
           android:lines="1" />
 
@@ -194,6 +200,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_large"
+        android:fontFamily="@font/open_sans_regular"
         android:layout_marginRight="@dimen/dimen_large"
         android:hint="@string/address"
         app:errorEnabled="true"
@@ -206,6 +213,7 @@
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_address"
           android:layout_width="match_parent"
+          android:fontFamily="@font/open_sans_regular"
           android:layout_height="wrap_content"
           android:imeOptions="actionNext"
           android:lines="1" />
@@ -220,6 +228,7 @@
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
         android:hint="@string/job"
+        android:fontFamily="@font/open_sans_regular"
         app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@id/input_layout_password"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -230,6 +239,7 @@
         <AutoCompleteTextView
           android:id="@+id/auto_complete_job_title"
           android:layout_width="match_parent"
+          android:fontFamily="@font/open_sans_regular"
           android:layout_height="wrap_content"
           android:inputType="none"
           tools:ignore="LabelFor" />
@@ -240,7 +250,7 @@
         android:id="@+id/progress_job_title"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginRight="@dimen/dimen_large"
+        android:layout_marginEnd="@dimen/dimen_large"
         android:layout_marginBottom="@dimen/corner_big"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/input_layout_job_title"
@@ -257,6 +267,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_large"
+        android:fontFamily="@font/open_sans_regular"
         android:layout_marginRight="@dimen/dimen_large"
         android:hint="@string/password"
         app:endIconMode="password_toggle"
@@ -270,6 +281,7 @@
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_password"
           android:layout_width="match_parent"
+          android:fontFamily="@font/open_sans_regular"
           android:layout_height="wrap_content"
           android:imeOptions="actionNext"
           android:inputType="textPassword"
@@ -281,6 +293,7 @@
         android:id="@+id/input_layout_password_confirm"
         style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
+        android:fontFamily="@font/open_sans_regular"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_large"
         android:layout_marginEnd="@dimen/dimen_large"
@@ -296,6 +309,7 @@
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_password_confirm"
           android:layout_width="match_parent"
+          android:fontFamily="@font/open_sans_regular"
           android:layout_height="wrap_content"
           android:imeOptions="actionNext"
           android:inputType="textPassword"
@@ -326,6 +340,7 @@
             android:id="@+id/button_delete"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_weight="1"
+            android:fontFamily="@font/open_sans_regular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/corner_small"
@@ -336,6 +351,7 @@
             android:id="@+id/button_save"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:fontFamily="@font/open_sans_regular"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/corner_small"
             android:text="@string/save"

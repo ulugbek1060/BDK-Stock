@@ -36,6 +36,7 @@
     android:textColor="@color/white"
     app:backgroundTint="?attr/colorPrimary"
     app:icon="@drawable/ic_add"
+    android:fontFamily="@font/open_sans_regular"
     app:iconTint="@color/white"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintRight_toRightOf="parent" />

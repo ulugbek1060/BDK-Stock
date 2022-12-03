@@ -15,7 +15,7 @@ class SuccessMessageFragment : Fragment(R.layout.fragment_success_message) {
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
       arguments?.let {
-         message = it.getString("success_message")
+         message = it.getString(SUCCESS_MESSAGE_KEY)
       }
    }
 
@@ -25,5 +25,9 @@ class SuccessMessageFragment : Fragment(R.layout.fragment_success_message) {
       view.findViewById<Button>(R.id.button_close).setOnClickListener {
          findTopNavController().popBackStack()
       }
+   }
+
+   companion object{
+      const val SUCCESS_MESSAGE_KEY = "success_message"
    }
 }

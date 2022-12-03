@@ -44,6 +44,7 @@
           android:id="@+id/input_name"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_regular"
           android:imeOptions="actionNext"
           android:lines="1" />
 
@@ -58,6 +59,7 @@
         android:layout_marginRight="@dimen/dimen_large"
         android:hint="@string/surname"
         app:errorEnabled="true"
+        android:fontFamily="@font/open_sans_regular"
         app:layout_constraintBottom_toTopOf="@id/input_layout_phone_number"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -68,6 +70,7 @@
           android:id="@+id/input_surname"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_regular"
           android:imeOptions="actionNext"
           android:lines="1" />
 
@@ -80,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
+        android:fontFamily="@font/open_sans_regular"
         android:hint="@string/phone_number"
         app:errorEnabled="true"
         app:prefixText="+998"
@@ -93,6 +97,7 @@
           android:id="@+id/input_phone_number"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_regular"
           android:imeOptions="actionNext"
           android:inputType="number"
           android:lines="1" />
@@ -102,6 +107,7 @@
       <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_address"
         style="@style/TextInputLayoutStyle"
+        android:fontFamily="@font/open_sans_regular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_large"
@@ -118,6 +124,7 @@
           android:id="@+id/input_address"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_regular"
           android:imeOptions="actionNext"
           android:lines="1" />
 
@@ -128,6 +135,7 @@
         style="@style/TextInputLayoutStyleDropDown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_regular"
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
         android:hint="@string/job"
@@ -143,6 +151,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:inputType="none"
+          android:fontFamily="@font/open_sans_regular"
           tools:ignore="LabelFor" />
 
       </com.google.android.material.textfield.TextInputLayout>
@@ -165,6 +174,7 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/corner_small"
           android:text="@string/save"
+          android:fontFamily="@font/open_sans_regular"
           android:textAllCaps="false" />
 
         <com.airbnb.lottie.LottieAnimationView

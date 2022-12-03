@@ -1,5 +1,6 @@
 package com.android.bdkstock.screens.main.menu.ingredients
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -121,6 +122,12 @@ class OperateIngredientsViewModel @Inject constructor(
       fun getBackgroundColor(context: Context) =
          if (status == OPERATION_INCOME) context.getColor(R.color.green)
          else context.getColor(R.color.red)
+
+      @SuppressLint("UseCompatLoadingForDrawables")
+      fun getIndicator(context: Context) =
+         if (status == OPERATION_INCOME) context.getDrawable(R.drawable.ic_export)
+         else context.getDrawable(R.drawable.ic_import)
+
    }
 
    private companion object {

@@ -25,6 +25,7 @@
       android:maxLines="1"
       android:textColor="@color/text_color_light"
       android:textSize="20sp"
+      android:fontFamily="@font/open_sans_bold"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintTop_toTopOf="parent"

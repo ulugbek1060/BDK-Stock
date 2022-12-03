@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_large"
         android:padding="@dimen/dimen_large"
+        android:fontFamily="@font/open_sans_regular"
         android:text="@string/filter"
         android:textColor="@color/on_area_txt_color"
         android:textSize="16sp"
@@ -32,6 +33,7 @@
         style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_regular"
         android:layout_margin="@dimen/dimen_large"
         android:hint="@string/search"
         app:endIconMode="clear_text"
@@ -42,6 +44,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_query"
+          android:fontFamily="@font/open_sans_regular"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:imeOptions="actionNext" />
@@ -66,6 +69,7 @@
           android:layout_height="wrap_content"
           android:layout_weight="1"
           android:buttonTint="?attr/colorPrimary"
+          android:fontFamily="@font/open_sans_regular"
           android:gravity="center"
           android:text="@string/all"
           android:textSize="16sp" />
@@ -75,6 +79,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_weight="1"
+          android:fontFamily="@font/open_sans_regular"
           android:buttonTint="?attr/colorPrimary"
           android:gravity="center"
           android:text="@string/income"
@@ -86,6 +91,7 @@
           android:layout_height="wrap_content"
           android:layout_weight="1"
           android:buttonTint="?attr/colorPrimary"
+          android:fontFamily="@font/open_sans_regular"
           android:gravity="center"
           android:text="@string/expense"
           android:textSize="16sp" />
@@ -100,6 +106,7 @@
         android:layout_margin="@dimen/dimen_large"
         android:hint="@string/from_date"
         app:endIconDrawable="@drawable/ic_calendar"
+        android:fontFamily="@font/open_sans_regular"
         app:endIconMode="custom"
         app:layout_constraintBottom_toTopOf="@id/input_layout_to_date"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -110,6 +117,7 @@
           android:id="@+id/input_from_date"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_regular"
           android:imeOptions="actionNext" />
 
       </com.google.android.material.textfield.TextInputLayout>
@@ -120,6 +128,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_large"
+        android:fontFamily="@font/open_sans_regular"
         android:hint="@string/to_date"
         app:endIconDrawable="@drawable/ic_calendar"
         app:endIconMode="custom"
@@ -131,6 +140,7 @@
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_to_date"
           android:layout_width="match_parent"
+          android:fontFamily="@font/open_sans_regular"
           android:layout_height="wrap_content"
           android:imeOptions="actionDone" />
 

@@ -33,6 +33,7 @@
     android:contentDescription="@string/add"
     android:text="@string/add"
     android:textColor="@color/white"
+    android:fontFamily="@font/open_sans_regular"
     app:icon="@drawable/ic_add"
     app:iconTint="@color/white"
     android:backgroundTint="?attr/colorPrimary"

@@ -17,79 +17,113 @@
     android:background="@color/item_color"
     android:padding="@dimen/dimen_big">
 
-    <TextView
-      android:id="@+id/tv_ingredient"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/dimen_normal"
-      android:text="@string/ingredients"
-      android:textColor="@color/text_color"
-      android:textSize="16sp"
-      android:textStyle="bold"
+    <LinearLayout
+      android:id="@+id/container"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/tv_status" />
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/iv_indicator">
 
-    <TextView
-      android:id="@+id/tv_creator_hint"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/dimen_normal"
-      android:text="@string/accepted"
-      android:textColor="@color/sub_text_color"
-      android:textSize="16sp"
-      app:layout_constraintLeft_toLeftOf="@id/tv_ingredient"
-      app:layout_constraintTop_toBottomOf="@id/tv_ingredient" />
+      <TextView
+        android:id="@+id/tv_ingredient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_small"
+        android:fontFamily="@font/open_sans_regular"
+        android:text="@string/ingredients"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_size_small"
+        android:textStyle="bold" />
 
-    <TextView
-      android:id="@+id/tv_creator"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen_small"
-      android:ellipsize="end"
-      android:maxLines="1"
-      android:textColor="@color/text_color"
-      android:textSize="16sp"
-      android:textStyle="bold"
-      app:layout_constraintBottom_toBottomOf="@id/tv_creator_hint"
-      app:layout_constraintLeft_toRightOf="@id/tv_creator_hint"
-      app:layout_constraintTop_toTopOf="@id/tv_creator_hint"
-      tools:text="Akmal" />
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_small"
+        android:orientation="horizontal">
+
+        <TextView
+          android:id="@+id/tv_creator_hint"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_regular"
+          android:text="@string/accepted"
+          android:textColor="@color/sub_text_color"
+          android:textSize="@dimen/text_size_small"
+          app:layout_constraintLeft_toLeftOf="@id/tv_ingredient"
+          app:layout_constraintTop_toBottomOf="@id/tv_ingredient" />
+
+        <TextView
+          android:id="@+id/tv_creator"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen_small"
+          android:ellipsize="end"
+          android:fontFamily="@font/open_sans_regular"
+          android:maxLines="1"
+          android:textColor="@color/text_color"
+          android:textSize="@dimen/text_size_small"
+          android:textStyle="bold"
+          app:layout_constraintBottom_toBottomOf="@id/tv_creator_hint"
+          app:layout_constraintLeft_toRightOf="@id/tv_creator_hint"
+          app:layout_constraintTop_toTopOf="@id/tv_creator_hint"
+          tools:text="Akmal" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_small"
+        android:orientation="horizontal">
+
+        <TextView
+          android:id="@+id/tv_amount_hint"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dimen_small"
+          android:fontFamily="@font/open_sans_regular"
+          android:text="@string/weight"
+          android:textColor="@color/sub_text_color"
+          android:textSize="@dimen/text_size_small" />
+
+        <TextView
+          android:id="@+id/tv_amount"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_regular"
+          android:textColor="@color/text_color"
+          android:textSize="@dimen/text_size_small"
+          android:textStyle="bold"
+          tools:text="23434354345435435435453" />
+
+      </LinearLayout>
+
+    </LinearLayout>
 
     <TextView
       android:id="@+id/tv_created_date"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/ingredients"
+      android:fontFamily="@font/open_sans_regular"
       android:textColor="@color/sub_text_color"
-      android:textSize="16sp"
+      android:textSize="@dimen/text_size_small"
+      app:layout_constraintBottom_toBottomOf="@id/iv_indicator"
       app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintTop_toTopOf="@id/iv_indicator" />
 
-
-    <TextView
-      android:id="@+id/tv_amount_hint"
+    <ImageView
+      android:id="@+id/iv_indicator"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="@dimen/dimen_small"
-      android:text="@string/weight"
-      android:textColor="@color/sub_text_color"
-      android:textSize="16sp"
-      app:layout_constraintBottom_toBottomOf="@id/tv_amount"
-      app:layout_constraintRight_toLeftOf="@id/tv_amount"
-      app:layout_constraintTop_toTopOf="@id/tv_amount" />
-
-    <TextView
-      android:id="@+id/tv_amount"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/dimen_normal"
-      android:text="@string/ingredients"
-      android:textColor="@color/text_color"
-      android:textSize="16sp"
-      android:textStyle="bold"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/tv_creator_hint" />
+      android:contentDescription="@string/indicator"
+      android:src="@drawable/ic_import"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:tint="@color/green" />
 
     <TextView
       android:id="@+id/tv_status"
@@ -98,9 +132,12 @@
       android:text="@string/income"
       android:textColor="@color/green"
       android:textStyle="bold"
-      android:textSize="18sp"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      android:layout_marginStart="@dimen/dimen_normal"
+      android:fontFamily="@font/open_sans_regular"
+      android:textSize="@dimen/text_size_normal"
+      app:layout_constraintBottom_toBottomOf="@id/iv_indicator"
+      app:layout_constraintLeft_toRightOf="@id/iv_indicator"
+      app:layout_constraintTop_toTopOf="@id/iv_indicator" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

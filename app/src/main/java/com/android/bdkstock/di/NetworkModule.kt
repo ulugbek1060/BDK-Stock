@@ -9,6 +9,7 @@ import com.android.source.network.employees.EmployeesApi
 import com.android.source.network.ingredients.IngredientsApi
 import com.android.source.network.job.JobApi
 import com.android.source.network.products.ProductsApi
+import com.android.source.network.sales.SalesApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -114,9 +115,16 @@ class NetworkModule {
    fun provideIngredientsApi(retrofit: Retrofit): IngredientsApi {
       return retrofit.create(IngredientsApi::class.java)
    }
+
    @Provides
    @Singleton
    fun provideProductsApi(retrofit: Retrofit): ProductsApi {
       return retrofit.create(ProductsApi::class.java)
+   }
+
+   @Provides
+   @Singleton
+   fun provideSalesApi(retrofit: Retrofit): SalesApi {
+      return retrofit.create(SalesApi::class.java)
    }
 }

@@ -125,5 +125,7 @@
   <string name="error_empty_ingredient">empty ingredient error</string>
   <string name="add_ingredient">Добавить ингредиент</string>
   <string name="add_product">Добавить товар</string>
+  <string name="indicator">indicator</string>
+  <string name="truck">truck</string>
 
 </resources>

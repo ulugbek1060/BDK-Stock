@@ -11,7 +11,7 @@
   <dimen name="corner_big">6dp</dimen>
   <dimen name="corner_extra">8dp</dimen>
 
-  <dimen name="text_size_small">12sp</dimen>
+  <dimen name="text_size_small">14sp</dimen>
   <dimen name="text_size_normal">16sp</dimen>
   <dimen name="text_size_big">20sp</dimen>
   <dimen name="text_size_extra">22sp</dimen>

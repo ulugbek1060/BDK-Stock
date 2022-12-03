@@ -45,7 +45,7 @@ class IngredientsOperationsFragment :
    private lateinit var layoutManager: LinearLayoutManager
    override fun getViewBinding() = FragmentIngredientsOperationsBinding.inflate(layoutInflater)
 
-   @SuppressLint("SetTextI18n")
+   @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
    private val adapter =
       pagingAdapter<IngredientExOrInEntity, RecyclerItemIngredientOperationBinding> {
          areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
@@ -57,6 +57,12 @@ class IngredientsOperationsFragment :
             val statusText =
                if (ingredient.status == "1") root.context.getString(R.string.expense)
                else root.context.getString(R.string.income)
+            val indicator =
+               if (ingredient.status == "1") root.context.getDrawable(R.drawable.ic_export)
+               else root.context.getDrawable(R.drawable.ic_import)
+
+            ivIndicator.setImageDrawable(indicator)
+            ivIndicator.setColorFilter(statusTextColor)
 
             tvStatus.text = statusText
             tvStatus.setTextColor(statusTextColor)
@@ -98,8 +104,6 @@ class IngredientsOperationsFragment :
 
       observeAuthError()
 
-      observeFilterResult()
-
       binding.buttonIncome.setCompoundDrawablesWithIntrinsicBounds(
          requireContext().getDrawable(R.drawable.ic_add),
          null,
@@ -117,7 +121,6 @@ class IngredientsOperationsFragment :
       binding.buttonAdd.setOnClickListener { addOnClick() }
 
       requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
-
    }
 
    private val menuProvider = object : MenuProvider {
@@ -131,9 +134,6 @@ class IngredientsOperationsFragment :
          }
          return false
       }
-   }
-
-   private fun observeFilterResult() {
    }
 
    private fun addOnClick() {

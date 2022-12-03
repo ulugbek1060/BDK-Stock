@@ -43,7 +43,7 @@
         android:id="@+id/tv_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/font_bold"
+        android:fontFamily="@font/open_sans_regular"
         android:textColor="@color/text_color_light"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -18,6 +18,7 @@
         android:id="@+id/input_layout_name"
         style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
+        android:fontFamily="@font/open_sans_regular"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_extra"
         android:hint="@string/name"
@@ -27,6 +28,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_name"
+          android:fontFamily="@font/open_sans_regular"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:imeOptions="actionNext"
@@ -37,6 +39,7 @@
       <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_unit"
         style="@style/TextInputLayoutStyle"
+        android:fontFamily="@font/open_sans_regular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_large"
@@ -47,6 +50,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_unit"
+          android:fontFamily="@font/open_sans_regular"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:imeOptions="actionNext"
@@ -56,6 +60,7 @@
 
       <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_price"
+        android:fontFamily="@font/open_sans_regular"
         style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,6 +73,7 @@
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_price"
           android:layout_width="match_parent"
+          android:fontFamily="@font/open_sans_regular"
           android:layout_height="wrap_content"
           android:imeOptions="actionNext"
           android:inputType="number"
@@ -78,6 +84,7 @@
       <TextView
         android:id="@+id/tv_info"
         android:layout_width="match_parent"
+        android:fontFamily="@font/open_sans_regular"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_big"
         android:text="@string/text_product_add_info"
@@ -101,6 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_big"
         android:backgroundTint="@color/green_500"
+        android:fontFamily="@font/open_sans_regular"
         android:text="@string/add_ingredient"
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@id/recycler_view_ingredient" />
@@ -115,6 +123,7 @@
         <Button
           android:id="@+id/button_save"
           android:layout_width="match_parent"
+          android:fontFamily="@font/open_sans_regular"
           android:layout_height="wrap_content"
           android:text="@string/save"
           android:textAllCaps="false" />

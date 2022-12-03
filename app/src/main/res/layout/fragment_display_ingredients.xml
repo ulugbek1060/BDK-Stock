@@ -21,7 +21,7 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/dimen_big"
       android:layout_marginTop="@dimen/dimen_big"
-      android:fontFamily="@font/font_bold"
+      android:fontFamily="@font/open_sans_regular"
       android:text="@string/name" />
 
     <TextView
@@ -49,7 +49,7 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/dimen_big"
       android:layout_marginTop="@dimen/dimen_big"
-      android:fontFamily="@font/font_bold"
+      android:fontFamily="@font/open_sans_regular"
       android:text="@string/weight" />
 
     <TextView
@@ -57,6 +57,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/dimen_big"
+      android:fontFamily="@font/open_sans_regular"
       android:textColor="@color/text_color"
       android:textSize="20sp"
       tools:text="983462462378 kg" />
@@ -70,6 +71,7 @@
     app:layout_constraintTop_toBottomOf="@id/container_amount"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:fontFamily="@font/open_sans_regular"
     android:layout_marginHorizontal="@dimen/dimen_big"
     android:layout_marginTop="@dimen/dimen_big"
     android:text="created: 123412" />

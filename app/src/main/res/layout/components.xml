@@ -30,7 +30,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:ellipsize="end"
-          android:fontFamily="@font/font_regular"
+          android:fontFamily="@font/open_sans_regular"
           android:lines="1"
           android:textColor="@color/white"
           android:textSize="16sp"

@@ -34,6 +34,7 @@
         style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_regular"
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginTop="@dimen/dimen_extra"
         android:layout_marginRight="@dimen/dimen_large"
@@ -49,6 +50,7 @@
           android:id="@+id/input_name"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_regular"
           android:imeOptions="actionNext"
           android:lines="1" />
 
@@ -61,6 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
+        android:fontFamily="@font/open_sans_regular"
         android:hint="@string/phone_number"
         app:counterEnabled="true"
         app:counterMaxLength="9"
@@ -76,6 +79,7 @@
           android:id="@+id/input_phone_number"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_regular"
           android:imeOptions="actionNext"
           android:inputType="number"
           android:lines="1" />
@@ -90,6 +94,7 @@
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
         android:hint="@string/address"
+        android:fontFamily="@font/open_sans_regular"
         app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@id/container_frame"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -100,6 +105,7 @@
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_address"
           android:layout_width="match_parent"
+          android:fontFamily="@font/open_sans_regular"
           android:layout_height="wrap_content"
           android:imeOptions="actionNext"
           android:lines="1" />
@@ -122,6 +128,7 @@
           android:id="@+id/button_save"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_regular"
           android:layout_marginStart="@dimen/corner_small"
           android:text="@string/save"
           android:textAllCaps="false" />

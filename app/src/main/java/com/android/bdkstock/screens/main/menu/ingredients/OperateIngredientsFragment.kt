@@ -94,6 +94,13 @@ class OperateIngredientsFragment :
 
          binding.tvIndicator.text = state.getStatusText(requireContext())
          binding.tvIndicator.setBackgroundColor(state.getBackgroundColor(requireContext()))
+         binding.tvIndicator.setCompoundDrawables(
+            null,
+            null,
+            state.getIndicator(requireContext()),
+            null
+         )
+
       }
    }
 }

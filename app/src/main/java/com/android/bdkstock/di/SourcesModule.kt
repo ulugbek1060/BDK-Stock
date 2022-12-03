@@ -7,6 +7,7 @@ import com.android.model.repository.employees.EmployeesSource
 import com.android.model.repository.ingredients.IngredientsSource
 import com.android.model.repository.jobs.JobSource
 import com.android.model.repository.products.ProductsSource
+import com.android.model.repository.sales.SalesSource
 import com.android.model.repository.settings.AppSettings
 import com.android.model.repository.settings.SharedPreferencesAppSettings
 import com.android.source.network.account.AccountSourceImpl
@@ -16,6 +17,7 @@ import com.android.source.network.employees.EmployeesSourceIml
 import com.android.source.network.ingredients.IngredientsSourceImpl
 import com.android.source.network.job.JobSourceImpl
 import com.android.source.network.products.ProductsSourceImpl
+import com.android.source.network.sales.SalesSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -65,4 +67,8 @@ abstract class SourcesModule {
       productsSourceImpl: ProductsSourceImpl
    ): ProductsSource
 
+   @Binds
+   abstract fun bindsSalesSource(
+      SalesSourceImpl: SalesSourceImpl
+   ): SalesSource
 }
