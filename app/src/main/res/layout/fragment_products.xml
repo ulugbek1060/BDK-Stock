@@ -30,13 +30,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen_big"
-    android:backgroundTint="?attr/colorPrimary"
     android:contentDescription="@string/add"
     android:text="@string/add"
-    android:textColor="@color/white"
     android:fontFamily="@font/open_sans_regular"
     app:icon="@drawable/ic_add"
-    app:iconTint="@color/white"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintRight_toRightOf="parent" />
 

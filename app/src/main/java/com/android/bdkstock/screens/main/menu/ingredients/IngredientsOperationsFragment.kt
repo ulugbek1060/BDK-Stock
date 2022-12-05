@@ -104,18 +104,6 @@ class IngredientsOperationsFragment :
 
       observeAuthError()
 
-      binding.buttonIncome.setCompoundDrawablesWithIntrinsicBounds(
-         requireContext().getDrawable(R.drawable.ic_add),
-         null,
-         null,
-         null
-      )
-      binding.buttonExpense.setCompoundDrawablesWithIntrinsicBounds(
-         requireContext().getDrawable(R.drawable.ic_remove),
-         null,
-         null,
-         null
-      )
       binding.buttonIncome.setOnClickListener { incomeOnClick() }
       binding.buttonExpense.setOnClickListener { expenseOnClick() }
       binding.buttonAdd.setOnClickListener { addOnClick() }
@@ -266,12 +254,11 @@ class IngredientsOperationsFragment :
 
          status = filterData.status
 
-         dialogBinding.radioGroup.check(getCheckId(filterData.status))
+         dialogBinding.toggleButton.check(getCheckId(filterData.status))
          dialogBinding.inputQuery.setText(filterData.query)
          dialogBinding.inputFromDate.setText(filterData.fromDate)
          dialogBinding.inputToDate.setText(filterData.toDate)
       }
-
 
       dialog.show()
    }

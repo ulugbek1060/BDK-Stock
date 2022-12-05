@@ -1,14 +1,8 @@
 package com.android.bdkstock.screens.main
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.provider.CalendarContract.Colors
-import android.util.Log
 import android.view.View
-import android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -18,7 +12,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.ActivityMainBinding
 import com.android.model.utils.Const.FLAG_SIGNED_IN

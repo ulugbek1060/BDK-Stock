@@ -133,7 +133,6 @@
 
       <Button
         android:id="@+id/button_save"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_regular"

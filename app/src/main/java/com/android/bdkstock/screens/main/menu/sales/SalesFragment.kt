@@ -40,17 +40,21 @@ class SalesFragment : BaseFragment<SalesViewModel, FragmentSalesBinding>() {
    private val adapter = pagingAdapter<OrderListItem, RecyclerItemOrderBinding> {
       areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
       bind { order ->
-         val statusColor =
-            if (order.status == 1) root.context.getColor(R.color.red)
-            else root.context.getColor(R.color.green)
+         val statusColor = when (order.status) {
+               1 -> root.context.getColor(R.color.green)
+               0 -> root.context.getColor(R.color.yellow)
+               else -> root.context.getColor(R.color.red)
+            }
 
          val statusText =
             if (order.status == 1) root.context.getString(R.string.expense)
             else root.context.getString(R.string.income)
 
-         val indicatorIcon =
-            if (order.status == 1) root.context.getDrawable(R.drawable.ic_sales)
-            else root.context.getDrawable(R.drawable.ic_time)
+         val indicatorIcon = when (order.status) {
+               1 -> root.context.getDrawable(R.drawable.ic_sales)
+               0 -> root.context.getDrawable(R.drawable.ic_time)
+               else -> root.context.getDrawable(R.drawable.ic_cancel)
+            }
 
          tvStatus.text = statusText
          tvStatus.setTextColor(statusColor)
@@ -235,7 +239,6 @@ class SalesFragment : BaseFragment<SalesViewModel, FragmentSalesBinding>() {
             .show()
       }
    }
-
 
    // -- Progress with shimmer layout
 

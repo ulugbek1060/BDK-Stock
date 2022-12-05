@@ -50,7 +50,6 @@
       android:layout_marginLeft="@dimen/dimen_large"
       android:layout_marginRight="@dimen/dimen_large"
       android:fontFamily="@font/open_sans_regular"
-      android:textColor="@color/text_color"
       android:textSize="20sp"
       app:layout_constraintBottom_toBottomOf="@id/iv_creator"
       app:layout_constraintLeft_toRightOf="@id/iv_creator"

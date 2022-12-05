@@ -127,5 +127,8 @@
   <string name="add_product">Добавить товар</string>
   <string name="indicator">indicator</string>
   <string name="truck">truck</string>
+  <string name="new_driver">Новый водитель</string>
+  <string name="new_client">Новый клиент</string>
+  <string name="pay">Оплатить</string>
 
 </resources>

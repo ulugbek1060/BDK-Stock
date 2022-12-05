@@ -21,7 +21,7 @@
         android:padding="@dimen/dimen_large"
         android:fontFamily="@font/open_sans_regular"
         android:text="@string/filter"
-        android:textColor="@color/on_area_txt_color"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/input_layout_query"
@@ -37,7 +37,7 @@
         android:layout_margin="@dimen/dimen_large"
         android:hint="@string/search"
         app:endIconMode="clear_text"
-        app:layout_constraintBottom_toTopOf="@id/radio_group"
+        app:layout_constraintBottom_toTopOf="@id/toggleButton"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title">
@@ -51,52 +51,45 @@
 
       </com.google.android.material.textfield.TextInputLayout>
 
-      <RadioGroup
-        android:id="@+id/radio_group"
+      <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleButton"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_margin="@dimen/dimen_large"
-        android:checkedButton="@id/button_all"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_large"
+        app:singleSelection="true"
         app:layout_constraintBottom_toTopOf="@id/input_layout_from_date"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/input_layout_query">
 
-        <RadioButton
+        <Button
           android:id="@+id/button_all"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="?attr/materialButtonOutlinedStyle"
           android:layout_weight="1"
-          android:buttonTint="?attr/colorPrimary"
-          android:fontFamily="@font/open_sans_regular"
-          android:gravity="center"
           android:text="@string/all"
-          android:textSize="16sp" />
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textAllCaps="false" />
 
-        <RadioButton
+        <Button
           android:id="@+id/button_income"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
           android:layout_weight="1"
-          android:fontFamily="@font/open_sans_regular"
-          android:buttonTint="?attr/colorPrimary"
-          android:gravity="center"
+          style="?attr/materialButtonOutlinedStyle"
           android:text="@string/income"
-          android:textSize="16sp" />
-
-        <RadioButton
-          android:id="@+id/button_expense"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:buttonTint="?attr/colorPrimary"
-          android:fontFamily="@font/open_sans_regular"
-          android:gravity="center"
-          android:text="@string/expense"
-          android:textSize="16sp" />
+          android:textAllCaps="false" />
 
-      </RadioGroup>
+        <Button
+          android:id="@+id/button_expense"
+          android:layout_weight="1"
+          style="?attr/materialButtonOutlinedStyle"
+          android:text="@string/expense"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textAllCaps="false" />
+
+      </com.google.android.material.button.MaterialButtonToggleGroup>
 
       <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_from_date"
@@ -111,7 +104,7 @@
         app:layout_constraintBottom_toTopOf="@id/input_layout_to_date"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radio_group">
+        app:layout_constraintTop_toBottomOf="@id/toggleButton">
 
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_from_date"
@@ -148,16 +141,16 @@
 
       <Button
         android:id="@+id/button_clear"
-        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_large"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_marginTop="@dimen/dimen_large"
+        android:fontFamily="@font/open_sans_regular"
         android:layout_marginEnd="@dimen/dimen_normal"
         android:layout_marginBottom="@dimen/dimen_normal"
         android:text="@string/cancel"
         android:textAllCaps="false"
-        android:textColor="@color/text_color"
         android:textSize="@dimen/text_size_normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -173,7 +166,7 @@
         android:layout_marginBottom="@dimen/dimen_normal"
         android:text="@string/filter"
         android:textSize="@dimen/text_size_normal"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:fontFamily="@font/open_sans_regular"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/button_clear"

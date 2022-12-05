@@ -4,8 +4,9 @@
   android:id="@+id/tv_job"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
+  android:background="?attr/colorSurface"
   android:fontFamily="@font/open_sans_regular"
   android:padding="@dimen/dimen_big"
-  android:textColor="@color/text_color"
+  android:textColor="?attr/colorOnSurface"
   android:textSize="18sp"
   tools:text="Android" />

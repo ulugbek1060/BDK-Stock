@@ -25,7 +25,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
       super.onViewCreated(view, savedInstanceState)
       binding = FragmentSignInBinding.bind(view)
 
-      binding.buttonSingIn.setOnClickListener { signInButtonPressed() }
+      binding.buttonSignIn.setOnClickListener { signInButtonPressed() }
 
       viewModel.state.observe(viewLifecycleOwner) { state ->
          binding.inputLayoutPhoneNumber.error = getPhoneNumberErrorText(state.emptyPhoneNumberError)
@@ -38,7 +38,15 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
       observeNavigation()
       observeAuthError()
       observeClearText()
+      observeParseJsonError()
       observeMessageFromBackend()
+   }
+
+   // TODO: need to fix message
+   private fun observeParseJsonError() {
+      viewModel.errorParseJson.observeEvent(viewLifecycleOwner) {
+         Toast.makeText(requireContext(), "Error from json!!!", Toast.LENGTH_SHORT).show()
+      }
    }
 
    private fun observeMessageFromBackend() {
@@ -91,7 +99,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
    private fun setProgressState(signInInProgress: Boolean) = binding.apply {
       lottiProgress.isVisible = signInInProgress
-      buttonSingIn.isVisible = !signInInProgress
+      buttonSignIn.isVisible = !signInInProgress
    }
 
    private fun getPhoneNumberErrorText(state: Boolean) =

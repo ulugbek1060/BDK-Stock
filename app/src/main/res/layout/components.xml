@@ -18,7 +18,7 @@
     <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/blue">
+      android:background="?attr/colorPrimary">
 
       <LinearLayout
         android:layout_width="match_parent"
@@ -66,5 +66,31 @@
 
   </com.google.android.material.textfield.TextInputLayout>
 
+  <com.google.android.material.button.MaterialButtonToggleGroup
+    android:id="@+id/toggleButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <Button
+      android:id="@+id/button1"
+      style="?attr/materialButtonOutlinedStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Button 1" />
+
+    <Button
+      android:id="@+id/button2"
+      style="?attr/materialButtonOutlinedStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Button 2" />
+
+    <Button
+      android:id="@+id/button3"
+      style="?attr/materialButtonOutlinedStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Button 3" />
+  </com.google.android.material.button.MaterialButtonToggleGroup>
 
 </LinearLayout>

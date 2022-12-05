@@ -3,6 +3,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
+  android:background="?android:attr/colorBackground"
   android:layout_height="wrap_content">
 
   <com.google.android.material.textfield.TextInputLayout
@@ -91,6 +92,7 @@
     android:layout_marginBottom="@dimen/dimen_large"
     android:text="@string/add"
     android:textAllCaps="false"
+    android:textAppearance="?attr/textAppearanceButton"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"

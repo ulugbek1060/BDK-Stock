@@ -14,7 +14,7 @@
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/item_color"
+    android:background="?attr/colorSurfaceVariant"
     android:padding="@dimen/dimen_extra">
 
     <TextView
@@ -23,7 +23,7 @@
       android:layout_height="wrap_content"
       android:ellipsize="end"
       android:maxLines="1"
-      android:textColor="@color/text_color_light"
+      android:textColor="?attr/colorPrimary"
       android:textSize="20sp"
       android:fontFamily="@font/open_sans_bold"
       app:layout_constraintLeft_toLeftOf="parent"
@@ -38,7 +38,7 @@
       android:layout_height="wrap_content"
       android:ellipsize="end"
       android:maxLines="1"
-      android:textColor="@color/text_color"
+      android:textColor="@color/high_emphasises"
       android:gravity="end"
       android:textSize="20sp"
       app:layout_constraintBottom_toBottomOf="parent"

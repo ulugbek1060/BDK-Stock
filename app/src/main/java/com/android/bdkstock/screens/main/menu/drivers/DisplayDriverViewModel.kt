@@ -191,14 +191,6 @@ class DisplayDriverViewModel @Inject constructor(
       val emptyRegNumberError: Boolean = false
    ) {
 
-      fun getToggleButtonColor(context: Context) =
-         if (isChangeableEnable) context.getColor(R.color.red)
-         else context.getColor(R.color.blue)
-
-      fun getToggleButtonText(context: Context) =
-         if (isChangeableEnable) context.getString(R.string.cancel)
-         else context.getString(R.string.edit)
-
       fun getNameErrorMessage(context: Context) =
          if (emptyNameError) context.getString(R.string.error_empty_name)
          else null

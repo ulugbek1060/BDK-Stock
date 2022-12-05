@@ -25,6 +25,9 @@ class SignInViewModel @Inject constructor(
    private val _showAuthError = MutableUnitLiveEvent()
    val showAuthError = _showAuthError.liveData()
 
+   private val _errorParseJson = MutableUnitLiveEvent()
+   val errorParseJson = _errorParseJson.liveData()
+
    private val _showMessageFromBackend = MutableLiveEvent<String>()
    val showCauseMessage = _showMessageFromBackend.liveData()
 
@@ -49,6 +52,8 @@ class SignInViewModel @Inject constructor(
          processAuthException()
       } catch (e: ConnectionException) {
          // TODO: need to initialize connection exception
+      } catch (e: ParseBackendResponseException) {
+         _errorParseJson.publishEvent()
       } finally {
          hideProgress()
       }

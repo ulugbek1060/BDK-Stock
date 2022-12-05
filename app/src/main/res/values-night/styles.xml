@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense" />
+  <style name="TextInputLayoutStyle"
+    parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+<!--    <item name="boxStrokeColor">@drawable/input_layout_border_selector</item>-->
+<!--    <item name="boxStrokeWidth">2dp</item>-->
+<!--    <item name="hintTextColor">#fff</item>-->
+  </style>
 
-  <style name="TextInputLayoutStyleDropDown" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu" />
+  <style name="TextInputLayoutStyleDropDown"
+    parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+<!--    <item name="boxStrokeColor">#fff</item>-->
+<!--    <item name="boxStrokeWidth">2dp</item>-->
+  </style>
 
   <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
     <item name="android:colorPrimary">@color/blue_500</item>
@@ -11,8 +20,7 @@
     <item name="android:statusBarColor">?attr/colorPrimary</item>
   </style>
 
-  <style name="ShapeAppearance.App.MediumComponent"
-    parent="ShapeAppearance.MaterialComponents.MediumComponent">
+  <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
     <item name="cornerFamily">cut</item>
     <item name="cornerSize">8dp</item>
   </style>

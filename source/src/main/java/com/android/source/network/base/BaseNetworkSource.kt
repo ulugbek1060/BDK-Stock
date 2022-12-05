@@ -37,7 +37,7 @@ open class BaseNetworkSource {
    private fun createBackendException(e: HttpException): Exception {
       return try {
          val jsonObject = JSONObject(e.response()!!.errorBody()!!.string())
-         val message = jsonObject.getString("message")
+         val message = jsonObject.getString("errors")
          val code = e.code()
          BackendException(code, message)
       } catch (e: Exception) {

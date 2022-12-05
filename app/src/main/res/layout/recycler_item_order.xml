@@ -14,7 +14,7 @@
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/item_color"
+    android:background="?attr/colorSurface"
     android:padding="@dimen/dimen_big">
 
     <LinearLayout
@@ -31,10 +31,10 @@
         android:id="@+id/tv_identification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="?attr/colorOnSurface"
         android:layout_marginTop="@dimen/dimen_small"
         android:fontFamily="@font/open_sans_regular"
         android:text="@string/ingredients"
-        android:textColor="@color/text_color"
         android:textSize="@dimen/text_size_small"
         android:textStyle="bold" />
 
@@ -49,7 +49,6 @@
           android:layout_height="wrap_content"
           android:fontFamily="@font/open_sans_regular"
           android:text="@string/accepted"
-          android:textColor="@color/sub_text_color"
           android:textSize="@dimen/text_size_small"
           app:layout_constraintLeft_toLeftOf="@id/tv_ingredient"
           app:layout_constraintTop_toBottomOf="@id/tv_ingredient" />
@@ -62,7 +61,7 @@
           android:ellipsize="end"
           android:fontFamily="@font/open_sans_regular"
           android:maxLines="1"
-          android:textColor="@color/text_color"
+          android:textColor="?attr/colorOnSurface"
           android:textSize="@dimen/text_size_small"
           android:textStyle="bold"
           app:layout_constraintBottom_toBottomOf="@id/tv_creator_hint"
@@ -84,7 +83,6 @@
           android:layout_marginEnd="@dimen/dimen_small"
           android:fontFamily="@font/open_sans_regular"
           android:text="@string/weight"
-          android:textColor="@color/sub_text_color"
           android:textSize="@dimen/text_size_small" />
 
         <TextView
@@ -92,9 +90,9 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:fontFamily="@font/open_sans_regular"
-          android:textColor="@color/text_color"
           android:textSize="@dimen/text_size_small"
           android:textStyle="bold"
+          android:textColor="?attr/colorOnSurface"
           tools:text="12.023" />
 
       </LinearLayout>
@@ -107,7 +105,6 @@
       android:layout_height="wrap_content"
       android:fontFamily="@font/open_sans_regular"
       android:text="@string/ingredients"
-      android:textColor="@color/sub_text_color"
       android:textSize="@dimen/text_size_small"
       app:layout_constraintBottom_toBottomOf="@id/iv_indicator"
       app:layout_constraintRight_toRightOf="parent"

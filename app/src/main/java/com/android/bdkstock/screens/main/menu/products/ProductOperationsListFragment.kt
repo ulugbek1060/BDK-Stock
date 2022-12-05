@@ -12,6 +12,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDestination
+import androidx.navigation.fragment.FragmentNavigator
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
@@ -102,18 +104,6 @@ class ProductOperationsListFragment :
 
       observeAuthError()
 
-      binding.buttonManufacture.setCompoundDrawablesWithIntrinsicBounds(
-         requireContext().getDrawable(R.drawable.ic_add),
-         null,
-         null,
-         null
-      )
-      binding.buttonExport.setCompoundDrawablesWithIntrinsicBounds(
-         requireContext().getDrawable(R.drawable.ic_remove),
-         null,
-         null,
-         null
-      )
       binding.buttonManufacture.setOnClickListener { manufactureOnClick() }
       binding.buttonExport.setOnClickListener { exportOnclick() }
       binding.buttonShow.setOnClickListener { showOnClick() }
@@ -136,6 +126,13 @@ class ProductOperationsListFragment :
          .actionActionsFragmentToProductOperationsFragment(MANUFACTURED_PRODUCT)
       findTopNavController().navigate(args)
    }
+
+//   private fun navigate(destination: NavDestination, extraInfo: FragmentNavigator.Extras) =
+//      with(findTopNavController()) {
+//         currentDestination?.getAction(destination.actionId)?.let {
+//            navigate(destination, extraInfo)
+//         }
+//      }
 
    private val menuProvider = object : MenuProvider {
       override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -194,7 +191,7 @@ class ProductOperationsListFragment :
 
          status = filterData.status
 
-         dialogBinding.radioGroup.check(getCheckId(filterData.status))
+         dialogBinding.toggleButton.check(getCheckId(filterData.status))
          dialogBinding.inputQuery.setText(filterData.query)
          dialogBinding.inputFromDate.setText(filterData.fromDate)
          dialogBinding.inputToDate.setText(filterData.toDate)
