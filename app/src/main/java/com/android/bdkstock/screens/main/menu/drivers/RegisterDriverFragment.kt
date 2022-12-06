@@ -78,10 +78,14 @@ class RegisterDriverFragment :
    }
 
    private fun navigateToDetailFrag() {
-      viewModel.navigateToDisplayFrag.observeEvent(viewLifecycleOwner) {
+      viewModel.navigateToDisplayFrag.observeEvent(viewLifecycleOwner) { (display, driver) ->
          findTopNavController().popBackStack()
-         val args = ActionsFragmentDirections.actionActionsFragmentToDisplayDriverFragment(it)
-         findTopNavController().navigate(args)
+         if (display) findTopNavController().navigate(
+            ActionsFragmentDirections
+               .actionActionsFragmentToDisplayDriverFragment(
+                  driver
+               )
+         )
       }
    }
 }

@@ -8,11 +8,11 @@ import com.android.model.utils.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-open class BaseViewModel(private val accountRepository: AccountRepository) : ViewModel() {
+open class BaseViewModel(
+   private val accountRepository: AccountRepository? = null
+) : ViewModel() {
 
    private val _showErrorMessageResEvent = MutableLiveEvent<Int>()
    val showErrorMessageRes = _showErrorMessageResEvent.liveData()
@@ -41,7 +41,7 @@ open class BaseViewModel(private val accountRepository: AccountRepository) : Vie
    }
 
    fun logout() = viewModelScope.launch {
-      accountRepository.logout()
+      accountRepository?.logout()
    }
 
    fun restart() {

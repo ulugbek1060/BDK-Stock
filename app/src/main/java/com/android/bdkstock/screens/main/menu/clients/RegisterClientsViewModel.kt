@@ -2,6 +2,7 @@ package com.android.bdkstock.screens.main.menu.clients
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.base.BaseViewModel
@@ -15,13 +16,18 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterClientsViewModel @Inject constructor(
    private val clientsRepository: ClientsRepository,
-   accountRepository: AccountRepository
+   accountRepository: AccountRepository,
+   savedStateHandle: SavedStateHandle
 ) : BaseViewModel(accountRepository) {
+
+   private val displayUser = RegisterClientsFragmentArgs
+      .fromSavedStateHandle(savedStateHandle)
+      .displayUser
 
    private val _state = MutableLiveData(State())
    val state = _state.liveData()
 
-   private val _navigateToDisplayFrag = MutableLiveEvent<ClientEntity>()
+   private val _navigateToDisplayFrag = MutableLiveEvent<Pair<Boolean, ClientEntity>>()
    val navigateToDisplay = _navigateToDisplayFrag.liveData()
 
    fun registerClients(
@@ -43,7 +49,7 @@ class RegisterClientsViewModel @Inject constructor(
    }
 
    private fun successAndNavigateToDisplay(clientEntity: ClientEntity) {
-      _navigateToDisplayFrag.publishEvent(clientEntity)
+      _navigateToDisplayFrag.publishEvent(displayUser to clientEntity)
    }
 
    private fun showProgress() {

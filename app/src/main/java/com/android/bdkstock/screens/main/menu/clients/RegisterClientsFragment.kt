@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.android.bdkstock.databinding.FragmentDisplayClientsBinding
 import com.android.bdkstock.databinding.FragmentRegisterClientsBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
@@ -30,10 +29,14 @@ class RegisterClientsFragment :
    }
 
    private fun observeNavigation() {
-      viewModel.navigateToDisplay.observeEvent(viewLifecycleOwner) {
+      viewModel.navigateToDisplay.observeEvent(viewLifecycleOwner) { (displayUser, clientEntity) ->
          findTopNavController().popBackStack()
-         val args = ActionsFragmentDirections.actionActionsFragmentToDisplayClientsFragment(it)
-         findTopNavController().navigate(args)
+         if (displayUser) findTopNavController().navigate(
+            ActionsFragmentDirections
+               .actionActionsFragmentToDisplayClientsFragment(
+                  clientEntity
+               )
+         )
       }
    }
 
@@ -62,5 +65,4 @@ class RegisterClientsFragment :
          binding.lottiProgress.isVisible = state.isInProgress
       }
    }
-
 }

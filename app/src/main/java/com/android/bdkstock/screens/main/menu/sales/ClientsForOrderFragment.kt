@@ -1,8 +1,7 @@
-package com.android.bdkstock.screens.main.menu.clients
+package com.android.bdkstock.screens.main.menu.sales
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -17,11 +16,11 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentClientsBinding
+import com.android.bdkstock.databinding.FragmentClientsForOrderBinding
 import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemClientBinding
-import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.screens.main.menu.clients.ClientsViewModel
 import com.android.bdkstock.views.DefaultLoadStateAdapter
 import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.views.pagingAdapter
@@ -39,12 +38,12 @@ import kotlinx.coroutines.launch
 @FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class ClientsFragment :
-   BaseFragment<ClientsViewModel, FragmentClientsBinding>(),
-   SearchView.OnQueryTextListener{
+class ClientsForOrderFragment :
+   BaseFragment<ClientsViewModel, FragmentClientsForOrderBinding>(),
+   SearchView.OnQueryTextListener {
 
-   override val viewModel by viewModels<ClientsViewModel>()
-   override fun getViewBinding() = FragmentClientsBinding.inflate(layoutInflater)
+   override val viewModel: ClientsViewModel by viewModels()
+   override fun getViewBinding() = FragmentClientsForOrderBinding.inflate(layoutInflater)
    private lateinit var layoutManager: LinearLayoutManager
    private lateinit var searchView: SearchView
 
@@ -57,10 +56,30 @@ class ClientsFragment :
       }
       listeners {
          root.onClick {
-            val args = ActionsFragmentDirections.actionActionsFragmentToDisplayClientsFragment(it)
-            findTopNavController().navigate(args)
+            showConfirmDialog(it)
          }
       }
+   }
+
+   private fun showConfirmDialog(client: ClientEntity) {
+      AlertDialog.Builder(requireContext())
+         .setTitle("${getString(R.string.client)}: ${client.fullName}")
+         .setMessage("${getString(R.string.phone_number)}: ${client.phoneNumber}")
+         .setNegativeButton(getString(R.string.close)) { _, _ -> }
+         .setPositiveButton(getString(R.string.choose)) { _, _ ->
+            val navController = findTopNavController()
+
+            navController
+               .previousBackStackEntry
+               ?.savedStateHandle
+               ?.set(CLIENT_SELECTION_KEY, client)
+
+            navController
+               .popBackStack()
+
+         }
+         .create()
+         .show()
    }
 
    override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,7 +114,7 @@ class ClientsFragment :
          menuInflater.inflate(R.menu.menu_search, menu)
          val myActionMenuItem = menu.findItem(R.id.search)
          searchView = myActionMenuItem.actionView as SearchView
-         searchView.setOnQueryTextListener(this@ClientsFragment)
+         searchView.setOnQueryTextListener(this@ClientsForOrderFragment)
       }
 
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -104,8 +123,8 @@ class ClientsFragment :
    }
 
    private fun fabOnClick() {
-      val args = ActionsFragmentDirections
-         .actionActionsFragmentToRegisterClientsFragment(true)
+      val args = ClientsForOrderFragmentDirections
+         .actionClientForOrderFragmentToRegisterClientsFragment(false)
       findTopNavController().navigate(args)
    }
 
@@ -196,4 +215,7 @@ class ClientsFragment :
       return true
    }
 
+   private companion object {
+      const val CLIENT_SELECTION_KEY = "chosen_client"
+   }
 }

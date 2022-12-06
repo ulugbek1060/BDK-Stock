@@ -73,9 +73,9 @@
     tools:layout="@layout/fragment_ingredients_operations" />
   <fragment
     android:id="@+id/salesFragment"
-    android:name="com.android.bdkstock.screens.main.menu.sales.SalesFragment"
+    android:name="com.android.bdkstock.screens.main.menu.sales.OrderListFragment"
     android:label="@string/sales"
-    tools:layout="@layout/fragment_sales" />
+    tools:layout="@layout/fragment_order_list" />
   <fragment
     android:id="@+id/productOperationsListFragment"
     android:name="com.android.bdkstock.screens.main.menu.products.ProductOperationsListFragment"

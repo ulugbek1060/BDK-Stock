@@ -26,8 +26,7 @@ class AccountRepository @Inject constructor(
 
    fun isSignedIn(): Boolean {
       // user is signed-in if auth token exists
-//      return appSettings.getCurrentToken() != null
-      return true
+      return appSettings.getCurrentToken() != null
    }
 
    /**

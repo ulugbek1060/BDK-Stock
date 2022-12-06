@@ -2,6 +2,7 @@ package com.android.bdkstock.screens.main.menu.drivers
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.base.BaseViewModel
@@ -16,9 +17,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterDriverViewModel @Inject constructor(
-   private val accountRepository: AccountRepository,
-   private val driversRepository: DriversRepository
+   private val driversRepository: DriversRepository,
+   accountRepository: AccountRepository,
+   savedStateHandle: SavedStateHandle
 ) : BaseViewModel(accountRepository) {
+
+   private val displayDriver = RegisterDriverFragmentArgs
+      .fromSavedStateHandle(savedStateHandle)
+      .displayDriver
 
    private val _vehicles = MutableLiveData<List<VehicleModelEntity>?>(emptyList())
    val vehicles = _vehicles.liveData()
@@ -29,7 +35,7 @@ class RegisterDriverViewModel @Inject constructor(
    private val _state = MutableLiveData(State())
    val state = _state.liveData()
 
-   private val _navigateToDisplayFrag = MutableLiveEvent<DriverEntity>()
+   private val _navigateToDisplayFrag = MutableLiveEvent<Pair<Boolean, DriverEntity>>()
    val navigateToDisplayFrag = _navigateToDisplayFrag.liveData()
 
    init {
@@ -62,7 +68,7 @@ class RegisterDriverViewModel @Inject constructor(
    }
 
    private fun navigateSuccessfully(driver: DriverEntity) {
-      _navigateToDisplayFrag.publishEvent(driver)
+      _navigateToDisplayFrag.publishEvent(displayDriver to driver)
    }
 
    fun setVehicleId(vehicleId: VehicleModelEntity) {

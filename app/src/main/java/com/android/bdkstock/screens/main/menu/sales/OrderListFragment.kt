@@ -15,11 +15,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentSalesBinding
+import com.android.bdkstock.databinding.FragmentOrderListBinding
 import com.android.bdkstock.databinding.ProgressItemBiggerBinding
 import com.android.bdkstock.databinding.RecyclerItemOrderBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.DefaultLoadStateAdapter
+import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.views.pagingAdapter
 import com.android.model.repository.sales.entity.OrderListItem
 import com.android.model.utils.AuthException
@@ -30,10 +31,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 
 @AndroidEntryPoint
-class SalesFragment : BaseFragment<SalesViewModel, FragmentSalesBinding>() {
+class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBinding>() {
 
-   override val viewModel by viewModels<SalesViewModel>()
-   override fun getViewBinding() = FragmentSalesBinding.inflate(layoutInflater)
+   override val viewModel by viewModels<OrderListViewModel>()
+   override fun getViewBinding() = FragmentOrderListBinding.inflate(layoutInflater)
    private lateinit var layoutManager: LinearLayoutManager
 
    @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
@@ -41,9 +42,9 @@ class SalesFragment : BaseFragment<SalesViewModel, FragmentSalesBinding>() {
       areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
       bind { order ->
          val statusColor = when (order.status) {
-               1 -> root.context.getColor(R.color.green)
-               0 -> root.context.getColor(R.color.yellow)
-               else -> root.context.getColor(R.color.red)
+            1 -> root.context.getColor(R.color.green)
+            0 -> root.context.getColor(R.color.yellow)
+            else -> root.context.getColor(R.color.red)
             }
 
          val statusText =
@@ -95,26 +96,14 @@ class SalesFragment : BaseFragment<SalesViewModel, FragmentSalesBinding>() {
 
       observeAuthError()
 
-      binding.buttonManufacture.setCompoundDrawablesWithIntrinsicBounds(
-         requireContext().getDrawable(R.drawable.ic_add),
-         null,
-         null,
-         null
-      )
-      binding.buttonExport.setCompoundDrawablesWithIntrinsicBounds(
-         requireContext().getDrawable(R.drawable.ic_remove),
-         null,
-         null,
-         null
-      )
-
-//      binding.buttonManufacture.setOnClickListener { manufactureOnClick() }
-//      binding.buttonExport.setOnClickListener { exportOnclick() }
-//      binding.buttonShow.setOnClickListener { showOnClick() }
+      binding.extendedFab.setOnClickListener { fabOnClick() }
 
       requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
    }
 
+   private fun fabOnClick() {
+      findTopNavController().navigate(R.id.action_actionsFragment_to_newOrderFragment)
+   }
 
    private val menuProvider = object : MenuProvider {
       override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {

@@ -11,7 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SalesViewModel @Inject constructor(
+class OrderListViewModel @Inject constructor(
    private val salesRepository: SalesRepository,
    accountRepository: AccountRepository
 ) : BaseViewModel(accountRepository) {

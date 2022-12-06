@@ -10,7 +10,6 @@
     android:name="com.android.bdkstock.screens.auth.SignInFragment"
     android:label="@string/sign_in"
     tools:layout="@layout/fragment_sign_in">
-
     <action
       android:id="@+id/action_signInFragment_to_actionsFragment"
       app:destination="@id/actionsFragment"
@@ -18,14 +17,12 @@
       app:exitAnim="@anim/exit"
       app:popEnterAnim="@anim/pop_enter"
       app:popExitAnim="@anim/pop_exit" />
-
   </fragment>
 
   <fragment
     android:id="@+id/actionsFragment"
     android:name="com.android.bdkstock.screens.main.ActionsFragment"
     tools:layout="@layout/fragment_actions">
-
     <action
       android:id="@+id/action_actionsFragment_to_displayEmployeeFragment"
       app:destination="@id/displayEmployeeFragment"
@@ -33,7 +30,6 @@
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
       app:popExitAnim="@anim/slide_pop_exit" />
-
     <action
       android:id="@+id/action_actionsFragment_to_registerEmployeeFragment"
       app:destination="@id/registerEmployeeFragment"
@@ -41,7 +37,6 @@
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
       app:popExitAnim="@anim/slide_pop_exit" />
-
     <action
       android:id="@+id/action_actionsFragment_to_registerDriverFragment"
       app:destination="@id/registerDriverFragment"
@@ -49,7 +44,6 @@
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
       app:popExitAnim="@anim/slide_pop_exit" />
-
     <action
       android:id="@+id/action_actionsFragment_to_displayDriverFragment"
       app:destination="@id/displayDriverFragment"
@@ -57,7 +51,6 @@
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
       app:popExitAnim="@anim/slide_pop_exit" />
-
     <action
       android:id="@+id/action_actionsFragment_to_registerClientsFragment"
       app:destination="@id/registerClientsFragment"
@@ -114,14 +107,21 @@
       app:enterAnim="@anim/slide_enter"
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
-      app:popExitAnim="@anim/slide_pop_exit"/>
+      app:popExitAnim="@anim/slide_pop_exit" />
     <action
       android:id="@+id/action_actionsFragment_to_detailOperationsFragment"
       app:destination="@id/detailOperationsFragment"
       app:enterAnim="@anim/slide_enter"
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
-      app:popExitAnim="@anim/slide_pop_exit"/>
+      app:popExitAnim="@anim/slide_pop_exit" />
+    <action
+      android:id="@+id/action_actionsFragment_to_newOrderFragment"
+      app:destination="@id/newOrderFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
 
   </fragment>
 
@@ -147,7 +147,11 @@
     android:id="@+id/registerDriverFragment"
     android:name="com.android.bdkstock.screens.main.menu.drivers.RegisterDriverFragment"
     android:label="@string/register_driver"
-    tools:layout="@layout/fragment_register_driver"/>
+    tools:layout="@layout/fragment_register_driver">
+    <argument
+      android:name="displayDriver"
+      app:argType="boolean" />
+  </fragment>
 
   <fragment
     android:id="@+id/displayDriverFragment"
@@ -165,7 +169,11 @@
     android:id="@+id/registerClientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.clients.RegisterClientsFragment"
     android:label="@string/register_client"
-    tools:layout="@layout/fragment_register_clients" />
+    tools:layout="@layout/fragment_register_clients">
+    <argument
+      android:name="displayUser"
+      app:argType="boolean" />
+  </fragment>
   <fragment
     android:id="@+id/displayClientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.clients.DisplayClientsFragment"
@@ -314,7 +322,65 @@
       app:enterAnim="@anim/slide_enter"
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
-      app:popExitAnim="@anim/slide_pop_exit"/>
+      app:popExitAnim="@anim/slide_pop_exit" />
   </fragment>
+  <fragment
+    android:id="@+id/newOrderFragment"
+    android:name="com.android.bdkstock.screens.main.menu.sales.NewOrderFragment"
+    android:label="fragment_new_order"
+    tools:layout="@layout/fragment_new_order">
+    <action
+      android:id="@+id/action_newOrderFragment_to_clientForOrderFragment"
+      app:destination="@id/clientForOrderFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
+    <action
+      android:id="@+id/action_newOrderFragment_to_driversForOrderFragment"
+      app:destination="@id/driversForOrderFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
+    <action
+      android:id="@+id/action_newOrderFragment_to_productsForOrderFragment"
+      app:destination="@id/productsForOrderFragment"
+      app:enterAnim="@anim/enter"
+      app:exitAnim="@anim/exit"
+      app:popEnterAnim="@anim/pop_enter"
+      app:popExitAnim="@anim/pop_exit" />
+  </fragment>
+  <fragment
+    android:id="@+id/clientForOrderFragment"
+    android:name="com.android.bdkstock.screens.main.menu.sales.ClientsForOrderFragment"
+    android:label="fragment_client_for_order"
+    tools:layout="@layout/fragment_clients_for_order">
+    <action
+      android:id="@+id/action_clientForOrderFragment_to_registerClientsFragment"
+      app:destination="@id/registerClientsFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
+  </fragment>
+  <fragment
+    android:id="@+id/driversForOrderFragment"
+    android:name="com.android.bdkstock.screens.main.menu.sales.DriversForOrderFragment"
+    android:label="fragment_drivers_for_order"
+    tools:layout="@layout/fragment_drivers_for_order">
+    <action
+      android:id="@+id/action_driversForOrderFragment_to_registerDriverFragment"
+      app:destination="@id/registerDriverFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
+  </fragment>
+  <dialog
+    android:id="@+id/productsForOrderFragment"
+    android:name="com.android.bdkstock.screens.main.menu.sales.ProductsForOrderFragment"
+    android:label="fragment_products_for_order"
+    tools:layout="@layout/fragment_products_for_order" />
 
 </navigation>

@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class ProductsRepository @Inject constructor(
+class    ProductsRepository @Inject constructor(
    private val productsSource: ProductsSource,
    private val ingredientsSource: IngredientsSource,
    @IoDispatcher private val ioDispatcher: CoroutineDispatcher

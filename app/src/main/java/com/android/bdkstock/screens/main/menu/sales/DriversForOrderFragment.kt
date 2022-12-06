@@ -1,4 +1,4 @@
-package com.android.bdkstock.screens.main.menu.drivers
+package com.android.bdkstock.screens.main.menu.sales
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -18,11 +18,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentDriversBinding
+import com.android.bdkstock.databinding.FragmentDriversForOrderBinding
 import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemDriverBinding
-import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.screens.main.menu.drivers.DriversViewModel
 import com.android.bdkstock.views.DefaultLoadStateAdapter
 import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.views.pagingAdapter
@@ -41,12 +41,12 @@ import kotlinx.coroutines.launch
 @FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class DriversFragment :
-   BaseFragment<DriversViewModel, FragmentDriversBinding>(),
+class DriversForOrderFragment :
+   BaseFragment<DriversViewModel, FragmentDriversForOrderBinding>(),
    SearchView.OnQueryTextListener {
 
-   override val viewModel by viewModels<DriversViewModel>()
-   override fun getViewBinding() = FragmentDriversBinding.inflate(layoutInflater)
+   override val viewModel: DriversViewModel by viewModels()
+   override fun getViewBinding() = FragmentDriversForOrderBinding.inflate(layoutInflater)
    private lateinit var layoutManager: LinearLayoutManager
 
    @SuppressLint("SetTextI18n")
@@ -59,11 +59,30 @@ class DriversFragment :
       }
       listeners {
          root.onClick { driver ->
-            val arg =
-               ActionsFragmentDirections.actionActionsFragmentToDisplayDriverFragment(driver)
-            findTopNavController().navigate(arg)
+            showConfirmDialog(driver)
          }
       }
+   }
+
+   private fun showConfirmDialog(driver: DriverEntity) {
+      AlertDialog.Builder(requireContext())
+         .setTitle("${getString(R.string.client)}: ${driver.driverFullName}")
+         .setMessage("${getString(R.string.phone_number)}: ${driver.phoneNumber}")
+         .setNegativeButton(getString(R.string.close)) { _, _ -> }
+         .setPositiveButton(getString(R.string.choose)) { _, _ ->
+            val navController = findTopNavController()
+
+            navController
+               .previousBackStackEntry
+               ?.savedStateHandle
+               ?.set(DRIVER_SELECTION_KEY, driver)
+
+            navController
+               .popBackStack()
+
+         }
+         .create()
+         .show()
    }
 
    override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,7 +116,7 @@ class DriversFragment :
          menuInflater.inflate(R.menu.menu_search, menu)
          val myActionMenuItem = menu.findItem(R.id.search)
          val searchView = myActionMenuItem.actionView as SearchView
-         searchView.setOnQueryTextListener(this@DriversFragment)
+         searchView.setOnQueryTextListener(this@DriversForOrderFragment)
       }
 
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -120,8 +139,8 @@ class DriversFragment :
    }
 
    private fun fabOnClick() {
-      val args = ActionsFragmentDirections
-         .actionActionsFragmentToRegisterDriverFragment(true)
+      val args = DriversForOrderFragmentDirections
+         .actionDriversForOrderFragmentToRegisterDriverFragment(false)
       findTopNavController().navigate(args)
    }
 
@@ -181,6 +200,7 @@ class DriversFragment :
          .map { it.refresh }
    }
 
+
    // -- Progress with shimmer layout
 
    private val shimmerAdapter = simpleAdapter<Any, ProgressItemSmallerBinding> {}
@@ -197,5 +217,9 @@ class DriversFragment :
    override fun onQueryTextChange(newText: String?): Boolean {
       viewModel.setQuery(newText)
       return true
+   }
+
+   private companion object {
+      const val DRIVER_SELECTION_KEY = "chosen_driver"
    }
 }
