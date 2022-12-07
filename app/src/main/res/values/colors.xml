@@ -15,8 +15,7 @@
   <color name="disable">#61000000</color>
   <color name="error">#B00020</color>
 
-  <color name="background">#FFFFFFFF</color>
-  <color name="item_color">#F9F9FE</color>
+  <color name="color_shimmer">#CDCDCD</color>
   <color name="green">#FF00AC4F</color>
   <color name="red">#FFFA3E3E</color>
   <color name="grey">#737373</color>

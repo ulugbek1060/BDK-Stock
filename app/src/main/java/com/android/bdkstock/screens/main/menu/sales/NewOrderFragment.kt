@@ -3,6 +3,7 @@ package com.android.bdkstock.screens.main.menu.sales
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
@@ -54,6 +55,8 @@ class NewOrderFragment : BaseFragment<NewOrderViewModel, FragmentNewOrderBinding
 
       setupRecyclerView()
       observeProductList()
+
+      requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
    }
 
    private fun observeProductList() = viewModel.productsList.observe(viewLifecycleOwner) {
@@ -125,13 +128,8 @@ class NewOrderFragment : BaseFragment<NewOrderViewModel, FragmentNewOrderBinding
       binding.recyclerProducts.setHasFixedSize(true)
    }
 
-   override fun onResume() {
-      super.onResume()
-      handleBackPressed()
-   }
-
-   private fun handleBackPressed() {
-      requireActivity().onBackPressedDispatcher.addCallback {
+   private val callback = object : OnBackPressedCallback(true) {
+      override fun handleOnBackPressed() {
          AlertDialog.Builder(requireContext())
             .setTitle("Exit")
             .setMessage("Do you want to exit from this page and remove all saved dates")

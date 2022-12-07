@@ -327,7 +327,7 @@
   <fragment
     android:id="@+id/newOrderFragment"
     android:name="com.android.bdkstock.screens.main.menu.sales.NewOrderFragment"
-    android:label="fragment_new_order"
+    android:label="@string/new_order"
     tools:layout="@layout/fragment_new_order">
     <action
       android:id="@+id/action_newOrderFragment_to_clientForOrderFragment"
