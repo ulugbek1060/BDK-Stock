@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.android.bdkstock.R
@@ -39,18 +40,36 @@ class ProductsForOrderFragment : BottomSheetDialogFragment() {
       super.onViewCreated(view, savedInstanceState)
 
       setupAutoComplete()
+      setupAmountCalculation()
 
       binding.buttonSave.setOnClickListener { saveOnClick() }
    }
 
+   private fun setupAmountCalculation() {
+      binding.inputAmount.doAfterTextChanged {
+         val product = viewModel.getProduct() ?: return@doAfterTextChanged
+
+         if (it.toString().isNotBlank()) product.amount = it.toString()
+         else product.amount = "0"
+
+         binding.tvPriceTotal.text = product.calculate()
+      }
+   }
+
    private fun saveOnClick() {
+      val amount = binding.inputAmount.text.toString()
+
+      if (amount.isBlank()) return
+
       val navController = findTopNavController()
+
+      val product = viewModel.getProduct() ?: return
+      product.amount = amount
 
       navController
          .previousBackStackEntry
          ?.savedStateHandle
-         ?.set(PRODUCT_SELECTION_KEY, viewModel.getProduct())
-
+         ?.set(PRODUCT_SELECTION_KEY, product)
       navController
          .popBackStack()
    }
@@ -66,7 +85,11 @@ class ProductsForOrderFragment : BottomSheetDialogFragment() {
                binding.autoCompleteProduct.setAdapter(adapter)
 
                binding.autoCompleteProduct.setOnItemClickListener { _, _, position, _ ->
-                  viewModel.setProduct(list[position])
+                  val product = list[position]
+                  viewModel.setProduct(product)
+                  binding.inputWeight.setText(product.unit)
+                  binding.tvProduct.text = product.name
+                  binding.tvPrice.text = product.price
                }
             }
             is Pending -> {

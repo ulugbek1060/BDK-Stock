@@ -3,6 +3,8 @@ package com.android.bdkstock.screens.main
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -12,9 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.ActivityMainBinding
 import com.android.model.utils.Const.FLAG_SIGNED_IN
@@ -141,13 +141,19 @@ class MainActivity : AppCompatActivity() {
       navController.restoreState(stateRestoration)
    }
 
-   override fun onBackPressed() {
-      if (isStartDestination(navController.currentDestination)) {
-         onBackPressedDispatcher.onBackPressed()
-      } else {
-         navController.popBackStack()
-      }
-   }
+//   @Deprecated("Deprecated in Java")
+//   override fun onBackPressed() {
+//      if (onBackPressedDispatcher.hasEnabledCallbacks()) {
+//         super.onBackPressed()   // dispatch event to custom callback, which implemented in fragment
+//      } else {
+//         // use activity backPressed if there is no callback          added to mOnBackPressedDispatcher
+//         if (isStartDestination(navController.currentDestination)) {
+//
+//         } else {
+//            navController.popBackStack()
+//         }
+//      }
+//   }
 
    private companion object {
       const val NAVIGATION_KEY = "navigation_key"

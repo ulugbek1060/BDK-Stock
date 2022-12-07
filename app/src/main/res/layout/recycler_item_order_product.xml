@@ -34,7 +34,7 @@
         android:textSize="@dimen/text_size_small" />
 
       <TextView
-        android:id="@+id/tv_sum"
+        android:id="@+id/tv_weight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_regular"
@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_ingredient" />
 
       <TextView
-        android:id="@+id/tv_client"
+        android:id="@+id/tv_total_sum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_small"

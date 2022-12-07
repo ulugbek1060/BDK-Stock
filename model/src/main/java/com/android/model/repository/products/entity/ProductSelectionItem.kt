@@ -11,10 +11,11 @@ data class ProductSelectionItem(
    val unit: String,
    val price: String
 ) : Parcelable {
-   var amount: String? = null
+
+   var amount: String = ""
 
    fun calculate(): String {
-      if (amount == "" || amount == null) return ""
+      if (amount.isBlank() || price.isBlank()) return "0"
       return BigDecimal(price).multiply(BigDecimal(amount)).toString()
    }
 

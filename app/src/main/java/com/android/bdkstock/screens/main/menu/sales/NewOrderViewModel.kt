@@ -14,14 +14,14 @@ class NewOrderViewModel @Inject constructor(
    accountRepository: AccountRepository
 ) : BaseViewModel(accountRepository) {
 
-   private val _productsList =
-      MutableLiveData<MutableList<ProductSelectionItem>>(mutableListOf())
+   private val _productsList = MutableLiveData<MutableList<ProductSelectionItem>>(mutableListOf())
    val productsList = _productsList.liveData()
+
 
    fun setProduct(product: ProductSelectionItem?) {
       if (product == null) return
       val list = _productsList.requireValue()
       list.add(product)
-      _productsList.value = list
+      _productsList.postValue(list)
    }
 }

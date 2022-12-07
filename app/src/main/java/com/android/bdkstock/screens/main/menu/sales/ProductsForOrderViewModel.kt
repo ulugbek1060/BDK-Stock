@@ -15,7 +15,7 @@ class ProductsForOrderViewModel @Inject constructor(
    accountRepository: AccountRepository
 ) : BaseViewModel(accountRepository) {
 
-   private lateinit var chosenProduct: ProductSelectionItem
+   private var chosenProduct: ProductSelectionItem? = null
 
    val productsResult: Flow<Results<List<ProductSelectionItem>>> = productsRepository
       .getProductsForSelect()

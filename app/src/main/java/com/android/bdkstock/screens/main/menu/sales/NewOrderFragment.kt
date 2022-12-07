@@ -1,8 +1,11 @@
 package com.android.bdkstock.screens.main.menu.sales
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.SavedStateHandle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.databinding.FragmentNewOrderBinding
 import com.android.bdkstock.databinding.RecyclerItemOrderProductBinding
@@ -23,83 +26,120 @@ class NewOrderFragment : BaseFragment<NewOrderViewModel, FragmentNewOrderBinding
    private val adapter = simpleAdapter<ProductSelectionItem, RecyclerItemOrderProductBinding> {
       areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
       bind {
-
+         tvProductName.text = it.name
+         tvWeight.text = "${it.amount} ${it.unit}"
+         tvTotalSum.text = it.calculate()
       }
       listeners {
-
+         root.onClick {
+            // TODO: need
+         }
       }
    }
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
-      binding.buttonAddClient.setOnClickListener {
-         val args = NewOrderFragmentDirections
-            .actionNewOrderFragmentToClientForOrderFragment()
-         findTopNavController().navigate(args)
-      }
-
-      binding.buttonAddDriver.setOnClickListener {
-         val args = NewOrderFragmentDirections
-            .actionNewOrderFragmentToDriversForOrderFragment()
-         findTopNavController().navigate(args)
-      }
-
-      binding.buttonAddProduct.setOnClickListener {
-         val args = NewOrderFragmentDirections
-            .actionNewOrderFragmentToProductsForOrderFragment()
-         findTopNavController().navigate(args)
-      }
-
-      val savedStateHandle = findTopNavController().currentBackStackEntry
+      val savedStateHandle = findTopNavController()
+         .currentBackStackEntry
          ?.savedStateHandle
 
+      observeClientData(savedStateHandle)
+      observeDriverData(savedStateHandle)
+      observeProductData(savedStateHandle)
+
+      binding.buttonAddClient.setOnClickListener { addClientButtonClick() }
+      binding.buttonAddDriver.setOnClickListener { addDriverOnClick() }
+      binding.buttonAddProduct.setOnClickListener { addProductOnClick() }
+
+      setupRecyclerView()
+      observeProductList()
+   }
+
+   private fun observeProductList() = viewModel.productsList.observe(viewLifecycleOwner) {
+      adapter.submitList(it)
+   }
+
+   private fun observeProductData(savedStateHandle: SavedStateHandle?) {
       savedStateHandle
-         ?.getLiveData<ClientEntity>(CLIENT_SELECTION_KEY)
+         ?.getLiveData<ProductSelectionItem>(PRODUCT_SELECTION_KEY)
          ?.observe(viewLifecycleOwner) {
-            if(it == null) return@observe
-            with(binding) {
-               inputClientName.setText(it.fullName)
-               inputClientMobile.setText(it.phoneNumber)
-               inputClientAddress.setText(it.address)
+            val savedState = findTopNavController()
+               .currentBackStackEntry
+               ?.savedStateHandle ?: return@observe
+
+            if (savedState.contains(PRODUCT_SELECTION_KEY)) {
+               viewModel.setProduct(it)
+               savedState.remove<ProductSelectionItem>(PRODUCT_SELECTION_KEY)
             }
          }
+   }
 
+   private fun observeDriverData(savedStateHandle: SavedStateHandle?) {
       savedStateHandle
          ?.getLiveData<DriverEntity>(DRIVER_SELECTION_KEY)
          ?.observe(viewLifecycleOwner) {
-            if(it == null) return@observe
+            if (it == null) return@observe
             with(binding) {
                inputDriverName.setText(it.driverFullName)
                inputDriverMobile.setText(it.phoneNumber)
                inputDriverAddress.setText(it.autoRegNumber)
             }
          }
+   }
 
+   private fun observeClientData(savedStateHandle: SavedStateHandle?) {
       savedStateHandle
-         ?.getLiveData<ProductSelectionItem>(PRODUCT_SELECTION_KEY)
+         ?.getLiveData<ClientEntity>(CLIENT_SELECTION_KEY)
          ?.observe(viewLifecycleOwner) {
-            if(it == null) return@observe
-            viewModel.setProduct(it)
-            findTopNavController()
-               .currentBackStackEntry
-               ?.savedStateHandle
-               ?.remove<ProductSelectionItem>(PRODUCT_SELECTION_KEY)
+            if (it == null) return@observe
+            with(binding) {
+               inputClientName.setText(it.fullName)
+               inputClientMobile.setText(it.phoneNumber)
+               inputClientAddress.setText(it.address)
+            }
          }
+   }
 
-//      savedStateHandle?.remove<ProductSelectionItem>(PRODUCT_SELECTION_KEY)
-//      savedStateHandle?.remove<ClientEntity>(CLIENT_SELECTION_KEY)
-//      savedStateHandle?.remove<DriverEntity>(DRIVER_SELECTION_KEY)
+   private fun addProductOnClick() {
+      val args = NewOrderFragmentDirections
+         .actionNewOrderFragmentToProductsForOrderFragment()
+      findTopNavController().navigate(args)
+   }
 
-      setupRecyclerView()
+   private fun addDriverOnClick() {
+      val args = NewOrderFragmentDirections
+         .actionNewOrderFragmentToDriversForOrderFragment()
+      findTopNavController().navigate(args)
+   }
+
+   private fun addClientButtonClick() {
+      val args = NewOrderFragmentDirections
+         .actionNewOrderFragmentToClientForOrderFragment()
+      findTopNavController().navigate(args)
    }
 
    private fun setupRecyclerView() {
       binding.recyclerProducts.layoutManager = LinearLayoutManager(requireContext())
       binding.recyclerProducts.adapter = adapter
-      viewModel.productsList.observe(viewLifecycleOwner) {
-         adapter.submitList(it)
-         binding.recyclerProducts.adapter = adapter
+      binding.recyclerProducts.setHasFixedSize(true)
+   }
+
+   override fun onResume() {
+      super.onResume()
+      handleBackPressed()
+   }
+
+   private fun handleBackPressed() {
+      requireActivity().onBackPressedDispatcher.addCallback {
+         AlertDialog.Builder(requireContext())
+            .setTitle("Exit")
+            .setMessage("Do you want to exit from this page and remove all saved dates")
+            .setNegativeButton("NO") { _, _ -> }
+            .setPositiveButton("YES") { _, _ ->
+               findTopNavController().popBackStack()
+            }
+            .show()
       }
    }
 
