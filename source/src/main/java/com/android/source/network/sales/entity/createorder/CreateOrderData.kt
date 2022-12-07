@@ -8,7 +8,7 @@ data class CreateOrderData(
    @SerializedName("status") val status: Int,
    @SerializedName("summa") val summa: String,
    @SerializedName("paid") val paid: String,
-   @SerializedName("debit") val debit: String,
+   @SerializedName("loan") val debit: String,
    @SerializedName("created_at") val createdAt: String,
    @SerializedName("client") val client: OrderForClient,
    @SerializedName("driver") val driver: DriverForOrder,

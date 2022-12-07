@@ -4,10 +4,10 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentNewOrderBinding
 import com.android.bdkstock.databinding.RecyclerItemOrderProductBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
@@ -15,6 +15,7 @@ import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.clients.entity.ClientEntity
 import com.android.model.repository.drivers.entity.DriverEntity
 import com.android.model.repository.products.entity.ProductSelectionItem
+import com.android.model.utils.observeEvent
 import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,11 +53,25 @@ class NewOrderFragment : BaseFragment<NewOrderViewModel, FragmentNewOrderBinding
       binding.buttonAddClient.setOnClickListener { addClientButtonClick() }
       binding.buttonAddDriver.setOnClickListener { addDriverOnClick() }
       binding.buttonAddProduct.setOnClickListener { addProductOnClick() }
+      binding.buttonSave.setOnClickListener { saveOnClick() }
 
       setupRecyclerView()
       observeProductList()
 
+      observeBackEvent()
+
       requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+   }
+
+   private fun saveOnClick() {
+      viewModel.createOrder()
+   }
+
+   private fun observeBackEvent() {
+      viewModel.goBack.observeEvent(viewLifecycleOwner) {
+         findTopNavController().popBackStack()
+         findTopNavController().navigate(R.id.successMessageFragment)
+      }
    }
 
    private fun observeProductList() = viewModel.productsList.observe(viewLifecycleOwner) {
@@ -83,6 +98,7 @@ class NewOrderFragment : BaseFragment<NewOrderViewModel, FragmentNewOrderBinding
          ?.getLiveData<DriverEntity>(DRIVER_SELECTION_KEY)
          ?.observe(viewLifecycleOwner) {
             if (it == null) return@observe
+            viewModel.setDriverId(it.id)
             with(binding) {
                inputDriverName.setText(it.driverFullName)
                inputDriverMobile.setText(it.phoneNumber)
@@ -96,10 +112,12 @@ class NewOrderFragment : BaseFragment<NewOrderViewModel, FragmentNewOrderBinding
          ?.getLiveData<ClientEntity>(CLIENT_SELECTION_KEY)
          ?.observe(viewLifecycleOwner) {
             if (it == null) return@observe
+            viewModel.setClientId(it.clientId)
             with(binding) {
                inputClientName.setText(it.fullName)
                inputClientMobile.setText(it.phoneNumber)
                inputClientAddress.setText(it.address)
+
             }
          }
    }

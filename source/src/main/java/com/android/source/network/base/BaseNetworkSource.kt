@@ -34,10 +34,17 @@ open class BaseNetworkSource {
       }
    }
 
+   // TODO: need to ask for change error message
    private fun createBackendException(e: HttpException): Exception {
       return try {
          val jsonObject = JSONObject(e.response()!!.errorBody()!!.string())
-         val message = jsonObject.getString("errors")
+         val message = if (jsonObject.has("message")) {
+            jsonObject.getString("message")
+         } else if (jsonObject.has("error")) {
+            jsonObject.getString("error")
+         } else {
+            "parse problem"
+         }
          val code = e.code()
          BackendException(code, message)
       } catch (e: Exception) {

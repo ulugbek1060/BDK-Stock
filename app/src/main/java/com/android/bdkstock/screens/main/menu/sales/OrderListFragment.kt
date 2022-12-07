@@ -52,10 +52,12 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
             else root.context.getString(R.string.income)
 
          val indicatorIcon = when (order.status) {
-               1 -> root.context.getDrawable(R.drawable.ic_sales)
-               0 -> root.context.getDrawable(R.drawable.ic_time)
-               else -> root.context.getDrawable(R.drawable.ic_cancel)
-            }
+            1 -> root.context.getDrawable(R.drawable.ic_sales)
+            0 -> root.context.getDrawable(R.drawable.ic_time)
+            else -> root.context.getDrawable(R.drawable.ic_cancel)
+         }
+
+         tvIdentification.text = "№: ${order.identification}"
 
          tvStatus.text = statusText
          tvStatus.setTextColor(statusColor)
