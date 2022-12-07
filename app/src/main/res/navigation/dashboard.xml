@@ -8,7 +8,7 @@
   <fragment
     android:id="@+id/menuFragment"
     android:name="com.android.bdkstock.screens.main.menu.actions.MenuFragment"
-    android:label="fragment_menu"
+    android:label="@string/app_name"
     tools:layout="@layout/fragment_menu" >
     <action
       android:id="@+id/action_menuFragment_to_clientsFragment"

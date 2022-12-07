@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
   <!-- Base application theme. -->
-  <style name="Theme.BDKStock" parent="Theme.MaterialComponents.Light">
+  <style name="Theme.BDKStock" parent="Theme.MaterialComponents.Light.NoActionBar">
     <!-- Primary brand color. -->
     <item name="colorPrimary">@color/blue_500</item>
     <item name="colorPrimaryVariant">@color/blue_700</item>
@@ -14,16 +14,16 @@
     <item name="android:colorBackground">@color/white_500</item>
     <item name="colorSurface">@color/white_500</item>
     <item name="colorSurfaceVariant">@color/white_700</item>
-    <item name="colorOnSurface">@color/medium_emphasises</item>
+    <item name="colorOnSurface">@color/high_emphasises</item>
     <!-- Background brand color. -->
     <item name="backgroundColor">@color/white_200</item>
     <!-- Error brand color. -->
     <item name="colorError">@color/error</item>
     <!-- Status bar color. -->
-    <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    <item name="android:statusBarColor">?android:colorBackground</item>
+    <item name="android:windowLightStatusBar">true</item>
     <!-- Customize your theme here. -->
     <item name="android:navigationBarColor">?attr/colorOnPrimary</item>
-
     <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
 
     <!-- For card-->

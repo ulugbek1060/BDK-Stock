@@ -27,8 +27,6 @@ class MainActivity : AppCompatActivity() {
    private lateinit var binding: ActivityMainBinding
    private lateinit var navController: NavController
 
-   private val TAG = this.javaClass.simpleName
-
    private val topLevelDestinations = setOf(getSignInId(), getActionsId())
 
    override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,15 +34,17 @@ class MainActivity : AppCompatActivity() {
       binding = ActivityMainBinding.inflate(layoutInflater)
       setContentView(binding.root)
 
+      setSupportActionBar(binding.toolbar)
+
+      supportActionBar?.elevation = 0f
+
       val navHost = supportFragmentManager
          .findFragmentById(R.id.fragment_main_container) as NavHostFragment
       navController = navHost.navController
 
       onNavControllerActivated(navController)
 
-      supportActionBar?.elevation = 0f
-
-      AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+//      AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
       if (savedInstanceState == null) prepareRootNavGraph(checkSign(), navController)
       else prepareRestorationRootNavGraph(savedInstanceState, navController)
@@ -140,20 +140,6 @@ class MainActivity : AppCompatActivity() {
       val stateRestoration = savedInstState.getBundle(NAVIGATION_KEY)
       navController.restoreState(stateRestoration)
    }
-
-//   @Deprecated("Deprecated in Java")
-//   override fun onBackPressed() {
-//      if (onBackPressedDispatcher.hasEnabledCallbacks()) {
-//         super.onBackPressed()   // dispatch event to custom callback, which implemented in fragment
-//      } else {
-//         // use activity backPressed if there is no callback          added to mOnBackPressedDispatcher
-//         if (isStartDestination(navController.currentDestination)) {
-//
-//         } else {
-//            navController.popBackStack()
-//         }
-//      }
-//   }
 
    private companion object {
       const val NAVIGATION_KEY = "navigation_key"
