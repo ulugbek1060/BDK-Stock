@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.android.bdkstock.R
@@ -61,17 +63,12 @@ class ProductsForOrderFragment : BottomSheetDialogFragment() {
 
       if (amount.isBlank()) return
 
-      val navController = findTopNavController()
-
       val product = viewModel.getProduct() ?: return
       product.amount = amount
 
-      navController
-         .previousBackStackEntry
-         ?.savedStateHandle
-         ?.set(PRODUCT_SELECTION_KEY, product)
-      navController
-         .popBackStack()
+      setFragmentResult(PRODUCT_SELECTION_KEY, bundleOf(PRODUCT_BUNDLE_KEY to product))
+
+      findTopNavController().popBackStack()
    }
 
    private fun setupAutoComplete() = lifecycleScope.launchWhenStarted {
@@ -111,5 +108,6 @@ class ProductsForOrderFragment : BottomSheetDialogFragment() {
 
    private companion object {
       const val PRODUCT_SELECTION_KEY = "chosen_product"
+      const val PRODUCT_BUNDLE_KEY = "bundle_product"
    }
 }

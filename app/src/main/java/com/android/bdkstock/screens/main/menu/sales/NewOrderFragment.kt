@@ -1,9 +1,12 @@
 package com.android.bdkstock.screens.main.menu.sales
 
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,8 +22,10 @@ import com.android.model.utils.observeEvent
 import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
-class NewOrderFragment : BaseFragment<NewOrderViewModel, FragmentNewOrderBinding>() {
+class NewOrderFragment :
+   BaseFragment<NewOrderViewModel, FragmentNewOrderBinding>() {
 
    override val viewModel by viewModels<NewOrderViewModel>()
    override fun getViewBinding() = FragmentNewOrderBinding.inflate(layoutInflater)
@@ -48,20 +53,21 @@ class NewOrderFragment : BaseFragment<NewOrderViewModel, FragmentNewOrderBinding
 
       observeClientData(savedStateHandle)
       observeDriverData(savedStateHandle)
-      observeProductData(savedStateHandle)
-
-      binding.buttonAddClient.setOnClickListener { addClientButtonClick() }
-      binding.buttonAddDriver.setOnClickListener { addDriverOnClick() }
-      binding.buttonAddProduct.setOnClickListener { addProductOnClick() }
-      binding.buttonSave.setOnClickListener { saveOnClick() }
+      getProductData()
 
       setupRecyclerView()
       observeProductList()
 
       observeBackEvent()
 
+      binding.buttonAddClient.setOnClickListener { addClientButtonClick() }
+      binding.buttonAddDriver.setOnClickListener { addDriverOnClick() }
+      binding.buttonAddProduct.setOnClickListener { addProductOnClick() }
+      binding.buttonSave.setOnClickListener { saveOnClick() }
+
       requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
    }
+
 
    private fun saveOnClick() {
       viewModel.createOrder()
@@ -74,23 +80,11 @@ class NewOrderFragment : BaseFragment<NewOrderViewModel, FragmentNewOrderBinding
       }
    }
 
-   private fun observeProductList() = viewModel.productsList.observe(viewLifecycleOwner) {
-      adapter.submitList(it)
-   }
-
-   private fun observeProductData(savedStateHandle: SavedStateHandle?) {
-      savedStateHandle
-         ?.getLiveData<ProductSelectionItem>(PRODUCT_SELECTION_KEY)
-         ?.observe(viewLifecycleOwner) {
-            val savedState = findTopNavController()
-               .currentBackStackEntry
-               ?.savedStateHandle ?: return@observe
-
-            if (savedState.contains(PRODUCT_SELECTION_KEY)) {
-               viewModel.setProduct(it)
-               savedState.remove<ProductSelectionItem>(PRODUCT_SELECTION_KEY)
-            }
-         }
+   private fun observeProductList() {
+      viewModel.productsList.observe(viewLifecycleOwner) {
+         adapter.submitList(it)
+         adapter.notifyDataSetChanged()
+      }
    }
 
    private fun observeDriverData(savedStateHandle: SavedStateHandle?) {
@@ -122,6 +116,17 @@ class NewOrderFragment : BaseFragment<NewOrderViewModel, FragmentNewOrderBinding
          }
    }
 
+   private fun getProductData() {
+      setFragmentResultListener(PRODUCT_SELECTION_KEY) { _, bundle ->
+         val result = if (Build.VERSION.SDK_INT >= 33) {
+            bundle.getParcelable(PRODUCT_BUNDLE_KEY, ProductSelectionItem::class.java)
+         } else {
+            bundle.getParcelable(PRODUCT_BUNDLE_KEY)
+         }
+         viewModel.setProduct(result)
+      }
+   }
+
    private fun addProductOnClick() {
       val args = NewOrderFragmentDirections
          .actionNewOrderFragmentToProductsForOrderFragment()
@@ -149,10 +154,10 @@ class NewOrderFragment : BaseFragment<NewOrderViewModel, FragmentNewOrderBinding
    private val callback = object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
          AlertDialog.Builder(requireContext())
-            .setTitle("Exit")
+            .setTitle(getString(R.string.exit))
             .setMessage("Do you want to exit from this page and remove all saved dates")
-            .setNegativeButton("NO") { _, _ -> }
-            .setPositiveButton("YES") { _, _ ->
+            .setNegativeButton(getString(R.string.no)) { _, _ -> }
+            .setPositiveButton(getString(R.string.yes)) { _, _ ->
                findTopNavController().popBackStack()
             }
             .show()
@@ -163,5 +168,6 @@ class NewOrderFragment : BaseFragment<NewOrderViewModel, FragmentNewOrderBinding
       const val CLIENT_SELECTION_KEY = "chosen_client"
       const val DRIVER_SELECTION_KEY = "chosen_driver"
       const val PRODUCT_SELECTION_KEY = "chosen_product"
+      const val PRODUCT_BUNDLE_KEY = "bundle_product"
    }
 }

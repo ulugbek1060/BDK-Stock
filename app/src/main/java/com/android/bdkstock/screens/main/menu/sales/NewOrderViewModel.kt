@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
+import com.android.model.repository.products.ProductsRepository
 import com.android.model.repository.products.entity.ProductSelectionItem
 import com.android.model.repository.sales.SalesRepository
 import com.android.model.repository.sales.entity.OrderEntity
@@ -15,11 +16,16 @@ import javax.inject.Inject
 @HiltViewModel
 class NewOrderViewModel @Inject constructor(
    private val salesRepository: SalesRepository,
+   private val productsRepository: ProductsRepository,
    accountRepository: AccountRepository
 ) : BaseViewModel(accountRepository) {
 
    private var clientId: Long? = null
    private var driverId: Long? = null
+
+   val productsFlow = productsRepository
+      .getProductsForSelect()
+      .handleException()
 
    private val _goBack = MutableLiveEvent<OrderEntity>()
    val goBack = _goBack.liveData()
@@ -68,9 +74,9 @@ class NewOrderViewModel @Inject constructor(
 
    fun setProduct(product: ProductSelectionItem?) {
       if (product == null) return
-      val list = _productsList.requireValue()
+      val list = _productsList.value ?: arrayListOf()
       list.add(product)
-      _productsList.postValue(list)
+      _productsList.value = list
    }
 
    private fun getProducts() = _productsList.requireValue().map {

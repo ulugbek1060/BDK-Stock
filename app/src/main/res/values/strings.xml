@@ -133,5 +133,6 @@
   <string name="new_order">Новый заказ</string>
   <string name="add_client">Добавить клиент</string>
   <string name="choose">Выбрать</string>
+  <string name="exit">Выход</string>
 
 </resources>

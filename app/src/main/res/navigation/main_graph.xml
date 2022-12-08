@@ -187,7 +187,7 @@
   <fragment
     android:id="@+id/addIngredientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.ingredients.AddIngredientsFragment"
-      android:label="@string/add_ingredients"
+    android:label="@string/add_ingredients"
     tools:layout="@layout/fragment_add_ingredients" />
 
   <fragment
