@@ -23,6 +23,7 @@
 
       <LinearLayout
         android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/dimen_small"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -37,7 +38,7 @@
           android:textStyle="bold"
           android:drawablePadding="@dimen/dimen_large"
           android:text="@string/client"
-          android:textSize="@dimen/text_size_big"
+          android:textSize="@dimen/text_size_normal"
           app:drawableStartCompat="@drawable/ic_clients" />
 
         <Button
@@ -47,6 +48,7 @@
           android:layout_height="wrap_content"
           android:fontFamily="@font/inter_regular"
           android:gravity="center"
+          android:textSize="12sp"
           android:text="@string/add_client"
           android:textAllCaps="false"
           android:textStyle="bold"
@@ -57,6 +59,7 @@
       <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_client_name"
         style="@style/TextInputLayoutStyle"
+        android:layout_marginTop="@dimen/dimen_large"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_regular"
@@ -127,12 +130,13 @@
       android:layout_marginTop="@dimen/dimen_large"
       android:layout_marginRight="@dimen/dimen_large"
       android:orientation="vertical"
-      app:layout_constraintBottom_toTopOf="@id/recycler_products"
+      app:layout_constraintBottom_toTopOf="@id/container_product"
       app:layout_constraintTop_toBottomOf="@id/container_client">
 
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_small"
         android:orientation="horizontal">
 
         <TextView
@@ -145,7 +149,7 @@
           android:textColor="@color/high_emphasises"
           android:textStyle="bold"
           android:text="@string/driver"
-          android:textSize="@dimen/text_size_big"
+          android:textSize="@dimen/text_size_normal"
           app:drawableStartCompat="@drawable/ic_drivers" />
 
         <Button
@@ -155,6 +159,7 @@
           android:layout_height="wrap_content"
           android:fontFamily="@font/inter_regular"
           android:gravity="center"
+          android:textSize="12sp"
           android:text="@string/add_driver"
           android:textAllCaps="false"
           android:textStyle="bold"
@@ -167,6 +172,7 @@
         style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_large"
         android:fontFamily="@font/open_sans_regular"
         android:hint="@string/driver"
         app:errorEnabled="true">
@@ -183,7 +189,7 @@
       </com.google.android.material.textfield.TextInputLayout>
 
       <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_driver_phone_number"
+        android:id="@+id/input_layout_driver_mobile"
         style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -203,16 +209,16 @@
       </com.google.android.material.textfield.TextInputLayout>
 
       <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_driver_address"
+        android:id="@+id/input_layout_driver_auto_number"
         style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_regular"
-        android:hint="@string/address"
+        android:hint="@string/registration_number_of_vehicle"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-          android:id="@+id/input_driver_address"
+          android:id="@+id/input_driver_auto_number"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:cursorVisible="false"
@@ -223,45 +229,126 @@
       </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recycler_products"
+    <LinearLayout
+      android:id="@+id/container_product"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:padding="@dimen/dimen_normal"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
+      android:layout_marginLeft="@dimen/dimen_large"
+      android:layout_marginTop="@dimen/dimen_large"
+      android:layout_marginRight="@dimen/dimen_large"
+      android:orientation="vertical"
       app:layout_constraintTop_toBottomOf="@id/container_driver"
-      tools:itemCount="2"
-      tools:listitem="@layout/recycler_item_order_product" />
+      app:layout_constraintBottom_toTopOf="@id/container_invoice">
 
-    <Button
-      android:id="@+id/button_add_product"
-      style="@style/Widget.MaterialComponents.Button.Icon"
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_small"
+        android:orientation="horizontal">
+
+        <TextView
+          android:id="@+id/tv_product"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:drawablePadding="@dimen/dimen_large"
+          android:fontFamily="@font/inter_regular"
+          android:text="@string/products"
+          android:textColor="@color/high_emphasises"
+          android:textSize="@dimen/text_size_normal"
+          android:textStyle="bold"
+          app:drawableStartCompat="@drawable/ic_sales" />
+
+        <Button
+          android:id="@+id/button_add_product"
+          style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/inter_regular"
+          android:gravity="center"
+          android:text="@string/add_product"
+          android:textAllCaps="false"
+          android:textSize="12sp"
+          android:textStyle="bold"
+          app:icon="@drawable/ic_add" />
+
+      </LinearLayout>
+
+      <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/recycler_products"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:minHeight="200dp"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/container_driver" />
+
+        <ImageView
+          android:id="@+id/iv_empty"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:contentDescription="@null"
+          android:src="@drawable/ic_empty" />
+
+      </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/container_invoice"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen_large"
-      android:layout_marginEnd="@dimen/dimen_large"
-      android:fontFamily="@font/inter_regular"
-      android:textStyle="bold"
-      android:backgroundTint="?attr/colorSecondary"
-      android:text="@string/add_product"
-      android:textAllCaps="false"
-      android:textColor="?attr/colorOnSecondary"
-      app:layout_constraintTop_toBottomOf="@id/recycler_products" />
+      android:layout_marginLeft="@dimen/dimen_extra"
+      android:layout_marginTop="@dimen/dimen_extra"
+      android:layout_marginRight="@dimen/dimen_extra"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toTopOf="@id/container_frame"
+      app:layout_constraintTop_toBottomOf="@id/container_product">
 
-    <Button
-      android:id="@+id/button_save"
-      android:layout_width="0dp"
+      <TextView
+        android:id="@+id/tv_total_sum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:gravity="end"
+        android:text=""
+        android:textColor="@color/high_emphasises"
+        android:textSize="@dimen/text_size_normal" />
+
+    </LinearLayout>
+
+    <FrameLayout
+      android:id="@+id/container_frame"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen_large"
-      android:layout_marginEnd="@dimen/dimen_large"
-      android:text="@string/save"
-      android:textAllCaps="false"
-      android:fontFamily="@font/inter_regular"
-      android:textStyle="bold"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/button_add_product" />
+      android:layout_marginLeft="@dimen/dimen_large"
+      android:layout_marginTop="@dimen/dimen_large"
+      android:layout_marginRight="@dimen/dimen_large"
+      android:fontFamily="@font/open_sans_regular"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/container_invoice">
+
+      <Button
+        android:id="@+id/button_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textStyle="bold" />
+
+      <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    </FrameLayout>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

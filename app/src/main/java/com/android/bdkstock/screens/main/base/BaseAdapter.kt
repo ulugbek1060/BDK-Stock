@@ -21,7 +21,7 @@ class BaseAdapter<T : Any, VB : ViewBinding>(
 
    override fun onBindViewHolder(holder: BaseViewHolder<VB>, position: Int) {
       val item = getItem(position) ?: return
-      bind.invoke(holder.binding, item)
+      bind(holder.binding, item)
    }
 }
 
@@ -37,7 +37,7 @@ class BasePagingAdapter<T : Any, VB : ViewBinding>(
 
    override fun onBindViewHolder(holder: BaseViewHolder<VB>, position: Int) {
       val item = getItem(position) ?: return
-      bind.invoke(holder.binding, item)
+      bind(holder.binding, item)
    }
 }
 

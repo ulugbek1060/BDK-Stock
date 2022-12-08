@@ -1,5 +1,6 @@
 package com.android.bdkstock.screens.main.menu.sales
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
@@ -36,6 +38,7 @@ class NewOrderFragment :
    override fun inflateBinding(layoutInflater: LayoutInflater, viewGroup: ViewGroup) =
       RecyclerItemOrderProductBinding.inflate(layoutInflater, viewGroup, false)
 
+   @SuppressLint("SetTextI18n")
    private val adapter =
       BaseAdapter<ProductSelectionItem, RecyclerItemOrderProductBinding>(this) { product ->
          tvProductName.text = product.name
@@ -54,6 +57,8 @@ class NewOrderFragment :
          .currentBackStackEntry
          ?.savedStateHandle
 
+      observeState()
+
       observeClientData(savedStateHandle)
       observeDriverData(savedStateHandle)
       getProductData()
@@ -71,6 +76,36 @@ class NewOrderFragment :
       requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
    }
 
+   private fun observeState() {
+      viewModel.state.observe(viewLifecycleOwner) { state ->
+         with(binding) {
+            tvTotalSum.text = "${getString(R.string.total_sum)} ${state.totalSum} UZS"
+
+            buttonAddClient.isEnabled = !state.isInProgress
+            inputClientName.isEnabled = !state.isInProgress
+            inputClientMobile.isEnabled = !state.isInProgress
+            inputClientAddress.isEnabled = !state.isInProgress
+
+            buttonAddDriver.isEnabled = !state.isInProgress
+            inputDriverName.isEnabled = !state.isInProgress
+            inputDriverMobile.isEnabled = !state.isInProgress
+            inputDriverAutoNumber.isEnabled = !state.isInProgress
+
+            buttonAddProduct.isEnabled = !state.isInProgress
+
+            inputLayoutClientName.error = state.getClientErrorMessage(requireContext())
+            inputLayoutClientMobile.error = state.getClientErrorMessage(requireContext())
+            inputLayoutClientAddress.error = state.getClientErrorMessage(requireContext())
+
+            inputLayoutDriverName.error = state.getDriverErrorMessage(requireContext())
+            inputLayoutDriverMobile.error = state.getDriverErrorMessage(requireContext())
+            inputLayoutDriverAutoNumber.error = state.getDriverErrorMessage(requireContext())
+
+            buttonSave.isVisible = !state.isInProgress
+            progressbar.isVisible = state.isInProgress
+         }
+      }
+   }
 
    private fun saveOnClick() {
       viewModel.createOrder()
@@ -85,6 +120,7 @@ class NewOrderFragment :
 
    private fun observeProductList() {
       viewModel.productsList.observe(viewLifecycleOwner) {
+         binding.ivEmpty.isVisible = it.isEmpty()
          adapter.submitList(it)
          adapter.notifyDataSetChanged()
       }
@@ -99,7 +135,7 @@ class NewOrderFragment :
             with(binding) {
                inputDriverName.setText(it.driverFullName)
                inputDriverMobile.setText(it.phoneNumber)
-               inputDriverAddress.setText(it.autoRegNumber)
+               inputDriverAutoNumber.setText(it.autoRegNumber)
             }
          }
    }

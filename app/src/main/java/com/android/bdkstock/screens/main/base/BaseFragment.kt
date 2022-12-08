@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.navOptions
 import androidx.viewbinding.ViewBinding
@@ -34,18 +32,19 @@ abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewBinding> : 
       super.onViewCreated(view, savedInstanceState)
 
       viewModel.showErrorMessageRes.observeEvent(viewLifecycleOwner) {
-         Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+         findTopNavController()
+            .navigate(R.id.globalErrorFragment, bundleOf(ERROR_MESSAGE_KEY to it))
       }
 
       viewModel.showErrorMessageEvent.observeEvent(viewLifecycleOwner) {
-         Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+         findTopNavController()
+            .navigate(R.id.globalErrorFragment, bundleOf(ERROR_MESSAGE_KEY to it))
       }
 
       viewModel.showAuthErrorAndRestart.observeEvent(viewLifecycleOwner) {
          logout()
       }
    }
-
 
 
    /**
@@ -120,10 +119,12 @@ abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewBinding> : 
       this
    }
 
-
-
    override fun onDestroyView() {
       _binding = null
       super.onDestroyView()
+   }
+
+   private companion object {
+      const val ERROR_MESSAGE_KEY = "error_message"
    }
 }

@@ -7,7 +7,7 @@
   android:background="?attr/colorSurface"
   android:gravity="center"
   android:orientation="vertical"
-  tools:context=".screens.main.menu.SuccessMessageFragment">
+  tools:context=".screens.main.base.SuccessMessageFragment">
 
   <com.airbnb.lottie.LottieAnimationView
     android:id="@+id/check_animation"

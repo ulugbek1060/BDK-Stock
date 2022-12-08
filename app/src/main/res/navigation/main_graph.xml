@@ -270,7 +270,7 @@
 
   <fragment
     android:id="@+id/successMessageFragment"
-    android:name="com.android.bdkstock.screens.main.menu.SuccessMessageFragment"
+    android:name="com.android.bdkstock.screens.main.base.SuccessMessageFragment"
     android:label="@string/message_fragment"
     tools:layout="@layout/fragment_success_message" />
 
@@ -382,5 +382,9 @@
     android:name="com.android.bdkstock.screens.main.menu.sales.ProductsForOrderFragment"
     android:label="fragment_products_for_order"
     tools:layout="@layout/fragment_products_for_order" />
+  <dialog
+    android:id="@+id/globalErrorFragment"
+    android:name="com.android.bdkstock.screens.main.base.GlobalErrorFragment"
+    android:label="GlobalErrorFragment" />
 
 </navigation>
