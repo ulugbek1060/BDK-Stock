@@ -3,8 +3,9 @@ package com.android.bdkstock.screens.main.menu.sales
 import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -13,36 +14,38 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentNewOrderBinding
 import com.android.bdkstock.databinding.RecyclerItemOrderProductBinding
+import com.android.bdkstock.screens.main.base.BaseAdapter
 import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.screens.main.base.ViewHolderCreator
 import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.clients.entity.ClientEntity
 import com.android.model.repository.drivers.entity.DriverEntity
 import com.android.model.repository.products.entity.ProductSelectionItem
 import com.android.model.utils.observeEvent
-import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class NewOrderFragment :
-   BaseFragment<NewOrderViewModel, FragmentNewOrderBinding>() {
+   BaseFragment<NewOrderViewModel, FragmentNewOrderBinding>(),
+   ViewHolderCreator<RecyclerItemOrderProductBinding> {
 
    override val viewModel by viewModels<NewOrderViewModel>()
    override fun getViewBinding() = FragmentNewOrderBinding.inflate(layoutInflater)
 
-   private val adapter = simpleAdapter<ProductSelectionItem, RecyclerItemOrderProductBinding> {
-      areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
-      bind {
-         tvProductName.text = it.name
-         tvWeight.text = "${it.amount} ${it.unit}"
-         tvTotalSum.text = it.calculate()
-      }
-      listeners {
-         root.onClick {
-            // TODO: need
+   override fun inflateBinding(layoutInflater: LayoutInflater, viewGroup: ViewGroup) =
+      RecyclerItemOrderProductBinding.inflate(layoutInflater, viewGroup, false)
+
+   private val adapter =
+      BaseAdapter<ProductSelectionItem, RecyclerItemOrderProductBinding>(this) { product ->
+         tvProductName.text = product.name
+         tvWeight.text = "${product.amount} ${product.unit}"
+         tvTotalSum.text = product.calculate()
+
+         buttonRemove.setOnClickListener {
+            viewModel.removeProduct(product)
          }
       }
-   }
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)

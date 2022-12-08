@@ -1,4 +1,4 @@
-package com.android.bdkstock.views
+package com.android.bdkstock.screens.main.base
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

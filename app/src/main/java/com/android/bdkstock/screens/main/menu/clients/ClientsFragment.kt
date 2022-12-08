@@ -2,7 +2,6 @@ package com.android.bdkstock.screens.main.menu.clients
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -18,17 +17,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentClientsBinding
-import com.android.bdkstock.databinding.ProgressItemSmallerBinding
 import com.android.bdkstock.databinding.RecyclerItemClientBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
-import com.android.bdkstock.views.DefaultLoadStateAdapter
+import com.android.bdkstock.screens.main.base.DefaultLoadStateAdapter
+import com.android.bdkstock.screens.main.base.pagingAdapter
 import com.android.bdkstock.views.findTopNavController
-import com.android.bdkstock.views.pagingAdapter
 import com.android.model.repository.clients.entity.ClientEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.observeEvent
-import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -47,6 +44,7 @@ class ClientsFragment :
    override fun getViewBinding() = FragmentClientsBinding.inflate(layoutInflater)
    private lateinit var layoutManager: LinearLayoutManager
    private lateinit var searchView: SearchView
+
 
    private val adapter = pagingAdapter<ClientEntity, RecyclerItemClientBinding> {
       areItemsSame = { oldItem, newItem -> oldItem.clientId == newItem.clientId }
@@ -77,7 +75,7 @@ class ClientsFragment :
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
-      setupShimmerLoading()
+//      setupShimmerLoading()
       setupRecyclerView()
       setupRefreshLayout()
 
@@ -180,12 +178,12 @@ class ClientsFragment :
 
    // -- Progress with shimmer layout
 
-   private val shimmerAdapter = simpleAdapter<Any, ProgressItemSmallerBinding> {}
-   private fun setupShimmerLoading() {
-      shimmerAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
-      binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
-      binding.recyclerProgress.adapter = shimmerAdapter
-   }
+//   private val shimmerAdapter = simpleAdapter<Any, ProgressItemSmallerBinding> {}
+//   private fun setupShimmerLoading() {
+//      shimmerAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+//      binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
+//      binding.recyclerProgress.adapter = shimmerAdapter
+//   }
 
    override fun onQueryTextSubmit(query: String?): Boolean {
       return true

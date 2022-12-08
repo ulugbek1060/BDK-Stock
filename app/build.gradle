@@ -99,5 +99,5 @@ dependencies {
     //rounded layout
     implementation 'androidx.constraintlayout:constraintlayout:2.2.0-alpha04' // if you want to use motion layout
 
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
 }

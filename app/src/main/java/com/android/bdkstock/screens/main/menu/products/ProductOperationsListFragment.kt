@@ -12,8 +12,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavDestination
-import androidx.navigation.fragment.FragmentNavigator
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
@@ -23,9 +21,9 @@ import com.android.bdkstock.databinding.ProgressItemBiggerBinding
 import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
-import com.android.bdkstock.views.DefaultLoadStateAdapter
+import com.android.bdkstock.screens.main.base.DefaultLoadStateAdapter
 import com.android.bdkstock.views.findTopNavController
-import com.android.bdkstock.views.pagingAdapter
+import com.android.bdkstock.screens.main.base.pagingAdapter
 import com.android.model.repository.products.entity.ProductOperationEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.Const.DATE_TIME_INPUT_FORMAT

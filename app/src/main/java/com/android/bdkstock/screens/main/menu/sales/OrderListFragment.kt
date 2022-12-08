@@ -19,9 +19,9 @@ import com.android.bdkstock.databinding.FragmentOrderListBinding
 import com.android.bdkstock.databinding.ProgressItemBiggerBinding
 import com.android.bdkstock.databinding.RecyclerItemOrderBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
-import com.android.bdkstock.views.DefaultLoadStateAdapter
+import com.android.bdkstock.screens.main.base.DefaultLoadStateAdapter
 import com.android.bdkstock.views.findTopNavController
-import com.android.bdkstock.views.pagingAdapter
+import com.android.bdkstock.screens.main.base.pagingAdapter
 import com.android.model.repository.sales.entity.OrderListItem
 import com.android.model.utils.AuthException
 import com.android.model.utils.observeEvent

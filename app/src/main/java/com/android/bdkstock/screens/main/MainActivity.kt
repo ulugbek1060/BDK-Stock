@@ -36,8 +36,6 @@ class MainActivity : AppCompatActivity() {
 
       setSupportActionBar(binding.toolbar)
 
-      supportActionBar?.elevation = 0f
-
       val navHost = supportFragmentManager
          .findFragmentById(R.id.fragment_main_container) as NavHostFragment
       navController = navHost.navController

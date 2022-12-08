@@ -1,8 +1,9 @@
 package com.android.bdkstock.screens.main.menu.actions
 
-import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
@@ -10,8 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentMenuBinding
 import com.android.bdkstock.databinding.RecyclerItemMenuBinding
+import com.android.bdkstock.screens.main.base.BaseAdapter
 import com.android.bdkstock.screens.main.base.BaseFragment
-import com.elveum.elementadapter.simpleAdapter
+import com.android.bdkstock.screens.main.base.ViewHolderCreator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,15 +23,17 @@ class MenuFragment : BaseFragment<MenuViewModel, FragmentMenuBinding>() {
    override val viewModel by viewModels<MenuViewModel>()
    override fun getViewBinding() = FragmentMenuBinding.inflate(layoutInflater)
 
-   private val adapter = simpleAdapter<MenuItem, RecyclerItemMenuBinding> {
-      areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
-      bind {
-         ivItemIcon.setImageResource(it.icon)
-         tvItemTitle.text = it.title
-      }
-      listeners {
-         root.onClick {
-            findNavController().navigate(it.fragmentId, null, navOptions {
+   private val viewHolderCreator = object : ViewHolderCreator<RecyclerItemMenuBinding> {
+      override fun inflateBinding(layoutInflater: LayoutInflater, viewGroup: ViewGroup) =
+         RecyclerItemMenuBinding.inflate(layoutInflater, viewGroup, false)
+   }
+
+   private val adapter =
+      BaseAdapter<MenuItem, RecyclerItemMenuBinding>(viewHolderCreator) { item ->
+         ivItemIcon.setImageResource(item.icon)
+         tvItemTitle.text = item.title
+         root.setOnClickListener{
+            findNavController().navigate(item.fragmentId, null, navOptions {
                anim {
                   enter = R.anim.enter
                   exit = R.anim.exit
@@ -39,7 +43,6 @@ class MenuFragment : BaseFragment<MenuViewModel, FragmentMenuBinding>() {
             })
          }
       }
-   }
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)

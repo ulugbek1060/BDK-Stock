@@ -18,7 +18,7 @@
     <!-- Background brand color. -->
     <item name="backgroundColor">@color/white_200</item>
     <!-- Error brand color. -->
-    <item name="colorError">@color/error</item>
+    <item name="colorError">@color/red</item>
     <!-- Status bar color. -->
     <item name="android:statusBarColor">?android:colorBackground</item>
     <item name="android:windowLightStatusBar">true</item>

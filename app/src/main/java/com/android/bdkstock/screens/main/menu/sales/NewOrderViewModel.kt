@@ -79,6 +79,12 @@ class NewOrderViewModel @Inject constructor(
       _productsList.value = list
    }
 
+   fun removeProduct(product: ProductSelectionItem) {
+      val list = _productsList.value ?: arrayListOf()
+      list.remove(product)
+      _productsList.value = list
+   }
+
    private fun getProducts() = _productsList.requireValue().map {
       SimpleProduct(
          id = it.id,
