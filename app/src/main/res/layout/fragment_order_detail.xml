@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".screens.main.menu.sales.OrderDetailFragment">
+
+  <androidx.core.widget.NestedScrollView
+    android:id="@+id/main_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <LinearLayout
+        android:id="@+id/container_client"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/container_driver"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+          android:id="@+id/tv_client"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_marginHorizontal="@dimen/dimen_small"
+          android:layout_weight="1"
+          android:drawablePadding="@dimen/dimen_large"
+          android:fontFamily="@font/inter_medium"
+          android:text="@string/client"
+          android:textColor="@color/high_emphasises"
+          android:textSize="@dimen/text_size_normal"
+          android:textStyle="bold"
+          app:drawableStartCompat="@drawable/ic_clients" />
+
+        <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/input_layout_client_name"
+          style="@style/TextInputLayoutStyle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:fontFamily="@font/open_sans_regular"
+          android:hint="@string/client"
+          app:errorEnabled="true"
+          app:startIconDrawable="@drawable/ic_user">
+
+          <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_client_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:fontFamily="@font/inter_regular"
+            android:imeOptions="actionNext" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/input_layout_client_mobile"
+          style="@style/TextInputLayoutStyle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:fontFamily="@font/open_sans_regular"
+          android:hint="@string/phone_number"
+          app:errorEnabled="true"
+          app:startIconDrawable="@drawable/ic_call">
+
+          <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_client_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:fontFamily="@font/inter_regular"
+            android:imeOptions="actionNext" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/input_layout_client_address"
+          style="@style/TextInputLayoutStyle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:fontFamily="@font/open_sans_regular"
+          android:hint="@string/address"
+          app:errorEnabled="true"
+          app:startIconDrawable="@drawable/ic_location_24">
+
+          <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_client_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:fontFamily="@font/inter_regular"
+            android:imeOptions="actionNext" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/container_driver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/container_product"
+        app:layout_constraintTop_toBottomOf="@id/container_client">
+
+        <TextView
+          android:id="@+id/tv_driver"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_small"
+          android:drawablePadding="@dimen/dimen_large"
+          android:fontFamily="@font/inter_regular"
+          android:text="@string/driver"
+          android:textColor="@color/high_emphasises"
+          android:textSize="@dimen/text_size_normal"
+          android:textStyle="bold"
+          app:drawableStartCompat="@drawable/ic_drivers" />
+
+        <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/input_layout_driver_name"
+          style="@style/TextInputLayoutStyle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:fontFamily="@font/open_sans_regular"
+          android:hint="@string/driver"
+          app:errorEnabled="true"
+          app:startIconDrawable="@drawable/ic_user">
+
+          <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_driver_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:fontFamily="@font/inter_regular"
+            android:imeOptions="actionNext" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/input_layout_driver_mobile"
+          style="@style/TextInputLayoutStyle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_regular"
+          android:hint="@string/phone_number"
+          app:errorEnabled="true"
+          app:startIconDrawable="@drawable/ic_call">
+
+          <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_driver_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:fontFamily="@font/inter_regular"
+            android:imeOptions="actionNext" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/input_layout_driver_auto_number"
+          style="@style/TextInputLayoutStyle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_regular"
+          android:hint="@string/registration_number_of_vehicle"
+          app:errorEnabled="true"
+          app:startIconDrawable="@drawable/ic_list">
+
+          <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_driver_auto_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:fontFamily="@font/inter_regular"
+            android:imeOptions="actionNext" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/container_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/container_invoice"
+        app:layout_constraintTop_toBottomOf="@id/container_driver">
+
+        <TextView
+          android:id="@+id/tv_product"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_small"
+          android:drawablePadding="@dimen/dimen_large"
+          android:fontFamily="@font/inter_regular"
+          android:text="@string/products"
+          android:textColor="@color/high_emphasises"
+          android:textSize="@dimen/text_size_normal"
+          android:textStyle="bold"
+          app:drawableStartCompat="@drawable/ic_sales" />
+
+        <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen_large">
+
+          <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_products"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_large"
+            android:minHeight="200dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_driver" />
+
+          <ImageView
+            android:id="@+id/iv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_empty" />
+
+        </FrameLayout>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/container_invoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_extra"
+        android:layout_marginTop="@dimen/dimen_extra"
+        android:layout_marginRight="@dimen/dimen_extra"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/button_save"
+        app:layout_constraintTop_toBottomOf="@id/container_product">
+
+        <TextView
+          android:id="@+id/tv_total_sum"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/inter_regular"
+          android:gravity="end"
+          android:text=""
+          android:textColor="@color/high_emphasises"
+          android:textSize="@dimen/text_size_normal" />
+
+      </LinearLayout>
+
+      <Button
+        android:id="@+id/button_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_large"
+        android:backgroundTint="?attr/colorSecondary"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/pay"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorOnSecondary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </androidx.core.widget.NestedScrollView>
+
+
+  <ProgressBar
+    android:id="@+id/progressbar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

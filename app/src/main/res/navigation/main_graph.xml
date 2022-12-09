@@ -122,6 +122,13 @@
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
       app:popExitAnim="@anim/slide_pop_exit" />
+    <action
+      android:id="@+id/action_actionsFragment_to_orderDetailFragment"
+      app:destination="@id/orderDetailFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
 
   </fragment>
 
@@ -386,5 +393,14 @@
     android:id="@+id/globalErrorFragment"
     android:name="com.android.bdkstock.screens.main.base.GlobalErrorFragment"
     android:label="GlobalErrorFragment" />
+  <fragment
+    android:id="@+id/orderDetailFragment"
+    android:name="com.android.bdkstock.screens.main.menu.sales.OrderDetailFragment"
+    android:label="fragment_order_detail"
+    tools:layout="@layout/fragment_order_detail" >
+    <argument
+      android:name="orderId"
+      app:argType="long" />
+  </fragment>
 
 </navigation>

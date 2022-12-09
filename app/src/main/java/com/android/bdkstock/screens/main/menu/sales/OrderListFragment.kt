@@ -12,16 +12,18 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentOrderListBinding
 import com.android.bdkstock.databinding.ProgressItemBiggerBinding
 import com.android.bdkstock.databinding.RecyclerItemOrderBinding
+import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.screens.main.base.DefaultLoadStateAdapter
-import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.screens.main.base.pagingAdapter
+import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.sales.entity.OrderListItem
 import com.android.model.utils.AuthException
 import com.android.model.utils.observeEvent
@@ -37,6 +39,8 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
    override fun getViewBinding() = FragmentOrderListBinding.inflate(layoutInflater)
    private lateinit var layoutManager: LinearLayoutManager
 
+   private val TAG = "OrderListFragment"
+
    @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
    private val adapter = pagingAdapter<OrderListItem, RecyclerItemOrderBinding> {
       areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
@@ -45,7 +49,7 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
             1 -> root.context.getColor(R.color.green)
             0 -> root.context.getColor(R.color.yellow)
             else -> root.context.getColor(R.color.red)
-            }
+         }
 
          val statusText =
             if (order.status == 1) root.context.getString(R.string.expense)
@@ -71,7 +75,9 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
          }
          listeners {
             root.onClick {
-
+               val args = ActionsFragmentDirections
+                  .actionActionsFragmentToOrderDetailFragment(it.id)
+               findTopNavController().navigate(args)
             }
          }
    }
@@ -113,68 +119,13 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
       }
 
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-         if (menuItem.itemId == R.id.filter) showFilterDialog()
+         if (menuItem.itemId == R.id.filter) {
+            val args = OrderListFragmentDirections
+               .actionSalesFragmentToFilterOrdersFragment()
+            findNavController().navigate(args)
+         }
          return false
       }
-   }
-
-   private fun showFilterDialog() {
-//      val dialog = AlertDialog.Builder(requireContext()).create()
-//      dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-//
-//      val dialogBinding = DialogFilterOperationsBinding.inflate(layoutInflater)
-//      dialog.setView(dialogBinding.root)
-//
-//      var status: Int? = null
-//
-//      dialogBinding.buttonClear.setOnClickListener {
-//         viewModel.clearFilter()
-//         dialog.dismiss()
-//      }
-//
-//      dialogBinding.buttonApply.setOnClickListener {
-//         viewModel.setFilterData(
-//            query = dialogBinding.inputQuery.text.toString(),
-//            fromDate = dialogBinding.inputFromDate.text.toString(),
-//            toDate = dialogBinding.inputToDate.text.toString(),
-//            status = status,
-//         )
-//         dialog.dismiss()
-//      }
-//
-//      dialogBinding.buttonAll.setOnClickListener { status = null }
-//      dialogBinding.buttonExpense.setOnClickListener { status =
-//         ProductOperationsListFragment.EXPORTED_PRODUCT
-//      }
-//      dialogBinding.buttonIncome.setOnClickListener { status =
-//         ProductOperationsListFragment.MANUFACTURED_PRODUCT
-//      }
-//
-//      dialogBinding.inputLayoutFromDate.setEndIconOnClickListener {
-//         getCalendarDialog(
-//            requireContext().getString(R.string.from_date),
-//            dialogBinding.inputFromDate
-//         )
-//      }
-//
-//      dialogBinding.inputLayoutToDate.setEndIconOnClickListener {
-//         getCalendarDialog(
-//            requireContext().getString(R.string.to_date),
-//            dialogBinding.inputToDate
-//         )
-//      }
-//
-//      viewModel.query.observe(viewLifecycleOwner) { filterData ->
-//
-//         status = filterData.status
-//
-//         dialogBinding.radioGroup.check(getCheckId(filterData.status))
-//         dialogBinding.inputQuery.setText(filterData.query)
-//         dialogBinding.inputFromDate.setText(filterData.fromDate)
-//         dialogBinding.inputToDate.setText(filterData.toDate)
-//      }
-//
-//      dialog.show()
    }
 
    private fun setupRecyclerView() = binding.apply {

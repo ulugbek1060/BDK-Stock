@@ -75,7 +75,11 @@
     android:id="@+id/salesFragment"
     android:name="com.android.bdkstock.screens.main.menu.sales.OrderListFragment"
     android:label="@string/sales"
-    tools:layout="@layout/fragment_order_list" />
+    tools:layout="@layout/fragment_order_list" >
+    <action
+      android:id="@+id/action_salesFragment_to_filterOrdersFragment"
+      app:destination="@id/filterOrdersFragment" />
+  </fragment>
   <fragment
     android:id="@+id/productOperationsListFragment"
     android:name="com.android.bdkstock.screens.main.menu.products.ProductOperationsListFragment"
@@ -91,5 +95,10 @@
     android:name="com.android.bdkstock.screens.main.menu.drivers.DriversFragment"
     android:label="@string/drivers"
     tools:layout="@layout/fragment_drivers" />
+  <dialog
+    android:id="@+id/filterOrdersFragment"
+    android:name="com.android.bdkstock.screens.main.menu.sales.FilterOrdersFragment"
+    android:label="fragment_orders_filter"
+    tools:layout="@layout/fragment_orders_filter" />
 
 </navigation>

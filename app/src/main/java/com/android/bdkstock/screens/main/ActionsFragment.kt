@@ -17,17 +17,16 @@ class ActionsFragment : Fragment() {
 
    private var _binding: FragmentActionsBinding? = null
    private val binding: FragmentActionsBinding get() = _binding!!
-
    private lateinit var navController: NavController
 
    override fun onCreateView(
       inflater: LayoutInflater,
       container: ViewGroup?,
       savedInstanceState: Bundle?
-   ): View? {
-      _binding = FragmentActionsBinding.inflate(inflater, container, false)
-      return _binding?.root
-   }
+   ) = FragmentActionsBinding
+      .inflate(inflater, container, false)
+      .also { _binding = it }
+      .root
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
@@ -39,4 +38,6 @@ class ActionsFragment : Fragment() {
 
       NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
    }
+
+
 }

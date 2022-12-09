@@ -1,6 +1,7 @@
 package com.android.model.repository.sales
 
 import androidx.paging.PagingData
+import com.android.model.di.IoDispatcher
 import com.android.model.repository.base.BasePageSource
 import com.android.model.repository.base.BaseRepository
 import com.android.model.repository.base.DataLoader
@@ -9,11 +10,15 @@ import com.android.model.repository.sales.entity.OrderListItem
 import com.android.model.repository.sales.entity.SimpleProduct
 import com.android.model.utils.EmptyFieldException
 import com.android.model.utils.Field
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class SalesRepository @Inject constructor(
-   private val salesSource: SalesSource
+   private val salesSource: SalesSource,
+   @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseRepository() {
 
    suspend fun createOrder(
@@ -67,11 +72,10 @@ class SalesRepository @Inject constructor(
       BasePageSource(loader, DEFAULT_PAGE_SIZE)
    }
 
-   suspend fun getOrderOverview(orderId: Long?): OrderEntity {
+   fun getOrderOverview(orderId: Long?): Flow<OrderEntity> = flow {
       if (orderId == null) throw EmptyFieldException(Field.EMPTY_ORDER)
-
-      return suspendRunCatching {
-         salesSource.getOrderOverview(orderId)
-      }
+      emit(suspendRunCatching { salesSource.getOrderOverview(orderId) })
    }
+      .flowOn(ioDispatcher)
+
 }

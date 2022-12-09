@@ -10,6 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
       android:id="@+id/container_client"
       android:layout_width="match_parent"
@@ -23,8 +24,8 @@
 
       <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="@dimen/dimen_small"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_small"
         android:orientation="horizontal">
 
         <TextView
@@ -32,13 +33,13 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
-          android:fontFamily="@font/inter_medium"
           android:layout_weight="1"
-          android:textColor="@color/high_emphasises"
-          android:textStyle="bold"
           android:drawablePadding="@dimen/dimen_large"
+          android:fontFamily="@font/inter_medium"
           android:text="@string/client"
+          android:textColor="@color/high_emphasises"
           android:textSize="@dimen/text_size_normal"
+          android:textStyle="bold"
           app:drawableStartCompat="@drawable/ic_clients" />
 
         <Button
@@ -48,9 +49,9 @@
           android:layout_height="wrap_content"
           android:fontFamily="@font/inter_regular"
           android:gravity="center"
-          android:textSize="12sp"
           android:text="@string/add_client"
           android:textAllCaps="false"
+          android:textSize="12sp"
           android:textStyle="bold"
           app:icon="@drawable/ic_add" />
 
@@ -59,12 +60,13 @@
       <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_client_name"
         style="@style/TextInputLayoutStyle"
-        android:layout_marginTop="@dimen/dimen_large"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_large"
         android:fontFamily="@font/open_sans_regular"
         android:hint="@string/client"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        app:startIconDrawable="@drawable/ic_user">
 
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_client_name"
@@ -85,7 +87,8 @@
         android:layout_weight="1"
         android:fontFamily="@font/open_sans_regular"
         android:hint="@string/phone_number"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        app:startIconDrawable="@drawable/ic_call">
 
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_client_mobile"
@@ -106,7 +109,8 @@
         android:layout_weight="1"
         android:fontFamily="@font/open_sans_regular"
         android:hint="@string/address"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        app:startIconDrawable="@drawable/ic_location_24">
 
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_client_address"
@@ -146,10 +150,10 @@
           android:layout_weight="1"
           android:drawablePadding="@dimen/dimen_large"
           android:fontFamily="@font/inter_regular"
-          android:textColor="@color/high_emphasises"
-          android:textStyle="bold"
           android:text="@string/driver"
+          android:textColor="@color/high_emphasises"
           android:textSize="@dimen/text_size_normal"
+          android:textStyle="bold"
           app:drawableStartCompat="@drawable/ic_drivers" />
 
         <Button
@@ -159,9 +163,9 @@
           android:layout_height="wrap_content"
           android:fontFamily="@font/inter_regular"
           android:gravity="center"
-          android:textSize="12sp"
           android:text="@string/add_driver"
           android:textAllCaps="false"
+          android:textSize="12sp"
           android:textStyle="bold"
           app:icon="@drawable/ic_add" />
 
@@ -175,7 +179,8 @@
         android:layout_marginTop="@dimen/dimen_large"
         android:fontFamily="@font/open_sans_regular"
         android:hint="@string/driver"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        app:startIconDrawable="@drawable/ic_user">
 
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_driver_name"
@@ -195,7 +200,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_regular"
         android:hint="@string/phone_number"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        app:startIconDrawable="@drawable/ic_call">
 
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_driver_mobile"
@@ -215,7 +221,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_regular"
         android:hint="@string/registration_number_of_vehicle"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        app:startIconDrawable="@drawable/ic_list">
 
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_driver_auto_number"
@@ -237,8 +244,8 @@
       android:layout_marginTop="@dimen/dimen_large"
       android:layout_marginRight="@dimen/dimen_large"
       android:orientation="vertical"
-      app:layout_constraintTop_toBottomOf="@id/container_driver"
-      app:layout_constraintBottom_toTopOf="@id/container_invoice">
+      app:layout_constraintBottom_toTopOf="@id/container_invoice"
+      app:layout_constraintTop_toBottomOf="@id/container_driver">
 
       <LinearLayout
         android:layout_width="match_parent"

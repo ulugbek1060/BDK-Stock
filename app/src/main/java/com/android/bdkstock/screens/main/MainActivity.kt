@@ -2,9 +2,8 @@ package com.android.bdkstock.screens.main
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -26,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
    private lateinit var binding: ActivityMainBinding
    private lateinit var navController: NavController
+   private val TAG = "MainActivity"
 
    private val topLevelDestinations = setOf(getSignInId(), getActionsId())
 
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
       onNavControllerActivated(navController)
 
-//      AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+      AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
       if (savedInstanceState == null) prepareRootNavGraph(checkSign(), navController)
       else prepareRestorationRootNavGraph(savedInstanceState, navController)
@@ -74,6 +74,13 @@ class MainActivity : AppCompatActivity() {
 
    private val destinationListener =
       NavController.OnDestinationChangedListener { _, destination, arguments ->
+         Log.d(TAG, "Destination Label: ${destination.label} " +
+              "\nDisplay Name: ${destination.displayName} " +
+              "\nParent: ${destination.parent}" +
+              "\nID: ${destination.id}" +
+              "\nNavigator Name: ${destination.navigatorName}" +
+              "\nRoute: ${destination.route}" +
+              "\n-----------------------------------------------------------------")
          supportActionBar?.title = prepareTitle(destination.label, arguments)
          supportActionBar?.setDisplayHomeAsUpEnabled(!isStartDestination(destination))
       }

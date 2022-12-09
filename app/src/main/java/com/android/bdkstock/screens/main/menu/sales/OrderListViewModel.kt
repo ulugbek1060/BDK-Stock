@@ -7,6 +7,7 @@ import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.sales.SalesRepository
 import com.android.model.utils.MutableUnitLiveEvent
 import com.android.model.utils.liveData
+import com.android.model.utils.publishEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -20,9 +21,13 @@ class OrderListViewModel @Inject constructor(
    val errorEvent = _errorEvent.liveData()
 
    fun showAuthError() {
-
+      _errorEvent.publishEvent()
    }
 
-   val ordersFlow = salesRepository.getOrdersList().cachedIn(viewModelScope)
+   val ordersFlow = salesRepository
+      .getOrdersList()
+      .cachedIn(viewModelScope)
+
+
 
 }

@@ -52,7 +52,8 @@ open class BaseViewModel(
       if (e is AuthException) {
          _showAuthErrorAndRestart.publishEvent()
       } else {
-         _showErrorMessageResEvent.publishEvent(R.string.internal_exception)
+         e.printStackTrace()
+         _showErrorMessageEvent.publishEvent(e.message ?: "Unknown error!")
       }
    }
 }
