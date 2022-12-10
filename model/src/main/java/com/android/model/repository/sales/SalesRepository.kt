@@ -1,6 +1,5 @@
 package com.android.model.repository.sales
 
-import android.util.Log
 import androidx.paging.PagingData
 import com.android.model.di.IoDispatcher
 import com.android.model.repository.base.BasePageSource
@@ -44,11 +43,17 @@ class SalesRepository @Inject constructor(
    ): String {
 
       if (orderId == null) throw EmptyFieldException(Field.EMPTY_ORDER)
-      if (cash.isBlank()) throw EmptyFieldException(Field.CASH)
-      if (card.isBlank()) throw EmptyFieldException(Field.CARD)
 
-      return suspendRunCatching {
-         salesSource.payForOrder(orderId, cash, card)
+      return if (cash.isBlank() && card.isNotBlank()) {
+         suspendRunCatching {
+            salesSource.payForOrder(orderId, cash, card)
+         }
+      } else if (card.isBlank() && cash.isNotBlank()) {
+         suspendRunCatching {
+            salesSource.payForOrder(orderId, cash, card)
+         }
+      } else {
+         throw EmptyFieldException(Field.EMPTY_PAY_FIELD)
       }
    }
 
@@ -76,7 +81,6 @@ class SalesRepository @Inject constructor(
    fun getOrderOverview(orderId: Long?): Flow<OrderEntity> = flow {
       if (orderId == null) throw EmptyFieldException(Field.EMPTY_ORDER)
       emit(suspendRunCatching { salesSource.getOrderOverview(orderId) })
-   }
-      .flowOn(ioDispatcher)
+   }.flowOn(ioDispatcher)
 
 }

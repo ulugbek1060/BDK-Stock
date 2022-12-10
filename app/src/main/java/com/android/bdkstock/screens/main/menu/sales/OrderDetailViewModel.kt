@@ -7,10 +7,7 @@ import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.sales.SalesRepository
 import com.android.model.repository.sales.entity.OrderEntity
-import com.android.model.utils.EmptyFieldException
-import com.android.model.utils.Field
-import com.android.model.utils.liveData
-import com.android.model.utils.requireValue
+import com.android.model.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -18,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OrderDetailViewModel @Inject constructor(
-   salesRepository: SalesRepository,
+   private val salesRepository: SalesRepository,
    accountRepository: AccountRepository,
    savedStateHandle: SavedStateHandle
 ) : BaseViewModel(accountRepository) {
@@ -30,6 +27,9 @@ class OrderDetailViewModel @Inject constructor(
    private val _state = MutableLiveData(State())
    val state = _state.liveData()
 
+   private val _payErrorEvent = MutableUnitLiveEvent()
+   val payErrorEvent = _payErrorEvent.liveData()
+
    private val orderResult = salesRepository
       .getOrderOverview(_orderId)
 
@@ -37,7 +37,6 @@ class OrderDetailViewModel @Inject constructor(
       viewModelScope.safeLaunch {
          showProgress()
          try {
-            delay(1000)
             orderResult.collectLatest { setOrderEntity(it) }
          } catch (e: EmptyFieldException) {
             showEmptyError(e)
@@ -47,9 +46,26 @@ class OrderDetailViewModel @Inject constructor(
       }
    }
 
+   fun pay(cash: String, card: String) = viewModelScope.safeLaunch {
+      showProgress()
+      try {
+         delay(2000)
+         salesRepository.payForOrder(
+            orderId = _orderId,
+            cash = cash,
+            card = card
+         )
+      } catch (e: EmptyFieldException) {
+         _payErrorEvent.publishEvent()
+      } finally {
+         hideProgress()
+      }
+   }
+
    private fun showEmptyError(e: EmptyFieldException) {
       _state.value = _state.requireValue().copy(
-         isEmptyOrderId = e.field == Field.EMPTY_ORDER
+         isEmptyOrderId = e.field == Field.EMPTY_ORDER,
+         isPayFieldEmpty = e.field == Field.EMPTY_PAY_FIELD
       )
    }
 
@@ -74,6 +90,7 @@ class OrderDetailViewModel @Inject constructor(
    data class State(
       val isInProgress: Boolean = false,
       val isEmptyOrderId: Boolean = false,
+      val isPayFieldEmpty: Boolean = false,
       val orderEntity: OrderEntity? = null
    )
 }

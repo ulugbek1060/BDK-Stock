@@ -24,6 +24,5 @@ enum class Field {
     EMPTY_CLIENT,
     EMPTY_DRIVER,
     EMPTY_ORDER,
-    CASH,
-    CARD
+    EMPTY_PAY_FIELD,
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,7 +13,6 @@ import com.android.bdkstock.databinding.RecyclerItemOrderProductBinding
 import com.android.bdkstock.screens.main.base.BaseAdapter
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.screens.main.base.ViewHolderCreator
-import com.android.model.repository.products.entity.ProductSelectionItem
 import com.android.model.repository.sales.entity.OrderedProduct
 import com.android.model.utils.gone
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,6 +43,16 @@ class OrderDetailFragment :
 
       setupRecyclerView()
       observeState()
+
+      binding.buttonPay.setOnClickListener { payOnClick() }
+   }
+
+   private fun payOnClick() {
+      // TODO: 1.orderId, 2.cache, 3.card
+      viewModel.pay(
+         cash = "",
+         card = ""
+      )
    }
 
    private fun setupRecyclerView() {
@@ -72,7 +82,10 @@ class OrderDetailFragment :
          binding.inputDriverAutoNumber.setText(driver?.autoRegNumber)
 
          adapter.submitList(products)
-         binding.ivEmpty.isVisible = products.isEmpty()
+
+         // TODO: pay error
+         if (state.isPayFieldEmpty)
+            Toast.makeText(requireContext(), "PAy error", Toast.LENGTH_SHORT).show()
       }
    }
 }
