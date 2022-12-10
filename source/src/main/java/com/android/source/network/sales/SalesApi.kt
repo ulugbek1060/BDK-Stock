@@ -31,7 +31,7 @@ interface SalesApi {
    @Headers("Content-Type: application/json", "Accept: application/json")
    @GET("api/order/order-list")
    suspend fun getOrders(
-      @Query("status") status: String?,
+      @Query("status") status: Int?,
       @Query("client") client: String?,
       @Query("dateFrom") fromDate: String?,
       @Query("dateTo") toDate: String?,

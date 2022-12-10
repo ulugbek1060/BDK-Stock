@@ -99,6 +99,10 @@
     android:id="@+id/filterOrdersFragment"
     android:name="com.android.bdkstock.screens.main.menu.sales.FilterOrdersFragment"
     android:label="fragment_orders_filter"
-    tools:layout="@layout/fragment_orders_filter" />
+    tools:layout="@layout/fragment_orders_filter" >
+    <argument
+      android:name="filterData"
+      app:argType="com.android.bdkstock.screens.main.menu.sales.FilterData" />
+  </dialog>
 
 </navigation>

@@ -184,6 +184,7 @@
       <Button
         android:id="@+id/button_apply"
         android:layout_width="0dp"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_normal"
         android:layout_marginEnd="@dimen/dimen_large"

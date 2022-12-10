@@ -67,7 +67,7 @@ class SalesSourceImpl @Inject constructor(
    }
 
    override suspend fun getOrdersList(
-      status: String?,
+      status: Int?,
       client: String?,
       fromDate: String?,
       toDate: String?,

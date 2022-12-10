@@ -61,7 +61,7 @@ interface SalesSource {
     * @throws ParseBackendResponseException
     */
    suspend fun getOrdersList(
-      status: String?,
+      status: Int?,
       client: String?,
       fromDate: String?,
       toDate: String?,

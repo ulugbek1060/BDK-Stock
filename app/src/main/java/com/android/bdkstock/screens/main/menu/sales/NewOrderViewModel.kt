@@ -19,16 +19,11 @@ import javax.inject.Inject
 @HiltViewModel
 class NewOrderViewModel @Inject constructor(
    private val salesRepository: SalesRepository,
-   private val productsRepository: ProductsRepository,
    accountRepository: AccountRepository
 ) : BaseViewModel(accountRepository) {
 
    private var clientId: Long? = null
    private var driverId: Long? = null
-
-   val productsFlow = productsRepository
-      .getProductsForSelect()
-      .handleException()
 
    private val _goBack = MutableLiveEvent<OrderEntity>()
    val goBack = _goBack.liveData()

@@ -2,13 +2,16 @@ package com.android.bdkstock.screens.main.menu.sales
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -104,9 +107,22 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
 
       observeAuthError()
 
-      binding.extendedFab.setOnClickListener { fabOnClick() }
+      getFilterDataResult()
 
+      binding.extendedFab.setOnClickListener { fabOnClick() }
+      
       requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
+   }
+
+   private fun getFilterDataResult() {
+      setFragmentResultListener(ORDER_FILTER_DATA_KEY) { _, bundle ->
+         val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            bundle.getSerializable(ORDER_FILTER_DATA_BUNDLE_KEY, FilterData::class.java)
+         } else {
+            bundle.getSerializable(ORDER_FILTER_DATA_BUNDLE_KEY) as FilterData
+         } ?: FilterData()
+         viewModel.setFilterData(result)
+      }
    }
 
    private fun fabOnClick() {
@@ -121,7 +137,7 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
          if (menuItem.itemId == R.id.filter) {
             val args = OrderListFragmentDirections
-               .actionSalesFragmentToFilterOrdersFragment()
+               .actionSalesFragmentToFilterOrdersFragment(viewModel.getFilterData())
             findNavController().navigate(args)
          }
          return false
@@ -194,5 +210,7 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
    private companion object {
       const val MANUFACTURED_PRODUCT = 0
       const val EXPORTED_PRODUCT = 1
+      const val ORDER_FILTER_DATA_KEY = "order_filter_data"
+      const val ORDER_FILTER_DATA_BUNDLE_KEY = "order_filter_data_bundle"
    }
 }
