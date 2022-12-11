@@ -64,8 +64,7 @@ class OrderDetailViewModel @Inject constructor(
 
    private fun showEmptyError(e: EmptyFieldException) {
       _state.value = _state.requireValue().copy(
-         isEmptyOrderId = e.field == Field.EMPTY_ORDER,
-         isPayFieldEmpty = e.field == Field.EMPTY_PAY_FIELD
+         isEmptyOrderId = e.field == Field.EMPTY_ORDER
       )
    }
 
@@ -90,7 +89,6 @@ class OrderDetailViewModel @Inject constructor(
    data class State(
       val isInProgress: Boolean = false,
       val isEmptyOrderId: Boolean = false,
-      val isPayFieldEmpty: Boolean = false,
       val orderEntity: OrderEntity? = null
    )
 }

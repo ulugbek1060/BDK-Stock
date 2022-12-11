@@ -15,6 +15,7 @@ import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.screens.main.base.ViewHolderCreator
 import com.android.model.repository.sales.entity.OrderedProduct
 import com.android.model.utils.gone
+import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,8 +44,15 @@ class OrderDetailFragment :
 
       setupRecyclerView()
       observeState()
+      observePayError()
 
       binding.buttonPay.setOnClickListener { payOnClick() }
+   }
+
+   private fun observePayError() {
+      viewModel.payErrorEvent.observeEvent(viewLifecycleOwner){
+         // TODO: pay empty error
+      }
    }
 
    private fun payOnClick() {
@@ -82,10 +90,6 @@ class OrderDetailFragment :
          binding.inputDriverAutoNumber.setText(driver?.autoRegNumber)
 
          adapter.submitList(products)
-
-         // TODO: pay error
-         if (state.isPayFieldEmpty)
-            Toast.makeText(requireContext(), "PAy error", Toast.LENGTH_SHORT).show()
       }
    }
 }
