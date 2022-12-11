@@ -34,7 +34,7 @@
     android:contentDescription="@string/add"
     android:text="@string/add"
     app:icon="@drawable/ic_add"
-    android:fontFamily="@font/open_sans_regular"
+    android:fontFamily="@font/inter_regular"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintRight_toRightOf="parent" />
 

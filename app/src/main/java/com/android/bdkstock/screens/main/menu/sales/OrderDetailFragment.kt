@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +12,7 @@ import com.android.bdkstock.databinding.RecyclerItemOrderProductBinding
 import com.android.bdkstock.screens.main.base.BaseAdapter
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.screens.main.base.ViewHolderCreator
+import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.sales.entity.OrderedProduct
 import com.android.model.utils.gone
 import com.android.model.utils.observeEvent
@@ -50,23 +50,27 @@ class OrderDetailFragment :
    }
 
    private fun observePayError() {
-      viewModel.payErrorEvent.observeEvent(viewLifecycleOwner){
+      viewModel.payErrorEvent.observeEvent(viewLifecycleOwner) {
          // TODO: pay empty error
       }
    }
 
    private fun payOnClick() {
-      // TODO: 1.orderId, 2.cache, 3.card
-      viewModel.pay(
-         cash = "",
-         card = ""
-      )
+      val orderEntity = viewModel.getOrderEntity() ?: return
+      val args = OrderDetailFragmentDirections
+         .actionOrderDetailFragmentToPayFragment(orderEntity)
+      findTopNavController().navigate(args)
+//      // TODO: 1.orderId, 2.cache, 3.card
+//      viewModel.pay(
+//         cash = "",
+//         card = ""
+//      )
    }
 
    private fun setupRecyclerView() {
       layoutManager = LinearLayoutManager(requireContext())
       binding.recyclerProducts.layoutManager = layoutManager
-      binding.recyclerProducts.adapter = adapter
+      binding.recyclerProducts.adapter = adapter//asd
       binding.recyclerProducts.setHasFixedSize(true)
    }
 
@@ -79,7 +83,7 @@ class OrderDetailFragment :
          val order = state.orderEntity
          val client = order?.client
          val driver = order?.driver
-         val products = order?.products?: listOf()
+         val products = order?.products ?: listOf()
 
          binding.inputClientName.setText(client?.fullName)
          binding.inputClientMobile.setText(client?.phoneNumber)

@@ -137,5 +137,7 @@
   <string name="total_sum">Итого: </string>
   <string name="error_empty_client">Клиент должен быть указан</string>
   <string name="error_empty_driver">Водитель должен быть указан</string>
+  <string name="card">Терминал</string>
+  <string name="cash">Наличка</string>
 
 </resources>

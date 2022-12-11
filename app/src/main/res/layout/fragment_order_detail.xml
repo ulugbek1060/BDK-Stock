@@ -257,25 +257,21 @@
 
       </LinearLayout>
 
-      <Button
+      <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/button_pay"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_large"
-        android:backgroundTint="?attr/colorSecondary"
-        android:fontFamily="@font/inter_regular"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/add"
         android:text="@string/pay"
-        android:textAllCaps="false"
-        android:textColor="?attr/colorOnSecondary"
-        android:textStyle="bold"
+        app:icon="@drawable/ic_payments"
+        app:layout_constraintTop_toBottomOf="@id/container_invoice"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
   </androidx.core.widget.NestedScrollView>
-
 
   <ProgressBar
     android:id="@+id/progressbar"

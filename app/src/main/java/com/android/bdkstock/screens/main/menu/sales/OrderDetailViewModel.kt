@@ -86,6 +86,10 @@ class OrderDetailViewModel @Inject constructor(
       )
    }
 
+   fun getOrderEntity(): OrderEntity? {
+      return _state.requireValue().orderEntity
+   }
+
    data class State(
       val isInProgress: Boolean = false,
       val isEmptyOrderId: Boolean = false,

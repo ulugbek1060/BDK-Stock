@@ -401,6 +401,18 @@
     <argument
       android:name="orderId"
       app:argType="long" />
+    <action
+      android:id="@+id/action_orderDetailFragment_to_payFragment"
+      app:destination="@id/payFragment" />
   </fragment>
+  <dialog
+    android:id="@+id/payFragment"
+    android:name="com.android.bdkstock.screens.main.menu.sales.PayFragment"
+    android:label="fragment_pay"
+    tools:layout="@layout/fragment_pay" >
+    <argument
+      android:name="orderEntity"
+      app:argType="com.android.model.repository.sales.entity.OrderEntity" />
+  </dialog>
 
 </navigation>

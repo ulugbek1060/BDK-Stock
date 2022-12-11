@@ -1,5 +1,9 @@
 package com.android.model.repository.sales.entity
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class OrderEntity(
    val id: Long,
    val identification: String,
@@ -11,4 +15,4 @@ data class OrderEntity(
    val client: ClientForOrderEntity,
    val driver: DriverForOrderEntity,
    val products: List<OrderedProduct>
-)
+) : Parcelable
