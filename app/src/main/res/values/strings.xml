@@ -139,5 +139,10 @@
   <string name="error_empty_driver">Водитель должен быть указан</string>
   <string name="card">Терминал</string>
   <string name="cash">Наличка</string>
+  <string name="error_empty_pay_field">Вам необходимо заполнить поля оплаты</string>
+  <string name="sale_status_0">Ожидает оплаты</string>
+  <string name="sale_status_1">Оплачен</string>
+  <string name="order">Заказ</string>
+  <string name="payments">Платежи</string>
 
 </resources>

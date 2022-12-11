@@ -1,6 +1,8 @@
 package com.android.model.repository.sales.entity
 
+import android.content.Context
 import android.os.Parcelable
+import com.android.model.R
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

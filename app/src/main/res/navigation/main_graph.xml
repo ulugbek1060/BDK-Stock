@@ -396,8 +396,9 @@
   <fragment
     android:id="@+id/orderDetailFragment"
     android:name="com.android.bdkstock.screens.main.menu.sales.OrderDetailFragment"
-    android:label="fragment_order_detail"
-    tools:layout="@layout/fragment_order_detail" >
+    android:label="@string/order"
+    tools:layout="@layout/fragment_order_detail">
+
     <argument
       android:name="orderId"
       app:argType="long" />
@@ -408,7 +409,7 @@
   <dialog
     android:id="@+id/payFragment"
     android:name="com.android.bdkstock.screens.main.menu.sales.PayFragment"
-    android:label="fragment_pay"
+    android:label="@string/payments"
     tools:layout="@layout/fragment_pay" >
     <argument
       android:name="orderEntity"

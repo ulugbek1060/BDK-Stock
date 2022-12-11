@@ -13,6 +13,7 @@ import com.android.bdkstock.screens.main.base.BaseAdapter
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.screens.main.base.ViewHolderCreator
 import com.android.bdkstock.views.findTopNavController
+import com.android.bdkstock.views.getActionBar
 import com.android.model.repository.sales.entity.OrderedProduct
 import com.android.model.utils.gone
 import com.android.model.utils.observeEvent
@@ -44,43 +45,15 @@ class OrderDetailFragment :
 
       setupRecyclerView()
       observeState()
+      observeOrder()
       observePayError()
 
-      binding.buttonPay.setOnClickListener { payOnClick() }
+      binding.fabPay.setOnClickListener { viewModel.pay() }
    }
 
-   private fun observePayError() {
-      viewModel.payErrorEvent.observeEvent(viewLifecycleOwner) {
-         // TODO: pay empty error
-      }
-   }
-
-   private fun payOnClick() {
-      val orderEntity = viewModel.getOrderEntity() ?: return
-      val args = OrderDetailFragmentDirections
-         .actionOrderDetailFragmentToPayFragment(orderEntity)
-      findTopNavController().navigate(args)
-//      // TODO: 1.orderId, 2.cache, 3.card
-//      viewModel.pay(
-//         cash = "",
-//         card = ""
-//      )
-   }
-
-   private fun setupRecyclerView() {
-      layoutManager = LinearLayoutManager(requireContext())
-      binding.recyclerProducts.layoutManager = layoutManager
-      binding.recyclerProducts.adapter = adapter//asd
-      binding.recyclerProducts.setHasFixedSize(true)
-   }
-
-   private fun observeState() {
-      viewModel.state.observe(viewLifecycleOwner) { state ->
-
-         binding.progressbar.isVisible = state.isInProgress
-         binding.mainContainer.isVisible = !state.isInProgress
-
-         val order = state.orderEntity
+   private fun observeOrder() {
+      viewModel.order.observe(viewLifecycleOwner) { orderData ->
+         val order = orderData.orderEntity
          val client = order?.client
          val driver = order?.driver
          val products = order?.products ?: listOf()
@@ -93,7 +66,41 @@ class OrderDetailFragment :
          binding.inputDriverMobile.setText(driver?.phoneNumber)
          binding.inputDriverAutoNumber.setText(driver?.autoRegNumber)
 
+         binding.tvTotalSum.text = order?.summa
+         binding.tvDebit.text = order?.debit
+         binding.tvPayed.text = order?.paid
          adapter.submitList(products)
+
+         orderData.fabVisibility(binding.fabPay)
+
+         getActionBar()?.title = orderData.getIdentification()
+         binding.tvIdentification.text = orderData?.getStatusText(requireContext())
+         binding.tvIdentification.setTextColor(orderData.getStatusColor(requireContext()))
+         binding.ivIndicator.setColorFilter(orderData.getStatusColor(requireContext()))
+         binding.ivIndicator.setImageDrawable(orderData.getStatusIndicator(requireContext()))
+      }
+   }
+
+   private fun observePayError() {
+      viewModel.navigatePayFrag.observeEvent(viewLifecycleOwner) {
+         val orderEntity = it ?: return@observeEvent
+         val args = OrderDetailFragmentDirections
+            .actionOrderDetailFragmentToPayFragment(orderEntity)
+         findTopNavController().navigate(args)
+      }
+   }
+
+   private fun setupRecyclerView() {
+      layoutManager = LinearLayoutManager(requireContext())
+      binding.recyclerProducts.layoutManager = layoutManager
+      binding.recyclerProducts.adapter = adapter
+      binding.recyclerProducts.setHasFixedSize(true)
+   }
+
+   private fun observeState() {
+      viewModel.state.observe(viewLifecycleOwner) { state ->
+         binding.progressbar.isVisible = state.isInProgress
+         binding.mainContainer.isVisible = !state.isInProgress
       }
    }
 }

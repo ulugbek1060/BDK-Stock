@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.annotation.CheckResult
+import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -16,10 +17,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.android.bdkstock.R
+import com.android.bdkstock.screens.main.MainActivity
 import com.android.model.utils.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.onStart
 
 
 fun Fragment.navigate(destinationId: Int) {
@@ -37,6 +41,10 @@ fun Fragment.findTopNavController(): NavController {
    val topLevelHost =
       requireActivity().supportFragmentManager.findFragmentById(R.id.fragment_main_container) as NavHostFragment?
    return topLevelHost?.navController ?: findNavController()
+}
+
+fun Fragment.getActionBar(): ActionBar? {
+   return (requireActivity() as MainActivity).supportActionBar
 }
 
 fun <T> LiveData<Results<T>>.observeResults(

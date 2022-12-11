@@ -1,15 +1,18 @@
 package com.android.bdkstock.screens.main.menu.sales
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.sales.SalesRepository
 import com.android.model.repository.sales.entity.OrderEntity
 import com.android.model.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
@@ -27,8 +30,11 @@ class OrderDetailViewModel @Inject constructor(
    private val _state = MutableLiveData(State())
    val state = _state.liveData()
 
-   private val _payErrorEvent = MutableUnitLiveEvent()
-   val payErrorEvent = _payErrorEvent.liveData()
+   private val _order = MutableLiveData(OrderData())
+   val order = _order.liveData()
+
+   private val _navigatePayFrag = MutableLiveEvent<OrderEntity?>()
+   val navigatePayFrag = _navigatePayFrag.liveData()
 
    private val orderResult = salesRepository
       .getOrderOverview(_orderId)
@@ -37,7 +43,7 @@ class OrderDetailViewModel @Inject constructor(
       viewModelScope.safeLaunch {
          showProgress()
          try {
-            orderResult.collectLatest { setOrderEntity(it) }
+            orderResult.collectLatest { _order.value = OrderData(it) }
          } catch (e: EmptyFieldException) {
             showEmptyError(e)
          } finally {
@@ -46,31 +52,17 @@ class OrderDetailViewModel @Inject constructor(
       }
    }
 
-   fun pay(cash: String, card: String) = viewModelScope.safeLaunch {
-      showProgress()
-      try {
-         delay(2000)
-         salesRepository.payForOrder(
-            orderId = _orderId,
-            cash = cash,
-            card = card
-         )
-      } catch (e: EmptyFieldException) {
-         _payErrorEvent.publishEvent()
-      } finally {
-         hideProgress()
-      }
+   fun pay() {
+      _navigatePayFrag.publishEvent(getOrderEntity())
+   }
+
+   private fun getOrderEntity(): OrderEntity? {
+      return _order.requireValue().orderEntity
    }
 
    private fun showEmptyError(e: EmptyFieldException) {
       _state.value = _state.requireValue().copy(
          isEmptyOrderId = e.field == Field.EMPTY_ORDER
-      )
-   }
-
-   private fun setOrderEntity(orderEntity: OrderEntity?) {
-      _state.value = _state.requireValue().copy(
-         orderEntity = orderEntity
       )
    }
 
@@ -86,13 +78,34 @@ class OrderDetailViewModel @Inject constructor(
       )
    }
 
-   fun getOrderEntity(): OrderEntity? {
-      return _state.requireValue().orderEntity
-   }
-
    data class State(
       val isInProgress: Boolean = false,
-      val isEmptyOrderId: Boolean = false,
-      val orderEntity: OrderEntity? = null
+      val isEmptyOrderId: Boolean = false
    )
+
+   data class OrderData(
+      val orderEntity: OrderEntity? = null
+   ) {
+      @SuppressLint("UseCompatLoadingForDrawables")
+      fun getStatusIndicator(context: Context) =
+         if (orderEntity?.status == 1) context.getDrawable(R.drawable.ic_sales)
+         else context.getDrawable(R.drawable.ic_time)
+
+      fun getStatusText(context: Context) =
+         if (orderEntity?.status == 1) context.getString(R.string.sale_status_1)
+         else context.getString(R.string.sale_status_0)
+
+      fun getStatusColor(context: Context) =
+         if (orderEntity?.status == 1) context.getColor(R.color.green)
+         else context.getColor(R.color.yellow)
+
+      fun fabVisibility(view: View) =
+         if (orderEntity?.status == 1) view.gone()
+         else view.visible()
+
+      fun getIdentification() =
+         if (orderEntity == null) "№:..."
+         else "№: ${orderEntity.identification}"
+
+   }
 }
