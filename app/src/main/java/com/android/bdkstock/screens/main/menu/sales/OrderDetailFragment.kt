@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.databinding.FragmentOrderDetailBinding
@@ -48,7 +49,17 @@ class OrderDetailFragment :
       observeOrder()
       observePayError()
 
-      binding.fabPay.setOnClickListener { viewModel.pay() }
+      observePaymentResult()
+
+      binding.fabPay.setOnClickListener { viewModel.payment() }
+   }
+
+   private fun observePaymentResult() {
+      setFragmentResultListener(PAYMENTS_KEY) { _, bundle ->
+         if (bundle.getBoolean(PAYMENTS_BUNDLE_KEY)) {
+            viewModel.getOrder()
+         }
+      }
    }
 
    private fun observeOrder() {
@@ -82,7 +93,7 @@ class OrderDetailFragment :
    }
 
    private fun observePayError() {
-      viewModel.navigatePayFrag.observeEvent(viewLifecycleOwner) {
+      viewModel.navigatePaymentsFrag.observeEvent(viewLifecycleOwner) {
          val orderEntity = it ?: return@observeEvent
          val args = OrderDetailFragmentDirections
             .actionOrderDetailFragmentToPayFragment(orderEntity)
@@ -102,5 +113,10 @@ class OrderDetailFragment :
          binding.progressbar.isVisible = state.isInProgress
          binding.mainContainer.isVisible = !state.isInProgress
       }
+   }
+
+   private companion object {
+      const val PAYMENTS_KEY = "payments"
+      const val PAYMENTS_BUNDLE_KEY = "payments_bundle"
    }
 }

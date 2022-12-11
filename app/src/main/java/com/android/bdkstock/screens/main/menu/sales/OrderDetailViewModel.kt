@@ -33,27 +33,29 @@ class OrderDetailViewModel @Inject constructor(
    private val _order = MutableLiveData(OrderData())
    val order = _order.liveData()
 
-   private val _navigatePayFrag = MutableLiveEvent<OrderEntity?>()
-   val navigatePayFrag = _navigatePayFrag.liveData()
+   private val _navigatePaymentsFrag = MutableLiveEvent<OrderEntity?>()
+   val navigatePaymentsFrag = _navigatePaymentsFrag.liveData()
 
    private val orderResult = salesRepository
       .getOrderOverview(_orderId)
 
    init {
-      viewModelScope.safeLaunch {
-         showProgress()
-         try {
-            orderResult.collectLatest { _order.value = OrderData(it) }
-         } catch (e: EmptyFieldException) {
-            showEmptyError(e)
-         } finally {
-            hideProgress()
-         }
+      getOrder()
+   }
+
+   fun getOrder() = viewModelScope.safeLaunch {
+      showProgress()
+      try {
+         orderResult.collectLatest { _order.value = OrderData(it) }
+      } catch (e: EmptyFieldException) {
+         showEmptyError(e)
+      } finally {
+         hideProgress()
       }
    }
 
-   fun pay() {
-      _navigatePayFrag.publishEvent(getOrderEntity())
+   fun payment() {
+      _navigatePaymentsFrag.publishEvent(getOrderEntity())
    }
 
    private fun getOrderEntity(): OrderEntity? {

@@ -109,7 +109,7 @@
   <string name="to_date">на дату</string>
   <string name="clear">Очистить</string>
   <string name="apply">Филтровать</string>
-  <string name="filter">Филтеровать</string>
+  <string name="filter">Фильтровать</string>
   <string name="register_employee">Зарегистрировать сотрудника</string>
   <string name="add_ingredients">Добавить ингредиенты</string>
   <string name="operation_on_ingredients">Операции с ингредиентами</string>

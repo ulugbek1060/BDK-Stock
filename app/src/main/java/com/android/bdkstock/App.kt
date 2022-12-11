@@ -4,7 +4,6 @@ import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 
-// TODO: 1.Observe pay error event
 // TODO: 2.Create pay dialog
 // TODO: 3.Setup indicator checker to check payed or not and also install to NewOrderFragment
 // TODO: 4.Fix filter fields

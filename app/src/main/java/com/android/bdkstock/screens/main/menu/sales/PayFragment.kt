@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentPayBinding
@@ -42,6 +44,7 @@ class PayFragment : BottomSheetDialogFragment(R.layout.fragment_pay) {
 
    private fun observeGoBack() {
       viewModel.goBack.observeEvent(viewLifecycleOwner) {
+         setFragmentResult(PAYMENTS_KEY, bundleOf(PAYMENTS_BUNDLE_KEY to true))
          findTopNavController().popBackStack()
       }
    }
@@ -79,5 +82,10 @@ class PayFragment : BottomSheetDialogFragment(R.layout.fragment_pay) {
    override fun onDestroy() {
       super.onDestroy()
       _binding = null
+   }
+
+   private companion object{
+      const val PAYMENTS_KEY = "payments"
+      const val PAYMENTS_BUNDLE_KEY = "payments_bundle"
    }
 }
