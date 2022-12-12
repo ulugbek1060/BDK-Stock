@@ -2,6 +2,7 @@ package com.android.bdkstock.screens.main.menu.ingredients
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,9 +10,11 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
@@ -22,6 +25,8 @@ import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.screens.main.base.DefaultLoadStateAdapter
 import com.android.bdkstock.screens.main.base.pagingAdapter
+import com.android.bdkstock.screens.main.menu.sales.OrderListFragment
+import com.android.bdkstock.screens.main.menu.sales.OrdersFilterData
 import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
 import com.android.model.utils.AuthException
@@ -99,6 +104,7 @@ class IngredientsOperationsFragment :
       handleViewVisibility()
 
       observeAuthError()
+      getFilterResult()
 
       binding.buttonIncome.setOnClickListener { incomeOnClick() }
       binding.buttonExpense.setOnClickListener { expenseOnClick() }
@@ -114,10 +120,22 @@ class IngredientsOperationsFragment :
 
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
          if (menuItem.itemId == R.id.filter) {
-//            val args =
-//           findTopNavController().navigate()
+            val args = IngredientsOperationsFragmentDirections
+               .actionToIngredientsFilter(viewModel.getFilter())
+            findNavController().navigate(args)
          }
          return false
+      }
+   }
+
+   private fun getFilterResult() {
+      setFragmentResultListener(INGREDIENTS_FILTER_KEY) { _, bundle ->
+         val filterData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            bundle.getSerializable(INGREDIENTS_FILTER_BUNDLE_KEY, IngredientsFilterData::class.java)
+         } else {
+            bundle.getSerializable(INGREDIENTS_FILTER_BUNDLE_KEY) as IngredientsFilterData
+         } ?: IngredientsFilterData()
+         viewModel.setFilterData(filterData)
       }
    }
 
@@ -201,13 +219,9 @@ class IngredientsOperationsFragment :
       binding.recyclerProgress.adapter = progressAdapter
    }
 
-   private fun getCheckId(state: Int?) = when (state) {
-      1 -> R.id.button_expense
-      0 -> R.id.button_income
-      else -> R.id.button_all
-   }
-
    private companion object {
+      const val INGREDIENTS_FILTER_KEY = "ingredients_filter"
+      const val INGREDIENTS_FILTER_BUNDLE_KEY = "ingredients_filter_bundle"
       const val OPERATION_INCOME = 0
       const val OPERATION_EXPENSE = 1
    }

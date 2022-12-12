@@ -3,8 +3,6 @@ package com.android.bdkstock
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
-// TODO: 4.Fix filter fields
-// TODO: 5.Fix ingredient filter and product filter
 // TODO: 6.Set all titles
 // TODO: 7.Change ingredient and product option buttons to fab button
 // TODO: 8.Fix employees edit function

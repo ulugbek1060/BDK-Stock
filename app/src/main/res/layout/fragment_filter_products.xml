@@ -163,6 +163,7 @@
       android:layout_marginBottom="@dimen/dimen_normal"
       android:fontFamily="@font/open_sans_regular"
       android:text="@string/filter"
+      style="@style/Widget.MaterialComponents.Button"
       android:textAllCaps="false"
       android:textSize="@dimen/text_size_normal"
       app:layout_constraintBottom_toBottomOf="parent"

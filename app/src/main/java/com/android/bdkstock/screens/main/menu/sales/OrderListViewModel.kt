@@ -27,7 +27,7 @@ class OrderListViewModel @Inject constructor(
    private val _errorEvent = MutableUnitLiveEvent()
    val errorEvent = _errorEvent.liveData()
 
-   private val _filterData = MutableLiveData(OrderFilterData())
+   private val _filterData = MutableLiveData(OrdersFilterData())
    val ordersFlow = _filterData.asFlow()
       .flatMapLatest { filter ->
          salesRepository.getOrdersList(
@@ -44,11 +44,11 @@ class OrderListViewModel @Inject constructor(
       _errorEvent.publishEvent()
    }
 
-   fun setFilterData(filterData: OrderFilterData) {
+   fun setFilterData(filterData: OrdersFilterData) {
       _filterData.value = filterData
    }
 
-   fun getFilterData(): OrderFilterData {
+   fun getFilterData(): OrdersFilterData {
       return _filterData.requireValue()
    }
 }

@@ -116,10 +116,10 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
    private fun getFilterDataResult() {
       setFragmentResultListener(ORDER_FILTER_DATA_KEY) { _, bundle ->
          val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            bundle.getSerializable(ORDER_FILTER_DATA_BUNDLE_KEY, OrderFilterData::class.java)
+            bundle.getSerializable(ORDER_FILTER_DATA_BUNDLE_KEY, OrdersFilterData::class.java)
          } else {
-            bundle.getSerializable(ORDER_FILTER_DATA_BUNDLE_KEY) as OrderFilterData
-         } ?: OrderFilterData()
+            bundle.getSerializable(ORDER_FILTER_DATA_BUNDLE_KEY) as OrdersFilterData
+         } ?: OrdersFilterData()
          viewModel.setFilterData(result)
       }
    }

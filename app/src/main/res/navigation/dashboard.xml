@@ -9,7 +9,7 @@
     android:id="@+id/menuFragment"
     android:name="com.android.bdkstock.screens.main.menu.actions.MenuFragment"
     android:label="@string/app_name"
-    tools:layout="@layout/fragment_menu" >
+    tools:layout="@layout/fragment_menu">
     <action
       android:id="@+id/action_menuFragment_to_clientsFragment"
       app:destination="@id/clientsFragment"
@@ -70,16 +70,16 @@
     android:id="@+id/ingredientsOperationsFragment"
     android:name="com.android.bdkstock.screens.main.menu.ingredients.IngredientsOperationsFragment"
     android:label="@string/ingredients"
-    tools:layout="@layout/fragment_ingredients_operations" >
+    tools:layout="@layout/fragment_ingredients_operations">
     <action
-      android:id="@+id/action_ingredientsOperationsFragment_to_filterIngredientsFragment"
+      android:id="@+id/actionToIngredientsFilter"
       app:destination="@id/filterIngredientsFragment" />
   </fragment>
   <fragment
     android:id="@+id/salesFragment"
     android:name="com.android.bdkstock.screens.main.menu.sales.OrderListFragment"
     android:label="@string/sales"
-    tools:layout="@layout/fragment_order_list" >
+    tools:layout="@layout/fragment_order_list">
     <action
       android:id="@+id/action_salesFragment_to_filterOrdersFragment"
       app:destination="@id/filterOrdersFragment" />
@@ -88,9 +88,9 @@
     android:id="@+id/productOperationsListFragment"
     android:name="com.android.bdkstock.screens.main.menu.products.ProductOperationsListFragment"
     android:label="@string/products"
-    tools:layout="@layout/fragment_product_operations_list" >
+    tools:layout="@layout/fragment_product_operations_list">
     <action
-      android:id="@+id/action_productOperationsListFragment_to_filterProductsFragment"
+      android:id="@+id/actionToProductsFilter"
       app:destination="@id/filterProductsFragment" />
   </fragment>
   <fragment
@@ -107,7 +107,7 @@
     android:id="@+id/filterOrdersFragment"
     android:name="com.android.bdkstock.screens.main.menu.sales.FilterOrdersFragment"
     android:label="@string/filter"
-    tools:layout="@layout/fragment_orders_filter" >
+    tools:layout="@layout/fragment_orders_filter">
     <argument
       android:name="ordersFilterData"
       app:argType="com.android.bdkstock.screens.main.menu.sales.OrdersFilterData" />
@@ -119,7 +119,7 @@
     tools:layout="@layout/fragment_filter_ingredients">
     <argument
       android:name="ingredientsFilterData"
-      app:argType="com.android.bdkstock.screens.main.menu.ingredients.IngredientsFilterData"/>
+      app:argType="com.android.bdkstock.screens.main.menu.ingredients.IngredientsFilterData" />
   </dialog>
   <dialog
     android:id="@+id/filterProductsFragment"
@@ -128,7 +128,7 @@
     tools:layout="@layout/fragment_filter_products">
     <argument
       android:name="productsFilterData"
-      app:argType="com.android.bdkstock.screens.main.menu.products.ProductsFilterData"/>
+      app:argType="com.android.bdkstock.screens.main.menu.products.ProductsFilterData" />
   </dialog>
 
 </navigation>

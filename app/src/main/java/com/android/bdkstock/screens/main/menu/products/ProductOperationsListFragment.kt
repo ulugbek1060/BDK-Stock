@@ -2,6 +2,7 @@ package com.android.bdkstock.screens.main.menu.products
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,9 +10,11 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
@@ -94,6 +97,7 @@ class ProductOperationsListFragment :
       handleViewVisibility()
 
       observeAuthError()
+      getFilterResult()
 
       binding.buttonManufacture.setOnClickListener { manufactureOnClick() }
       binding.buttonExport.setOnClickListener { exportOnclick() }
@@ -125,9 +129,22 @@ class ProductOperationsListFragment :
 
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
          if (menuItem.itemId == R.id.filter) {
-
+            val args = ProductOperationsListFragmentDirections
+               .actionToProductsFilter(viewModel.getFilter())
+            findNavController().navigate(args)
          }
          return false
+      }
+   }
+
+   private fun getFilterResult() {
+      setFragmentResultListener(PRODUCTS_FILTER_KEY) { _, bundle ->
+         val filterData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            bundle.getSerializable(PRODUCTS_FILTER_BUNDLE_KEY, ProductsFilterData::class.java)
+         } else {
+            bundle.getSerializable(PRODUCTS_FILTER_BUNDLE_KEY) as ProductsFilterData
+         } ?: ProductsFilterData()
+         viewModel.setFilterData(filterData)
       }
    }
 
@@ -195,6 +212,8 @@ class ProductOperationsListFragment :
    }
 
    private companion object {
+      const val PRODUCTS_FILTER_KEY = "ingredients_filter"
+      const val PRODUCTS_FILTER_BUNDLE_KEY = "ingredients_filter_bundle"
       const val MANUFACTURED_PRODUCT = 0
       const val EXPORTED_PRODUCT = 1
    }
