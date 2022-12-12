@@ -3,6 +3,7 @@ package com.android.bdkstock.screens.main.menu.sales
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.android.bdkstock.R
 import com.android.model.utils.liveData
 import com.android.model.utils.requireValue
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,4 +51,10 @@ data class OrdersFilterData(
    val fromDate: String? = null,
    val toDate: String? = null,
    val driver: String? = null,
-) : Serializable
+) : Serializable {
+   fun getSelectedStatusId(): Int = when (status) {
+      1 -> R.id.button_expense
+      0 -> R.id.button_income
+      else -> R.id.button_all
+   }
+}

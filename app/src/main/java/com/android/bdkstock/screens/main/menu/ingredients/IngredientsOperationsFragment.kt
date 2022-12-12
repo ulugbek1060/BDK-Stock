@@ -22,11 +22,9 @@ import com.android.bdkstock.databinding.FragmentIngredientsOperationsBinding
 import com.android.bdkstock.databinding.ProgressItemBiggerBinding
 import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
-import com.android.bdkstock.screens.main.base.BaseFragment
-import com.android.bdkstock.screens.main.base.DefaultLoadStateAdapter
-import com.android.bdkstock.screens.main.base.pagingAdapter
-import com.android.bdkstock.screens.main.menu.sales.OrderListFragment
-import com.android.bdkstock.screens.main.menu.sales.OrdersFilterData
+import com.android.bdkstock.screens.main.base.BaseWithFabFragment
+import com.android.bdkstock.screens.main.base.adapters.DefaultLoadStateAdapter
+import com.android.bdkstock.screens.main.base.adapters.pagingAdapter
 import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
 import com.android.model.utils.AuthException
@@ -40,7 +38,7 @@ import java.util.*
 
 @AndroidEntryPoint
 class IngredientsOperationsFragment :
-   BaseFragment<IngredientsOperationsViewModel, FragmentIngredientsOperationsBinding>() {
+   BaseWithFabFragment<IngredientsOperationsViewModel, FragmentIngredientsOperationsBinding>() {
 
    override val viewModel by viewModels<IngredientsOperationsViewModel>()
    private lateinit var layoutManager: LinearLayoutManager
@@ -106,9 +104,25 @@ class IngredientsOperationsFragment :
       observeAuthError()
       getFilterResult()
 
-      binding.buttonIncome.setOnClickListener { incomeOnClick() }
-      binding.buttonExpense.setOnClickListener { expenseOnClick() }
-      binding.buttonAdd.setOnClickListener { addOnClick() }
+      binding.fabIncome.setOnClickListener { incomeOnClick() }
+      binding.fabExpense.setOnClickListener { expenseOnClick() }
+      binding.fabIngredients.setOnClickListener { addOnClick() }
+
+      binding.fabOptions.setOnClickListener {
+         onAddButtonClicked(
+            binding.fabOptions,
+            listOf(
+               binding.fabIngredients,
+               binding.fabIncome,
+               binding.fabExpense
+            ),
+            listOf(
+               binding.tvIngredients,
+               binding.tvIncome,
+               binding.tvExpense
+            )
+         )
+      }
 
       requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
    }

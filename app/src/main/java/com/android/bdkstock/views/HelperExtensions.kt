@@ -16,14 +16,21 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
+import androidx.viewbinding.ViewBinding
 import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.MainActivity
+import com.android.bdkstock.screens.main.base.BaseBottomSheetDialogFragment
 import com.android.model.utils.*
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.onStart
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 fun Fragment.navigate(destinationId: Int) {
@@ -102,5 +109,24 @@ fun DialogFragment.setFullScreen() {
       ViewGroup.LayoutParams.WRAP_CONTENT
    )
 }
+
+
+fun BottomSheetDialogFragment.getDate(
+   title: String, inputFromDate: TextInputEditText
+) {
+   val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText(title)
+      .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
+   datePicker.addOnPositiveButtonClickListener { timeMiles ->
+      val formatter = SimpleDateFormat("dd/MM/yyyy")
+      val date = formatter.format(Date(timeMiles))
+      inputFromDate.setText(date)
+   }
+   datePicker.addOnNegativeButtonClickListener {
+      inputFromDate.setText("")
+      datePicker.dismiss()
+   }
+   datePicker.show(parentFragmentManager, "tag")
+}
+
 
 

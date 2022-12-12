@@ -1,6 +1,5 @@
 package com.android.bdkstock.screens.main.menu.ingredients
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
@@ -9,23 +8,22 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentFilterIngredientsBinding
+import com.android.bdkstock.screens.main.base.BaseBottomSheetDialogFragment
+import com.android.bdkstock.views.getDate
 import com.android.model.utils.observeEvent
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.textfield.TextInputEditText
-import java.text.SimpleDateFormat
-import java.util.*
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FilterIngredientsFragment :
-   BottomSheetDialogFragment(R.layout.fragment_filter_ingredients) {
+   BaseBottomSheetDialogFragment<FragmentFilterIngredientsBinding>() {
 
-   private var _binding: FragmentFilterIngredientsBinding? = null
-   private val binding: FragmentFilterIngredientsBinding get() = _binding!!
+   override fun getViewBinding() = FragmentFilterIngredientsBinding
+      .inflate(layoutInflater)
+
    private val viewModel: FilterIngredientsViewModel by viewModels()
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      _binding = FragmentFilterIngredientsBinding.bind(view)
 
       observeFilterData()
       observeMoveEvent()
@@ -66,34 +64,11 @@ class FilterIngredientsFragment :
    }
 
    private fun toDateOnClick() {
-      getCalendarDialog(getString(R.string.to_date), binding.inputToDate)
+      getDate(getString(R.string.to_date), binding.inputToDate)
    }
 
    private fun fromDateOnClick() {
-      getCalendarDialog(getString(R.string.from_date), binding.inputFromDate)
-   }
-
-   @SuppressLint("SimpleDateFormat")
-   private fun getCalendarDialog(title: String, inputFromDate: TextInputEditText) {
-      val datePicker = MaterialDatePicker.Builder.datePicker()
-         .setTitleText(title)
-         .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-         .build()
-      datePicker.addOnPositiveButtonClickListener { timeMiles ->
-         val formatter = SimpleDateFormat("dd/MM/yyyy")
-         val date = formatter.format(Date(timeMiles))
-         inputFromDate.setText(date)
-      }
-      datePicker.addOnNegativeButtonClickListener {
-         inputFromDate.setText("")
-         datePicker.dismiss()
-      }
-      datePicker.show(parentFragmentManager, "tag")
-   }
-
-   override fun onDestroy() {
-      super.onDestroy()
-      _binding = null
+      getDate(getString(R.string.from_date), binding.inputFromDate)
    }
 
    private companion object {

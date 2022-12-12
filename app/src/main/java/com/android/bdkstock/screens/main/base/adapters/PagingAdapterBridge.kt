@@ -1,4 +1,4 @@
-package com.android.bdkstock.screens.main.base
+package com.android.bdkstock.screens.main.base.adapters
 
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter

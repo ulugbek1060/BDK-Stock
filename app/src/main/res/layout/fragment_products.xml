@@ -32,7 +32,7 @@
     android:layout_margin="@dimen/dimen_big"
     android:contentDescription="@string/add"
     android:text="@string/add"
-    android:fontFamily="@font/open_sans_regular"
+    android:fontFamily="@font/inter_medium"
     app:icon="@drawable/ic_add"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintRight_toRightOf="parent" />

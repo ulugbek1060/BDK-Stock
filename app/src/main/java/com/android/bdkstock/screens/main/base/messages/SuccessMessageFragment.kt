@@ -1,4 +1,4 @@
-package com.android.bdkstock.screens.main.base
+package com.android.bdkstock.screens.main.base.messages
 
 import android.os.Bundle
 import android.view.View

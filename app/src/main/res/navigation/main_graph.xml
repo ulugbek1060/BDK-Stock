@@ -277,7 +277,7 @@
 
   <fragment
     android:id="@+id/successMessageFragment"
-    android:name="com.android.bdkstock.screens.main.base.SuccessMessageFragment"
+    android:name="com.android.bdkstock.screens.main.base.messages.SuccessMessageFragment"
     android:label="@string/message_fragment"
     tools:layout="@layout/fragment_success_message" />
 
@@ -391,7 +391,7 @@
     tools:layout="@layout/fragment_products_for_order" />
   <dialog
     android:id="@+id/globalErrorFragment"
-    android:name="com.android.bdkstock.screens.main.base.GlobalErrorFragment"
+    android:name="com.android.bdkstock.screens.main.base.messages.GlobalErrorFragment"
     android:label="GlobalErrorFragment" />
   <fragment
     android:id="@+id/orderDetailFragment"

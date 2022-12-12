@@ -20,8 +20,8 @@ import com.android.bdkstock.databinding.FragmentClientsBinding
 import com.android.bdkstock.databinding.RecyclerItemClientBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
-import com.android.bdkstock.screens.main.base.DefaultLoadStateAdapter
-import com.android.bdkstock.screens.main.base.pagingAdapter
+import com.android.bdkstock.screens.main.base.adapters.DefaultLoadStateAdapter
+import com.android.bdkstock.screens.main.base.adapters.pagingAdapter
 import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.clients.entity.ClientEntity
 import com.android.model.utils.AuthException
