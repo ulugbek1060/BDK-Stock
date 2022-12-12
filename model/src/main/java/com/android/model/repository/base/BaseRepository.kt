@@ -8,7 +8,7 @@ import com.google.gson.JsonParseException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 
-open class BaseRepository {
+open class BaseRepository : Repository {
 
    /**
     * @throws EmptyFieldException

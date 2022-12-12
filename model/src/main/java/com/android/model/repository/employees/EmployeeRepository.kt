@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class EmployeeRepository @Inject constructor(
    private val employeesSource: EmployeesSource
-) : BaseRepository(), Repository {
+) : BaseRepository() {
 
    suspend fun registerEmployee(
       firstname: String,

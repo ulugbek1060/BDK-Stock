@@ -12,10 +12,6 @@ class JobRepository @Inject constructor(
    private val appDatabase: AppDatabase
 ) : BaseRepository() {
 
-   /**
-    * Get jobs from server and save to room database
-    * @throws BackendException
-    */
    fun getJobs() = networkBoundResult(
       query = {
          appDatabase.getJobsDao().getJobs()
