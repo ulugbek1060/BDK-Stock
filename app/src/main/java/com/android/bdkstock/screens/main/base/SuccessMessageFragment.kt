@@ -15,7 +15,7 @@ class SuccessMessageFragment : Fragment(R.layout.fragment_success_message) {
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
       arguments?.let {
-         message = it.getString(SUCCESS_MESSAGE_KEY)
+         message = it.getString(SUCCESS_MESSAGE_BUNDLE_KEY)
       }
    }
 
@@ -27,7 +27,7 @@ class SuccessMessageFragment : Fragment(R.layout.fragment_success_message) {
       }
    }
 
-   companion object{
-      const val SUCCESS_MESSAGE_KEY = "success_message"
+   private companion object {
+      const val SUCCESS_MESSAGE_BUNDLE_KEY = "success_message"
    }
 }

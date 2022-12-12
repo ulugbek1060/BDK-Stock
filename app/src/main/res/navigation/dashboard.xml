@@ -70,7 +70,11 @@
     android:id="@+id/ingredientsOperationsFragment"
     android:name="com.android.bdkstock.screens.main.menu.ingredients.IngredientsOperationsFragment"
     android:label="@string/ingredients"
-    tools:layout="@layout/fragment_ingredients_operations" />
+    tools:layout="@layout/fragment_ingredients_operations" >
+    <action
+      android:id="@+id/action_ingredientsOperationsFragment_to_filterIngredientsFragment"
+      app:destination="@id/filterIngredientsFragment" />
+  </fragment>
   <fragment
     android:id="@+id/salesFragment"
     android:name="com.android.bdkstock.screens.main.menu.sales.OrderListFragment"
@@ -84,7 +88,11 @@
     android:id="@+id/productOperationsListFragment"
     android:name="com.android.bdkstock.screens.main.menu.products.ProductOperationsListFragment"
     android:label="@string/products"
-    tools:layout="@layout/fragment_product_operations_list" />
+    tools:layout="@layout/fragment_product_operations_list" >
+    <action
+      android:id="@+id/action_productOperationsListFragment_to_filterProductsFragment"
+      app:destination="@id/filterProductsFragment" />
+  </fragment>
   <fragment
     android:id="@+id/clientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.clients.ClientsFragment"
@@ -101,8 +109,26 @@
     android:label="@string/filter"
     tools:layout="@layout/fragment_orders_filter" >
     <argument
-      android:name="filterData"
-      app:argType="com.android.bdkstock.screens.main.menu.sales.FilterData" />
+      android:name="ordersFilterData"
+      app:argType="com.android.bdkstock.screens.main.menu.sales.OrdersFilterData" />
+  </dialog>
+  <dialog
+    android:id="@+id/filterIngredientsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.ingredients.FilterIngredientsFragment"
+    android:label="@string/filter"
+    tools:layout="@layout/fragment_filter_ingredients">
+    <argument
+      android:name="ingredientsFilterData"
+      app:argType="com.android.bdkstock.screens.main.menu.ingredients.IngredientsFilterData"/>
+  </dialog>
+  <dialog
+    android:id="@+id/filterProductsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.products.FilterProductsFragment"
+    android:label="@string/filter"
+    tools:layout="@layout/fragment_filter_products">
+    <argument
+      android:name="productsFilterData"
+      app:argType="com.android.bdkstock.screens.main.menu.products.ProductsFilterData"/>
   </dialog>
 
 </navigation>

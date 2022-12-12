@@ -234,7 +234,7 @@
         android:layout_marginTop="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/container_total_sum"
+        app:layout_constraintBottom_toTopOf="@id/container_payments"
         app:layout_constraintTop_toBottomOf="@id/container_driver">
 
         <TextView
@@ -262,98 +262,100 @@
       </LinearLayout>
 
       <LinearLayout
-        android:id="@+id/container_total_sum"
+        android:id="@+id/container_payments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dimen_large"
         android:layout_marginTop="@dimen/dimen_extra"
+        android:layout_marginBottom="@dimen/dimen_large"
+        android:background="@drawable/cornered_bg"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/container_debit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:padding="@dimen/dimen_large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fab_pay"
         app:layout_constraintTop_toBottomOf="@id/container_product">
 
-        <TextView
+        <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/inter_regular"
-          android:text="Total sum:"
-          android:textSize="@dimen/text_size_normal" />
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:text="@string/total_sum"
+            android:textSize="@dimen/text_size_small" />
 
 
-        <TextView
-          android:id="@+id/tv_total_sum"
+          <TextView
+            android:id="@+id/tv_total_sum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/inter_regular"
+            android:lines="1"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="@dimen/text_size_normal"
+            android:textStyle="bold"
+            tools:text="12,000,000.00 UZS" />
+
+        </LinearLayout>
+
+        <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/inter_regular"
-          android:textColor="?attr/colorOnSurface"
-          android:textSize="@dimen/text_size_extra"
-          android:textStyle="bold"
-          tools:text="12,000,000.00 UZS" />
+          android:layout_marginTop="@dimen/dimen_large"
+          android:orientation="vertical">
 
-      </LinearLayout>
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:text="@string/debit"
+            android:textSize="@dimen/text_size_small" />
 
-      <LinearLayout
-        android:id="@+id/container_debit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dimen_large"
-        android:layout_marginTop="@dimen/dimen_large"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/container_payed"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_total_sum">
+          <TextView
+            android:id="@+id/tv_debit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/inter_regular"
+            android:lines="1"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="@dimen/text_size_normal"
+            android:textStyle="bold"
+            tools:text="12,000,000.00 UZS" />
 
-        <TextView
+        </LinearLayout>
+
+        <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/inter_regular"
-          android:text="Debit:"
-          android:textSize="@dimen/text_size_normal" />
+          android:layout_marginTop="@dimen/dimen_large"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:text="@string/paid"
+            android:textSize="@dimen/text_size_small" />
 
 
-        <TextView
-          android:id="@+id/tv_debit"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:fontFamily="@font/inter_regular"
-          android:textColor="?attr/colorOnSurface"
-          android:textSize="@dimen/text_size_extra"
-          android:textStyle="bold"
-          tools:text="12,000,000.00 UZS" />
+          <TextView
+            android:id="@+id/tv_payed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/inter_regular"
+            android:lines="1"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="@dimen/text_size_normal"
+            android:textStyle="bold"
+            tools:text="12,000,000.00 UZS" />
 
-      </LinearLayout>
-
-      <LinearLayout
-        android:id="@+id/container_payed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dimen_large"
-        android:layout_marginTop="@dimen/dimen_large"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/fab_pay"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_debit">
-
-        <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:fontFamily="@font/inter_regular"
-          android:text="Payed:"
-          android:textSize="@dimen/text_size_normal" />
-
-
-        <TextView
-          android:id="@+id/tv_payed"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:fontFamily="@font/inter_regular"
-          android:textColor="?attr/colorOnSurface"
-          android:textSize="@dimen/text_size_extra"
-          android:textStyle="bold"
-          tools:text="12,000,000.00 UZS" />
+        </LinearLayout>
 
       </LinearLayout>
 
@@ -361,13 +363,14 @@
         android:id="@+id/fab_pay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginEnd="@dimen/dimen_big"
+        android:layout_marginBottom="@dimen/dimen_big"
         android:contentDescription="@string/add"
-        android:text="@string/pay"
+        android:text="@string/payments"
         app:icon="@drawable/ic_payments"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_payed" />
+        app:layout_constraintTop_toBottomOf="@id/container_payments" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

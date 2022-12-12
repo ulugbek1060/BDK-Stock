@@ -99,7 +99,7 @@ class OrderDetailViewModel @Inject constructor(
 
       fun getStatusColor(context: Context) =
          if (orderEntity?.status == 1) context.getColor(R.color.green)
-         else context.getColor(R.color.yellow)
+         else context.getColor(R.color.orange)
 
       fun fabVisibility(view: View) =
          if (orderEntity?.status == 1) view.gone()

@@ -126,31 +126,30 @@ class NewOrderFragment :
       }
    }
 
-   private fun observeDriverData(savedStateHandle: SavedStateHandle?) {
-      savedStateHandle
-         ?.getLiveData<DriverEntity>(DRIVER_SELECTION_KEY)
-         ?.observe(viewLifecycleOwner) {
-            if (it == null) return@observe
-            viewModel.setDriverId(it.id)
-            with(binding) {
-               inputDriverName.setText(it.driverFullName)
-               inputDriverMobile.setText(it.phoneNumber)
-               inputDriverAutoNumber.setText(it.autoRegNumber)
-            }
-         }
-   }
-
    private fun observeClientData(savedStateHandle: SavedStateHandle?) {
       savedStateHandle
          ?.getLiveData<ClientEntity>(CLIENT_SELECTION_KEY)
          ?.observe(viewLifecycleOwner) {
-            if (it == null) return@observe
             viewModel.setClientId(it.clientId)
+            viewModel.disableClientErrorMessage(false)
             with(binding) {
                inputClientName.setText(it.fullName)
                inputClientMobile.setText(it.phoneNumber)
                inputClientAddress.setText(it.address)
+            }
+         }
+   }
 
+   private fun observeDriverData(savedStateHandle: SavedStateHandle?) {
+      savedStateHandle
+         ?.getLiveData<DriverEntity>(DRIVER_SELECTION_KEY)
+         ?.observe(viewLifecycleOwner) {
+            viewModel.setDriverId(it.id)
+            viewModel.disableDriverErrorMessage(false)
+            with(binding) {
+               inputDriverName.setText(it.driverFullName)
+               inputDriverMobile.setText(it.phoneNumber)
+               inputDriverAutoNumber.setText(it.autoRegNumber)
             }
          }
    }

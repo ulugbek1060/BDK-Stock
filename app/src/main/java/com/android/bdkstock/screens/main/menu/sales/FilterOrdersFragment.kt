@@ -137,10 +137,3 @@ class FilterOrdersFragment : BottomSheetDialogFragment(R.layout.fragment_orders_
 
 }
 
-data class FilterData(
-   val status: Int? = null,
-   val client: String? = null,
-   val fromDate: String? = null,
-   val toDate: String? = null,
-   val driver: String? = null,
-) : Serializable

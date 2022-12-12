@@ -15,35 +15,28 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.DialogFilterOperationsBinding
 import com.android.bdkstock.databinding.FragmentProductOperationsListBinding
 import com.android.bdkstock.databinding.ProgressItemBiggerBinding
 import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.screens.main.base.DefaultLoadStateAdapter
-import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.screens.main.base.pagingAdapter
+import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.products.entity.ProductOperationEntity
 import com.android.model.utils.AuthException
-import com.android.model.utils.Const.DATE_TIME_INPUT_FORMAT
 import com.android.model.utils.observeEvent
 import com.elveum.elementadapter.simpleAdapter
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
-import java.text.SimpleDateFormat
 import java.util.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class ProductOperationsListFragment :
    BaseFragment<ProductOperationsListViewModel, FragmentProductOperationsListBinding>() {
-
-   // TODO: need to fix item card
 
    override val viewModel: ProductOperationsListViewModel by viewModels()
    override fun getViewBinding() = FragmentProductOperationsListBinding.inflate(layoutInflater)
@@ -73,7 +66,7 @@ class ProductOperationsListFragment :
          listeners {
             root.onClick {
                val args = ActionsFragmentDirections
-                     .actionActionsFragmentToDetailOperationsFragment(it)
+                  .actionActionsFragmentToDetailOperationsFragment(it)
                findTopNavController().navigate(args)
             }
          }
@@ -125,95 +118,17 @@ class ProductOperationsListFragment :
       findTopNavController().navigate(args)
    }
 
-//   private fun navigate(destination: NavDestination, extraInfo: FragmentNavigator.Extras) =
-//      with(findTopNavController()) {
-//         currentDestination?.getAction(destination.actionId)?.let {
-//            navigate(destination, extraInfo)
-//         }
-//      }
-
    private val menuProvider = object : MenuProvider {
       override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
          menuInflater.inflate(R.menu.menu_filter, menu)
       }
 
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-         if (menuItem.itemId == R.id.filter) showFilterDialog()
+         if (menuItem.itemId == R.id.filter) {
+
+         }
          return false
       }
-   }
-
-   private fun showFilterDialog() {
-      val dialog = AlertDialog.Builder(requireContext()).create()
-      dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-      val dialogBinding = DialogFilterOperationsBinding.inflate(layoutInflater)
-      dialog.setView(dialogBinding.root)
-
-      var status: Int? = null
-
-      dialogBinding.buttonClear.setOnClickListener {
-         viewModel.clearFilter()
-         dialog.dismiss()
-      }
-
-      dialogBinding.buttonApply.setOnClickListener {
-         viewModel.setFilterData(
-            query = dialogBinding.inputQuery.text.toString(),
-            fromDate = dialogBinding.inputFromDate.text.toString(),
-            toDate = dialogBinding.inputToDate.text.toString(),
-            status = status,
-         )
-         dialog.dismiss()
-      }
-
-      dialogBinding.buttonAll.setOnClickListener { status = null }
-      dialogBinding.buttonExpense.setOnClickListener { status = EXPORTED_PRODUCT }
-      dialogBinding.buttonIncome.setOnClickListener { status = MANUFACTURED_PRODUCT }
-
-      dialogBinding.inputLayoutFromDate.setEndIconOnClickListener {
-         getCalendarDialog(
-            requireContext().getString(R.string.from_date),
-            dialogBinding.inputFromDate
-         )
-      }
-
-      dialogBinding.inputLayoutToDate.setEndIconOnClickListener {
-         getCalendarDialog(
-            requireContext().getString(R.string.to_date),
-            dialogBinding.inputToDate
-         )
-      }
-
-      viewModel.query.observe(viewLifecycleOwner) { filterData ->
-
-         status = filterData.status
-
-         dialogBinding.toggleButton.check(getCheckId(filterData.status))
-         dialogBinding.inputQuery.setText(filterData.query)
-         dialogBinding.inputFromDate.setText(filterData.fromDate)
-         dialogBinding.inputToDate.setText(filterData.toDate)
-      }
-
-      dialog.show()
-   }
-
-   @SuppressLint("SimpleDateFormat")
-   private fun getCalendarDialog(title: String, inputFromDate: TextInputEditText) {
-      val datePicker = MaterialDatePicker.Builder.datePicker()
-         .setTitleText(title)
-         .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-         .build()
-      datePicker.addOnPositiveButtonClickListener { timeMiles ->
-         val formatter = SimpleDateFormat(DATE_TIME_INPUT_FORMAT)
-         val date = formatter.format(Date(timeMiles))
-         inputFromDate.setText(date)
-      }
-      datePicker.addOnNegativeButtonClickListener {
-         inputFromDate.setText("")
-         datePicker.dismiss()
-      }
-      datePicker.show(parentFragmentManager, "tag")
    }
 
    private fun setupRecyclerView() = binding.apply {
@@ -277,12 +192,6 @@ class ProductOperationsListFragment :
       progressAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
       binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
       binding.recyclerProgress.adapter = progressAdapter
-   }
-
-   private fun getCheckId(state: Int?) = when (state) {
-      1 -> R.id.button_expense
-      0 -> R.id.button_income
-      else -> R.id.button_all
    }
 
    private companion object {

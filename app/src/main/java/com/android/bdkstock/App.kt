@@ -3,9 +3,6 @@ package com.android.bdkstock
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
-
-// TODO: 2.Create pay dialog
-// TODO: 3.Setup indicator checker to check payed or not and also install to NewOrderFragment
 // TODO: 4.Fix filter fields
 // TODO: 5.Fix ingredient filter and product filter
 // TODO: 6.Set all titles
@@ -17,6 +14,8 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class App : Application()
+
+// TODO: messages 1.pay message 2.created order message
 
 
 

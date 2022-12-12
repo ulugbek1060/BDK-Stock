@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.android.model.utils.liveData
 import com.android.model.utils.requireValue
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.Serializable
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,7 +16,7 @@ class FilterOrderViewModel @Inject constructor(
 
    private val _currentFilterData = FilterOrdersFragmentArgs
       .fromSavedStateHandle(savedStateHandle)
-      .filterData
+      .ordersFilterData
 
    private val _filterData = MutableLiveData(_currentFilterData)
    val filterData = _filterData.liveData()
@@ -39,6 +40,14 @@ class FilterOrderViewModel @Inject constructor(
    fun getFilterData() = _filterData.requireValue()
 
    fun clearData() {
-      _filterData.value = FilterData()
+      _filterData.value = OrdersFilterData()
    }
 }
+
+data class OrdersFilterData(
+   val status: Int? = null,
+   val client: String? = null,
+   val fromDate: String? = null,
+   val toDate: String? = null,
+   val driver: String? = null,
+) : Serializable

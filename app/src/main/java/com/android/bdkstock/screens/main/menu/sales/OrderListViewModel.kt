@@ -1,7 +1,5 @@
-
 package com.android.bdkstock.screens.main.menu.sales
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
@@ -14,23 +12,22 @@ import com.android.model.utils.liveData
 import com.android.model.utils.publishEvent
 import com.android.model.utils.requireValue
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
-@OptIn(FlowPreview::class)
+@OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class OrderListViewModel @Inject constructor(
    private val salesRepository: SalesRepository,
    accountRepository: AccountRepository
 ) : BaseViewModel(accountRepository) {
 
-
    private val _errorEvent = MutableUnitLiveEvent()
    val errorEvent = _errorEvent.liveData()
 
-   private val _filterData = MutableLiveData(FilterData())
+   private val _filterData = MutableLiveData(OrderFilterData())
    val ordersFlow = _filterData.asFlow()
       .flatMapLatest { filter ->
          salesRepository.getOrdersList(
@@ -47,11 +44,11 @@ class OrderListViewModel @Inject constructor(
       _errorEvent.publishEvent()
    }
 
-   fun setFilterData(filterData: FilterData) {
+   fun setFilterData(filterData: OrderFilterData) {
       _filterData.value = filterData
    }
 
-   fun getFilterData(): FilterData {
+   fun getFilterData(): OrderFilterData {
       return _filterData.requireValue()
    }
 }

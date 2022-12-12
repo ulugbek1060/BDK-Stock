@@ -77,8 +77,9 @@ class PayViewModel @Inject constructor(
 
    data class State(
       val isInProgress: Boolean = false,
-      val isEmptyPay: Boolean = false
-   ) {
+      val isEmptyPay: Boolean = false,
+
+      ) {
       fun getEmptyPayError(context: Context) =
          if (isEmptyPay) context.getString(R.string.error_empty_pay_field)
          else null

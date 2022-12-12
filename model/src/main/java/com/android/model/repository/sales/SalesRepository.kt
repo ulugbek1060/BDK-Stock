@@ -1,6 +1,5 @@
 package com.android.model.repository.sales
 
-import android.util.Log
 import androidx.paging.PagingData
 import com.android.model.di.IoDispatcher
 import com.android.model.repository.base.BasePageSource
@@ -50,6 +49,10 @@ class SalesRepository @Inject constructor(
             salesSource.payForOrder(orderId, cash, card)
          }
       } else if (card.isBlank() && cash.isNotBlank()) {
+         suspendRunCatching {
+            salesSource.payForOrder(orderId, cash, card)
+         }
+      } else if (cash.isNotBlank() && card.isNotBlank()) {
          suspendRunCatching {
             salesSource.payForOrder(orderId, cash, card)
          }

@@ -22,7 +22,6 @@ class PayFragment : BottomSheetDialogFragment(R.layout.fragment_pay) {
    private val binding: FragmentPayBinding get() = _binding!!
    private val viewModel: PayViewModel by viewModels()
 
-
    override fun onCreateView(
       inflater: LayoutInflater,
       container: ViewGroup?,
@@ -44,8 +43,15 @@ class PayFragment : BottomSheetDialogFragment(R.layout.fragment_pay) {
 
    private fun observeGoBack() {
       viewModel.goBack.observeEvent(viewLifecycleOwner) {
+
          setFragmentResult(PAYMENTS_KEY, bundleOf(PAYMENTS_BUNDLE_KEY to true))
+
          findTopNavController().popBackStack()
+
+         findTopNavController().navigate(
+            R.id.successMessageFragment,
+            bundleOf(SUCCESS_MESSAGE_BUNDLE_KEY to it)
+         )
       }
    }
 
@@ -84,8 +90,9 @@ class PayFragment : BottomSheetDialogFragment(R.layout.fragment_pay) {
       _binding = null
    }
 
-   private companion object{
+   private companion object {
       const val PAYMENTS_KEY = "payments"
       const val PAYMENTS_BUNDLE_KEY = "payments_bundle"
+      const val SUCCESS_MESSAGE_BUNDLE_KEY = "success_message"
    }
 }

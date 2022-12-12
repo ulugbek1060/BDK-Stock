@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
-import com.android.model.repository.products.ProductsRepository
 import com.android.model.repository.products.entity.ProductSelectionItem
 import com.android.model.repository.sales.SalesRepository
 import com.android.model.repository.sales.entity.OrderEntity
@@ -56,9 +55,9 @@ class NewOrderViewModel @Inject constructor(
 
    private fun showEmptyFields(e: EmptyFieldException) {
       _state.value = _state.requireValue().copy(
-         emptyClient = e.field == Field.EMPTY_CLIENT,
-         emptyDriver = e.field == Field.EMPTY_DRIVER,
-         emptyProduct = e.field == Field.PRODUCT
+         isEmptyClient = e.field == Field.EMPTY_CLIENT,
+         isEmptyDriver = e.field == Field.EMPTY_DRIVER,
+         isEmptyProduct = e.field == Field.PRODUCT
       )
    }
 
@@ -124,24 +123,38 @@ class NewOrderViewModel @Inject constructor(
       )
    }
 
+   fun disableClientErrorMessage(clientState: Boolean) {
+      if (_state.requireValue().isEmptyClient)
+         _state.value = _state.requireValue().copy(
+            isEmptyClient = clientState
+         )
+   }
+
+   fun disableDriverErrorMessage(driverState: Boolean) {
+      if (_state.requireValue().isEmptyDriver)
+         _state.value = _state.requireValue().copy(
+            isEmptyDriver = driverState
+         )
+   }
+
    data class State(
       val isInProgress: Boolean = false,
-      val emptyClient: Boolean = false,
-      val emptyDriver: Boolean = false,
-      val emptyProduct: Boolean = false,
+      val isEmptyClient: Boolean = false,
+      val isEmptyDriver: Boolean = false,
+      val isEmptyProduct: Boolean = false,
       val totalSum: String = "0"
    ) {
 
       fun getClientErrorMessage(context: Context) =
-         if (emptyClient) context.getString(R.string.error_empty_client)
+         if (isEmptyClient) context.getString(R.string.error_empty_client)
          else null
 
       fun getDriverErrorMessage(context: Context) =
-         if (emptyClient) context.getString(R.string.error_empty_driver)
+         if (isEmptyDriver) context.getString(R.string.error_empty_driver)
          else null
 
       fun getProductErrorMessage(context: Context) =
-         if (emptyClient) context.getString(R.string.error_empty_product)
+         if (isEmptyProduct) context.getString(R.string.error_empty_product)
          else null
    }
 }

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -50,7 +49,7 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
       bind { order ->
          val statusColor = when (order.status) {
             1 -> root.context.getColor(R.color.green)
-            0 -> root.context.getColor(R.color.yellow)
+            0 -> root.context.getColor(R.color.orange)
             else -> root.context.getColor(R.color.red)
          }
 
@@ -117,10 +116,10 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
    private fun getFilterDataResult() {
       setFragmentResultListener(ORDER_FILTER_DATA_KEY) { _, bundle ->
          val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            bundle.getSerializable(ORDER_FILTER_DATA_BUNDLE_KEY, FilterData::class.java)
+            bundle.getSerializable(ORDER_FILTER_DATA_BUNDLE_KEY, OrderFilterData::class.java)
          } else {
-            bundle.getSerializable(ORDER_FILTER_DATA_BUNDLE_KEY) as FilterData
-         } ?: FilterData()
+            bundle.getSerializable(ORDER_FILTER_DATA_BUNDLE_KEY) as OrderFilterData
+         } ?: OrderFilterData()
          viewModel.setFilterData(result)
       }
    }

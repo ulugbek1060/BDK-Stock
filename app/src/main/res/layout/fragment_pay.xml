@@ -1,182 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   tools:context=".screens.main.menu.sales.PayFragment">
 
-  <LinearLayout
-    android:id="@+id/layout_total_sum"
+  <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/dimen_large"
-    android:layout_marginTop="@dimen/dimen_extra"
-    android:orientation="vertical"
-    app:layout_constraintBottom_toTopOf="@id/layout_debit"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_height="match_parent">
 
     <TextView
+      android:id="@+id/tv_title"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/dimen_large"
       android:fontFamily="@font/inter_regular"
-      android:text="Total sum:"
-      android:textSize="@dimen/text_size_small" />
-
-
-    <TextView
-      android:id="@+id/tv_total_sum"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fontFamily="@font/inter_regular"
+      android:padding="@dimen/dimen_large"
+      android:text="@string/payments"
       android:textColor="?attr/colorOnSurface"
-      android:textSize="@dimen/text_size_normal"
+      android:textSize="@dimen/text_size_big"
       android:textStyle="bold"
-      tools:text="12,000,000.00 UZS" />
+      app:layout_constraintTop_toTopOf="parent" />
 
-  </LinearLayout>
-
-  <LinearLayout
-    android:id="@+id/layout_debit"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/dimen_large"
-    android:layout_marginTop="@dimen/dimen_large"
-    android:orientation="vertical"
-    app:layout_constraintBottom_toTopOf="@id/layout_payed"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/layout_total_sum">
-
-    <TextView
+    <LinearLayout
+      android:id="@+id/container_payments"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:fontFamily="@font/inter_regular"
-      android:text="Debit:"
-      android:textSize="@dimen/text_size_small" />
+      android:layout_marginHorizontal="@dimen/dimen_large"
+      android:layout_marginTop="@dimen/dimen_extra"
+      android:background="@drawable/cornered_bg"
+      android:orientation="vertical"
+      android:padding="@dimen/dimen_large"
+      app:layout_constraintBottom_toTopOf="@id/input_layout_cash"
+      app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/inter_regular"
+          android:text="@string/total_sum"
+          android:textSize="@dimen/text_size_small" />
 
 
-    <TextView
-      android:id="@+id/tv_debit"
+        <TextView
+          android:id="@+id/tv_total_sum"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ellipsize="end"
+          android:fontFamily="@font/inter_regular"
+          android:lines="1"
+          android:textColor="?attr/colorOnSurface"
+          android:textSize="@dimen/text_size_normal"
+          android:textStyle="bold"
+          tools:text="12,000,000.00 UZS" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:orientation="vertical">
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/inter_regular"
+          android:text="@string/debit"
+          android:textSize="@dimen/text_size_small" />
+
+        <TextView
+          android:id="@+id/tv_debit"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ellipsize="end"
+          android:fontFamily="@font/inter_regular"
+          android:lines="1"
+          android:textColor="?attr/colorOnSurface"
+          android:textSize="@dimen/text_size_normal"
+          android:textStyle="bold"
+          tools:text="12,000,000.00 UZS" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:orientation="vertical">
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/inter_regular"
+          android:text="@string/paid"
+          android:textSize="@dimen/text_size_small" />
+
+
+        <TextView
+          android:id="@+id/tv_payed"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ellipsize="end"
+          android:fontFamily="@font/inter_regular"
+          android:lines="1"
+          android:textColor="?attr/colorOnSurface"
+          android:textSize="@dimen/text_size_normal"
+          android:textStyle="bold"
+          tools:text="12,000,000.00 UZS" />
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/input_layout_cash"
+      style="@style/TextInputLayoutStyle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:fontFamily="@font/inter_regular"
-      android:textColor="?attr/colorOnSurface"
-      android:textSize="@dimen/text_size_normal"
-      android:textStyle="bold"
-      tools:text="12,000,000.00 UZS" />
+      android:layout_marginHorizontal="@dimen/dimen_large"
+      android:layout_marginTop="@dimen/dimen_large"
+      android:fontFamily="@font/open_sans_regular"
+      android:hint="@string/cash"
+      app:errorEnabled="true"
+      app:layout_constraintBottom_toTopOf="@id/input_layout_card"
+      app:layout_constraintTop_toBottomOf="@id/container_payments"
+      app:startIconDrawable="@drawable/ic_payments">
 
-  </LinearLayout>
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/input_cash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:imeOptions="actionDone"
+        android:inputType="numberDecimal" />
 
-  <LinearLayout
-    android:id="@+id/layout_payed"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/dimen_large"
-    android:layout_marginTop="@dimen/dimen_large"
-    android:orientation="vertical"
-    app:layout_constraintBottom_toTopOf="@id/input_layout_cash"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/layout_debit">
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/input_layout_card"
+      style="@style/TextInputLayoutStyle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:fontFamily="@font/inter_regular"
-      android:text="Payed:"
-      android:textSize="@dimen/text_size_small" />
+      android:layout_marginHorizontal="@dimen/dimen_large"
+      android:fontFamily="@font/open_sans_regular"
+      android:hint="@string/card"
+      app:errorEnabled="true"
+      app:layout_constraintBottom_toTopOf="@id/buttons_frame"
+      app:layout_constraintTop_toBottomOf="@id/input_layout_cash"
+      app:startIconDrawable="@drawable/ic_payments">
 
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/input_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:imeOptions="actionDone"
+        android:inputType="numberDecimal" />
 
-    <TextView
-      android:id="@+id/tv_payed"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <FrameLayout
+      android:id="@+id/buttons_frame"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:fontFamily="@font/inter_regular"
-      android:textColor="?attr/colorOnSurface"
-      android:textSize="@dimen/text_size_normal"
-      android:textStyle="bold"
-      tools:text="12,000,000.00 UZS" />
+      android:layout_margin="@dimen/dimen_large"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/input_layout_card">
 
-  </LinearLayout>
+      <Button
+        android:id="@+id/button_pay"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/pay"
+        android:visibility="visible" />
 
-  <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/input_layout_cash"
-    style="@style/TextInputLayoutStyle"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/dimen_large"
-    android:layout_marginTop="@dimen/dimen_large"
-    android:fontFamily="@font/open_sans_regular"
-    android:hint="@string/cash"
-    app:errorEnabled="true"
-    app:layout_constraintBottom_toTopOf="@id/input_layout_card"
-    app:layout_constraintTop_toBottomOf="@id/layout_payed"
-    app:startIconDrawable="@drawable/ic_payments">
+      <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
-    <com.google.android.material.textfield.TextInputEditText
-      android:id="@+id/input_cash"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fontFamily="@font/inter_regular"
-      android:imeOptions="actionDone"
-      android:inputType="numberDecimal" />
+    </FrameLayout>
 
-  </com.google.android.material.textfield.TextInputLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
-  <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/input_layout_card"
-    style="@style/TextInputLayoutStyle"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/dimen_large"
-    android:fontFamily="@font/open_sans_regular"
-    android:hint="@string/card"
-    app:errorEnabled="true"
-    app:layout_constraintBottom_toTopOf="@id/buttons_frame"
-    app:layout_constraintTop_toBottomOf="@id/input_layout_cash"
-    app:startIconDrawable="@drawable/ic_payments">
 
-    <com.google.android.material.textfield.TextInputEditText
-      android:id="@+id/input_card"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fontFamily="@font/inter_regular"
-      android:imeOptions="actionDone"
-      android:inputType="numberDecimal" />
-
-  </com.google.android.material.textfield.TextInputLayout>
-
-  <FrameLayout
-    android:id="@+id/buttons_frame"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dimen_large"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/input_layout_card">
-
-    <Button
-      android:id="@+id/button_pay"
-      style="@style/Widget.MaterialComponents.Button"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:fontFamily="@font/inter_regular"
-      android:text="@string/pay"
-      android:textStyle="bold"
-      android:visibility="visible" />
-
-    <ProgressBar
-      android:id="@+id/progressbar"
-      android:layout_width="match_parent"
-      android:layout_height="45dp"
-      android:layout_gravity="center"
-      android:visibility="gone" />
-
-  </FrameLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

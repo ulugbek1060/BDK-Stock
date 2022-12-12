@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/recycler_menu"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".screens.main.menu.actions.MenuFragment">
-
-  <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/recycler_menu"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="@dimen/dimen_small"
-    tools:listitem="@layout/recycler_item_menu" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+  android:paddingLeft="@dimen/dimen_normal"
+  android:paddingRight="@dimen/dimen_normal"
+  tools:context=".screens.main.menu.actions.MenuFragment"
+  tools:listitem="@layout/recycler_item_menu" />

@@ -1,208 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content">
 
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/main_container"
+  <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:visibility="visible">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/input_layout_product"
-      style="@style/TextInputLayoutStyleDropDown"
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/main_container"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/dimen_large"
-      android:layout_marginTop="@dimen/dimen_extra"
-      android:layout_marginRight="@dimen/dimen_large"
-      android:fontFamily="@font/open_sans_regular"
-      android:hint="@string/job"
-      app:layout_constraintBottom_toTopOf="@id/input_layout_amount"
-      app:errorEnabled="true"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
+      android:layout_height="match_parent"
+      android:visibility="visible">
 
-      <AutoCompleteTextView
-        android:id="@+id/auto_complete_product"
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_product"
+        style="@style/TextInputLayoutStyleDropDown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:imeOptions="actionNext"
-        android:fontFamily="@font/inter_regular"
-        android:inputType="none"
-        tools:ignore="LabelFor" />
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_extra"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:fontFamily="@font/open_sans_regular"
+        android:hint="@string/job"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@id/input_layout_amount"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <AutoCompleteTextView
+          android:id="@+id/auto_complete_product"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/inter_regular"
+          android:imeOptions="actionNext"
+          android:inputType="none"
+          tools:ignore="LabelFor" />
 
-    <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/input_layout_amount"
-      style="@style/TextInputLayoutStyle"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/dimen_large"
-      android:layout_marginRight="@dimen/dimen_large"
-      android:layout_weight="1"
-      android:fontFamily="@font/open_sans_regular"
-      android:hint="@string/weight"
-      app:layout_constraintBottom_toTopOf="@id/tv_product_hint"
-      app:errorEnabled="true"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toLeftOf="@id/input_layout_weight"
-      app:layout_constraintTop_toBottomOf="@id/input_layout_product">
+      </com.google.android.material.textfield.TextInputLayout>
 
-      <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/input_amount"
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_amount"
+        style="@style/TextInputLayoutStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:layout_weight="1"
+        android:fontFamily="@font/open_sans_regular"
+        android:hint="@string/weight"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@id/tv_product_hint"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/input_layout_weight"
+        app:layout_constraintTop_toBottomOf="@id/input_layout_product">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/input_amount"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/inter_regular"
+          android:imeOptions="actionDone"
+          android:inputType="number" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_weight"
+        style="@style/TextInputLayoutStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_large"
+        android:layout_weight="1"
+        android:fontFamily="@font/open_sans_regular"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toBottomOf="@id/input_layout_amount"
+        app:layout_constraintLeft_toRightOf="@id/input_layout_amount"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/input_layout_amount">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/input_weight"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:cursorVisible="false"
+          android:focusable="false"
+          android:fontFamily="@font/inter_regular"
+          tools:text="kg" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <TextView
+        android:id="@+id/tv_product_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginRight="@dimen/dimen_large"
         android:fontFamily="@font/inter_regular"
-        android:imeOptions="actionDone"
-        android:inputType="number" />
+        android:text="@string/product"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintBottom_toTopOf="@id/tv_product"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_layout_amount" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+      <TextView
+        android:id="@+id/tv_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="@color/high_emphasises"
+        android:textSize="@dimen/text_size_normal"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tv_price_hint"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_product_hint" />
 
-    <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/input_layout_weight"
-      style="@style/TextInputLayoutStyle"
+      <TextView
+        android:id="@+id/tv_price_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_normal"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/cost_of_product"
+        android:textSize="@dimen/text_size_small"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tv_price"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_product" />
+
+      <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="@color/high_emphasises"
+        android:textSize="@dimen/text_size_normal"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tv_price_total_hint"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_price_hint" />
+
+      <TextView
+        android:id="@+id/tv_price_total_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_normal"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/total_sum"
+        android:textSize="@dimen/text_size_small"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tv_price_total"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_price" />
+
+      <TextView
+        android:id="@+id/tv_price_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="@color/high_emphasises"
+        android:textSize="@dimen/text_size_normal"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/button_save"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_price_total_hint" />
+
+      <Button
+        android:id="@+id/button_save"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_extra"
+        android:layout_marginRight="@dimen/dimen_large"
+        android:layout_marginBottom="@dimen/dimen_large"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_price_total" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+      android:id="@+id/progressbar"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="@dimen/dimen_large"
-      android:layout_weight="1"
-      app:layout_constraintLeft_toRightOf="@id/input_layout_amount"
-      android:fontFamily="@font/open_sans_regular"
-      app:errorEnabled="true"
-      app:layout_constraintBottom_toBottomOf="@id/input_layout_amount"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="@id/input_layout_amount">
+      android:layout_gravity="center"
+      android:layout_margin="@dimen/dimen_large"
+      android:visibility="visible"/>
 
-      <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/input_weight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:fontFamily="@font/inter_regular"
-        tools:text="kg" />
+  </FrameLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-      android:id="@+id/tv_product_hint"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/dimen_large"
-      android:layout_marginRight="@dimen/dimen_large"
-      android:fontFamily="@font/inter_regular"
-      android:text="Product name:"
-      android:textSize="@dimen/text_size_small"
-      app:layout_constraintBottom_toTopOf="@id/tv_product"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/input_layout_amount" />
-
-    <TextView
-      android:id="@+id/tv_product"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/dimen_large"
-      android:layout_marginRight="@dimen/dimen_large"
-      android:fontFamily="@font/inter_regular"
-      android:textColor="@color/high_emphasises"
-      android:textSize="@dimen/text_size_normal"
-      android:textStyle="bold"
-      app:layout_constraintBottom_toTopOf="@id/tv_price_hint"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/tv_product_hint" />
-
-    <TextView
-      android:id="@+id/tv_price_hint"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/dimen_large"
-      android:layout_marginTop="@dimen/dimen_normal"
-      android:textSize="@dimen/text_size_small"
-      android:layout_marginRight="@dimen/dimen_large"
-      android:fontFamily="@font/inter_regular"
-      android:text="Price for 1 kg:"
-      android:textStyle="bold"
-      app:layout_constraintBottom_toTopOf="@id/tv_price"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/tv_product" />
-
-    <TextView
-      android:id="@+id/tv_price"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/dimen_large"
-      android:layout_marginRight="@dimen/dimen_large"
-      android:fontFamily="@font/inter_regular"
-      android:text="0 UZS"
-      android:textSize="@dimen/text_size_normal"
-      android:textColor="@color/high_emphasises"
-      android:textStyle="bold"
-      app:layout_constraintBottom_toTopOf="@id/tv_price_total_hint"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/tv_price_hint" />
-
-
-    <TextView
-      android:id="@+id/tv_price_total_hint"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/dimen_large"
-      android:layout_marginTop="@dimen/dimen_normal"
-      android:layout_marginRight="@dimen/dimen_large"
-      android:fontFamily="@font/inter_regular"
-      android:text="Total sum:"
-      android:textSize="@dimen/text_size_small"
-      android:textStyle="bold"
-      app:layout_constraintBottom_toTopOf="@id/tv_price_total"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/tv_price" />
-
-    <TextView
-      android:id="@+id/tv_price_total"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/dimen_large"
-      android:layout_marginRight="@dimen/dimen_large"
-      android:fontFamily="@font/inter_regular"
-      android:text="0 UZS"
-      android:textColor="@color/high_emphasises"
-      android:textSize="@dimen/text_size_normal"
-      android:textStyle="bold"
-      app:layout_constraintBottom_toTopOf="@id/button_save"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/tv_price_total_hint" />
-
-    <Button
-      android:id="@+id/button_save"
-      style="@style/Widget.MaterialComponents.Button"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/dimen_large"
-      android:layout_marginRight="@dimen/dimen_large"
-      android:layout_marginBottom="@dimen/dimen_large"
-      android:layout_marginTop="@dimen/dimen_extra"
-      android:text="@string/save"
-      android:fontFamily="@font/inter_medium"
-      android:textAllCaps="false"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/tv_price_total" />
-
-  </androidx.constraintlayout.widget.ConstraintLayout>
-
-  <ProgressBar
-    android:id="@+id/progressbar"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:visibility="visible"
-    android:layout_margin="@dimen/dimen_large"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-</FrameLayout>
+</androidx.core.widget.NestedScrollView>

@@ -144,5 +144,9 @@
   <string name="sale_status_1">Оплачен</string>
   <string name="order">Заказ</string>
   <string name="payments">Платежи</string>
+  <string name="debit">Остаток суммы</string>
+  <string name="paid">Оплачен</string>
+  <string name="product">Товар</string>
+  <string name="cost_of_product">Сумма товара за 1 кг</string>
 
 </resources>
