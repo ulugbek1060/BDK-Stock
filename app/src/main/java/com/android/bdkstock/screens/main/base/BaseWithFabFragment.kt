@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.core.view.isVisible
 import androidx.viewbinding.ViewBinding
 import com.android.bdkstock.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,7 +32,9 @@ abstract class BaseWithFabFragment<ViewModel : BaseViewModel, Binding : ViewBind
 
    private var opened = false
 
-   fun onAddButtonClicked(
+   protected fun isFabChildesVisible() = opened
+
+   protected fun onAddButtonClicked(
       mainFab: FloatingActionButton, childButtons: List<View>, titles: List<View>
    ) {
       setAnimation(mainFab, childButtons, titles)
@@ -41,9 +44,8 @@ abstract class BaseWithFabFragment<ViewModel : BaseViewModel, Binding : ViewBind
    }
 
    private fun setVisibility(childButtons: List<View>, titles: List<View>) {
-      val visibility = if (!opened) View.VISIBLE else View.GONE
-      childButtons.forEach { it.visibility = visibility }
-      titles.forEach { it.visibility = visibility }
+      childButtons.forEach { it.isVisible = !opened }
+      titles.forEach { it.isVisible = !opened }
    }
 
    private fun setAnimation(

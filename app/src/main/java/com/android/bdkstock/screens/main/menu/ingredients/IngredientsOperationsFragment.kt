@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.AbsListView
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
@@ -17,10 +18,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentIngredientsOperationsBinding
-import com.android.bdkstock.databinding.ProgressItemBiggerBinding
-import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
+import com.android.bdkstock.databinding.RecyclerItemOperationBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseWithFabFragment
 import com.android.bdkstock.screens.main.base.adapters.DefaultLoadStateAdapter
@@ -29,7 +30,6 @@ import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.observeEvent
-import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
@@ -44,32 +44,34 @@ class IngredientsOperationsFragment :
    private lateinit var layoutManager: LinearLayoutManager
    override fun getViewBinding() = FragmentIngredientsOperationsBinding.inflate(layoutInflater)
 
+   private val TAG = "IngredientsOperationsFr"
+
    @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
    private val adapter =
-      pagingAdapter<IngredientExOrInEntity, RecyclerItemIngredientOperationBinding> {
+      pagingAdapter<IngredientExOrInEntity, RecyclerItemOperationBinding> {
          areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
          bind { ingredient ->
-            // status
-            val statusTextColor =
-               if (ingredient.status == "1") root.context.getColor(R.color.red)
+
+            val statusColor =
+               if (ingredient.status == OPERATION_EXPORT) root.context.getColor(R.color.red)
                else root.context.getColor(R.color.green)
+
             val statusText =
-               if (ingredient.status == "1") root.context.getString(R.string.expense)
+               if (ingredient.status == OPERATION_EXPORT) root.context.getString(R.string.expense)
                else root.context.getString(R.string.income)
-            val indicator =
-               if (ingredient.status == "1") root.context.getDrawable(R.drawable.ic_export)
-               else root.context.getDrawable(R.drawable.ic_import)
 
-            ivIndicator.setImageDrawable(indicator)
-            ivIndicator.setColorFilter(statusTextColor)
+            val statusIcon =
+               if (ingredient.status == OPERATION_EXPORT) root.context.getDrawable(R.drawable.ic_import)
+               else root.context.getDrawable(R.drawable.ic_export)
 
+            icStatus.setImageDrawable(statusIcon)
+            icStatus.setColorFilter(statusColor)
             tvStatus.text = statusText
-            tvStatus.setTextColor(statusTextColor)
-
-            tvIngredient.text = ingredient.name
-            tvCreator.text = ingredient.creator
-            tvCreatedDate.text = ingredient.createdAt.formatDate(root.context)
-            tvAmount.text = ": ${ingredient.amount} ${ingredient.unit}"
+            tvStatus.setTextColor(statusColor)
+            tvName.text = ingredient.name
+            tvComment.text = ingredient.comment
+            tvAmount.text = ingredient.amount
+            tvUnit.text = ingredient.unit
          }
          listeners {
             root.onClick {
@@ -95,9 +97,9 @@ class IngredientsOperationsFragment :
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
-      setupProgress()
       setupRecyclerView()
       setupRefreshLayout()
+      setFabBehaviorOnRecycler()
 
       handleViewVisibility()
 
@@ -107,25 +109,24 @@ class IngredientsOperationsFragment :
       binding.fabIncome.setOnClickListener { incomeOnClick() }
       binding.fabExpense.setOnClickListener { expenseOnClick() }
       binding.fabIngredients.setOnClickListener { addOnClick() }
-
-      binding.fabOptions.setOnClickListener {
-         onAddButtonClicked(
-            binding.fabOptions,
-            listOf(
-               binding.fabIngredients,
-               binding.fabIncome,
-               binding.fabExpense
-            ),
-            listOf(
-               binding.tvIngredients,
-               binding.tvIncome,
-               binding.tvExpense
-            )
-         )
-      }
+      binding.fabOptions.setOnClickListener { fabOperationsOnClick() }
 
       requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
    }
+
+   private fun fabOperationsOnClick() = onAddButtonClicked(
+      binding.fabOptions,
+      listOf(
+         binding.fabIngredients,
+         binding.fabIncome,
+         binding.fabExpense
+      ),
+      listOf(
+         binding.tvIngredients,
+         binding.tvIncome,
+         binding.tvExpense
+      )
+   )
 
    private val menuProvider = object : MenuProvider {
       override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -160,13 +161,13 @@ class IngredientsOperationsFragment :
 
    private fun expenseOnClick() {
       val args = ActionsFragmentDirections
-         .actionActionsFragmentToOperateIngredientsFragment(OPERATION_EXPENSE)
+         .actionActionsFragmentToOperateIngredientsFragment(OPERATION_EXPORT)
       findTopNavController().navigate(args)
    }
 
    private fun incomeOnClick() {
       val args = ActionsFragmentDirections
-         .actionActionsFragmentToOperateIngredientsFragment(OPERATION_INCOME)
+         .actionActionsFragmentToOperateIngredientsFragment(OPERATION_IMPORT)
       findTopNavController().navigate(args)
    }
 
@@ -182,6 +183,29 @@ class IngredientsOperationsFragment :
       binding.recyclerIngredients.itemAnimator = null
    }
 
+   private fun setFabBehaviorOnRecycler() {
+      binding.recyclerIngredients.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            if (dy > 0 && binding.fabOptions.isVisible) {
+               if (isFabChildesVisible()) fabOperationsOnClick()
+               binding.fabOptions.hide()
+            } else if (dy < 0 && !binding.fabOptions.isVisible) {
+               binding.fabOptions.show()
+            }
+         }
+
+         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            when (newState) {
+               AbsListView.OnScrollListener.SCROLL_STATE_FLING -> {}
+               AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL -> {}
+               else -> {}
+            }
+         }
+      })
+   }
+
    private fun setupRefreshLayout() {
       binding.refreshLayout.setOnRefreshListener {
          adapter.refresh()
@@ -194,7 +218,7 @@ class IngredientsOperationsFragment :
          .map { it.refresh }
          .collectLatest { loadState ->
 
-            binding.recyclerProgress.isVisible = loadState == LoadState.Loading
+            binding.progressbar.isVisible = loadState == LoadState.Loading
             binding.refreshLayout.isVisible = loadState != LoadState.Loading
 
             if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
@@ -224,19 +248,10 @@ class IngredientsOperationsFragment :
       }
    }
 
-   // -- Progress with shimmer layout
-
-   private val progressAdapter = simpleAdapter<Any, ProgressItemBiggerBinding> {}
-   private fun setupProgress() {
-      progressAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
-      binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
-      binding.recyclerProgress.adapter = progressAdapter
-   }
-
    private companion object {
       const val INGREDIENTS_FILTER_KEY = "ingredients_filter"
       const val INGREDIENTS_FILTER_BUNDLE_KEY = "ingredients_filter_bundle"
-      const val OPERATION_INCOME = 0
-      const val OPERATION_EXPENSE = 1
+      const val OPERATION_IMPORT = 0
+      const val OPERATION_EXPORT = 1
    }
 }

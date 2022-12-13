@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.DialogAddIngredirntBinding
 import com.android.bdkstock.databinding.FragmentAddProductBinding
-import com.android.bdkstock.databinding.RecyclerSimpleItemIngredientBinding
+import com.android.bdkstock.databinding.RecyclerSingleItemBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.ingredients.entity.SimpleIngredient
@@ -30,14 +30,15 @@ class AddProductFragment : BaseFragment<AddProductViewModel, FragmentAddProductB
    private lateinit var layoutManager: LinearLayoutManager
 
    private val adapter =
-      simpleAdapter<SimpleIngredient, RecyclerSimpleItemIngredientBinding> {
+      simpleAdapter<SimpleIngredient, RecyclerSingleItemBinding> {
          areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
          bind { ingredient ->
             tvName.text = ingredient.name
-            tvAmount.text = "${ingredient.amount} ${ingredient.unit}"
+            tvAmount.text = ingredient.amount
+            tvUnit.text = ingredient.unit
          }
          listeners {
-            buttonRemove.onClick { ingredient ->
+            buttonDelete.onClick { ingredient ->
                viewModel.removeIngredient(ingredient)
             }
          }
@@ -116,7 +117,7 @@ class AddProductFragment : BaseFragment<AddProductViewModel, FragmentAddProductB
          binding.inputLayoutPrice.error = state.getPriceError(requireContext())
 
          binding.buttonSave.isVisible = !state.isInProgress
-         binding.lottiProgress.isVisible = state.isInProgress
+         binding.progressbar.isVisible = state.isInProgress
          binding.buttonAddIngredient.isEnabled = !state.isInProgress
       }
    }

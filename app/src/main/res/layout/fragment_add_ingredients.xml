@@ -15,7 +15,7 @@
     android:layout_marginLeft="@dimen/dimen_large"
     android:layout_marginTop="@dimen/dimen_extra"
     android:layout_marginRight="@dimen/dimen_large"
-    android:fontFamily="@font/open_sans_regular"
+    android:fontFamily="@font/inter_regular"
     android:hint="@string/name"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
@@ -24,7 +24,7 @@
     <com.google.android.material.textfield.TextInputEditText
       android:id="@+id/input_name"
       android:layout_width="match_parent"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:layout_height="wrap_content"
       android:imeOptions="actionNext"
       android:lines="1" />
@@ -36,7 +36,7 @@
     style="@style/TextInputLayoutStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fontFamily="@font/open_sans_regular"
+    android:fontFamily="@font/inter_regular"
     android:layout_marginLeft="@dimen/dimen_large"
     android:layout_marginTop="@dimen/dimen_large"
     android:layout_marginRight="@dimen/dimen_large"
@@ -48,7 +48,7 @@
     <com.google.android.material.textfield.TextInputEditText
       android:id="@+id/input_unit"
       android:layout_width="match_parent"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:layout_height="wrap_content"
       android:imeOptions="actionNext"
       android:inputType="number"
@@ -69,24 +69,17 @@
 
     <Button
       android:id="@+id/button_save"
-      android:layout_height="wrap_content"
       android:layout_width="match_parent"
-      android:fontFamily="@font/open_sans_regular"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/inter_medium"
       android:text="@string/save"
       android:textAllCaps="false" />
 
-    <com.airbnb.lottie.LottieAnimationView
-      android:id="@+id/lotti_progress"
+    <ProgressBar
+      android:id="@+id/progressbar"
       android:layout_width="match_parent"
-      android:layout_height="45dp"
-      android:visibility="gone"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/input_layout_job_title"
-      app:lottie_autoPlay="true"
-      app:lottie_loop="true"
-      app:lottie_rawRes="@raw/loading" />
+      android:layout_height="wrap_content"
+      android:visibility="gone" />
 
   </FrameLayout>
 

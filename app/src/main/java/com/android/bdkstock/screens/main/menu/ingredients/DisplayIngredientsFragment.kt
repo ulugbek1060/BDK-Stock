@@ -11,8 +11,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentDisplayIngredientsBinding
-import com.android.bdkstock.databinding.ProgressItemBiggerBinding
-import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
+import com.android.bdkstock.databinding.RecyclerItemOperationBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.screens.main.base.adapters.DefaultLoadStateAdapter
 import com.android.bdkstock.screens.main.base.adapters.pagingAdapter
@@ -36,24 +35,29 @@ class DisplayIngredientsFragment :
 
    @SuppressLint("SetTextI18n")
    private val adapter =
-      pagingAdapter<IngredientExOrInEntity, RecyclerItemIngredientOperationBinding> {
+      pagingAdapter<IngredientExOrInEntity, RecyclerItemOperationBinding> {
          areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
          bind { ingredient ->
-            // status
-            val statusTextColor =
-               if (ingredient.status == "1") root.context.getColor(R.color.red)
+
+            val statusColor =
+               if (ingredient.status == OPERATION_EXPORT) root.context.getColor(R.color.red)
                else root.context.getColor(R.color.green)
+
             val statusText =
-               if (ingredient.status == "1") root.context.getString(R.string.expense)
+               if (ingredient.status == OPERATION_EXPORT) root.context.getString(R.string.expense)
                else root.context.getString(R.string.income)
 
-            tvStatus.text = statusText
-            tvStatus.setTextColor(statusTextColor)
+            val statusIcon =
+               if (ingredient.status == OPERATION_EXPORT) root.context.getDrawable(R.drawable.ic_import)
+               else root.context.getDrawable(R.drawable.ic_export)
 
-            tvIngredient.text = ingredient.name
-            tvCreator.text = ingredient.creator
-            tvCreatedDate.text = ingredient.createdAt
-            tvAmount.text = "${ingredient.amount} ${ingredient.unit}"
+            icStatus.setImageDrawable(statusIcon)
+            icStatus.setColorFilter(statusColor)
+            tvName.text = statusText
+            tvName.setTextColor(statusColor)
+            tvComment.text = ingredient.comment
+            tvAmount.text = ingredient.amount
+            tvUnit.text = ingredient.unit
          }
          listeners {
             root.onClick {
@@ -72,7 +76,6 @@ class DisplayIngredientsFragment :
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
-      setupProgress()
       setupRecyclerView()
       setupRefreshLayout()
       observeIngredientFields()
@@ -119,7 +122,7 @@ class DisplayIngredientsFragment :
          .map { it.refresh }
          .collectLatest { loadState ->
 
-            binding.progress.isVisible = loadState == LoadState.Loading
+            binding.progressbar.isVisible = loadState == LoadState.Loading
             binding.refreshLayout.isVisible = loadState != LoadState.Loading
 
             if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
@@ -149,12 +152,8 @@ class DisplayIngredientsFragment :
       }
    }
 
-   // -- progress
-   private val progressAdapter = simpleAdapter<Any, ProgressItemBiggerBinding> {}
-   private fun setupProgress() {
-      progressAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
-      binding.progress.layoutManager = LinearLayoutManager(requireContext())
-      binding.progress.adapter = progressAdapter
+   private companion object {
+      const val OPERATION_IMPORT = 0
+      const val OPERATION_EXPORT = 1
    }
-
 }

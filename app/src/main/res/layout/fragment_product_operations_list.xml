@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
@@ -7,74 +7,9 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   tools:context=".screens.main.menu.products.ProductOperationsListFragment">
 
-  <com.google.android.material.appbar.AppBarLayout
-    android:id="@+id/appbar"
-    android:layout_width="match_parent"
-    android:background="@color/white"
-    app:elevation="0dp"
-    android:layout_height="?attr/actionBarSize"
-    android:fitsSystemWindows="true">
-
-    <com.google.android.material.appbar.CollapsingToolbarLayout
-      android:id="@+id/collapsing_toolbar"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fitsSystemWindows="true"
-      app:layout_scrollFlags="scroll|enterAlways">
-
-      <LinearLayout
-        android:id="@+id/buttons_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/dimen_small">
-
-        <Button
-          android:id="@+id/button_manufacture"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          style="@style/Widget.MaterialComponents.Button.Icon"
-          android:backgroundTint="@color/green"
-          android:layout_marginEnd="@dimen/dimen_small"
-          android:layout_weight="1"
-          app:icon="@drawable/ic_add"
-          android:text="@string/income"
-          android:textAllCaps="false" />
-
-        <Button
-          android:id="@+id/button_export"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/dimen_small"
-          android:layout_marginEnd="@dimen/dimen_small"
-          android:layout_weight="1"
-          style="@style/Widget.MaterialComponents.Button.Icon"
-          android:backgroundTint="@color/red"
-          app:icon="@drawable/ic_remove"
-          android:text="@string/expense"
-          android:textAllCaps="false" />
-
-        <Button
-          android:id="@+id/button_show"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/dimen_small"
-          android:layout_weight="1"
-          android:text="@string/add"
-          android:textAllCaps="false"
-          android:textSize="@dimen/text_size_small" />
-
-      </LinearLayout>
-
-    </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-  </com.google.android.material.appbar.AppBarLayout>
-
-
   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     android:id="@+id/refresh_layout"
     android:layout_width="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -84,12 +19,110 @@
 
   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-  <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/recycler_progress"
-    android:layout_width="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:layout_height="match_parent"
-    android:visibility="gone"
-    tools:listitem="@layout/progress_item_smaller" />
+  <ProgressBar
+    android:id="@+id/progressbar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+  <TextView
+    android:id="@+id/tv_manufacture"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_normal"
+    android:background="@drawable/cornered_bg"
+    android:fontFamily="@font/inter_medium"
+    android:padding="@dimen/dimen_normal"
+    android:text="@string/income"
+    android:textColor="?attr/colorOnSurface"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="@id/fab_manufacture"
+    app:layout_constraintRight_toLeftOf="@id/fab_manufacture"
+    app:layout_constraintTop_toTopOf="@id/fab_manufacture" />
+
+  <TextView
+    android:id="@+id/tv_export"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_normal"
+    android:background="@drawable/cornered_bg"
+    android:fontFamily="@font/inter_medium"
+    android:padding="@dimen/dimen_normal"
+    android:text="@string/expense"
+    android:textColor="?attr/colorOnSurface"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="@id/fab_export"
+    app:layout_constraintRight_toLeftOf="@id/fab_export"
+    app:layout_constraintTop_toTopOf="@id/fab_export" />
+
+  <TextView
+    android:id="@+id/tv_products"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_normal"
+    android:background="@drawable/cornered_bg"
+    android:fontFamily="@font/inter_medium"
+    android:padding="@dimen/dimen_normal"
+    android:text="@string/ingredients"
+    android:textColor="?attr/colorOnSurface"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="@id/fab_products"
+    app:layout_constraintRight_toLeftOf="@id/fab_products"
+    app:layout_constraintTop_toTopOf="@id/fab_products" />
+
+  <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    android:id="@+id/fab_export"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dimen_normal"
+    android:contentDescription="@null"
+    android:fontFamily="@font/inter_medium"
+    android:scaleX="0.8"
+    android:scaleY="0.8"
+    android:visibility="gone"
+    app:icon="@drawable/ic_export"
+    app:layout_constraintBottom_toTopOf="@id/fab_manufacture"
+    app:layout_constraintRight_toRightOf="@id/fab_manufacture" />
+
+  <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    android:id="@+id/fab_manufacture"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dimen_normal"
+    android:contentDescription="@null"
+    android:fontFamily="@font/inter_medium"
+    android:scaleX="0.8"
+    android:scaleY="0.8"
+    android:visibility="gone"
+    app:icon="@drawable/ic_import"
+    app:layout_constraintBottom_toTopOf="@id/fab_products"
+    app:layout_constraintRight_toRightOf="@id/fab_products" />
+
+  <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    android:id="@+id/fab_products"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dimen_normal"
+    android:contentDescription="@null"
+    android:fontFamily="@font/inter_medium"
+    android:scaleX="0.8"
+    android:scaleY="0.8"
+    android:visibility="gone"
+    app:icon="@drawable/ic_add"
+    app:layout_constraintBottom_toTopOf="@id/fab_options"
+    app:layout_constraintRight_toRightOf="@id/fab_options" />
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/fab_options"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_big"
+    android:contentDescription="@null"
+    android:src="@drawable/ic_add"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintRight_toRightOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

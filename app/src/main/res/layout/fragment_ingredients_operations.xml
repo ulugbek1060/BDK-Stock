@@ -16,16 +16,18 @@
       android:id="@+id/recycler_ingredients"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      tools:listitem="@layout/recycler_item_ingredient_operation" />
+      tools:listitem="@layout/recycler_item_operation" />
 
   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-  <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/recycler_progress"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:visibility="gone"
-    tools:listitem="@layout/progress_item_smaller" />
+  <ProgressBar
+    android:id="@+id/progressbar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
   <TextView
     android:id="@+id/tv_income"
@@ -65,7 +67,7 @@
     android:background="@drawable/cornered_bg"
     android:fontFamily="@font/inter_medium"
     android:padding="@dimen/dimen_normal"
-    android:text="@string/ingredients"
+    android:text="@string/products"
     android:textColor="?attr/colorOnSurface"
     android:visibility="gone"
     app:layout_constraintBottom_toBottomOf="@id/fab_ingredients"

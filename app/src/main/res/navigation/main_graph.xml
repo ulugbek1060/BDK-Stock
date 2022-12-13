@@ -361,7 +361,7 @@
   <fragment
     android:id="@+id/clientForOrderFragment"
     android:name="com.android.bdkstock.screens.main.menu.sales.ClientsForOrderFragment"
-    android:label="fragment_client_for_order"
+    android:label="@string/clients"
     tools:layout="@layout/fragment_clients_for_order">
     <action
       android:id="@+id/action_clientForOrderFragment_to_registerClientsFragment"
@@ -374,7 +374,7 @@
   <fragment
     android:id="@+id/driversForOrderFragment"
     android:name="com.android.bdkstock.screens.main.menu.sales.DriversForOrderFragment"
-    android:label="fragment_drivers_for_order"
+    android:label="@string/drivers"
     tools:layout="@layout/fragment_drivers_for_order">
     <action
       android:id="@+id/action_driversForOrderFragment_to_registerDriverFragment"
@@ -387,7 +387,7 @@
   <dialog
     android:id="@+id/productsForOrderFragment"
     android:name="com.android.bdkstock.screens.main.menu.sales.ProductsForOrderFragment"
-    android:label="fragment_products_for_order"
+    android:label="@string/products"
     tools:layout="@layout/fragment_products_for_order" />
   <dialog
     android:id="@+id/globalErrorFragment"

@@ -11,14 +11,14 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentIngredientsTypeBinding
-import com.android.bdkstock.databinding.ProgressItemSmallerBinding
-import com.android.bdkstock.databinding.RecyclerItemIngredientBinding
+import com.android.bdkstock.databinding.RecyclerSingleItemBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.screens.main.base.adapters.DefaultLoadStateAdapter
 import com.android.bdkstock.screens.main.base.adapters.pagingAdapter
 import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.ingredients.entity.IngredientEntity
 import com.android.model.utils.AuthException
+import com.android.model.utils.gone
 import com.android.model.utils.observeEvent
 import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,11 +35,13 @@ class IngredientsTypeFragment :
    override fun getViewBinding() = FragmentIngredientsTypeBinding.inflate(layoutInflater)
 
    @SuppressLint("SetTextI18n")
-   private val adapter = pagingAdapter<IngredientEntity, RecyclerItemIngredientBinding> {
+   private val adapter = pagingAdapter<IngredientEntity, RecyclerSingleItemBinding> {
       areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
       bind { ingredient ->
          tvName.text = ingredient.name
-         tvAmount.text = "${ingredient.amount} ${ingredient.unit}"
+         tvAmount.text = ingredient.amount
+         tvUnit.text = ingredient.unit
+         buttonDelete.gone()
       }
       listeners {
          root.onClick {
@@ -64,7 +66,6 @@ class IngredientsTypeFragment :
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
-      setupProgress()
       setupRecyclerView()
       setupRefreshLayout()
 
@@ -103,7 +104,7 @@ class IngredientsTypeFragment :
          .map { it.refresh }
          .collectLatest { loadState ->
 
-            binding.recyclerProgress.isVisible = loadState == LoadState.Loading
+            binding.progressbar.isVisible = loadState == LoadState.Loading
             binding.refreshLayout.isVisible = loadState != LoadState.Loading
 
             if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
@@ -131,14 +132,5 @@ class IngredientsTypeFragment :
             .create()
             .show()
       }
-   }
-
-   // -- Progress with shimmer layout
-
-   private val progressAdapter = simpleAdapter<Any, ProgressItemSmallerBinding> {}
-   private fun setupProgress() {
-      progressAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
-      binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
-      binding.recyclerProgress.adapter = progressAdapter
    }
 }

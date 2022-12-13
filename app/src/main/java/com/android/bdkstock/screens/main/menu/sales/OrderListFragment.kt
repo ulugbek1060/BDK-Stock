@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.AbsListView
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
@@ -17,9 +18,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentOrderListBinding
-import com.android.bdkstock.databinding.ProgressItemBiggerBinding
 import com.android.bdkstock.databinding.RecyclerItemOrderBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
 import com.android.bdkstock.screens.main.base.BaseFragment
@@ -41,8 +42,6 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
    override fun getViewBinding() = FragmentOrderListBinding.inflate(layoutInflater)
    private lateinit var layoutManager: LinearLayoutManager
 
-   private val TAG = "OrderListFragment"
-
    @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
    private val adapter = pagingAdapter<OrderListItem, RecyclerItemOrderBinding> {
       areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
@@ -53,9 +52,11 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
             else -> root.context.getColor(R.color.red)
          }
 
-         val statusText =
-            if (order.status == 1) root.context.getString(R.string.expense)
-            else root.context.getString(R.string.income)
+         val statusText = when (order.status) {
+            1 -> root.context.getString(R.string.sale_status_1)
+            0 -> root.context.getString(R.string.sale_status_0)
+            else -> root.context.getString(R.string.cancel)
+         }
 
          val indicatorIcon = when (order.status) {
             1 -> root.context.getDrawable(R.drawable.ic_sales)
@@ -63,25 +64,23 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
             else -> root.context.getDrawable(R.drawable.ic_cancel)
          }
 
-         tvIdentification.text = "№: ${order.identification}"
-
+         icStatus.setImageDrawable(indicatorIcon)
+         icStatus.setColorFilter(statusColor)
          tvStatus.text = statusText
          tvStatus.setTextColor(statusColor)
-
-         ivIndicator.setImageDrawable(indicatorIcon)
-         ivIndicator.setColorFilter(statusColor)
-
-         tvClient.text = order.client
-         tvCreatedDate.text = order.createdAt
+         tvName.text = order.identification
+         tvBuyerName.text = order.client
+         tvBuyerPhoneNumber.text = "no phone number"
          tvSum.text = order.summa
+         tvUnit.text = "UZS"
+      }
+      listeners {
+         root.onClick {
+            val args = ActionsFragmentDirections
+               .actionActionsFragmentToOrderDetailFragment(it.id)
+            findTopNavController().navigate(args)
          }
-         listeners {
-            root.onClick {
-               val args = ActionsFragmentDirections
-                  .actionActionsFragmentToOrderDetailFragment(it.id)
-               findTopNavController().navigate(args)
-            }
-         }
+      }
    }
 
    override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,9 +97,10 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
    @SuppressLint("UseCompatLoadingForDrawables")
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      setupProgress()
+
       setupRecyclerView()
       setupRefreshLayout()
+      setFabBehaviorOnRecycler()
 
       handleViewVisibility()
 
@@ -109,7 +109,7 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
       getFilterDataResult()
 
       binding.extendedFab.setOnClickListener { fabOnClick() }
-      
+
       requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
    }
 
@@ -155,6 +155,28 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
       binding.recyclerProducts.itemAnimator = null
    }
 
+   private fun setFabBehaviorOnRecycler() {
+      binding.recyclerProducts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            if (dy > 0 && binding.extendedFab.isVisible) {
+               binding.extendedFab.hide()
+            } else if (dy < 0 && !binding.extendedFab.isVisible) {
+               binding.extendedFab.show()
+            }
+         }
+
+         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            when (newState) {
+               AbsListView.OnScrollListener.SCROLL_STATE_FLING -> {}
+               AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL -> {}
+               else -> {}
+            }
+         }
+      })
+   }
+
    private fun setupRefreshLayout() {
       binding.refreshLayout.setOnRefreshListener {
          adapter.refresh()
@@ -167,7 +189,7 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
          .map { it.refresh }
          .collectLatest { loadState ->
 
-            binding.recyclerProgress.isVisible = loadState == LoadState.Loading
+            binding.progressbar.isVisible = loadState == LoadState.Loading
             binding.refreshLayout.isVisible = loadState != LoadState.Loading
 
             if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
@@ -195,15 +217,6 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
             .create()
             .show()
       }
-   }
-
-   // -- Progress with shimmer layout
-
-   private val progressAdapter = simpleAdapter<Any, ProgressItemBiggerBinding> {}
-   private fun setupProgress() {
-      progressAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8))
-      binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
-      binding.recyclerProgress.adapter = progressAdapter
    }
 
    private companion object {

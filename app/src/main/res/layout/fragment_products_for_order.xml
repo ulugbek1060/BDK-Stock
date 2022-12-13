@@ -23,7 +23,7 @@
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginTop="@dimen/dimen_extra"
         android:layout_marginRight="@dimen/dimen_large"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:hint="@string/job"
         app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@id/input_layout_amount"
@@ -50,7 +50,7 @@
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
         android:layout_weight="1"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:hint="@string/weight"
         app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@id/tv_product_hint"
@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dimen_large"
         android:layout_weight="1"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         app:errorEnabled="true"
         app:layout_constraintBottom_toBottomOf="@id/input_layout_amount"
         app:layout_constraintLeft_toRightOf="@id/input_layout_amount"
@@ -130,7 +130,6 @@
         android:fontFamily="@font/inter_regular"
         android:text="@string/cost_of_product"
         android:textSize="@dimen/text_size_small"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tv_price"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_product" />
@@ -159,7 +158,6 @@
         android:fontFamily="@font/inter_regular"
         android:text="@string/total_sum"
         android:textSize="@dimen/text_size_small"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tv_price_total"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_price" />
@@ -201,7 +199,7 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:layout_margin="@dimen/dimen_large"
-      android:visibility="visible"/>
+      android:visibility="visible" />
 
   </FrameLayout>
 

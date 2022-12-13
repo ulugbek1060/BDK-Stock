@@ -9,7 +9,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.databinding.FragmentOrderDetailBinding
-import com.android.bdkstock.databinding.RecyclerItemOrderProductBinding
+import com.android.bdkstock.databinding.RecyclerSingleItemBinding
 import com.android.bdkstock.screens.main.base.BaseAdapter
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.screens.main.base.ViewHolderCreator
@@ -28,17 +28,17 @@ class OrderDetailFragment :
    override fun getViewBinding() = FragmentOrderDetailBinding.inflate(layoutInflater)
    private lateinit var layoutManager: LinearLayoutManager
 
-   private val viewHolderInflater = object : ViewHolderCreator<RecyclerItemOrderProductBinding> {
+   private val viewHolderInflater = object : ViewHolderCreator<RecyclerSingleItemBinding> {
       override fun inflateBinding(layoutInflater: LayoutInflater, viewGroup: ViewGroup) =
-         RecyclerItemOrderProductBinding.inflate(layoutInflater, viewGroup, false)
+         RecyclerSingleItemBinding.inflate(layoutInflater, viewGroup, false)
    }
 
    private val adapter =
-      BaseAdapter<OrderedProduct, RecyclerItemOrderProductBinding>(viewHolderInflater) { product ->
-         tvProductName.text = product.name
-         tvWeight.text = "${product.amount} ${product.unit}"
-         tvTotalSum.text = product.calculate()
-         buttonRemove.gone()
+      BaseAdapter<OrderedProduct, RecyclerSingleItemBinding>(viewHolderInflater) { product ->
+         tvName.text = product.name
+         tvAmount.text = product.amount
+         tvUnit.text = product.unit
+         buttonDelete.gone()
       }
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

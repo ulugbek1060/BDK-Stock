@@ -18,7 +18,7 @@
       android:background="@color/red"
       android:gravity="center_vertical"
       android:padding="@dimen/dimen_large"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:text="@string/expense"
       android:textColor="@color/white"
       android:textSize="20sp"
@@ -34,7 +34,7 @@
       android:layout_marginTop="@dimen/dimen_extra"
       android:layout_marginRight="@dimen/dimen_large"
       android:hint="@string/ingredients"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       app:errorEnabled="true"
       app:layout_constraintBottom_toTopOf="@id/input_layout_amount"
       app:layout_constraintLeft_toLeftOf="parent"
@@ -43,7 +43,7 @@
 
       <androidx.appcompat.widget.AppCompatAutoCompleteTextView
         android:id="@+id/input_ingredient"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textAutoComplete"
@@ -58,7 +58,7 @@
       android:layout_height="wrap_content"
       android:layout_marginLeft="@dimen/dimen_large"
       android:layout_marginRight="@dimen/dimen_large"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:layout_weight="1"
       android:hint="@string/weight"
       app:errorEnabled="true"
@@ -69,7 +69,7 @@
       <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_amount"
         android:layout_width="match_parent"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:layout_height="wrap_content"
         android:imeOptions="actionNext"
         android:inputType="number" />
@@ -82,7 +82,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginEnd="@dimen/dimen_large"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:layout_weight="1"
       android:clickable="false"
       android:enabled="false"
@@ -94,7 +94,7 @@
 
       <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_weight"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionNext"
@@ -109,7 +109,7 @@
       android:layout_height="wrap_content"
       android:layout_marginLeft="@dimen/dimen_large"
       android:layout_marginRight="@dimen/dimen_large"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:hint="@string/comments"
       app:errorEnabled="true"
       app:layout_constraintLeft_toLeftOf="parent"
@@ -120,7 +120,7 @@
         android:id="@+id/input_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:gravity="top"
         android:minHeight="200dp" />
 
@@ -133,7 +133,7 @@
       android:layout_marginHorizontal="@dimen/dimen_large"
       android:text="@string/save"
       android:elevation="0dp"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_medium"
       android:textAllCaps="false"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintTop_toBottomOf="@id/input_layout_comment" />

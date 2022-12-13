@@ -44,7 +44,7 @@
         android:id="@+id/tv_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:textColor="?attr/colorOnSurface"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

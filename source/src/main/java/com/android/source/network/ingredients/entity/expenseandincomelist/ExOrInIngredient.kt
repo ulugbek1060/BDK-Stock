@@ -13,7 +13,7 @@ data class ExOrInIngredient(
    @SerializedName("name")
    val name: String, // KOST
    @SerializedName("status")
-   val status: String, // 0
+   val status: Int, // 0
    @SerializedName("unit")
    val unit: String, // kg
    @SerializedName("user_id")

@@ -31,7 +31,7 @@
       android:layout_height="wrap_content"
       android:layout_marginLeft="@dimen/dimen_large"
       android:layout_marginTop="@dimen/dimen_extra"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:layout_marginRight="@dimen/dimen_large"
       android:hint="@string/name"
       app:errorEnabled="true"
@@ -45,7 +45,7 @@
         android:id="@+id/input_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:imeOptions="actionNext"
         android:lines="1" />
 
@@ -58,7 +58,7 @@
       android:layout_height="wrap_content"
       android:layout_marginLeft="@dimen/dimen_large"
       android:layout_marginRight="@dimen/dimen_large"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:hint="@string/phone_number"
       app:counterEnabled="true"
       app:counterMaxLength="9"
@@ -73,7 +73,7 @@
       <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_phone_number"
         android:layout_width="match_parent"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:layout_height="wrap_content"
         android:imeOptions="actionNext"
         android:inputType="number"
@@ -84,7 +84,7 @@
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/input_layout_vehicle"
       style="@style/TextInputLayoutStyleDropDown"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginLeft="@dimen/dimen_large"
@@ -101,7 +101,7 @@
         android:id="@+id/auto_complete_vehicle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:inputType="none"
         tools:ignore="LabelFor" />
 
@@ -112,7 +112,7 @@
       style="@style/TextInputLayoutStyle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:layout_marginLeft="@dimen/dimen_large"
       android:layout_marginRight="@dimen/dimen_large"
       android:hint="@string/registration_number_of_vehicle"
@@ -127,7 +127,7 @@
         android:id="@+id/input_reg_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:imeOptions="actionNext"
         android:lines="1" />
 
@@ -139,7 +139,7 @@
       android:layout_height="wrap_content"
       android:layout_marginLeft="@dimen/dimen_large"
       android:layout_marginTop="@dimen/dimen_extra"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:layout_marginRight="@dimen/dimen_large"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintLeft_toLeftOf="parent"
@@ -150,7 +150,7 @@
         android:id="@+id/button_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_medium"
         android:layout_marginStart="@dimen/corner_small"
         android:text="@string/save"
         android:textAllCaps="false" />

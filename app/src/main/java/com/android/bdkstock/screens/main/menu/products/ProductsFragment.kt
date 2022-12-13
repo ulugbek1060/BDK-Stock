@@ -17,14 +17,14 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentProductsBinding
-import com.android.bdkstock.databinding.ProgressItemSmallerBinding
-import com.android.bdkstock.databinding.RecyclerItemIngredientBinding
+import com.android.bdkstock.databinding.RecyclerSingleItemBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.screens.main.base.adapters.DefaultLoadStateAdapter
 import com.android.bdkstock.screens.main.base.adapters.pagingAdapter
 import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.products.entity.ProductEntity
 import com.android.model.utils.AuthException
+import com.android.model.utils.gone
 import com.android.model.utils.observeEvent
 import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,11 +44,13 @@ class ProductsFragment :
    private lateinit var layoutManager: LinearLayoutManager
 
    @SuppressLint("SetTextI18n")
-   private val adapter = pagingAdapter<ProductEntity, RecyclerItemIngredientBinding> {
+   private val adapter = pagingAdapter<ProductEntity, RecyclerSingleItemBinding> {
       areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
-      bind { ingredient ->
-         tvName.text = ingredient.name
-         tvAmount.text = "${ingredient.amount} ${ingredient.unit}"
+      bind { product ->
+         tvName.text = product.name
+         tvAmount.text = product.amount
+         tvUnit.text = product.unit
+         buttonDelete.gone()
       }
       listeners {
          root.onClick {
@@ -74,7 +76,6 @@ class ProductsFragment :
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
-      setupProgress()
       setupRecyclerView()
       setupRefreshLayout()
 
@@ -128,7 +129,7 @@ class ProductsFragment :
          .map { it.refresh }
          .collectLatest { loadState ->
 
-            binding.recyclerProgress.isVisible = loadState == LoadState.Loading
+            binding.progressbar.isVisible = loadState == LoadState.Loading
             binding.refreshLayout.isVisible = loadState != LoadState.Loading
 
             if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
@@ -156,15 +157,6 @@ class ProductsFragment :
             .create()
             .show()
       }
-   }
-
-   // -- Progress with shimmer layout
-
-   private val progressAdapter = simpleAdapter<Any, ProgressItemSmallerBinding> {}
-   private fun setupProgress() {
-      progressAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
-      binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
-      binding.recyclerProgress.adapter = progressAdapter
    }
 
    override fun onQueryTextSubmit(query: String?): Boolean {

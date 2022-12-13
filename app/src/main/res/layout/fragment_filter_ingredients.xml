@@ -15,7 +15,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/dimen_large"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:padding="@dimen/dimen_large"
       android:text="@string/filter"
       android:textColor="?attr/colorOnSurface"
@@ -31,7 +31,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/dimen_large"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:hint="@string/search"
       app:endIconMode="clear_text"
       app:layout_constraintBottom_toTopOf="@id/toggleButton"
@@ -43,7 +43,7 @@
         android:id="@+id/input_query"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:imeOptions="actionNext" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -94,7 +94,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/dimen_large"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:hint="@string/from_date"
       app:endIconDrawable="@drawable/ic_calendar"
       app:endIconMode="custom"
@@ -107,7 +107,7 @@
         android:id="@+id/input_from_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:imeOptions="actionNext" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -118,7 +118,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/dimen_large"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:hint="@string/to_date"
       app:endIconDrawable="@drawable/ic_calendar"
       app:endIconMode="custom"
@@ -131,7 +131,7 @@
         android:id="@+id/input_to_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:imeOptions="actionDone" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -145,7 +145,7 @@
       android:layout_marginTop="@dimen/dimen_large"
       android:layout_marginEnd="@dimen/dimen_normal"
       android:layout_marginBottom="@dimen/dimen_normal"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_medium"
       android:text="@string/cancel"
       android:textAllCaps="false"
       android:textSize="@dimen/text_size_normal"
@@ -162,7 +162,7 @@
       android:layout_marginStart="@dimen/dimen_normal"
       android:layout_marginEnd="@dimen/dimen_large"
       android:layout_marginBottom="@dimen/dimen_normal"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_medium"
       android:text="@string/filter"
       android:textAllCaps="false"
       android:textSize="@dimen/text_size_normal"

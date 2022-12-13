@@ -74,7 +74,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/dimen_large"
-          android:fontFamily="@font/open_sans_regular"
+          android:fontFamily="@font/inter_regular"
           android:hint="@string/client"
           app:errorEnabled="true"
           app:startIconDrawable="@drawable/ic_user">
@@ -96,7 +96,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_weight="1"
-          android:fontFamily="@font/open_sans_regular"
+          android:fontFamily="@font/inter_regular"
           android:hint="@string/phone_number"
           app:errorEnabled="true"
           app:startIconDrawable="@drawable/ic_call">
@@ -118,7 +118,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_weight="1"
-          android:fontFamily="@font/open_sans_regular"
+          android:fontFamily="@font/inter_regular"
           android:hint="@string/address"
           app:errorEnabled="true"
           app:startIconDrawable="@drawable/ic_location_24">
@@ -167,7 +167,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/dimen_large"
-          android:fontFamily="@font/open_sans_regular"
+          android:fontFamily="@font/inter_regular"
           android:hint="@string/driver"
           app:errorEnabled="true"
           app:startIconDrawable="@drawable/ic_user">
@@ -188,7 +188,7 @@
           style="@style/TextInputLayoutStyle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_regular"
+          android:fontFamily="@font/inter_regular"
           android:hint="@string/phone_number"
           app:errorEnabled="true"
           app:startIconDrawable="@drawable/ic_call">
@@ -209,7 +209,7 @@
           style="@style/TextInputLayoutStyle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_regular"
+          android:fontFamily="@font/inter_regular"
           android:hint="@string/registration_number_of_vehicle"
           app:errorEnabled="true"
           app:startIconDrawable="@drawable/ic_list">

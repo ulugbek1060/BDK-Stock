@@ -41,17 +41,14 @@ class AddIngredientsFragment :
 
    private fun observeState() {
       viewModel.state.observe(viewLifecycleOwner) { state ->
-         // enable
          binding.inputLayoutName.isEnabled = !state.isInProgress
          binding.inputLayoutUnit.isEnabled = !state.isInProgress
 
-         // error
          binding.inputLayoutName.error = state.getNameErrorMessage(requireContext())
          binding.inputLayoutUnit.error = state.getUnitErrorMessage(requireContext())
 
-         // visibility
          binding.buttonSave.isVisible = !state.isInProgress
-         binding.lottiProgress.isVisible = state.isInProgress
+         binding.progressbar.isVisible = state.isInProgress
       }
    }
 }

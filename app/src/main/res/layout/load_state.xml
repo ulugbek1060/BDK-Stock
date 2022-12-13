@@ -25,7 +25,7 @@
     android:id="@+id/button_retry"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:fontFamily="@font/open_sans_regular"
+    android:fontFamily="@font/inter_medium"
     android:text="@string/retry"
     android:textAllCaps="false" />
 

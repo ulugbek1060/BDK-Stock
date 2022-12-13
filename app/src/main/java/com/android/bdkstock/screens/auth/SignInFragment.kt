@@ -98,7 +98,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
    private fun getFormattedNumber(number: String) = "998$number"
 
    private fun setProgressState(signInInProgress: Boolean) = binding.apply {
-      lottiProgress.isVisible = signInInProgress
+      progressbar.isVisible = signInInProgress
       buttonSignIn.isVisible = !signInInProgress
    }
 

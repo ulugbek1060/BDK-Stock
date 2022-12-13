@@ -32,7 +32,7 @@ class MenuFragment : BaseFragment<MenuViewModel, FragmentMenuBinding>() {
       BaseAdapter<MenuItem, RecyclerItemMenuBinding>(viewHolderCreator) { item ->
          ivItemIcon.setImageResource(item.icon)
          tvItemTitle.text = item.title
-         root.setOnClickListener{
+         root.setOnClickListener {
             findNavController().navigate(item.fragmentId, null, navOptions {
                anim {
                   enter = R.anim.enter

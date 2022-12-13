@@ -24,7 +24,7 @@
         android:gravity="center_vertical"
         android:padding="@dimen/dimen_large"
         android:text="@string/expense"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +35,7 @@
         style="@style/TextInputLayoutStyleDropDown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginTop="@dimen/dimen_extra"
         android:layout_marginRight="@dimen/dimen_large"
@@ -50,7 +50,7 @@
           android:id="@+id/input_product"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_regular"
+          android:fontFamily="@font/inter_regular"
           android:inputType="textAutoComplete"
           tools:ignore="LabelFor" />
 
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:layout_weight="1"
         android:hint="@string/weight"
         app:errorEnabled="true"
@@ -75,7 +75,7 @@
           android:id="@+id/input_amount"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_regular"
+          android:fontFamily="@font/inter_regular"
           android:imeOptions="actionNext"
           android:inputType="number" />
 
@@ -87,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dimen_large"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:layout_weight="1"
         android:clickable="false"
         android:enabled="false"
@@ -101,7 +101,7 @@
           android:id="@+id/input_weight"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_regular"
+          android:fontFamily="@font/inter_regular"
           android:imeOptions="actionNext"
           tools:text="kg" />
 
@@ -114,7 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_regular"
         android:hint="@string/comments"
         app:errorEnabled="true"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -124,7 +124,7 @@
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/input_comment"
           android:layout_width="match_parent"
-          android:fontFamily="@font/open_sans_regular"
+          android:fontFamily="@font/inter_regular"
           android:layout_height="wrap_content"
           android:gravity="top"
           android:minHeight="200dp" />
@@ -135,7 +135,7 @@
         android:id="@+id/button_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_medium"
         android:layout_marginHorizontal="@dimen/dimen_large"
         android:elevation="0dp"
         android:text="@string/save"

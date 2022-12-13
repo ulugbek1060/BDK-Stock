@@ -27,7 +27,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen_extra"
     android:textSize="20sp"
-    android:fontFamily="@font/open_sans_regular"
+    android:fontFamily="@font/inter_regular"
     android:textStyle="bold"
     android:textColor="?attr/colorPrimary"
     app:layout_constraintLeft_toLeftOf="parent"

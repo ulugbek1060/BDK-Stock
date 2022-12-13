@@ -11,8 +11,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentDisplayProductsBinding
-import com.android.bdkstock.databinding.ProgressItemBiggerBinding
-import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
+import com.android.bdkstock.databinding.RecyclerItemOperationBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.screens.main.base.adapters.DefaultLoadStateAdapter
 import com.android.bdkstock.screens.main.base.adapters.pagingAdapter
@@ -20,7 +19,6 @@ import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.products.entity.ProductOperationEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.observeEvent
-import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
@@ -36,24 +34,29 @@ class DisplayProductsFragment :
 
    @SuppressLint("SetTextI18n")
    private val adapter =
-      pagingAdapter<ProductOperationEntity, RecyclerItemIngredientOperationBinding> {
+      pagingAdapter<ProductOperationEntity, RecyclerItemOperationBinding> {
          areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
-         bind { ingredient ->
-            // status
-            val statusTextColor =
-               if (ingredient.status == 1) root.context.getColor(R.color.red)
+         bind { products ->
+
+            val statusColor =
+               if (products.status == EXPORTED_PRODUCT) root.context.getColor(R.color.red)
                else root.context.getColor(R.color.green)
+
             val statusText =
-               if (ingredient.status == 1) root.context.getString(R.string.expense)
+               if (products.status == EXPORTED_PRODUCT) root.context.getString(R.string.expense)
                else root.context.getString(R.string.income)
 
-            tvStatus.text = statusText
-            tvStatus.setTextColor(statusTextColor)
+            val statusIcon =
+               if (products.status == EXPORTED_PRODUCT) root.context.getDrawable(R.drawable.ic_import)
+               else root.context.getDrawable(R.drawable.ic_export)
 
-            tvIngredient.text = ingredient.name
-            tvCreator.text = ingredient.creator
-            tvCreatedDate.text = ingredient.createdAt
-            tvAmount.text = "${ingredient.amount} ${ingredient.unit}"
+            icStatus.setImageDrawable(statusIcon)
+            icStatus.setColorFilter(statusColor)
+            tvName.text = statusText
+            tvName.setTextColor(statusColor)
+            tvComment.text = products.comment
+            tvAmount.text = products.amount
+            tvUnit.text = products.unit
          }
          listeners {
             root.onClick {
@@ -77,7 +80,7 @@ class DisplayProductsFragment :
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-      setupProgress()
+
       setupRecyclerView()
       setupRefreshLayout()
       observeIngredientFields()
@@ -118,7 +121,7 @@ class DisplayProductsFragment :
          .map { it.refresh }
          .collectLatest { loadState ->
 
-            binding.progress.isVisible = loadState == LoadState.Loading
+            binding.progressbar.isVisible = loadState == LoadState.Loading
             binding.refreshLayout.isVisible = loadState != LoadState.Loading
 
             if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
@@ -148,11 +151,10 @@ class DisplayProductsFragment :
       }
    }
 
-   // -- progress
-   private val progressAdapter = simpleAdapter<Any, ProgressItemBiggerBinding> {}
-   private fun setupProgress() {
-      progressAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
-      binding.progress.layoutManager = LinearLayoutManager(requireContext())
-      binding.progress.adapter = progressAdapter
+   private companion object {
+      const val PRODUCTS_FILTER_KEY = "ingredients_filter"
+      const val PRODUCTS_FILTER_BUNDLE_KEY = "ingredients_filter_bundle"
+      const val MANUFACTURED_PRODUCT = 0
+      const val EXPORTED_PRODUCT = 1
    }
 }

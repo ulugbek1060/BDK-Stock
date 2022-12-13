@@ -75,7 +75,6 @@ class ClientsFragment :
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
-//      setupShimmerLoading()
       setupRecyclerView()
       setupRefreshLayout()
 
@@ -146,7 +145,7 @@ class ClientsFragment :
          .map { it.refresh }
          .collectLatest { loadState ->
 
-            binding.recyclerProgress.isVisible = loadState == LoadState.Loading
+            binding.progressbar.isVisible = loadState == LoadState.Loading
             binding.recyclerClients.isVisible = loadState != LoadState.Loading
 
             if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
@@ -176,15 +175,6 @@ class ClientsFragment :
       }
    }
 
-   // -- Progress with shimmer layout
-
-//   private val shimmerAdapter = simpleAdapter<Any, ProgressItemSmallerBinding> {}
-//   private fun setupShimmerLoading() {
-//      shimmerAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
-//      binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
-//      binding.recyclerProgress.adapter = shimmerAdapter
-//   }
-
    override fun onQueryTextSubmit(query: String?): Boolean {
       return true
    }
@@ -193,5 +183,4 @@ class ClientsFragment :
       viewModel.setQuery(newText)
       return true
    }
-
 }

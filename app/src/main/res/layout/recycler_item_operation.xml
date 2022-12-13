@@ -15,10 +15,11 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dimen_large"
     android:contentDescription="@null"
-    android:src="@drawable/ic_sales"
+    android:src="@drawable/ic_import"
     app:layout_constraintBottom_toTopOf="@id/tv_name"
     app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    app:layout_constraintTop_toTopOf="parent"
+    app:tint="@color/green" />
 
   <TextView
     android:id="@+id/tv_status"
@@ -40,40 +41,28 @@
     android:lines="1"
     android:textColor="?attr/colorOnSurface"
     android:textSize="@dimen/text_size_normal"
-    app:layout_constraintBottom_toTopOf="@id/tv_buyer_name"
+    app:layout_constraintBottom_toTopOf="@id/tv_comment"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toBottomOf="@id/ic_status"
-    tools:text="№ Ф13" />
+    tools:text="Ingredient name" />
+
 
   <TextView
-    android:id="@+id/tv_buyer_name"
+    android:id="@+id/tv_comment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dimen_small"
-    android:maxLines="1"
-    android:textColor="?attr/colorOnSurface"
-    android:textSize="@dimen/text_size_normal"
-    app:layout_constraintBottom_toTopOf="@id/tv_buyer_phone_number"
+    android:maxLines="2"
+    android:textSize="@dimen/text_size_small"
+    app:layout_constraintBottom_toTopOf="@id/tv_amount"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toBottomOf="@id/tv_name"
     tools:text="Comment Lorem ipsum Basil's lists use custom typography for item and quantity text." />
 
   <TextView
-    android:id="@+id/tv_buyer_phone_number"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:maxLines="1"
-    android:textSize="@dimen/text_size_small"
-    app:layout_constraintBottom_toTopOf="@id/tv_sum"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_buyer_name"
-    tools:text="+998909999999" />
-
-  <TextView
-    android:id="@+id/tv_sum"
+    android:id="@+id/tv_amount"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dimen_small"
@@ -85,7 +74,7 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toLeftOf="@id/tv_unit"
-    app:layout_constraintTop_toBottomOf="@id/tv_buyer_phone_number"
+    app:layout_constraintTop_toBottomOf="@id/tv_comment"
     tools:text="1200" />
 
   <TextView
@@ -95,10 +84,10 @@
     android:layout_marginStart="@dimen/dimen_small"
     android:textColor="?attr/colorOnSurface"
     android:textSize="@dimen/text_size_normal"
-    app:layout_constraintBottom_toBottomOf="@id/tv_sum"
-    app:layout_constraintLeft_toRightOf="@id/tv_sum"
-    app:layout_constraintTop_toTopOf="@id/tv_sum"
-    tools:text="UZS" />
+    app:layout_constraintBottom_toBottomOf="@id/tv_amount"
+    app:layout_constraintLeft_toRightOf="@id/tv_amount"
+    app:layout_constraintTop_toTopOf="@id/tv_amount"
+    tools:text="kg" />
 
   <View
     android:layout_width="match_parent"

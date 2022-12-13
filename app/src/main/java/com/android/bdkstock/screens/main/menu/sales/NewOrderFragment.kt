@@ -15,7 +15,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentNewOrderBinding
-import com.android.bdkstock.databinding.RecyclerItemOrderProductBinding
+import com.android.bdkstock.databinding.RecyclerSingleItemBinding
 import com.android.bdkstock.screens.main.base.BaseAdapter
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.screens.main.base.ViewHolderCreator
@@ -24,28 +24,30 @@ import com.android.model.repository.clients.entity.ClientEntity
 import com.android.model.repository.drivers.entity.DriverEntity
 import com.android.model.repository.products.entity.ProductSelectionItem
 import com.android.model.utils.observeEvent
+import com.android.model.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class NewOrderFragment :
    BaseFragment<NewOrderViewModel, FragmentNewOrderBinding>(),
-   ViewHolderCreator<RecyclerItemOrderProductBinding> {
+   ViewHolderCreator<RecyclerSingleItemBinding> {
 
    override val viewModel by viewModels<NewOrderViewModel>()
    override fun getViewBinding() = FragmentNewOrderBinding.inflate(layoutInflater)
 
    override fun inflateBinding(layoutInflater: LayoutInflater, viewGroup: ViewGroup) =
-      RecyclerItemOrderProductBinding.inflate(layoutInflater, viewGroup, false)
+      RecyclerSingleItemBinding.inflate(layoutInflater, viewGroup, false)
 
    @SuppressLint("SetTextI18n")
    private val adapter =
-      BaseAdapter<ProductSelectionItem, RecyclerItemOrderProductBinding>(this) { product ->
-         tvProductName.text = product.name
-         tvWeight.text = "${product.amount} ${product.unit}"
-         tvTotalSum.text = product.calculate()
+      BaseAdapter<ProductSelectionItem, RecyclerSingleItemBinding>(this) { product ->
+         tvName.text = product.name
+         tvAmount.text = product.amount
+         tvUnit.text = product.unit
+         buttonDelete.visible()
 
-         buttonRemove.setOnClickListener {
+         buttonDelete.setOnClickListener {
             viewModel.removeProduct(product)
          }
       }

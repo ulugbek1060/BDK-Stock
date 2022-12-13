@@ -25,7 +25,7 @@
     android:layout_marginLeft="20dp"
     android:layout_marginTop="20dp"
     android:layout_marginRight="20dp"
-    android:fontFamily="@font/open_sans_regular"
+    android:fontFamily="@font/inter_regular"
     android:text="@string/bdk_stock"
     android:textSize="20sp"
     android:textStyle="bold"
@@ -42,7 +42,7 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="20dp"
     android:layout_marginTop="20dp"
-    android:fontFamily="@font/open_sans_regular"
+    android:fontFamily="@font/inter_regular"
     android:layout_marginRight="20dp"
     android:hint="@string/phone_number"
     app:counterEnabled="true"
@@ -60,7 +60,7 @@
       android:id="@+id/input_phone_number"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:imeOptions="actionNext"
       android:inputType="number"
       android:lines="1" />
@@ -73,7 +73,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="20dp"
-    android:fontFamily="@font/open_sans_regular"
+    android:fontFamily="@font/inter_regular"
     android:layout_marginTop="20dp"
     android:layout_marginRight="20dp"
     android:hint="@string/password"
@@ -88,7 +88,7 @@
     <com.google.android.material.textfield.TextInputEditText
       android:id="@+id/input_password"
       android:layout_width="match_parent"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_regular"
       android:layout_height="wrap_content"
       android:imeOptions="actionDone"
       android:inputType="textPassword"
@@ -112,18 +112,14 @@
       android:id="@+id/button_sign_in"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:fontFamily="@font/open_sans_regular"
+      android:fontFamily="@font/inter_medium"
       android:text="@string/sign_in"
       android:textAllCaps="false" />
 
-    <com.airbnb.lottie.LottieAnimationView
-      android:id="@+id/lotti_progress"
+    <ProgressBar
+      android:id="@+id/progressbar"
       android:layout_width="match_parent"
-      android:layout_height="45dp"
-      android:visibility="gone"
-      app:lottie_autoPlay="true"
-      app:lottie_loop="true"
-      app:lottie_rawRes="@raw/loading" />
+      android:layout_height="wrap_content" />
 
   </FrameLayout>
 

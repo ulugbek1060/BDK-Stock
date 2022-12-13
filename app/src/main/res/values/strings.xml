@@ -61,7 +61,7 @@
   <string name="retry">Повторить</string>
   <string name="user_logged_out">Пользователь вышел из системы</string>
   <string name="try_again_to_sign_in">Попробуйте еще раз войти в приложение</string>
-  <string name="sign_in">войти</string>
+  <string name="sign_in">Войти</string>
   <string name="left_icon_button">button left</string>
   <string name="right_icon_button">button right</string>
   <string name="recent_searches">Recent searches</string>
@@ -106,7 +106,7 @@
   <string name="ingredient">Игредиенть</string>
   <string name="all">Все</string>
   <string name="from_date">с даты</string>
-  <string name="to_date">на дату</string>
+  <string name="to_date">по дату</string>
   <string name="clear">Очистить</string>
   <string name="apply">Филтровать</string>
   <string name="filter">Фильтровать</string>
@@ -141,12 +141,14 @@
   <string name="cash">Наличка</string>
   <string name="error_empty_pay_field">Вам необходимо заполнить поля оплаты</string>
   <string name="sale_status_0">Ожидает оплаты</string>
-  <string name="sale_status_1">Оплачен</string>
+  <string name="sale_status_1">Продан</string>
   <string name="order">Заказ</string>
   <string name="payments">Платежи</string>
   <string name="debit">Остаток суммы</string>
   <string name="paid">Оплачен</string>
   <string name="product">Товар</string>
   <string name="cost_of_product">Сумма товара за 1 кг</string>
+  <string name="query_by_client">поиск по клиенту</string>
+  <string name="search_by_driver">поиск по водителю</string>
 
 </resources>

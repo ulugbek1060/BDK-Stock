@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.AbsListView
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
@@ -17,12 +18,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentProductOperationsListBinding
-import com.android.bdkstock.databinding.ProgressItemBiggerBinding
-import com.android.bdkstock.databinding.RecyclerItemIngredientOperationBinding
+import com.android.bdkstock.databinding.RecyclerItemOperationBinding
 import com.android.bdkstock.screens.main.ActionsFragmentDirections
-import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.screens.main.base.BaseWithFabFragment
 import com.android.bdkstock.screens.main.base.adapters.DefaultLoadStateAdapter
 import com.android.bdkstock.screens.main.base.adapters.pagingAdapter
 import com.android.bdkstock.views.findTopNavController
@@ -39,32 +40,40 @@ import java.util.*
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class ProductOperationsListFragment :
-   BaseFragment<ProductOperationsListViewModel, FragmentProductOperationsListBinding>() {
+   BaseWithFabFragment<ProductOperationsListViewModel, FragmentProductOperationsListBinding>() {
 
    override val viewModel: ProductOperationsListViewModel by viewModels()
    override fun getViewBinding() = FragmentProductOperationsListBinding.inflate(layoutInflater)
    private lateinit var layoutManager: LinearLayoutManager
 
+   private val TAG = "ProductOperationsListFr"
+
    @SuppressLint("SetTextI18n")
    private val adapter =
-      pagingAdapter<ProductOperationEntity, RecyclerItemIngredientOperationBinding> {
+      pagingAdapter<ProductOperationEntity, RecyclerItemOperationBinding> {
          areItemsSame = { oldItem, newItem -> oldItem.id == newItem.id }
-         bind { ingredient ->
-            // status
-            val statusTextColor =
-               if (ingredient.status == 1) root.context.getColor(R.color.red)
+         bind { products ->
+
+            val statusColor =
+               if (products.status == EXPORTED_PRODUCT) root.context.getColor(R.color.red)
                else root.context.getColor(R.color.green)
+
             val statusText =
-               if (ingredient.status == 1) root.context.getString(R.string.expense)
+               if (products.status == EXPORTED_PRODUCT) root.context.getString(R.string.expense)
                else root.context.getString(R.string.income)
 
-            tvStatus.text = statusText
-            tvStatus.setTextColor(statusTextColor)
+            val statusIcon =
+               if (products.status == EXPORTED_PRODUCT) root.context.getDrawable(R.drawable.ic_import)
+               else root.context.getDrawable(R.drawable.ic_export)
 
-            tvIngredient.text = ingredient.name
-            tvCreator.text = ingredient.creator
-            tvCreatedDate.text = ingredient.createdAt.formatDate(root.context)
-            tvAmount.text = ": ${ingredient.amount} ${ingredient.unit}"
+            icStatus.setImageDrawable(statusIcon)
+            icStatus.setColorFilter(statusColor)
+            tvName.text = statusText
+            tvName.setTextColor(statusColor)
+            tvComment.text = products.comment
+            tvAmount.text = products.amount
+            tvUnit.text = products.unit
+
          }
          listeners {
             root.onClick {
@@ -89,22 +98,36 @@ class ProductOperationsListFragment :
    @SuppressLint("UseCompatLoadingForDrawables")
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-
-      setupProgress()
       setupRecyclerView()
       setupRefreshLayout()
+      setFabBehaviorOnRecycler()
 
       handleViewVisibility()
 
       observeAuthError()
       getFilterResult()
 
-      binding.buttonManufacture.setOnClickListener { manufactureOnClick() }
-      binding.buttonExport.setOnClickListener { exportOnclick() }
-      binding.buttonShow.setOnClickListener { showOnClick() }
+      binding.fabManufacture.setOnClickListener { manufactureOnClick() }
+      binding.fabExport.setOnClickListener { exportOnclick() }
+      binding.fabProducts.setOnClickListener { showOnClick() }
+      binding.fabOptions.setOnClickListener { fabOperationsOnClick() }
 
       requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
    }
+
+   private fun fabOperationsOnClick() = onAddButtonClicked(
+      binding.fabOptions,
+      listOf(
+         binding.fabProducts,
+         binding.fabManufacture,
+         binding.fabExport
+      ),
+      listOf(
+         binding.tvProducts,
+         binding.tvManufacture,
+         binding.tvExport
+      )
+   )
 
    private fun showOnClick() {
       findTopNavController().navigate(R.id.action_actionsFragment_to_productsFragment)
@@ -160,6 +183,29 @@ class ProductOperationsListFragment :
       binding.recyclerProducts.itemAnimator = null
    }
 
+   private fun setFabBehaviorOnRecycler() {
+      binding.recyclerProducts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            if (dy > 0 && binding.fabOptions.isVisible) {
+               if (isFabChildesVisible()) fabOperationsOnClick()
+               binding.fabOptions.hide()
+            } else if (dy < 0 && !binding.fabOptions.isVisible) {
+               binding.fabOptions.show()
+            }
+         }
+
+         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            when (newState) {
+               AbsListView.OnScrollListener.SCROLL_STATE_FLING -> {}
+               AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL -> {}
+               else -> {}
+            }
+         }
+      })
+   }
+
    private fun setupRefreshLayout() {
       binding.refreshLayout.setOnRefreshListener {
          adapter.refresh()
@@ -172,7 +218,7 @@ class ProductOperationsListFragment :
          .map { it.refresh }
          .collectLatest { loadState ->
 
-            binding.recyclerProgress.isVisible = loadState == LoadState.Loading
+            binding.progressbar.isVisible = loadState == LoadState.Loading
             binding.refreshLayout.isVisible = loadState != LoadState.Loading
 
             if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
@@ -200,15 +246,6 @@ class ProductOperationsListFragment :
             .create()
             .show()
       }
-   }
-
-   // -- Progress with shimmer layout
-
-   private val progressAdapter = simpleAdapter<Any, ProgressItemBiggerBinding> {}
-   private fun setupProgress() {
-      progressAdapter.submitList(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
-      binding.recyclerProgress.layoutManager = LinearLayoutManager(requireContext())
-      binding.recyclerProgress.adapter = progressAdapter
    }
 
    private companion object {
