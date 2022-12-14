@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -12,14 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentDisplayIngredientsBinding
 import com.android.bdkstock.databinding.RecyclerItemOperationBinding
-import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.screens.main.base.BaseWithFabFragment
 import com.android.bdkstock.screens.main.base.adapters.DefaultLoadStateAdapter
 import com.android.bdkstock.screens.main.base.adapters.pagingAdapter
 import com.android.bdkstock.views.findTopNavController
+import com.android.bdkstock.views.getActionBar
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.observeEvent
-import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
@@ -27,7 +28,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DisplayIngredientsFragment :
-   BaseFragment<DisplayIngredientsViewModel, FragmentDisplayIngredientsBinding>() {
+   BaseWithFabFragment<DisplayIngredientsViewModel, FragmentDisplayIngredientsBinding>() {
 
    override val viewModel by viewModels<DisplayIngredientsViewModel>()
    override fun getViewBinding() = FragmentDisplayIngredientsBinding.inflate(layoutInflater)
@@ -79,11 +80,29 @@ class DisplayIngredientsFragment :
       setupRecyclerView()
       setupRefreshLayout()
       observeIngredientFields()
+      setFabBehaviorOnMotion()
 
       handleViewVisibility()
 
       observeAuthError()
+
+      binding.fabOptions.setOnClickListener { fabOperationsOnClick() }
+      binding.fabImport.setOnClickListener { }
+      binding.fabExport.setOnClickListener { }
    }
+
+   private fun fabOperationsOnClick() = onAddButtonClicked(
+      binding.fabOptions,
+      listOf(
+         binding.fabExport,
+         binding.fabImport
+      ),
+      listOf(
+         binding.tvExport,
+         binding.tvImport
+      )
+   )
+
 
    private fun observeIngredients() = lifecycleScope.launch {
       viewModel.ingredientsOperationsFlow.collectLatest {
@@ -93,8 +112,14 @@ class DisplayIngredientsFragment :
 
    private fun observeIngredientFields() {
       viewModel.ingredientEntity.observe(viewLifecycleOwner) { ingredient ->
-         binding.tvName.text = ingredient.name
-         binding.tvAmount.text = "${ingredient.amount} ${ingredient.unit}"
+
+         getActionBar()?.title = ingredient.name
+
+         with(binding) {
+            tvIngredient.text = ingredient.name
+            tvAmount.text = "${ingredient.amount} ${ingredient.unit}"
+            tvDate.text = ingredient.createdAt
+         }
       }
    }
 
@@ -116,6 +141,24 @@ class DisplayIngredientsFragment :
       binding.recyclerOperations.itemAnimator = null
    }
 
+   private fun setFabBehaviorOnMotion() {
+      binding.motionLayout.addTransitionListener(object : MotionLayout.TransitionListener {
+         override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) = Unit
+         override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) = Unit
+         override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) = Unit
+
+         override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
+            if (currentId == R.id.autoCompleteToEnd && binding.fabOptions.isVisible) {
+               if (isFabChildesVisible()) fabOperationsOnClick()
+               binding.fabOptions.hide()
+            } else if (currentId == R.id.start && !binding.fabOptions.isVisible) {
+               binding.fabOptions.show()
+            }
+         }
+
+      })
+   }
+
    private fun handleViewVisibility() = lifecycleScope.launchWhenStarted {
       adapter
          .loadStateFlow
@@ -124,6 +167,9 @@ class DisplayIngredientsFragment :
 
             binding.progressbar.isVisible = loadState == LoadState.Loading
             binding.refreshLayout.isVisible = loadState != LoadState.Loading
+
+            if (loadState is LoadState.NotLoading)
+               binding.ivEmpty.isVisible = adapter.snapshot().isEmpty()
 
             if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
                binding.refreshLayout.isRefreshing = false

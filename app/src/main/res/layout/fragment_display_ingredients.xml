@@ -1,98 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:orientation="vertical"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
   tools:context=".screens.main.menu.ingredients.DisplayIngredientsFragment">
 
-  <LinearLayout
-    android:id="@+id/container_name"
+  <androidx.constraintlayout.motion.widget.MotionLayout
+    android:id="@+id/motion_layout"
     android:layout_width="match_parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/fragment_display_ingredients_scene">
 
-    <TextView
+    <LinearLayout
+      android:id="@+id/container_ingredient"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen_big"
-      android:layout_marginTop="@dimen/dimen_big"
-      android:fontFamily="@font/inter_regular"
-      android:text="@string/name" />
+      android:layout_margin="@dimen/dimen_big"
+      android:background="@drawable/cornered_bg"
+      android:orientation="vertical"
+      android:padding="@dimen/dimen_big"
+      android:paddingHorizontal="@dimen/dimen_big"
+      app:layout_constraintBottom_toTopOf="@id/refresh_layout"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-      android:id="@+id/tv_name"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen_big"
-      android:textSize="20sp"
-      tools:text="Kepak" />
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/ingredient"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-  </LinearLayout>
+      <TextView
+        android:id="@+id/tv_ingredient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter_regular"
+        android:maxLines="1"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="@dimen/text_size_normal"
+        tools:text="Ingredient 1" />
 
-  <LinearLayout
-    android:id="@+id/container_amount"
-    android:layout_width="match_parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/container_name"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/total_weight"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+      <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter_regular"
+        android:maxLines="1"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="@dimen/text_size_normal"
+        tools:text="12 000  kg" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/date"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="@dimen/text_size_normal"
+        tools:text="12 вы 2022" />
+
+    </LinearLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+      android:id="@+id/refresh_layout"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen_big"
-      android:layout_marginTop="@dimen/dimen_big"
-      android:fontFamily="@font/inter_regular"
-      android:text="@string/weight" />
+      android:layout_height="0dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/container_ingredient">
 
-    <TextView
-      android:id="@+id/tv_amount"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen_big"
-      android:fontFamily="@font/inter_regular"
-      android:textSize="20sp"
-      tools:text="983462462378 kg" />
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_operations"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/recycler_item_operation" />
 
-  </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-  <TextView
-    android:id="@+id/tv_created_date"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/container_amount"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fontFamily="@font/inter_regular"
-    android:layout_marginHorizontal="@dimen/dimen_big"
-    android:layout_marginTop="@dimen/dimen_big"
-    android:text="created: 123412" />
-
-  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    android:id="@+id/refresh_layout"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_created_date">
-
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recycler_operations"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      tools:listitem="@layout/recycler_item_operation" />
-
-  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+  </androidx.constraintlayout.motion.widget.MotionLayout>
 
   <ProgressBar
     android:id="@+id/progressbar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+    android:id="@+id/tv_import"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_normal"
+    android:background="@drawable/cornered_bg"
+    android:fontFamily="@font/inter_medium"
+    android:padding="@dimen/dimen_normal"
+    android:text="@string/income"
+    android:textColor="?attr/colorOnSurface"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="@id/fab_import"
+    app:layout_constraintRight_toLeftOf="@id/fab_import"
+    app:layout_constraintTop_toTopOf="@id/fab_import" />
+
+  <TextView
+    android:id="@+id/tv_export"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_normal"
+    android:background="@drawable/cornered_bg"
+    android:fontFamily="@font/inter_medium"
+    android:padding="@dimen/dimen_normal"
+    android:text="@string/expense"
+    android:textColor="?attr/colorOnSurface"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="@id/fab_export"
+    app:layout_constraintRight_toLeftOf="@id/fab_export"
+    app:layout_constraintTop_toTopOf="@id/fab_export" />
+
+  <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    android:id="@+id/fab_import"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dimen_normal"
+    android:contentDescription="@null"
+    android:fontFamily="@font/inter_medium"
+    android:scaleX="0.8"
+    android:scaleY="0.8"
+    android:visibility="gone"
+    app:icon="@drawable/ic_import"
+    app:layout_constraintBottom_toTopOf="@id/fab_export"
+    app:layout_constraintRight_toRightOf="@id/fab_export" />
+
+  <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    android:id="@+id/fab_export"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dimen_normal"
+    android:contentDescription="@null"
+    android:fontFamily="@font/inter_medium"
+    android:scaleX="0.8"
+    android:scaleY="0.8"
+    android:visibility="gone"
+    app:icon="@drawable/ic_export"
+    app:layout_constraintBottom_toTopOf="@id/fab_options"
+    app:layout_constraintRight_toRightOf="@id/fab_options" />
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/fab_options"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_big"
+    android:contentDescription="@null"
+    android:src="@drawable/ic_add"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintRight_toRightOf="parent" />
+
+  <ImageView
+    android:contentDescription="@null"
+    android:id="@+id/iv_empty"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_empty"
+    android:visibility="gone"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"

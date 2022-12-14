@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentIngredientsTypeBinding
 import com.android.bdkstock.databinding.RecyclerSingleItemBinding
@@ -20,7 +21,6 @@ import com.android.model.repository.ingredients.entity.IngredientEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.gone
 import com.android.model.utils.observeEvent
-import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
@@ -68,6 +68,7 @@ class IngredientsTypeFragment :
 
       setupRecyclerView()
       setupRefreshLayout()
+      setFabBehaviorOnRecycler()
 
       handleViewVisibility()
 
@@ -92,6 +93,19 @@ class IngredientsTypeFragment :
       binding.recyclerIngredients.itemAnimator = null
    }
 
+   private fun setFabBehaviorOnRecycler() {
+      binding.recyclerIngredients.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            if (dy > 0 && binding.extendedFab.isVisible) {
+               binding.extendedFab.hide()
+            } else if (dy < 0 && !binding.extendedFab.isVisible) {
+               binding.extendedFab.show()
+            }
+         }
+      })
+   }
+
    private fun setupRefreshLayout() {
       binding.refreshLayout.setOnRefreshListener {
          adapter.refresh()
@@ -106,6 +120,9 @@ class IngredientsTypeFragment :
 
             binding.progressbar.isVisible = loadState == LoadState.Loading
             binding.refreshLayout.isVisible = loadState != LoadState.Loading
+
+            if (loadState is LoadState.NotLoading)
+               binding.ivEmpty.isVisible = adapter.snapshot().isEmpty()
 
             if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
                binding.refreshLayout.isRefreshing = false

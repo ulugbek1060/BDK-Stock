@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.android.bdkstock.databinding.FragmentDisplayOperationsBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.views.getActionBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,14 +24,14 @@ class DisplayOperationsFragment :
 
    @SuppressLint("SetTextI18n")
    private fun observeOperation() = viewModel.state.observe(viewLifecycleOwner) { state ->
-      binding.tvCreator.setText(state.ingredient?.creator)
-      binding.inputIngredient.setText(state.ingredient?.name)
-      binding.inputAmount.setText(state.ingredient?.amount)
-      binding.inputWeight.setText(state.ingredient?.unit)
-      binding.inputComment.setText(state.ingredient?.comment)
-      binding.tvCreatedDate.setText(state.ingredient?.createdAt)
-
-      binding.tvIndicator.text = state.getStatusText(requireContext())
-      binding.tvIndicator.setBackgroundColor(state.getBackgroundColor(requireContext()))
+      val ingredient = state.ingredient
+      getActionBar()?.title = state.getStatusText(requireContext())
+      with(binding) {
+         tvEmployee.text = ingredient?.creator
+         tvIngredients.text = ingredient?.name
+         tvAmount.text = "${ingredient?.amount} ${ingredient?.unit}"
+         tvDate.text = ingredient?.createdAt
+         inputComment.setText(state.ingredient?.comment)
+      }
    }
 }

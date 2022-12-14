@@ -180,6 +180,9 @@ class DriversForOrderFragment :
          binding.recyclerDrivers.isVisible = loadState != LoadState.Loading
          binding.progressbar.isVisible = loadState == LoadState.Loading
 
+         if (loadState is LoadState.NotLoading)
+            binding.ivEmpty.isVisible = adapter.snapshot().isEmpty()
+
          if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
             binding.refreshLayout.isRefreshing = false
 

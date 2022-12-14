@@ -71,7 +71,7 @@
   <string name="expense">Расход</string>
   <string name="ingredients">Ингредиенты</string>
   <string name="accepted">Принял</string>
-  <string name="weight">Масса: </string>
+  <string name="weight">Масса</string>
 
   <string name="m_01">Янв</string>
   <string name="m_01_full">Яанварь</string>
@@ -150,5 +150,7 @@
   <string name="cost_of_product">Сумма товара за 1 кг</string>
   <string name="query_by_client">поиск по клиенту</string>
   <string name="search_by_driver">поиск по водителю</string>
+  <string name="date">Дата</string>
+  <string name="total_weight">Общая масса</string>
 
 </resources>

@@ -192,6 +192,9 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
             binding.progressbar.isVisible = loadState == LoadState.Loading
             binding.refreshLayout.isVisible = loadState != LoadState.Loading
 
+            if (loadState is LoadState.NotLoading)
+               binding.ivEmpty.isVisible = adapter.snapshot().isEmpty()
+
             if (loadState is LoadState.NotLoading || loadState is LoadState.Error)
                binding.refreshLayout.isRefreshing = false
 

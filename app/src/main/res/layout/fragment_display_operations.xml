@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_height="wrap_content"
   tools:context=".screens.main.menu.ingredients.DisplayOperationsFragment">
 
@@ -11,168 +11,145 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-      android:id="@+id/tv_indicator"
-      android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize"
-      android:background="@color/red"
-      android:gravity="center_vertical"
-      android:padding="@dimen/dimen_large"
-      android:text="@string/expense"
-      android:fontFamily="@font/inter_regular"
-      android:textColor="@color/white"
-      android:textSize="20sp"
-      app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:padding="@dimen/dimen_large"
-      android:src="@drawable/ic_check"
-      app:layout_constraintBottom_toBottomOf="@id/tv_indicator"
-      app:layout_constraintRight_toRightOf="@id/tv_indicator"
-      app:layout_constraintTop_toTopOf="@id/tv_indicator" />
-
-    <ImageView
-      android:id="@+id/iv_creator"
-      android:layout_width="40dp"
-      android:layout_height="40dp"
-      android:layout_marginStart="@dimen/dimen_large"
-      android:layout_marginTop="@dimen/dimen_large"
-      android:src="@drawable/img_avatar"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/tv_indicator" />
-
-    <TextView
-      android:id="@+id/tv_creator"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/dimen_large"
-      android:layout_marginRight="@dimen/dimen_large"
-      android:fontFamily="@font/inter_regular"
-      android:textSize="20sp"
-      app:layout_constraintBottom_toBottomOf="@id/iv_creator"
-      app:layout_constraintLeft_toRightOf="@id/iv_creator"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="@id/iv_creator"
-      tools:text="Admin" />
-
-    <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/input_layout_ingredient"
-      style="@style/TextInputLayoutStyleDropDown"
+    <LinearLayout
+      android:id="@+id/container_employee"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/dimen_large"
+      android:layout_marginHorizontal="@dimen/dimen_big"
+      android:layout_marginTop="@dimen/dimen_big"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toTopOf="@id/container_ingredient"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/employee"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <TextView
+        android:id="@+id/tv_employee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter_regular"
+        android:maxLines="1"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="@dimen/text_size_normal"
+        tools:text="Admin" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/container_ingredient"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/dimen_big"
       android:layout_marginTop="@dimen/dimen_large"
-      android:layout_marginRight="@dimen/dimen_large"
-      android:hint="@string/ingredients"
-      app:errorEnabled="true"
-      android:fontFamily="@font/inter_regular"
-      app:layout_constraintBottom_toTopOf="@id/input_layout_amount"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/iv_creator">
+      android:background="@drawable/cornered_bg"
+      android:orientation="vertical"
+      android:padding="@dimen/dimen_big"
+      android:paddingHorizontal="@dimen/dimen_big"
+      app:layout_constraintBottom_toTopOf="@id/input_layout_comment"
+      app:layout_constraintTop_toBottomOf="@id/container_employee">
 
-      <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-        android:id="@+id/input_ingredient"
-        android:layout_width="match_parent"
-        android:fontFamily="@font/inter_regular"
-        android:layout_height="wrap_content"
-        android:cursorVisible="false"
-        android:focusable="false"
-        tools:ignore="LabelFor" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/input_layout_amount"
-      style="@style/TextInputLayoutStyle"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/dimen_large"
-      android:layout_marginRight="@dimen/dimen_large"
-      android:layout_weight="1"
-      android:hint="@string/weight"
-      android:fontFamily="@font/inter_regular"
-      app:errorEnabled="true"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toLeftOf="@id/input_layout_weight"
-      app:layout_constraintTop_toBottomOf="@id/input_layout_ingredient">
-
-      <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/input_amount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:fontFamily="@font/inter_regular"
-        android:imeOptions="actionNext"
-        android:inputType="number" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/input_layout_weight"
-      style="@style/TextInputLayoutStyle"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="@dimen/dimen_large"
-      android:fontFamily="@font/inter_regular"
-      android:layout_weight="1"
-      app:errorEnabled="true"
-      app:layout_constraintBottom_toBottomOf="@id/input_layout_amount"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="@id/input_layout_amount">
-
-      <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/input_weight"
+      <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_regular"
-        android:cursorVisible="false"
-        android:focusable="false"
-        tools:text="kg" />
+        android:text="@string/ingredient"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+      <TextView
+        android:id="@+id/tv_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter_regular"
+        android:maxLines="1"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="@dimen/text_size_normal"
+        tools:text="Ingredient 1" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/weight"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter_regular"
+        android:maxLines="1"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="@dimen/text_size_normal"
+        tools:text="12 000  kg" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/date"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="@dimen/text_size_normal"
+        tools:text="12 вы 2022" />
+
+    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/input_layout_comment"
       style="@style/TextInputLayoutStyle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/dimen_large"
-      android:layout_marginRight="@dimen/dimen_large"
+      android:layout_marginHorizontal="@dimen/dimen_big"
+      android:layout_marginTop="@dimen/dimen_big"
       android:fontFamily="@font/inter_regular"
       android:hint="@string/comments"
       app:errorEnabled="true"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/input_layout_amount">
+      app:layout_constraintTop_toBottomOf="@id/container_ingredient">
 
       <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:cursorVisible="false"
-        android:fontFamily="@font/inter_regular"
         android:focusable="false"
+        android:fontFamily="@font/inter_regular"
         android:gravity="top"
         android:minHeight="200dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-      android:id="@+id/tv_created_date"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/dimen_large"
-      android:fontFamily="@font/inter_regular"
-      android:layout_marginEnd="@dimen/dimen_large"
-      android:layout_marginBottom="@dimen/dimen_large"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/input_layout_comment"
-      tools:text="21 may 2022" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 
