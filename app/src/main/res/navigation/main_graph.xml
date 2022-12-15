@@ -57,14 +57,14 @@
       app:enterAnim="@anim/slide_enter"
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
-      app:popExitAnim="@anim/slide_pop_exit"/>
+      app:popExitAnim="@anim/slide_pop_exit" />
     <action
       android:id="@+id/action_actionsFragment_to_displayClientsFragment"
       app:destination="@id/displayClientsFragment"
       app:enterAnim="@anim/slide_enter"
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
-      app:popExitAnim="@anim/slide_pop_exit"/>
+      app:popExitAnim="@anim/slide_pop_exit" />
     <action
       android:id="@+id/action_actionsFragment_to_ingredientsTypeFragment"
       app:destination="@id/ingredientsTypeFragment"
@@ -78,7 +78,7 @@
       app:enterAnim="@anim/slide_enter"
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
-      app:popExitAnim="@anim/slide_pop_exit"/>
+      app:popExitAnim="@anim/slide_pop_exit" />
 
     <action
       android:id="@+id/action_actionsFragment_to_displayOperationsFragment"
@@ -93,14 +93,14 @@
       app:enterAnim="@anim/slide_enter"
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
-      app:popExitAnim="@anim/slide_pop_exit"/>
+      app:popExitAnim="@anim/slide_pop_exit" />
     <action
-      android:id="@+id/action_actionsFragment_to_productOperationsFragment"
+      android:id="@+id/actionsFragment_to_productOperations"
       app:destination="@id/productOperationsFragment"
       app:enterAnim="@anim/slide_enter"
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
-      app:popExitAnim="@anim/slide_pop_exit"/>
+      app:popExitAnim="@anim/slide_pop_exit" />
     <action
       android:id="@+id/action_actionsFragment_to_productsFragment"
       app:destination="@id/productsFragment"
@@ -110,7 +110,7 @@
       app:popExitAnim="@anim/slide_pop_exit" />
     <action
       android:id="@+id/action_actionsFragment_to_detailOperationsFragment"
-      app:destination="@id/detailOperationsFragment"
+      app:destination="@id/displayProductOperations"
       app:enterAnim="@anim/slide_enter"
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
@@ -148,7 +148,7 @@
     android:id="@+id/registerEmployeeFragment"
     android:name="com.android.bdkstock.screens.main.menu.employees.RegisterEmployeeFragment"
     android:label="@string/register_employee"
-    tools:layout="@layout/fragment_register_employee"/>
+    tools:layout="@layout/fragment_register_employee" />
 
   <fragment
     android:id="@+id/registerDriverFragment"
@@ -234,24 +234,37 @@
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
       app:popExitAnim="@anim/slide_pop_exit" />
+    <action
+      android:id="@+id/action_displayIngredientsFragment_to_operateIngredientsFragment"
+      app:destination="@id/operateIngredientsFragment" />
   </fragment>
   <fragment
     android:id="@+id/operateIngredientsFragment"
     android:name="com.android.bdkstock.screens.main.menu.ingredients.OperateIngredientsFragment"
     android:label="@string/operation"
     tools:layout="@layout/fragment_operate_ingredients">
+
     <argument
       android:name="operationId"
       android:defaultValue="0"
       app:argType="integer" />
+    <argument
+      android:name="defaultIngredient"
+      android:defaultValue="@null"
+      app:argType="com.android.model.repository.ingredients.entity.SimpleIngredient"
+      app:nullable="true" />
+    <action
+      android:id="@+id/action_operateIngredientsFragment_to_displayOperationsFragment"
+      app:destination="@id/displayOperationsFragment" />
+
 
   </fragment>
 
   <fragment
     android:id="@+id/displayOperationsFragment"
-    android:name="com.android.bdkstock.screens.main.menu.ingredients.DisplayOperationsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.ingredients.DisplayIngredientOperationFragment"
     android:label="@string/operation"
-    tools:layout="@layout/fragment_display_operations">
+    tools:layout="@layout/fragment_display_ingredient_operation">
     <argument
       android:name="operationIngredient"
       app:argType="com.android.model.repository.ingredients.entity.IngredientExOrInEntity" />
@@ -273,6 +286,12 @@
       android:name="operationsStatus"
       app:argType="integer" />
 
+    <argument
+      android:name="defaultProduct"
+      android:defaultValue="@null"
+      app:argType="com.android.model.repository.products.entity.ProductSelectionItem"
+      app:nullable="true" />
+
   </fragment>
 
   <fragment
@@ -285,51 +304,74 @@
     android:id="@+id/productsFragment"
     android:name="com.android.bdkstock.screens.main.menu.products.ProductsFragment"
     android:label="@string/products"
-    tools:layout="@layout/fragment_products" >
+    tools:layout="@layout/fragment_products">
     <action
-      android:id="@+id/action_productsFragment_to_addProductFragment"
+      android:id="@+id/products_to_addProduct"
       app:destination="@id/addProductFragment"
       app:enterAnim="@anim/slide_enter"
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
-      app:popExitAnim="@anim/slide_pop_exit"/>
+      app:popExitAnim="@anim/slide_pop_exit" />
     <action
-      android:id="@+id/action_productsFragment_to_displayProductsFragment"
+      android:id="@+id/products_to_displayProducts"
       app:destination="@id/displayProductsFragment"
       app:enterAnim="@anim/slide_enter"
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
-      app:popExitAnim="@anim/slide_pop_exit"/>
+      app:popExitAnim="@anim/slide_pop_exit" />
   </fragment>
   <fragment
     android:id="@+id/addProductFragment"
     android:name="com.android.bdkstock.screens.main.menu.products.AddProductFragment"
     android:label="@string/add_product"
-    tools:layout="@layout/fragment_add_product"/>
+    tools:layout="@layout/fragment_add_product" />
   <fragment
-    android:id="@+id/detailOperationsFragment"
-    android:name="com.android.bdkstock.screens.main.menu.products.DetailOperationsFragment"
+    android:id="@+id/displayProductOperations"
+    android:name="com.android.bdkstock.screens.main.menu.products.DisplayProductOperationFragment"
     android:label="fragment_operations_detail"
-    tools:layout="@layout/fragment_operations_detail" >
+    tools:layout="@layout/fragment_display_product_operation">
     <argument
       android:name="productOperation"
       app:argType="com.android.model.repository.products.entity.ProductOperationEntity" />
   </fragment>
   <fragment
     android:id="@+id/displayProductsFragment"
-    tools:layout="@layout/fragment_display_products"
     android:name="com.android.bdkstock.screens.main.menu.products.DisplayProductsFragment"
-    android:label="@string/products" >
+    android:label="@string/products"
+    tools:layout="@layout/fragment_display_products">
     <argument
       android:name="product"
       app:argType="com.android.model.repository.products.entity.ProductEntity" />
+
     <action
-      android:id="@+id/action_displayProductsFragment_to_detailOperationsFragment"
-      app:destination="@id/detailOperationsFragment"
+      android:id="@+id/displayProducts_to_operationsOfProduct"
+      app:destination="@id/operationsOfProductFragment"
       app:enterAnim="@anim/slide_enter"
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
       app:popExitAnim="@anim/slide_pop_exit" />
+    <action
+      android:id="@+id/displayProducts_to_productOperations"
+      app:destination="@id/productOperationsFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
+    <action
+      android:id="@+id/displayProducts_to_editProduct"
+      app:destination="@id/editProductFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
+    <action
+      android:id="@+id/displayProducts_to_editIngredientsOfProduct"
+      app:destination="@id/editIngredientsOfProductFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
+
   </fragment>
   <fragment
     android:id="@+id/newOrderFragment"
@@ -410,10 +452,44 @@
     android:id="@+id/payFragment"
     android:name="com.android.bdkstock.screens.main.menu.sales.PayFragment"
     android:label="@string/payments"
-    tools:layout="@layout/fragment_pay" >
+    tools:layout="@layout/fragment_pay">
     <argument
       android:name="orderEntity"
       app:argType="com.android.model.repository.sales.entity.OrderEntity" />
   </dialog>
+  <fragment
+    android:id="@+id/operationsOfProductFragment"
+    android:name="com.android.bdkstock.screens.main.menu.products.OperationsOfProductFragment"
+    android:label="fragment_operations_of_product"
+    tools:layout="@layout/fragment_operations_of_product">
+    <argument
+      android:name="productId"
+      app:argType="long" />
+    <action
+      android:id="@+id/operationsOfProduct_to_detailOperations"
+      app:destination="@id/displayProductOperations"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
+  </fragment>
+  <fragment
+    android:id="@+id/editProductFragment"
+    android:name="com.android.bdkstock.screens.main.menu.products.EditProductFragment"
+    android:label="fragment_edit_product"
+    tools:layout="@layout/fragment_edit_product">
+    <argument
+      android:name="productId"
+      app:argType="long" />
+  </fragment>
+  <fragment
+    android:id="@+id/editIngredientsOfProductFragment"
+    android:name="com.android.bdkstock.screens.main.menu.products.EditIngredientsOfProductFragment"
+    android:label="fragment_edit_ingredients_of_product"
+    tools:layout="@layout/fragment_edit_ingredients_of_product">
+    <argument
+      android:name="productId"
+      app:argType="long" />
+  </fragment>
 
 </navigation>

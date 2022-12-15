@@ -4,7 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  tools:context=".screens.main.menu.ingredients.DisplayOperationsFragment">
+  tools:context=".screens.main.menu.products.DisplayProductOperationFragment">
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -18,7 +18,7 @@
       android:layout_marginHorizontal="@dimen/dimen_big"
       android:layout_marginTop="@dimen/dimen_big"
       android:orientation="vertical"
-      app:layout_constraintBottom_toTopOf="@id/container_ingredient"
+      app:layout_constraintBottom_toTopOf="@id/container_product"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toTopOf="parent">
@@ -47,7 +47,7 @@
     </LinearLayout>
 
     <LinearLayout
-      android:id="@+id/container_ingredient"
+      android:id="@+id/container_product"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginHorizontal="@dimen/dimen_big"
@@ -63,14 +63,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_regular"
-        android:text="@string/ingredient"
+        android:text="@string/product"
         android:textSize="@dimen/text_size_small"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
       <TextView
-        android:id="@+id/tv_ingredients"
+        android:id="@+id/tv_products"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -137,7 +137,7 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/container_ingredient">
+      app:layout_constraintTop_toBottomOf="@id/container_product">
 
       <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_comment"

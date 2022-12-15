@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentMenuBinding
 import com.android.bdkstock.databinding.RecyclerItemMenuBinding
-import com.android.bdkstock.screens.main.base.BaseAdapter
+import com.android.bdkstock.screens.main.base.adapters.BaseAdapter
 import com.android.bdkstock.screens.main.base.BaseFragment
-import com.android.bdkstock.screens.main.base.ViewHolderCreator
+import com.android.bdkstock.screens.main.base.adapters.ViewHolderCreator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

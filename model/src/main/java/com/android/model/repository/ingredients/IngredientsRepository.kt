@@ -12,7 +12,6 @@ import com.android.model.utils.Field
 import com.android.model.utils.Results
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
@@ -51,7 +50,7 @@ class IngredientsRepository @Inject constructor(
       amount: String,
       statusOfActions: Int,
       comments: String
-   ): IngredientExOrInEntity {
+   ): String {
       if (ingredientId == null) throw EmptyFieldException(Field.NAME)
       if (amount.isBlank()) throw EmptyFieldException(Field.AMOUNT)
       if (comments.isBlank()) throw EmptyFieldException(Field.COMMENT)
@@ -87,9 +86,14 @@ class IngredientsRepository @Inject constructor(
       BasePageSource(loader, defaultPageSize = DEFAULT_PAGE_SIZE)
    }
 
-   fun getIngredientsList(): Flow<Results<List<SimpleIngredient>>> = flow {
-      emit(suspendRunCatching { ingredientsSource.getIngredientList() })
-   }
-      .flowOn(Dispatchers.IO)
-      .asResult()
+   fun getIngredientsList(hasDefaultIngredient: Boolean = false): Flow<Results<List<SimpleIngredient>>> =
+      flow {
+         if (hasDefaultIngredient) {
+            emit(emptyList())
+         } else {
+            emit(suspendRunCatching { ingredientsSource.getIngredientList() })
+         }
+      }
+         .flowOn(Dispatchers.IO)
+         .asResult()
 }

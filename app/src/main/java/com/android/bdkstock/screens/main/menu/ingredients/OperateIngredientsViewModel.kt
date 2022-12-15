@@ -1,6 +1,5 @@
 package com.android.bdkstock.screens.main.menu.ingredients
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -9,7 +8,6 @@ import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.ingredients.IngredientsRepository
-import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
 import com.android.model.repository.ingredients.entity.SimpleIngredient
 import com.android.model.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,24 +22,32 @@ class OperateIngredientsViewModel @Inject constructor(
 ) : BaseViewModel(accountRepository) {
 
    private val _operationId = OperateIngredientsFragmentArgs
-      .fromSavedStateHandle(savedStateHandle).operationId
+      .fromSavedStateHandle(savedStateHandle)
+      .operationId
+
+   private val _ingredient = OperateIngredientsFragmentArgs
+      .fromSavedStateHandle(savedStateHandle)
+      .defaultIngredient
 
    private val _state = MutableLiveData(State())
    val state = _state.liveData()
 
-   private val _navigateToDisplay = MutableLiveEvent<IngredientExOrInEntity>()
+   private val _navigateToDisplay = MutableLiveEvent<String>()
    val navigateToDisplay = _navigateToDisplay.liveData()
 
    private val _selectedIngredient = MutableLiveData<SimpleIngredient>()
    val selectedIngredient = _selectedIngredient.liveData()
 
-   val getIngredientList: Flow<Results<List<SimpleIngredient>>> = ingredientsRepository
-      .getIngredientsList()
+   var getIngredientList: Flow<Results<List<SimpleIngredient>>> = ingredientsRepository
+      .getIngredientsList(_ingredient != null)
 
    init {
       _state.value = _state.requireValue().copy(
-         status = _operationId
+         status = _operationId,
+         defaultIngredient = _ingredient
       )
+
+      if (_ingredient != null) setIngredient(_ingredient)
    }
 
    fun operateIngredient(
@@ -50,14 +56,13 @@ class OperateIngredientsViewModel @Inject constructor(
    ) = viewModelScope.safeLaunch {
       showProgress()
       try {
-         val importedIngredient =
-            ingredientsRepository.addExpensesAndIncomesOfIngredient(
-               statusOfActions = _operationId,
-               ingredientId = getIngredientId(),
-               amount = amount,
-               comments = comment
-            )
-         successAndNavigateToDisplay(importedIngredient)
+         val message = ingredientsRepository.addExpensesAndIncomesOfIngredient(
+            statusOfActions = _operationId,
+            ingredientId = getIngredientId(),
+            amount = amount,
+            comments = comment
+         )
+         successAndNavigateToDisplay(message)
       } catch (e: EmptyFieldException) {
          showEmptyFields(e)
       } finally {
@@ -69,8 +74,8 @@ class OperateIngredientsViewModel @Inject constructor(
       _selectedIngredient.value = ingredient
    }
 
-   private fun successAndNavigateToDisplay(importedIngredient: IngredientExOrInEntity) {
-      _navigateToDisplay.publishEvent(importedIngredient)
+   private fun successAndNavigateToDisplay(message: String) {
+      _navigateToDisplay.publishEvent(message)
    }
 
    private fun showEmptyFields(e: EmptyFieldException) {
@@ -100,9 +105,9 @@ class OperateIngredientsViewModel @Inject constructor(
       val emptyName: Boolean = false,
       val emptyAmount: Boolean = false,
       val emptyComment: Boolean = false,
-      val status: Int? = null
+      val status: Int? = null,
+      val defaultIngredient: SimpleIngredient? = null
    ) {
-
       fun getNameErrorMessage(context: Context) =
          if (emptyName) context.getString(R.string.error_empty_name)
          else null
@@ -119,15 +124,7 @@ class OperateIngredientsViewModel @Inject constructor(
          if (status == OPERATION_INCOME) context.getString(R.string.income)
          else context.getString(R.string.expense)
 
-      fun getBackgroundColor(context: Context) =
-         if (status == OPERATION_INCOME) context.getColor(R.color.green)
-         else context.getColor(R.color.red)
-
-      @SuppressLint("UseCompatLoadingForDrawables")
-      fun getIndicator(context: Context) =
-         if (status == OPERATION_INCOME) context.getDrawable(R.drawable.ic_export)
-         else context.getDrawable(R.drawable.ic_import)
-
+      fun ingredientChangeability() = defaultIngredient != null
    }
 
    private companion object {

@@ -152,5 +152,7 @@
   <string name="search_by_driver">поиск по водителю</string>
   <string name="date">Дата</string>
   <string name="total_weight">Общая масса</string>
+  <string name="edit_product">Редактировать товар</string>
+  <string name="edit_ingredient_of_product">Редактировать ингредиены</string>
 
 </resources>

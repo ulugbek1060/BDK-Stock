@@ -41,7 +41,7 @@ class DisplayIngredientsFragment :
          bind { ingredient ->
 
             val statusColor =
-               if (ingredient.status == OPERATION_EXPORT) root.context.getColor(R.color.red)
+               if (ingredient.status == OPERATION_EXPORT) root.context.getColor(R.color.orange)
                else root.context.getColor(R.color.green)
 
             val statusText =
@@ -49,13 +49,14 @@ class DisplayIngredientsFragment :
                else root.context.getString(R.string.income)
 
             val statusIcon =
-               if (ingredient.status == OPERATION_EXPORT) root.context.getDrawable(R.drawable.ic_import)
-               else root.context.getDrawable(R.drawable.ic_export)
+               if (ingredient.status == OPERATION_EXPORT) root.context.getDrawable(R.drawable.ic_export)
+               else root.context.getDrawable(R.drawable.ic_import)
 
             icStatus.setImageDrawable(statusIcon)
             icStatus.setColorFilter(statusColor)
-            tvName.text = statusText
-            tvName.setTextColor(statusColor)
+            tvStatus.text = statusText
+            tvStatus.setTextColor(statusColor)
+            tvName.text = ingredient.name
             tvComment.text = ingredient.comment
             tvAmount.text = ingredient.amount
             tvUnit.text = ingredient.unit
@@ -87,8 +88,22 @@ class DisplayIngredientsFragment :
       observeAuthError()
 
       binding.fabOptions.setOnClickListener { fabOperationsOnClick() }
-      binding.fabImport.setOnClickListener { }
-      binding.fabExport.setOnClickListener { }
+      binding.fabImport.setOnClickListener { fabImportOnClick() }
+      binding.fabExport.setOnClickListener { fabExportOnClick() }
+   }
+
+   private fun fabExportOnClick() {
+      val ingredient = viewModel.getCurrentIngredient()
+      val args = DisplayIngredientsFragmentDirections
+         .actionDisplayIngredientsFragmentToOperateIngredientsFragment(OPERATION_EXPORT, ingredient)
+      findTopNavController().navigate(args)
+   }
+
+   private fun fabImportOnClick() {
+      val ingredient = viewModel.getCurrentIngredient()
+      val args = DisplayIngredientsFragmentDirections
+         .actionDisplayIngredientsFragmentToOperateIngredientsFragment(OPERATION_IMPORT, ingredient)
+      findTopNavController().navigate(args)
    }
 
    private fun fabOperationsOnClick() = onAddButtonClicked(

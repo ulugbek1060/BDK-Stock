@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="300">
+       <KeyFrameSet>
+       </KeyFrameSet>
+      <OnClick motion:targetId="@+id/toggle_button" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+      <Constraint
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        motion:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/dimen_big"
+        android:layout_marginEnd="@dimen/dimen_big"
+        motion:layout_constraintRight_toRightOf="parent"
+        motion:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="@dimen/dimen_big"
+        motion:layout_constraintTop_toTopOf="parent" />
+      <Constraint
+        android:id="@+id/toggle_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        motion:layout_constraintRight_toRightOf="@id/linearLayout"
+        motion:layout_constraintTop_toTopOf="@id/linearLayout"
+        motion:layout_constraintBottom_toBottomOf="@id/linearLayout"
+        android:rotationX="180" />
+    </ConstraintSet>
+</MotionScene>

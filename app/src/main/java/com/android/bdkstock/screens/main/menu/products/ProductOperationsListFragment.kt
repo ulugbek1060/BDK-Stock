@@ -30,7 +30,6 @@ import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.products.entity.ProductOperationEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.observeEvent
-import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
@@ -55,7 +54,7 @@ class ProductOperationsListFragment :
          bind { products ->
 
             val statusColor =
-               if (products.status == EXPORTED_PRODUCT) root.context.getColor(R.color.red)
+               if (products.status == EXPORTED_PRODUCT) root.context.getColor(R.color.orange)
                else root.context.getColor(R.color.green)
 
             val statusText =
@@ -63,13 +62,14 @@ class ProductOperationsListFragment :
                else root.context.getString(R.string.income)
 
             val statusIcon =
-               if (products.status == EXPORTED_PRODUCT) root.context.getDrawable(R.drawable.ic_import)
-               else root.context.getDrawable(R.drawable.ic_export)
+               if (products.status == EXPORTED_PRODUCT) root.context.getDrawable(R.drawable.ic_export)
+               else root.context.getDrawable(R.drawable.ic_import)
 
             icStatus.setImageDrawable(statusIcon)
             icStatus.setColorFilter(statusColor)
-            tvName.text = statusText
-            tvName.setTextColor(statusColor)
+            tvStatus.text = statusText
+            tvStatus.setTextColor(statusColor)
+            tvName.text = products.name
             tvComment.text = products.comment
             tvAmount.text = products.amount
             tvUnit.text = products.unit
@@ -135,13 +135,13 @@ class ProductOperationsListFragment :
 
    private fun exportOnclick() {
       val args = ActionsFragmentDirections
-         .actionActionsFragmentToProductOperationsFragment(EXPORTED_PRODUCT)
+         .actionsFragmentToProductOperations(EXPORTED_PRODUCT)
       findTopNavController().navigate(args)
    }
 
    private fun manufactureOnClick() {
       val args = ActionsFragmentDirections
-         .actionActionsFragmentToProductOperationsFragment(MANUFACTURED_PRODUCT)
+         .actionsFragmentToProductOperations(MANUFACTURED_PRODUCT)
       findTopNavController().navigate(args)
    }
 

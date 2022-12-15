@@ -3,9 +3,14 @@ package com.android.bdkstock.screens.main.menu.ingredients
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +33,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class IngredientsTypeFragment :
-   BaseFragment<IngredientsTypeViewModel, FragmentIngredientsTypeBinding>() {
+   BaseFragment<IngredientsTypeViewModel, FragmentIngredientsTypeBinding>(),
+   androidx.appcompat.widget.SearchView.OnQueryTextListener {
 
    override val viewModel by viewModels<IngredientsTypeViewModel>()
    private lateinit var layoutManager: LinearLayoutManager
@@ -75,6 +81,21 @@ class IngredientsTypeFragment :
       observeAuthError()
 
       binding.extendedFab.setOnClickListener { addOnClick() }
+
+      requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
+   }
+
+   private val menuProvider = object : MenuProvider {
+      override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+         menuInflater.inflate(R.menu.menu_search, menu)
+         val myActionMenuItem = menu.findItem(R.id.search)
+         val searchView = myActionMenuItem.actionView as androidx.appcompat.widget.SearchView
+         searchView.setOnQueryTextListener(this@IngredientsTypeFragment)
+      }
+
+      override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+         return false
+      }
    }
 
    private fun addOnClick() {
@@ -149,5 +170,13 @@ class IngredientsTypeFragment :
             .create()
             .show()
       }
+   }
+
+   override fun onQueryTextSubmit(query: String?): Boolean {
+      return false
+   }
+
+   override fun onQueryTextChange(newText: String?): Boolean {
+      return viewModel.setQuery(newText)
    }
 }

@@ -1,12 +1,12 @@
 package com.android.bdkstock.screens.main.base
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navOptions
 import androidx.viewbinding.ViewBinding
 import com.android.bdkstock.R
@@ -45,6 +45,11 @@ abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewBinding> : 
       }
    }
 
+   protected fun lifecycleScopeStarted(block: suspend () -> Unit) {
+      lifecycleScope.launchWhenStarted {
+         block()
+      }
+   }
 
    /**
     * Log out without colling (api/user/logout)  if token is unusable

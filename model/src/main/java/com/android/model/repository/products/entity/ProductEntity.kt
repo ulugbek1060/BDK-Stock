@@ -12,4 +12,11 @@ data class ProductEntity(
    val amount: String,
    val createdAt: String,
    val updatedAt: String
-) : Parcelable
+) : Parcelable {
+   fun toProductSelectionItem() = ProductSelectionItem(
+      id = id,
+      name = name,
+      unit = unit,
+      price = price
+   )
+}

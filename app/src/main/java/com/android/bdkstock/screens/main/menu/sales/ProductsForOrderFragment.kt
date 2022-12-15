@@ -72,31 +72,18 @@ class ProductsForOrderFragment : BottomSheetDialogFragment() {
    }
 
    private fun setupAutoComplete() = lifecycleScope.launchWhenStarted {
-      viewModel.productsResult.collectLatest { result ->
-         when (result) {
-            is Success -> {
-               binding.progressbar.gone()
-               binding.mainContainer.visible()
-               val list = result.value
-               val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, list)
-               binding.autoCompleteProduct.setAdapter(adapter)
+      viewModel.productsResult.collectLatest { list ->
+         binding.progressbar.gone()
+         binding.mainContainer.visible()
+         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, list)
+         binding.autoCompleteProduct.setAdapter(adapter)
 
-               binding.autoCompleteProduct.setOnItemClickListener { _, _, position, _ ->
-                  val product = list[position]
-                  viewModel.setProduct(product)
-                  binding.inputWeight.setText(product.unit)
-                  binding.tvProduct.text = product.name
-                  binding.tvPrice.text = product.price
-               }
-            }
-            is Pending -> {
-               binding.progressbar.visible()
-               binding.mainContainer.gone()
-            }
-            else -> {
-               Toast.makeText(requireContext(), "Something went wrong!!!", Toast.LENGTH_SHORT)
-                  .show()
-            }
+         binding.autoCompleteProduct.setOnItemClickListener { _, _, position, _ ->
+            val product = list[position]
+            viewModel.setProduct(product)
+            binding.inputWeight.setText(product.unit)
+            binding.tvProduct.text = product.name
+            binding.tvPrice.text = product.price
          }
       }
    }

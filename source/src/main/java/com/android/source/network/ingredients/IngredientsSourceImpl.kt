@@ -59,25 +59,26 @@ class IngredientsSourceImpl @Inject constructor(
       amount: String,
       statusOfActions: Int,
       comments: String
-   ): IngredientExOrInEntity = wrapNetworkException {
+   ): String = wrapNetworkException {
       val body = AddExOrInIngredientRequestEntity(
          materialId = ingredientId,
          amount = amount,
          comment = comments,
          status = statusOfActions
       )
-      val ingredientAction = ingredientsApi.addExpenseAndIncomeIngredient(body).exOrInIngredients
-      IngredientExOrInEntity(
-         id = ingredientAction.id,
-         name = ingredientAction.name,
-         amount = ingredientAction.amount,
-         comment = ingredientAction.comment,
-         creator = ingredientAction.userId,
-         status = ingredientAction.status,
-         unit = ingredientAction.unit,
-         createdAt = ingredientAction.createdAt,
-         updatedAt = ingredientAction.updatedAt
-      )
+      val ingredientAction = ingredientsApi.addExpenseAndIncomeIngredient(body).message
+//      IngredientExOrInEntity(
+//         id = ingredientAction.id,
+//         name = ingredientAction.name,
+//         amount = ingredientAction.amount,
+//         comment = ingredientAction.comment,
+//         creator = ingredientAction.userId,
+//         status = ingredientAction.status,
+//         unit = ingredientAction.unit,
+//         createdAt = ingredientAction.createdAt,
+//         updatedAt = ingredientAction.updatedAt
+//      )
+      ingredientAction
    }
 
    override suspend fun getExpensesAndIncomesOfIngredients(

@@ -40,7 +40,7 @@ interface IngredientsSource {
       amount: String,
       statusOfActions: Int,
       comments: String
-   ): IngredientExOrInEntity
+   ): String
 
    /**
     * Fetches actions of Ingredients expenses and incomes with pagination

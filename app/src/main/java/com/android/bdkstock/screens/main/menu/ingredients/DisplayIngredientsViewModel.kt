@@ -50,6 +50,8 @@ class DisplayIngredientsViewModel @Inject constructor(
       ingredientsOperationsFlow = getOperationsByIngredientId()
    }
 
+   fun getCurrentIngredient() = _ingredientEntity.requireValue()?.toSimpleIngredient()
+
    private fun getOperationsByIngredientId() = _ingredientId.asFlow()
       .flatMapLatest {
          ingredientsRepository

@@ -20,12 +20,17 @@ class ProductOperationsViewModel @Inject constructor(
    savedStateHandle: SavedStateHandle
 ) : BaseViewModel(accountRepository) {
 
-   val productsFlow = productsRepository
-      .getProductsForSelect()
+   private val _defaultProduct = ProductOperationsFragmentArgs
+      .fromSavedStateHandle(savedStateHandle)
+      .defaultProduct
 
    private val operationStatus = ProductOperationsFragmentArgs
       .fromSavedStateHandle(savedStateHandle)
       .operationsStatus
+
+   val productsFlow = productsRepository
+      .getProductsForSelect(_defaultProduct != null)
+      .handleException()
 
    private val _goBack = MutableLiveEvent<String>()
    val goBack = _goBack.liveData()
@@ -37,8 +42,11 @@ class ProductOperationsViewModel @Inject constructor(
 
    init {
       _state.value = _state.requireValue().copy(
-         status = operationStatus
+         status = operationStatus,
+         defaultProduct = _defaultProduct
       )
+
+      selectedProductId = _defaultProduct?.id
    }
 
    fun manufacture(amount: String, comment: String) = viewModelScope.safeLaunch {
@@ -63,7 +71,7 @@ class ProductOperationsViewModel @Inject constructor(
       }
    }
 
-   private fun successMessage(message:String) = _goBack.publishEvent(message)
+   private fun successMessage(message: String) = _goBack.publishEvent(message)
 
    private fun showEmptyFields(e: EmptyFieldException) {
       _state.value = _state.requireValue().copy(
@@ -98,7 +106,8 @@ class ProductOperationsViewModel @Inject constructor(
       val emptyProduct: Boolean = false,
       val emptyAmount: Boolean = false,
       val emptyComment: Boolean = false,
-      val isInProgress: Boolean = false
+      val isInProgress: Boolean = false,
+      val defaultProduct: ProductSelectionItem? = null
    ) {
 
       fun getStatusText(context: Context) =

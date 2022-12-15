@@ -15,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentProductsBinding
 import com.android.bdkstock.databinding.RecyclerSingleItemBinding
@@ -26,7 +27,6 @@ import com.android.model.repository.products.entity.ProductEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.gone
 import com.android.model.utils.observeEvent
-import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
@@ -55,7 +55,7 @@ class ProductsFragment :
       listeners {
          root.onClick {
             val args = ProductsFragmentDirections
-               .actionProductsFragmentToDisplayProductsFragment(it)
+               .productsToDisplayProducts(it)
             findTopNavController().navigate(args)
          }
       }
@@ -65,7 +65,6 @@ class ProductsFragment :
       super.onCreate(savedInstanceState)
       observeIngredients()
    }
-
 
    private fun observeIngredients() = lifecycleScope.launch {
       viewModel.productsFlow.collectLatest {
@@ -78,6 +77,7 @@ class ProductsFragment :
 
       setupRecyclerView()
       setupRefreshLayout()
+      setFabBehaviorOnRecycler()
 
       handleViewVisibility()
 
@@ -102,7 +102,7 @@ class ProductsFragment :
    }
 
    private fun addOnClick() {
-      findTopNavController().navigate(R.id.action_productsFragment_to_addProductFragment)
+      findTopNavController().navigate(R.id.products_to_addProduct)
    }
 
    private fun setupRecyclerView() = binding.apply {
@@ -115,6 +115,19 @@ class ProductsFragment :
       )
 
       binding.recyclerProducts.itemAnimator = null
+   }
+
+   private fun setFabBehaviorOnRecycler() {
+      binding.recyclerProducts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            if (dy > 0 && binding.extendedFab.isVisible) {
+               binding.extendedFab.hide()
+            } else if (dy < 0 && !binding.extendedFab.isVisible) {
+               binding.extendedFab.show()
+            }
+         }
+      })
    }
 
    private fun setupRefreshLayout() {

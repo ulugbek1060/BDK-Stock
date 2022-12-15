@@ -8,4 +8,12 @@ data class IngredientEntity(
    val createdAt: String? = null,
    val updatedAt: String? = null,
    val isDeleted: String? = null,
-) : java.io.Serializable
+) : java.io.Serializable {
+
+   fun toSimpleIngredient() = SimpleIngredient(
+      id = id,
+      name = name,
+      unit = unit
+   )
+
+}

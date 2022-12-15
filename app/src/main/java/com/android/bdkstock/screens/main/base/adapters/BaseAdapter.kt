@@ -1,4 +1,4 @@
-package com.android.bdkstock.screens.main.base
+package com.android.bdkstock.screens.main.base.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

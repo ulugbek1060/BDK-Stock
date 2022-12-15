@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentNewOrderBinding
 import com.android.bdkstock.databinding.RecyclerSingleItemBinding
-import com.android.bdkstock.screens.main.base.BaseAdapter
+import com.android.bdkstock.screens.main.base.adapters.BaseAdapter
 import com.android.bdkstock.screens.main.base.BaseFragment
-import com.android.bdkstock.screens.main.base.ViewHolderCreator
+import com.android.bdkstock.screens.main.base.adapters.ViewHolderCreator
 import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.clients.entity.ClientEntity
 import com.android.model.repository.drivers.entity.DriverEntity

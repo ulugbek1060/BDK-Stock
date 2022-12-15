@@ -17,7 +17,7 @@ class ProductsForOrderViewModel @Inject constructor(
 
    private var chosenProduct: ProductSelectionItem? = null
 
-   val productsResult: Flow<Results<List<ProductSelectionItem>>> = productsRepository
+   val productsResult: Flow<List<ProductSelectionItem>> = productsRepository
       .getProductsForSelect()
       .handleException()
 

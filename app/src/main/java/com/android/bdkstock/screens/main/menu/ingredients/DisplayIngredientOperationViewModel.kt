@@ -12,12 +12,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DisplayOperationsViewModel @Inject constructor(
+class DisplayIngredientOperationViewModel @Inject constructor(
    accountRepository: AccountRepository,
    savedStateHandle: SavedStateHandle
 ) : BaseViewModel(accountRepository) {
 
-   private val _currentOperations = DisplayOperationsFragmentArgs
+   private val _currentOperations = DisplayIngredientOperationFragmentArgs
       .fromSavedStateHandle(savedStateHandle)
       .operationIngredient
 

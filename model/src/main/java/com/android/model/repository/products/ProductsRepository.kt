@@ -17,17 +17,14 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class    ProductsRepository @Inject constructor(
+class ProductsRepository @Inject constructor(
    private val productsSource: ProductsSource,
    private val ingredientsSource: IngredientsSource,
    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseRepository() {
 
    suspend fun createProduct(
-      name: String,
-      unit: String,
-      price: String,
-      ingredients: List<SimpleIngredientItem>
+      name: String, unit: String, price: String, ingredients: List<SimpleIngredientItem>
    ): String {
 
       if (name.isBlank()) throw EmptyFieldException(Field.NAME)
@@ -37,19 +34,13 @@ class    ProductsRepository @Inject constructor(
 
       return suspendRunCatching {
          productsSource.createProducts(
-            name = name,
-            unit = unit,
-            price = price,
-            ingredients = ingredients
+            name = name, unit = unit, price = price, ingredients = ingredients
          )
       }
    }
 
    suspend fun updateProducts(
-      productId: Long,
-      name: String,
-      unit: String,
-      price: String
+      productId: Long, name: String, unit: String, price: String
    ): ProductEntity {
       if (name.isBlank()) throw EmptyFieldException(Field.NAME)
       if (unit.isBlank()) throw EmptyFieldException(Field.UNIT)
@@ -57,32 +48,25 @@ class    ProductsRepository @Inject constructor(
 
       return suspendRunCatching {
          productsSource.updateProducts(
-            productId = productId,
-            name = name,
-            unit = unit,
-            price = price
+            productId = productId, name = name, unit = unit, price = price
          )
       }
    }
 
    suspend fun updateIngredientOfProducts(
-      productId: Long,
-      ingredientList: List<SimpleIngredientItem>
+      productId: Long, ingredientList: List<SimpleIngredientItem>
    ): String {
       if (ingredientList.isEmpty()) throw EmptyFieldException(Field.INGREDIENT)
 
       return suspendRunCatching {
          productsSource.updateIngredientOfProducts(
-            productId = productId,
-            ingredientList = ingredientList
+            productId = productId, ingredientList = ingredientList
          )
       }
    }
 
    suspend fun manufactureProduct(
-      productId: Long?,
-      amount: String,
-      comment: String
+      productId: Long?, amount: String, comment: String
    ): String {
       if (productId == null) throw EmptyFieldException(Field.PRODUCT)
       if (amount.isBlank()) throw EmptyFieldException(Field.AMOUNT)
@@ -90,17 +74,13 @@ class    ProductsRepository @Inject constructor(
 
       return suspendRunCatching {
          productsSource.manufactureProducts(
-            productId = productId,
-            amount = amount,
-            comment = comment
+            productId = productId, amount = amount, comment = comment
          )
       }
    }
 
    suspend fun exportProduct(
-      productId: Long?,
-      amount: String,
-      comment: String
+      productId: Long?, amount: String, comment: String
    ): String {
       if (productId == null) throw EmptyFieldException(Field.PRODUCT)
       if (amount.isBlank()) throw EmptyFieldException(Field.AMOUNT)
@@ -108,9 +88,7 @@ class    ProductsRepository @Inject constructor(
 
       return suspendRunCatching {
          productsSource.exportProduct(
-            productId = productId,
-            amount = amount,
-            comment = comment
+            productId = productId, amount = amount, comment = comment
          )
       }
    }
@@ -145,22 +123,21 @@ class    ProductsRepository @Inject constructor(
       BasePageSource(loader, DEFAULT_PAGE_SIZE)
    }
 
-   fun getIngredientsForSelect(): Flow<Results<List<SimpleIngredient>>>  = flow{
+   fun getIngredientsForSelect(): Flow<Results<List<SimpleIngredient>>> = flow {
       emit(suspendRunCatching { ingredientsSource.getIngredientList() })
-   }
-      .flowOn(ioDispatcher)
-      .asResult()
+   }.flowOn(ioDispatcher).asResult()
 
    fun getIngredientsOfProduct(productId: Long): Flow<Results<List<IngredientItem>>> = flow {
       emit(suspendRunCatching { productsSource.getIngredientsOfProduct(productId) })
-   }
-      .flowOn(ioDispatcher)
-      .asResult()
+   }.flowOn(ioDispatcher).asResult()
 
-   fun getProductsForSelect(): Flow<Results<List<ProductSelectionItem>>> = flow {
-      emit(suspendRunCatching { productsSource.getProductsForSelect() })
-   }
-      .flowOn(ioDispatcher)
-      .asResult()
+   fun getProductsForSelect(hasDefaultProduct: Boolean = false): Flow<List<ProductSelectionItem>> =
+      flow {
+         if (hasDefaultProduct) {
+            emit(emptyList())
+         } else {
+            emit(suspendRunCatching { productsSource.getProductsForSelect() })
+         }
+      }.flowOn(ioDispatcher)
 
 }

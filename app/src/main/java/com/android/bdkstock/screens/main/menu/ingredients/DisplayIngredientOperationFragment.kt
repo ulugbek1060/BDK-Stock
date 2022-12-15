@@ -4,17 +4,19 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.android.bdkstock.databinding.FragmentDisplayOperationsBinding
+import com.android.bdkstock.databinding.FragmentDisplayIngredientOperationBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.getActionBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DisplayOperationsFragment :
-   BaseFragment<DisplayOperationsViewModel, FragmentDisplayOperationsBinding>() {
+class DisplayIngredientOperationFragment :
+   BaseFragment<DisplayIngredientOperationViewModel, FragmentDisplayIngredientOperationBinding>() {
 
-   override fun getViewBinding() = FragmentDisplayOperationsBinding.inflate(layoutInflater)
-   override val viewModel by viewModels<DisplayOperationsViewModel>()
+   override fun getViewBinding() =
+      FragmentDisplayIngredientOperationBinding.inflate(layoutInflater)
+
+   override val viewModel by viewModels<DisplayIngredientOperationViewModel>()
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)

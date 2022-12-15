@@ -12,6 +12,7 @@ import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentProductOperationsBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.findTopNavController
+import com.android.bdkstock.views.getActionBar
 import com.android.model.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -29,13 +30,17 @@ class ProductOperationsFragment :
       observeState()
       initProductsList()
       observeGoBackEvent()
+
       binding.buttonSave.setOnClickListener { saveOnClick() }
    }
 
    private fun observeGoBackEvent() {
       viewModel.goBack.observeEvent(viewLifecycleOwner) { message ->
          findTopNavController().popBackStack()
-         findTopNavController().navigate(R.id.successMessageFragment, bundleOf("success_message" to message))
+         findTopNavController().navigate(
+            R.id.successMessageFragment,
+            bundleOf("success_message" to message)
+         )
       }
    }
 
@@ -47,51 +52,44 @@ class ProductOperationsFragment :
    }
 
    private fun initProductsList() = lifecycleScope.launchWhenStarted {
-      viewModel.productsFlow.collectLatest { result ->
-         when (result) {
-            is Success -> {
-               val list = result.value
+      viewModel.productsFlow.collectLatest { list ->
+         binding.mainContainer.visible()
+         binding.initialProgressBar.gone()
 
-               binding.mainContainer.visible()
-               binding.initialProgressBar.gone()
+         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, list)
+         binding.inputProduct.setAdapter(adapter)
 
-               val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, list)
-               binding.inputProduct.setAdapter(adapter)
+         binding.inputProduct.setOnItemClickListener { _, _, position, _ ->
+            viewModel.setProduct(list[position])
+            binding.inputWeight.setText(list[position].unit)
+         }
 
-               binding.inputProduct.setOnItemClickListener { _, _, position, _ ->
-                  viewModel.setProduct(list[position])
-                  binding.inputWeight.setText(list[position].unit)
-               }
-
-               // lister product input
-               binding.inputProduct.doAfterTextChanged {
-                  if (it.toString().isBlank()) viewModel.clearProduct()
-               }
-            }
-            is Pending -> {
-               binding.mainContainer.gone()
-               binding.initialProgressBar.visible()
-            }
-            else -> {}
+         // lister product input
+         binding.inputProduct.doAfterTextChanged {
+            if (it.toString().isBlank()) viewModel.clearProduct()
          }
       }
    }
 
    private fun observeState() {
       viewModel.state.observe(viewLifecycleOwner) { state ->
-         binding.inputLayoutProduct.isEnabled = !state.isInProgress
-         binding.inputLayoutAmount.isEnabled = !state.isInProgress
-         binding.inputLayoutComment.isEnabled = !state.isInProgress
 
-         binding.inputProduct.error = state.getProductErrorMessage(requireContext())
-         binding.inputAmount.error = state.getAmountErrorMessage(requireContext())
-         binding.inputComment.error = state.getCommentErrorMessage(requireContext())
+         getActionBar()?.title = state.getStatusText(requireContext())
+         with(binding) {
+            inputLayoutProduct.isEnabled = !state.isInProgress
+            inputLayoutAmount.isEnabled = !state.isInProgress
+            inputLayoutComment.isEnabled = !state.isInProgress
 
-         binding.buttonSave.isVisible = !state.isInProgress
-         binding.progress.isVisible = state.isInProgress
+            inputProduct.error = state.getProductErrorMessage(requireContext())
+            inputAmount.error = state.getAmountErrorMessage(requireContext())
+            inputComment.error = state.getCommentErrorMessage(requireContext())
 
-         binding.tvIndicator.text = state.getStatusText(requireContext())
-         binding.tvIndicator.setBackgroundColor(state.getBackgroundColor(requireContext()))
+            buttonSave.isVisible = !state.isInProgress
+            progress.isVisible = state.isInProgress
+
+            inputProduct.setText(state.defaultProduct?.name)
+            inputWeight.setText(state.defaultProduct?.unit)
+         }
       }
    }
 }

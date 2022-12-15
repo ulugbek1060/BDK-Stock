@@ -3,6 +3,7 @@ package com.android.bdkstock.screens.main.menu.ingredients
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -10,8 +11,8 @@ import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentOperateIngredientsBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.findTopNavController
-import com.android.model.utils.Pending
-import com.android.model.utils.Success
+import com.android.bdkstock.views.getActionBar
+import com.android.model.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -34,30 +35,39 @@ class OperateIngredientsFragment :
       binding.buttonSave.setOnClickListener { saveOnClick() }
    }
 
-   // TODO: setup progressbar
    private fun setupIngredientsList() = lifecycleScope.launchWhenStarted {
       viewModel.getIngredientList.collectLatest { result ->
          when (result) {
             is Success -> {
+               binding.mainContainer.visible()
+               binding.progressbar.gone()
                val list = result.value
-               val adapter =
-                  ArrayAdapter(requireContext(), R.layout.spinner_item, list)
-
+               val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, list)
                binding.inputIngredient.setAdapter(adapter)
 
                binding.inputIngredient.setOnItemClickListener { _, _, position, _ ->
                   viewModel.setIngredient(list[position])
                }
             }
-            is Pending -> {}
-            else -> {}
+            is Pending -> {
+               binding.mainContainer.gone()
+               binding.progressbar.visible()
+            }
+            else -> {
+               binding.mainContainer.visible()
+               binding.progressbar.gone()
+            }
          }
       }
    }
 
    private fun observeNavigateBack() {
-      viewModel.navigateToDisplay.observe(viewLifecycleOwner) {
+      viewModel.navigateToDisplay.observeEvent(viewLifecycleOwner) {
          findTopNavController().popBackStack()
+         findTopNavController().navigate(
+            R.id.successMessageFragment,
+            bundleOf(SUCCESS_MESSAGE_BUNDLE_KEY to it)
+         )
       }
    }
 
@@ -78,29 +88,31 @@ class OperateIngredientsFragment :
    private fun observeState() {
       viewModel.state.observe(viewLifecycleOwner) { state ->
 
-         // enable
-         binding.inputLayoutIngredient.isEnabled = !state.isInProgress
-         binding.inputAmount.isEnabled = !state.isInProgress
-         binding.inputLayoutComment.isEnabled = !state.isInProgress
+         getActionBar()?.title = state.getStatusText(requireContext())
 
-         // error
-         binding.inputLayoutIngredient.error = state.getNameErrorMessage(requireContext())
-         binding.inputAmount.error = state.getAmountErrorMessage(requireContext())
-         binding.inputLayoutComment.error = state.getCommentErrorMessage(requireContext())
+         with(binding) {
+            inputLayoutIngredient.isEnabled = !state.isInProgress
+            inputAmount.isEnabled = !state.isInProgress
+            inputLayoutComment.isEnabled = !state.isInProgress
 
-         // visibility
-         binding.buttonSave.isVisible = !state.isInProgress
-         binding.progress.isVisible = state.isInProgress
+            inputLayoutIngredient.error = state.getNameErrorMessage(requireContext())
+            inputAmount.error = state.getAmountErrorMessage(requireContext())
+            inputLayoutComment.error = state.getCommentErrorMessage(requireContext())
 
-         binding.tvIndicator.text = state.getStatusText(requireContext())
-         binding.tvIndicator.setBackgroundColor(state.getBackgroundColor(requireContext()))
-         binding.tvIndicator.setCompoundDrawables(
-            null,
-            null,
-            state.getIndicator(requireContext()),
-            null
-         )
+            buttonSave.isVisible = !state.isInProgress
+            progressbar.isVisible = state.isInProgress
 
+            //set default ingredient
+            inputIngredient.isFocusable = state.ingredientChangeability()
+            inputIngredient.isCursorVisible = state.ingredientChangeability()
+
+            inputIngredient.setText(state.defaultIngredient?.name)
+            inputWeight.setText(state.defaultIngredient?.unit)
+         }
       }
+   }
+
+   private companion object {
+      const val SUCCESS_MESSAGE_BUNDLE_KEY = "success_message"
    }
 }

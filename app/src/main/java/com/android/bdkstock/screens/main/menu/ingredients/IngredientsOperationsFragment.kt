@@ -53,7 +53,7 @@ class IngredientsOperationsFragment :
          bind { ingredient ->
 
             val statusColor =
-               if (ingredient.status == OPERATION_EXPORT) root.context.getColor(R.color.red)
+               if (ingredient.status == OPERATION_EXPORT) root.context.getColor(R.color.orange)
                else root.context.getColor(R.color.green)
 
             val statusText =
@@ -61,8 +61,8 @@ class IngredientsOperationsFragment :
                else root.context.getString(R.string.income)
 
             val statusIcon =
-               if (ingredient.status == OPERATION_EXPORT) root.context.getDrawable(R.drawable.ic_import)
-               else root.context.getDrawable(R.drawable.ic_export)
+               if (ingredient.status == OPERATION_EXPORT) root.context.getDrawable(R.drawable.ic_export)
+               else root.context.getDrawable(R.drawable.ic_import)
 
             icStatus.setImageDrawable(statusIcon)
             icStatus.setColorFilter(statusColor)
