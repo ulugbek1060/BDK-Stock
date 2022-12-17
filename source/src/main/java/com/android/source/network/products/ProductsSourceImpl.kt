@@ -180,17 +180,17 @@ class ProductsSourceImpl @Inject constructor(
       fromDate: String?,
       toDate: String?
    ): List<ProductOperationEntity> = wrapNetworkException {
-      productsApi
-         .getOperationList(
-            productId,
-            query,
-            pageIndex,
-            pageSize,
-            status,
-            fromDate,
-            toDate
-         )
-         .list
+      productsApi.getOperationList(
+         productId = productId,
+         query = query,
+         pageIndex = pageIndex,
+         pageSize = pageSize,
+         status = status,
+         fromDate = fromDate,
+         toDate = toDate
+      )
+         .operations
+         .operationsList
          .map {
             ProductOperationEntity(
                id = it.id,

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".screens.main.menu.employees.EditEmployeeFragment">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+      android:id="@+id/iv_avatar"
+      android:layout_width="100dp"
+      android:layout_height="100dp"
+      android:layout_marginTop="@dimen/dimen_extra"
+      android:contentDescription="@string/user"
+      android:gravity="center"
+      android:src="@drawable/img_avatar"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0" />
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/input_layout_name"
+      style="@style/TextInputLayoutStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dimen_large"
+      android:layout_marginTop="@dimen/dimen_extra"
+      android:layout_marginRight="@dimen/dimen_large"
+      android:hint="@string/name"
+      app:errorEnabled="true"
+      app:layout_constraintBottom_toTopOf="@id/input_layout_surname"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/iv_avatar"
+      app:startIconDrawable="@drawable/ic_person_24">
+
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/input_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionNext"
+        android:lines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/input_layout_surname"
+      style="@style/TextInputLayoutStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dimen_large"
+      android:layout_marginRight="@dimen/dimen_large"
+      android:fontFamily="@font/inter_regular"
+      android:hint="@string/surname"
+      app:errorEnabled="true"
+      app:layout_constraintBottom_toTopOf="@id/input_layout_phone_number"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/input_layout_name"
+      app:startIconDrawable="@drawable/ic_emergency_24">
+
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/input_surname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:imeOptions="actionNext"
+        android:lines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/input_layout_phone_number"
+      style="@style/TextInputLayoutStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dimen_large"
+      android:layout_marginRight="@dimen/dimen_large"
+      android:fontFamily="@font/inter_regular"
+      android:hint="@string/phone_number"
+      app:counterMaxLength="9"
+      app:errorEnabled="true"
+      app:layout_constraintBottom_toTopOf="@id/input_layout_address"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/input_layout_surname"
+      app:prefixText="+998"
+      app:startIconDrawable="@drawable/ic_call">
+
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/input_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:lines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/input_layout_address"
+      style="@style/TextInputLayoutStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dimen_large"
+      android:layout_marginRight="@dimen/dimen_large"
+      android:fontFamily="@font/inter_regular"
+      android:hint="@string/address"
+      app:errorEnabled="true"
+      app:layout_constraintBottom_toTopOf="@id/input_layout_job_title"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/input_layout_phone_number"
+      app:startIconDrawable="@drawable/ic_location_24">
+
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/input_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:imeOptions="actionNext"
+        android:lines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/input_layout_job_title"
+      style="@style/TextInputLayoutStyleDropDown"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dimen_large"
+      android:layout_marginRight="@dimen/dimen_large"
+      android:fontFamily="@font/inter_regular"
+      android:hint="@string/job"
+      app:errorEnabled="true"
+      app:layout_constraintBottom_toTopOf="@id/input_layout_password"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/input_layout_address"
+      app:startIconDrawable="@drawable/ic_work_24">
+
+      <AutoCompleteTextView
+        android:id="@+id/auto_complete_job_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:inputType="none"
+        tools:ignore="LabelFor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+      android:id="@+id/progress_job_title"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginEnd="@dimen/dimen_large"
+      android:layout_marginBottom="@dimen/corner_big"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="@id/input_layout_job_title"
+      app:layout_constraintDimensionRatio="1:1"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="@id/input_layout_job_title"
+      app:lottie_autoPlay="true"
+      app:lottie_loop="true"
+      app:lottie_rawRes="@raw/loading" />
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/input_layout_password"
+      style="@style/TextInputLayoutStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dimen_large"
+      android:layout_marginRight="@dimen/dimen_large"
+      android:fontFamily="@font/inter_regular"
+      android:hint="@string/password"
+      app:helperText="While changing user fields password is not required. If you want to change password change it in there"
+      app:endIconMode="password_toggle"
+      app:errorEnabled="true"
+      app:layout_constraintBottom_toTopOf="@id/input_layout_password_confirm"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/input_layout_job_title"
+      app:startIconDrawable="@drawable/ic_lock">
+
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/input_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:imeOptions="actionNext"
+        android:inputType="textPassword"
+        android:lines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/input_layout_password_confirm"
+      style="@style/TextInputLayoutStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/dimen_large"
+      android:layout_marginEnd="@dimen/dimen_large"
+      android:fontFamily="@font/inter_regular"
+      android:hint="@string/confirm_password"
+      app:helperText="While changing user fields password is not required. If you want to change password change it in there."
+      app:endIconMode="password_toggle"
+      app:errorEnabled="true"
+      app:layout_constraintBottom_toTopOf="@id/container_frame"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/input_layout_password"
+      app:startIconDrawable="@drawable/ic_lock">
+
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/input_password_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:imeOptions="actionNext"
+        android:inputType="textPassword"
+        android:lines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <FrameLayout
+      android:id="@+id/container_frame"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/dimen_large"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/input_layout_password_confirm">
+
+      <LinearLayout
+        android:id="@+id/container_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_large"
+        android:layout_marginEnd="@dimen/dimen_large"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <Button
+          android:id="@+id/button_delete"
+          style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/corner_small"
+          android:layout_weight="1"
+          android:fontFamily="@font/inter_medium"
+          android:text="@string/delete"
+          android:textAllCaps="false" />
+
+        <Button
+          android:id="@+id/button_save"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/corner_small"
+          android:layout_weight="1"
+          android:fontFamily="@font/inter_medium"
+          android:text="@string/save"
+          android:textAllCaps="false" />
+
+      </LinearLayout>
+
+      <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    </FrameLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -31,7 +31,7 @@ class AccountSourceImpl @Inject constructor(
             firstname = userInfo.firstName,
             lastname = userInfo.lastName,
             address = userInfo.address,
-            job = JobEntity(userInfo.job.id, userInfo.job.name),
+            job = JobEntity(userInfo.job.id.toInt(), userInfo.job.name),
             phoneNumber = userInfo.phoneNumber
          )
       }

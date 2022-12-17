@@ -54,7 +54,7 @@ class RegisterDriverFragment :
          binding.inputLayoutRegNumber.isEnabled = !state.isInProgress
 
          binding.buttonSave.isVisible = !state.isInProgress
-         binding.lottiProgress.isVisible = state.isInProgress
+         binding.progressbar.isVisible = state.isInProgress
 
          binding.inputLayoutName.error = state.getNameErrorMessage(requireContext())
          binding.inputLayoutPhoneNumber.error = state.getPhoneNumberErrorMessage(requireContext())

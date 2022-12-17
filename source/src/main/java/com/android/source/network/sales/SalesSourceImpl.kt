@@ -62,8 +62,8 @@ class SalesSourceImpl @Inject constructor(
             .message
       }
 
-   override suspend fun cancelOrder(orderId: Long) {
-      TODO("Not yet implemented")
+   override suspend fun cancelOrder(orderId: Long) = wrapNetworkException {
+      salesApi.cancelOrder(orderId)
    }
 
    override suspend fun getOrdersList(
@@ -83,16 +83,19 @@ class SalesSourceImpl @Inject constructor(
          driver = driver,
          pageIndex = pageIndex,
          pageSize = pageSize
-      ).orderList.map {
-         OrderListItem(
-            id = it.id,
-            identification = it.name,
-            client = it.client,
-            summa = it.summa,
-            status = it.status,
-            createdAt = it.createdAt
-         )
-      }
+      )
+         .orders
+         .orderList
+         .map {
+            OrderListItem(
+               id = it.id,
+               identification = it.name,
+               client = it.client,
+               summa = it.summa,
+               status = it.status,
+               createdAt = it.createdAt
+            )
+         }
    }
 
    override suspend fun getOrderOverview(orderId: Long): OrderEntity = wrapNetworkException {

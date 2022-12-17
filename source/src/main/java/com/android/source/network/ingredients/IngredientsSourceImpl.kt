@@ -98,19 +98,22 @@ class IngredientsSourceImpl @Inject constructor(
          ingredientId = ingredientId,
          pageIndex = pageIndex,
          pageSize = pageSize
-      ).expansesAndIncomesList.map { ingredientAction ->
-         IngredientExOrInEntity(
-            id = ingredientAction.id,
-            name = ingredientAction.name,
-            amount = ingredientAction.amount,
-            comment = ingredientAction.comment,
-            creator = ingredientAction.userId,
-            status = ingredientAction.status,
-            unit = ingredientAction.unit,
-            createdAt = ingredientAction.createdAt,
-            updatedAt = ingredientAction.updatedAt
-         )
-      }
+      )
+         .operations
+         .operationsList
+         .map { ingredientAction ->
+            IngredientExOrInEntity(
+               id = ingredientAction.id,
+               name = ingredientAction.name,
+               amount = ingredientAction.amount,
+               comment = ingredientAction.comment,
+               creator = ingredientAction.userId,
+               status = ingredientAction.status,
+               unit = ingredientAction.unit,
+               createdAt = ingredientAction.createdAt,
+               updatedAt = ingredientAction.updatedAt
+            )
+         }
    }
 
    override suspend fun getIngredientList(): List<SimpleIngredient> = wrapNetworkException {

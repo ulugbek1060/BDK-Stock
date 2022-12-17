@@ -4,14 +4,13 @@ import com.android.model.database.jobs.entity.JobRoomEntity
 import java.io.Serializable
 
 data class JobEntity(
-   val id: Long,
+   val id: Int,
    val name: String
 ) : Serializable {
 
-   // for saving to database
    fun toJobRoomEntity() =
       JobRoomEntity(
-         id = id,
+         id = id.toLong(),
          name = name
       )
 

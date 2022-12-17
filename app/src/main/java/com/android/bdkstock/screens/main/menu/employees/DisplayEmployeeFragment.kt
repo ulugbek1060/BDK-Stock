@@ -5,23 +5,24 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.MenuProvider
-import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentDisplayEmployeeBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.views.findTopNavController
+import com.android.model.repository.employees.entity.EmployeeEntity
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +32,67 @@ class DisplayEmployeeFragment :
 
    override val viewModel by viewModels<DisplayEmployeeViewModel>()
    override fun getViewBinding() = FragmentDisplayEmployeeBinding.inflate(layoutInflater)
+
+   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+      super.onViewCreated(view, savedInstanceState)
+      observeEmployee()
+      observeNavigateToEdit()
+
+      getFragmentResult()
+
+
+      binding.buttonCall.setOnClickListener {
+         requestCallPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
+      }
+
+      binding.buttonMessage.setOnClickListener {
+         requestMessagePermissionLauncher.launch(Manifest.permission.SEND_SMS)
+      }
+
+      requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
+   }
+
+
+   private fun observeNavigateToEdit() {
+      viewModel.navigateToEdit.observeEvent(viewLifecycleOwner) {
+         val args = DisplayEmployeeFragmentDirections
+            .displayEmployeeToEditEmployee(it)
+         findTopNavController().navigate(args)
+      }
+   }
+
+
+   private fun observeEmployee() {
+      viewModel.employee.observe(viewLifecycleOwner) { employee ->
+         binding.tvFullName.text = "${employee.firstname} ${employee.lastname}"
+         binding.tvMobile.text = "+998${employee.phoneNumber}"
+         binding.tvAddress.text = employee.address
+         binding.tvJob.text = employee.job.name
+      }
+   }
+
+   private val menuProvider = object : MenuProvider {
+      override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+         menuInflater.inflate(R.menu.menu_edit, menu)
+      }
+
+      override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+         if (menuItem.itemId == R.id.edit) viewModel.navigateToEdit()
+         return false
+      }
+   }
+
+   private fun getFragmentResult() {
+      setFragmentResultListener(EMPLOYEE_ENTITY_KEY) { _, bundle ->
+         val clientEntity = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            bundle.getSerializable(EMPLOYEE_ENTITY_BUNDLE_KEY, EmployeeEntity::class.java)
+         } else {
+            bundle.getSerializable(EMPLOYEE_ENTITY_BUNDLE_KEY) as EmployeeEntity
+         }
+         viewModel.setUpdatedEntity(clientEntity)
+      }
+   }
+
 
    private val requestMessagePermissionLauncher = registerForActivityResult(
       ActivityResultContracts.RequestPermission(),
@@ -95,111 +157,15 @@ class DisplayEmployeeFragment :
       }
    }
 
-   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-      super.onViewCreated(view, savedInstanceState)
-
-      fetchEmployee()
-      setupJobTitle()
-      observeState()
-
-      observeClearPassword()
-      showMessages()
-
-      observeChangesDialogEvent()
-
-      binding.buttonSave.setOnClickListener { saveOnClick() }
-      binding.buttonDelete.setOnClickListener { }
-
-      binding.buttonCall.setOnClickListener {
-         requestCallPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
-      }
-
-      binding.buttonMessage.setOnClickListener {
-         requestMessagePermissionLauncher.launch(Manifest.permission.SEND_SMS)
-      }
-
-      requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
-   }
-
-   private val menuProvider = object : MenuProvider {
-      override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-         menuInflater.inflate(R.menu.menu_edit, menu)
-      }
-
-      override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-         if (menuItem.itemId == R.id.edit) viewModel.toggleChangeableState()
-         return false
-      }
-   }
-
-   private fun observeChangesDialogEvent() {
-      viewModel.showSuggestionDialog.observeEvent(viewLifecycleOwner) {
-         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.edit)
-            .setMessage(R.string.edit_user_details)
-            .setNegativeButton(R.string.no) { _, _ -> viewModel.disableChangeableState() }
-            .setPositiveButton(R.string.yes) { _, _ -> viewModel.enableChangeableState() }
-            .create()
-            .show()
-      }
-   }
-
-   private fun observeClearPassword() {
-      viewModel.clearPassword.observeEvent(viewLifecycleOwner) {
-         binding.inputPassword.setText("")
-         binding.inputPasswordConfirm.setText("")
-      }
-   }
-
-   private fun setupJobTitle() = lifecycleScope.launchWhenStarted {
-      viewModel.jobsEntity.observe(viewLifecycleOwner) { list ->
-         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, list)
-         binding.autoCompleteJobTitle.setAdapter(adapter)
-
-         binding.autoCompleteJobTitle.setOnItemClickListener { _, _, position, _ ->
-            viewModel.setJobEntity(list[position])
-         }
-      }
-   }
-
-   private fun saveOnClick() {
-      viewModel.updateEmployee(
-         newFirstname = binding.inputName.text.toString(),
-         newLastname = binding.inputSurname.text.toString(),
-         newAddress = binding.inputAddress.text.toString(),
-         newPhoneNumber = "998${binding.inputPhoneNumber.text.toString()}",
-         newPassword = binding.inputPassword.text.toString(),
-         newPasswordConfirm = binding.inputPasswordConfirm.text.toString()
-      )
-   }
-
-   private fun showMessages() {
-      viewModel.showMessages.observeEvent(viewLifecycleOwner) {
-         Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-      }
-   }
-
-   private fun fetchEmployee() {
-      viewModel.employeeEntity.observe(viewLifecycleOwner) { employee ->
-         binding.inputName.setText(employee.firstname)
-         binding.inputSurname.setText(employee.lastname)
-         binding.inputAddress.setText(employee.address)
-         binding.inputPhoneNumber.setText(employee.phoneNumber)
-         binding.autoCompleteJobTitle.setText(employee.job.name, false)
-         binding.inputPassword.setText("")
-         binding.inputPasswordConfirm.setText("")
-      }
-   }
-
    private fun onCallPermissionGranted() {
-      val phoneNumber = "tel:+998${binding.inputPhoneNumber.text.toString()}"
+      val phoneNumber = "tel:+998${binding.tvMobile.text}"
       val intent = Intent(Intent.ACTION_CALL)
       intent.data = Uri.parse(phoneNumber)
       requireActivity().startActivity(intent)
    }
 
    private fun onMessagePermissionGranted() {
-      val phoneNumber = "sms:+998${binding.inputPhoneNumber.text.toString()}"
+      val phoneNumber = "sms:+998${binding.tvMobile.text}"
       val sendIntent = Intent(Intent.ACTION_VIEW)
       sendIntent.data = Uri.parse("sms:")
       sendIntent.data = Uri.parse(phoneNumber)
@@ -207,34 +173,10 @@ class DisplayEmployeeFragment :
       requireActivity().startActivity(sendIntent)
    }
 
-   private fun observeState() {
-      viewModel.state.observe(viewLifecycleOwner) { state ->
 
-         // enable fields
-         binding.inputLayoutName.isEnabled = state.isChangeableEnable
-         binding.inputLayoutSurname.isEnabled = state.isChangeableEnable
-         binding.inputLayoutAddress.isEnabled = state.isChangeableEnable
-         binding.inputLayoutPhoneNumber.isEnabled = state.isChangeableEnable
-         binding.inputLayoutPassword.isEnabled = state.isChangeableEnable
-         binding.inputLayoutJobTitle.isEnabled = state.isChangeableEnable
-         binding.inputLayoutPasswordConfirm.isEnabled = state.isChangeableEnable
-
-         binding.buttonSave.isEnabled = state.isChangeableEnable
-         binding.buttonDelete.isEnabled = state.isChangeableEnable
-
-         // error messages
-         binding.inputLayoutName.error = state.getNameError(requireContext())
-         binding.inputLayoutSurname.error = state.getSurnameError(requireContext())
-         binding.inputLayoutAddress.error = state.getAddressError(requireContext())
-         binding.inputLayoutPhoneNumber.error = state.getPhoneNumberError(requireContext())
-         binding.inputLayoutPassword.error = state.getPasswordError(requireContext())
-         binding.inputLayoutPasswordConfirm.error = state.getPasswordError(requireContext())
-
-         // visibility
-         binding.buttonSave.isVisible = state.isChangeableEnable && !state.isProgressActive
-         binding.buttonDelete.isVisible = state.isChangeableEnable && !state.isProgressActive
-         binding.lottiProgress.isVisible = state.isProgressActive
-      }
+   private companion object {
+      const val EMPLOYEE_ENTITY_KEY = "client_entity"
+      const val EMPLOYEE_ENTITY_BUNDLE_KEY = "client_entity_bundle"
    }
 }
 

@@ -30,8 +30,8 @@ class DisplayProductsViewModel @Inject constructor(
          .fromSavedStateHandle(savedStateHandle)
          .product
 
-   val ingredients: Flow<Results<List<IngredientItem>>> =
-      productsRepository.getIngredientsOfProduct(_currentProduct.id)
+   val ingredients: Flow<Results<List<IngredientItem>>> = productsRepository
+         .getIngredientsOfProduct(_currentProduct.id)
 
    private val _productEntity = MutableLiveData(_currentProduct)
    val productEntity = _productEntity.liveData()

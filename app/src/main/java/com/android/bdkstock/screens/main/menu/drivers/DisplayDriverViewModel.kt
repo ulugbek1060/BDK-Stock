@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
+import com.android.model.repository.clients.entity.ClientEntity
 import com.android.model.repository.drivers.DriversRepository
 import com.android.model.repository.drivers.entity.DriverEntity
 import com.android.model.repository.drivers.entity.VehicleModelEntity
@@ -17,149 +18,34 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DisplayDriverViewModel @Inject constructor(
-   private val driversRepository: DriversRepository,
-   accountRepository: AccountRepository,
    savedStateHandle: SavedStateHandle
-) : BaseViewModel(accountRepository) {
+) : BaseViewModel() {
 
    private val _currentDriver = DisplayDriverFragmentArgs
       .fromSavedStateHandle(savedStateHandle)
+      .driverEntity
 
    private val _driver = MutableLiveData<DriverEntity>()
    val driver = _driver.liveData()
 
-   private val _vehicles = MutableLiveData<List<VehicleModelEntity>?>(emptyList())
-   val vehicles = _vehicles.liveData()
 
-   private val _selectedVehicle = MutableLiveData(VehicleModelEntity())
-   val selectedVehicle = _selectedVehicle.liveData()
-
-   private val _state = MutableLiveData(State())
-   val state = _state.liveData()
-
-   private val _showSuggestionDialog = MutableUnitLiveEvent()
-   val showSuggestionDialog = _showSuggestionDialog.liveData()
-
-   private val _showSuccessMessage = MutableLiveEvent<String>()
-   val showSuccessMessage = _showSuccessMessage.liveData()
+   private val _navigateToEdit = MutableLiveEvent<DriverEntity>()
+   val navigateToEdit = _navigateToEdit.liveData()
 
    init {
-      getInitialValue()
-      viewModelScope.safeLaunch {
-         driversRepository.getVehicleModelsList().collectLatest { result ->
-            if (result is Success) _vehicles.value = result.value
-            if (result is Error) _vehicles.value =
-               listOf(VehicleModelEntity(id = null, name = "Some error occurred!"))
-         }
-      }
-   }
-
-   private fun getInitialValue() = try {
-      val entity = _currentDriver.driverEntity
-      val phoneNumber = formatPhoneNumber(entity.phoneNumber)
-      val vehicle = entity.vehicle
-
-      // set driver
-      _driver.value = entity.copy(
-         phoneNumber = phoneNumber
-      )
-
-      // set selected vehicle
-      _selectedVehicle.value = vehicle
-   } catch (e: Exception) {
-      e.printStackTrace()
-   }
-
-   fun updateDriver(
-      fullName: String,
-      phoneNumber: String,
-      regNumber: String
-   ) = viewModelScope.safeLaunch {
-      if (changeableState()) {
-         showProgress()
-         try {
-
-            val message = driversRepository.updateDriver(
-               driverId = driverId,
-               fullName = fullName,
-               phoneNumber = phoneNumber,
-               autoModelId = vehicleId(),
-               regNumber = regNumber,
-            )
-
-            // show success message
-            showSuccessMessage(message)
-
-            // update driver fields
-            setDriverData(fullName, phoneNumber, regNumber)
-
-         } catch (e: EmptyFieldException) {
-            showEmptyFields(e)
-         } finally {
-            hideProgress()
-         }
-      }
-   }
-
-   private fun setDriverData(fullName: String, phoneNumber: String, regNumber: String) {
-      _driver.value = _driver.requireValue().copy(
-         driverFullName = fullName,
-         phoneNumber = phoneNumber,
-         autoRegNumber = regNumber,
-         vehicle = _selectedVehicle.requireValue()
+      val driver = _currentDriver
+      _driver.value = driver.copy(
+         phoneNumber = formatPhoneNumber(driver.phoneNumber)
       )
    }
 
-   fun toggleChangeableState() {
-      if (!changeableState()) {
-         _showSuggestionDialog.publishEvent()
-      } else {
-         disableChangeableState()
-      }
+   fun navigateToEdit() {
+      _navigateToEdit.publishEvent(_driver.requireValue())
    }
 
-   fun enableChangeableState() {
-      _state.value = _state.requireValue().copy(
-         isChangeableEnable = true
-      )
-   }
-
-   fun disableChangeableState() {
-      _state.value = _state.requireValue().copy(
-         isChangeableEnable = false
-      )
-      getInitialValue()
-   }
-
-   fun setVehicle(vehicle: VehicleModelEntity) {
-      _selectedVehicle.value = vehicle
-   }
-
-   private fun showSuccessMessage(message: String) {
-      _showSuccessMessage.publishEvent(message)
-      _state.value = State()
-   }
-
-
-   private fun showEmptyFields(e: EmptyFieldException) {
-      _state.value = _state.requireValue().copy(
-         emptyNameError = e.field == Field.FULL_NAME,
-         emptyPhoneNumberError = e.field == Field.PHONE_NUMBER,
-         emptyVehicleError = e.field == Field.VEHICLE_MODEL,
-         emptyRegNumberError = e.field == Field.REG_NUMBER
-      )
-   }
-
-   private fun showProgress() {
-      _state.value = _state.requireValue().copy(
-         isInProgress = true
-      )
-   }
-
-   private fun hideProgress() {
-      _state.value = _state.requireValue().copy(
-         isInProgress = false
-      )
+   fun setUpdatedEntity(driverEntity: DriverEntity?) {
+      if (driverEntity == null) return
+      _driver.value = driverEntity!!
    }
 
    private fun formatPhoneNumber(number: String): String {
@@ -174,37 +60,5 @@ class DisplayDriverViewModel @Inject constructor(
       } catch (e: Exception) {
          "phone number is invalid"
       }
-   }
-
-   private fun changeableState() = _state.requireValue().isChangeableEnable
-
-   private val driverId = _driver.requireValue().id
-
-   private fun vehicleId() = _selectedVehicle.requireValue().id
-
-   data class State(
-      val isChangeableEnable: Boolean = false,
-      val isInProgress: Boolean = false,
-      val emptyNameError: Boolean = false,
-      val emptyPhoneNumberError: Boolean = false,
-      val emptyVehicleError: Boolean = false,
-      val emptyRegNumberError: Boolean = false
-   ) {
-
-      fun getNameErrorMessage(context: Context) =
-         if (emptyNameError) context.getString(R.string.error_empty_name)
-         else null
-
-      fun getPhoneNumberErrorMessage(context: Context) =
-         if (emptyNameError) context.getString(R.string.error_empty_phone_number)
-         else null
-
-      fun getVehicleErrorMessage(context: Context) =
-         if (emptyNameError) context.getString(R.string.error_empty_vehicle)
-         else null
-
-      fun getRegNumberErrorMessage(context: Context) =
-         if (emptyNameError) context.getString(R.string.error_empty_reg_number)
-         else null
    }
 }

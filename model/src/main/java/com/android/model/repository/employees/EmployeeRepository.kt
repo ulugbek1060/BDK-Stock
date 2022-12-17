@@ -4,7 +4,6 @@ import androidx.paging.PagingData
 import com.android.model.repository.base.BasePageSource
 import com.android.model.repository.base.BaseRepository
 import com.android.model.repository.base.DataLoader
-import com.android.model.repository.base.Repository
 import com.android.model.repository.employees.entity.EmployeeEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.BackendException
@@ -56,9 +55,11 @@ class EmployeeRepository @Inject constructor(
       if (lastname.isBlank()) throw EmptyFieldException(Field.LASTNAME)
       if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PHONE_NUMBER)
       if (address.isBlank()) throw EmptyFieldException(Field.ADDRESS)
-      if (password.isBlank()) throw EmptyFieldException(Field.PASSWORD)
-      if (confirmPassword != password) throw EmptyFieldException(Field.MATCH_PASSWORD_FIELDS)
       if (jobId == null) throw throw EmptyFieldException(Field.JOB)
+
+      if (password.isNotBlank() && confirmPassword.isBlank()) throw EmptyFieldException(Field.MATCH_PASSWORD_FIELDS)
+      if (password.isBlank() && confirmPassword.isNotBlank()) throw EmptyFieldException(Field.MATCH_PASSWORD_FIELDS)
+      if (password.isNotBlank()&& confirmPassword.isNotBlank()&& password != confirmPassword) throw EmptyFieldException(Field.MATCH_PASSWORD_FIELDS)
 
       return try {
          employeesSource.updateEmployee(

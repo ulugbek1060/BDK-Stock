@@ -40,8 +40,7 @@ import kotlinx.coroutines.launch
 @FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class DriversFragment :
-   BaseFragment<DriversViewModel, FragmentDriversBinding>(),
+class DriversFragment : BaseFragment<DriversViewModel, FragmentDriversBinding>(),
    SearchView.OnQueryTextListener {
 
    override val viewModel by viewModels<DriversViewModel>()

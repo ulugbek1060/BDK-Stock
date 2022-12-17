@@ -55,7 +55,7 @@ class DisplayIngredientsViewModel @Inject constructor(
    private fun getOperationsByIngredientId() = _ingredientId.asFlow()
       .flatMapLatest {
          ingredientsRepository
-            .getExpensesAndIncomesOfIngredients(ingredientId = it.toInt())
+            .  getExpensesAndIncomesOfIngredients(ingredientId = it.toInt())
       }
       .cachedIn(viewModelScope)
 

@@ -33,6 +33,7 @@ class IngredientsOperationsViewModel @Inject constructor(
       .asFlow()
       .flatMapLatest { filter ->
          ingredientsRepository.getExpensesAndIncomesOfIngredients(
+            query = filter.query,
             operationsStatus = filter.status,
             fromDate = filter.fromDate,
             toDate = filter.toDate

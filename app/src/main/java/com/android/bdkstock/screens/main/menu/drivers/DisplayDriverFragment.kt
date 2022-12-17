@@ -5,22 +5,25 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.MenuProvider
-import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentDisplayDriverBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.screens.main.menu.clients.DisplayClientsFragmentDirections
+import com.android.bdkstock.views.findTopNavController
+import com.android.model.repository.drivers.entity.DriverEntity
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,18 +47,46 @@ class DisplayDriverFragment :
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
-      observeState()
-      observeVehicles()
-      observeSelectedVehicle()
-      observeDriverFields()
-      showSuggestionDialog()
-      observeSuccessMessage()
+      observeDriver()
+      observeNavigateToEdit()
 
-      binding.buttonSave.setOnClickListener { saveOnClick() }
+      getFragmentResult()
+
+
       binding.buttonCall.setOnClickListener { callOnClick() }
       binding.buttonMessage.setOnClickListener { messageOnClick() }
 
       requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
+   }
+
+   private fun observeDriver() {
+      viewModel.driver.observe(viewLifecycleOwner){ driver ->
+         with(binding){
+            tvFullName.text = driver.driverFullName
+            tvMobile.text = "+998${driver.phoneNumber}"
+            tvAuto.text = driver.vehicle.name
+            tvRegNumber.text = driver.autoRegNumber
+         }
+      }
+   }
+
+   private fun getFragmentResult() {
+      setFragmentResultListener(DRIVER_ENTITY_KEY){ _, bundle ->
+         val driverEntity = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            bundle.getSerializable(DRIVER_ENTITY_BUNDLE_KEY, DriverEntity::class.java)
+         } else {
+            bundle.getSerializable(DRIVER_ENTITY_BUNDLE_KEY) as DriverEntity
+         }
+         viewModel.setUpdatedEntity(driverEntity)
+      }
+   }
+
+   private fun observeNavigateToEdit() {
+      viewModel.navigateToEdit.observeEvent(viewLifecycleOwner) {
+         val args = DisplayDriverFragmentDirections
+            .displayDriverToEditDriver(it)
+         findTopNavController().navigate(args)
+      }
    }
 
    private val menuProvider = object : MenuProvider {
@@ -64,7 +95,7 @@ class DisplayDriverFragment :
       }
 
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-         if (menuItem.itemId == R.id.edit) viewModel.toggleChangeableState()
+         if (menuItem.itemId == R.id.edit) viewModel.navigateToEdit()
          return false
       }
    }
@@ -76,99 +107,6 @@ class DisplayDriverFragment :
    private fun callOnClick() {
       requestCallPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
    }
-
-   private fun observeDriverFields() {
-      //observe driver source
-      viewModel.driver.observe(viewLifecycleOwner) { driver ->
-         binding.inputName.setText(driver.driverFullName)
-         binding.inputPhoneNumber.setText(driver.phoneNumber)
-         binding.inputRegNumber.setText(driver.autoRegNumber)
-      }
-   }
-
-   private fun observeSuccessMessage() {
-      viewModel.showSuccessMessage.observeEvent(viewLifecycleOwner) {
-         Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-      }
-   }
-
-   private fun showSuggestionDialog() {
-      viewModel.showSuggestionDialog.observe(viewLifecycleOwner) {
-         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.editing)
-            .setMessage(R.string.edit_driver_message)
-            .setPositiveButton(R.string.yes) { _, _ ->
-               viewModel.enableChangeableState()
-            }
-            .setNegativeButton(R.string.no) { _, _ ->
-               viewModel.disableChangeableState()
-            }
-            .setCancelable(false)
-            .create()
-            .show()
-      }
-   }
-
-   private fun toggleOnClick() {
-      viewModel.toggleChangeableState()
-   }
-
-   private fun saveOnClick() {
-      viewModel.updateDriver(
-         fullName = binding.inputName.text.toString(),
-         phoneNumber = "998${binding.inputPhoneNumber.text.toString()}",
-         regNumber = binding.inputRegNumber.text.toString()
-      )
-   }
-
-   private fun observeVehicles() {
-      viewModel.vehicles.observe(viewLifecycleOwner) { list ->
-         val vehicles = list ?: emptyList()
-
-         val adapter =
-            ArrayAdapter(requireContext(), R.layout.spinner_item, vehicles)
-         binding.autoCompleteVehicle.setAdapter(adapter)
-
-         binding.autoCompleteVehicle.setOnItemClickListener { _, _, position, _ ->
-            viewModel.setVehicle(vehicles[position])
-         }
-      }
-   }
-
-   private fun observeSelectedVehicle() {
-      //show changes from ui & current driver
-      viewModel.selectedVehicle.observe(viewLifecycleOwner) {
-         binding.autoCompleteVehicle.setText(it.name, false)
-      }
-   }
-
-   private fun observeState() {
-      viewModel.state.observe(viewLifecycleOwner) { state ->
-         //enable
-         binding.inputLayoutName.isEnabled = state.isChangeableEnable
-         binding.inputLayoutPhoneNumber.isEnabled = state.isChangeableEnable
-         binding.inputLayoutRegNumber.isEnabled = state.isChangeableEnable
-         binding.inputLayoutVehicle.isEnabled = state.isChangeableEnable
-
-         //errors
-         binding.inputLayoutName.error = state.getNameErrorMessage(requireContext())
-         binding.inputLayoutPhoneNumber.error = state.getPhoneNumberErrorMessage(requireContext())
-         binding.inputLayoutRegNumber.error = state.getRegNumberErrorMessage(requireContext())
-         binding.inputLayoutVehicle.error = state.getVehicleErrorMessage(requireContext())
-
-         //colors
-//         binding.containerSaveButton.setBackgroundColor(state.getButtonSaveColor(requireContext()))
-//         binding.buttonEdit.setTextColor(state.getToggleButtonColor(requireContext()))
-
-         //text
-//         binding.buttonEdit.setText(state.getToggleButtonText(requireContext()))
-
-         //visibility
-         binding.buttonSave.isVisible = state.isChangeableEnable && !state.isInProgress
-         binding.lottiProgress.isVisible = state.isInProgress
-      }
-   }
-
 
    @SuppressLint("QueryPermissionsNeeded")
    private fun askForUserOpenSettings() {
@@ -210,7 +148,7 @@ class DisplayDriverFragment :
    }
 
    private fun onCallPermissionGranted() {
-      val phoneNumber = "tel:+998${binding.inputPhoneNumber.text.toString()}"
+      val phoneNumber = "tel:+998${binding.tvMobile.text}"
       val intent = Intent(Intent.ACTION_CALL)
       intent.data = Uri.parse(phoneNumber)
       requireActivity().startActivity(intent)
@@ -235,11 +173,17 @@ class DisplayDriverFragment :
    }
 
    private fun onMessagePermissionGranted() {
-      val phoneNumber = "sms:+998${binding.inputPhoneNumber.text.toString()}"
+      val phoneNumber = "sms:+998${binding.tvMobile.text}"
       val sendIntent = Intent(Intent.ACTION_VIEW)
       sendIntent.data = Uri.parse("sms:")
       sendIntent.data = Uri.parse(phoneNumber)
       sendIntent.putExtra("sms_body", "")
       requireActivity().startActivity(sendIntent)
+   }
+
+
+   private companion object{
+      const val DRIVER_ENTITY_KEY = "driver_entity"
+      const val DRIVER_ENTITY_BUNDLE_KEY = "driver_entity_bundle"
    }
 }

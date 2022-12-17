@@ -44,8 +44,6 @@ class IngredientsOperationsFragment :
    private lateinit var layoutManager: LinearLayoutManager
    override fun getViewBinding() = FragmentIngredientsOperationsBinding.inflate(layoutInflater)
 
-   private val TAG = "IngredientsOperationsFr"
-
    @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
    private val adapter =
       pagingAdapter<IngredientExOrInEntity, RecyclerItemOperationBinding> {

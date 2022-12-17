@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 
 data class OrderListResponseEntity(
    @SerializedName("ok") val ok: Boolean,
-   @SerializedName("data") val orderList: List<OrderData>
+   @SerializedName("data") val orders: OrdersData
 )

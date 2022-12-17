@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Job(
    @SerializedName("id")
-   val id: Long, // 1
+   val id: Int, // 1
    @SerializedName("name")
    val name: String, // Admin
 ) : java.io.Serializable {

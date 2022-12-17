@@ -69,7 +69,7 @@ class RegisterEmployeeFragment :
          binding.inputLayoutPhoneNumber.isEnabled = !state.isProgressActive
          binding.inputLayoutJobTitle.isEnabled = !state.isProgressActive
 
-         binding.lottiProgress.isVisible = state.isProgressActive
+         binding.progressbar.isVisible = state.isProgressActive
          binding.buttonSave.isVisible = !state.isProgressActive
 
          binding.inputLayoutName.error = state.getNameError(requireContext())

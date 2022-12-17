@@ -11,7 +11,7 @@ data class JobRoomEntity(
 ) {
 
    fun mapTotJobEntity() = JobEntity(
-      id = id,
+      id = id.toInt(),
       name = name
    )
 }

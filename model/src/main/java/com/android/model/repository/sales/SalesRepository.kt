@@ -61,6 +61,10 @@ class SalesRepository @Inject constructor(
       }
    }
 
+   suspend fun cancelOrder(orderId: Long) {
+      salesSource.cancelOrder(orderId)
+   }
+
    fun getOrdersList(
       status: Int? = null,
       client: String? = null,

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
@@ -14,13 +15,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.MenuProvider
-import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import com.android.bdkstock.R
-import com.android.bdkstock.databinding.FragmentClientsBinding
 import com.android.bdkstock.databinding.FragmentDisplayClientsBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.views.findTopNavController
+import com.android.model.repository.clients.entity.ClientEntity
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,16 +36,43 @@ class DisplayClientsFragment :
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
-      observeState()
-      observeClientFields()
-      observeSuggestionDialog()
-      observeSuccessMessage()
+      observeClient()
+      observeNavigateToEdit()
 
-      binding.buttonSave.setOnClickListener { saveOnClick() }
+      getFragmentResult()
+
       binding.buttonCall.setOnClickListener { callOnClick() }
       binding.buttonMessage.setOnClickListener { messageOnClick() }
 
       requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
+   }
+
+   private fun getFragmentResult() {
+      setFragmentResultListener(CLIENT_ENTITY_KEY){_, bundle ->
+         val clientEntity = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            bundle.getSerializable(CLIENT_ENTITY_BUNDLE_KEY, ClientEntity::class.java)
+         } else {
+            bundle.getSerializable(CLIENT_ENTITY_BUNDLE_KEY) as ClientEntity
+         }
+         viewModel.setUpdatedEntity(clientEntity)
+      }
+   }
+
+   private fun observeNavigateToEdit() {
+      viewModel.navigateToEdit.observeEvent(viewLifecycleOwner) {
+         val args = DisplayClientsFragmentDirections.displayClientsToEditClient(it)
+         findTopNavController().navigate(args)
+      }
+   }
+
+   private fun observeClient() {
+      viewModel.client.observe(viewLifecycleOwner) { client ->
+         with(binding) {
+            tvFullName.text = client.fullName
+            tvMobile.text = "+998${client.phoneNumber}"
+            tvAddress.text = client.address
+         }
+      }
    }
 
    private val menuProvider = object : MenuProvider {
@@ -52,10 +81,11 @@ class DisplayClientsFragment :
       }
 
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-         if (menuItem.itemId == R.id.edit) viewModel.toggleChangeableState()
+         if (menuItem.itemId == R.id.edit) viewModel.navigateToEdit()
          return false
       }
    }
+
    private fun messageOnClick() {
       requestMessagePermissionLauncher.launch(Manifest.permission.SEND_SMS)
    }
@@ -64,62 +94,22 @@ class DisplayClientsFragment :
       requestCallPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
    }
 
-   private fun saveOnClick() {
-      viewModel.updateClient(
-         fullName = binding.inputName.text.toString(),
-         phoneNumber = "998${binding.inputPhoneNumber.text.toString()}",
-         address = binding.inputAddress.text.toString()
-      )
-   }
 
-   private fun observeSuccessMessage() {
-      viewModel.showSuccessMessage.observeEvent(viewLifecycleOwner) {
-         Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-      }
-   }
 
-   private fun observeSuggestionDialog() {
-      viewModel.showSuggestionDialog.observeEvent(viewLifecycleOwner) {
-         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.editing)
-            .setMessage(R.string.edit_driver_message)
-            .setPositiveButton(R.string.yes) { _, _ ->
-               viewModel.enableChangeableState()
-            }
-            .setNegativeButton(R.string.no) { _, _ ->
-               viewModel.disableChangeableState()
-            }
-            .setCancelable(false)
-            .create()
-            .show()
-      }
-   }
 
-   private fun observeClientFields() {
-      viewModel.clientEntity.observe(viewLifecycleOwner) {
-         binding.inputName.setText(it.fullName)
-         binding.inputPhoneNumber.setText(it.phoneNumber)
-         binding.inputAddress.setText(it.address)
-      }
-   }
 
-   private fun observeState() {
-      viewModel.state.observe(viewLifecycleOwner) { state ->
-         // enable
-         binding.inputLayoutName.isEnabled = state.isChangeableEnable
-         binding.inputLayoutPhoneNumber.isEnabled = state.isChangeableEnable
-         binding.inputLayoutAddress.isEnabled = state.isChangeableEnable
 
-         // errors
-         binding.inputLayoutName.error = state.getFullNameErrorMessage(requireContext())
-         binding.inputLayoutPhoneNumber.error = state.getPhoneNumberErrorMessage(requireContext())
-         binding.inputLayoutAddress.error = state.getAddressErrorMessage(requireContext())
 
-         //visibility
-         binding.buttonSave.isVisible = state.isChangeableEnable && !state.isInProgress
-         binding.lottiProgress.isVisible = state.isInProgress
-      }
-   }
+
+
+
+
+
+
+
+
+
+
 
    // -- call permission launch ------------------------------
 
@@ -146,14 +136,13 @@ class DisplayClientsFragment :
    }
 
    private fun onCallPermissionGranted() {
-      val phoneNumber = "tel:+998${binding.inputPhoneNumber.text.toString()}"
+      val phoneNumber = "tel:+998${binding.tvMobile.text}"
       val intent = Intent(Intent.ACTION_CALL)
       intent.data = Uri.parse(phoneNumber)
       requireActivity().startActivity(intent)
    }
 
    // -- message permission launch ------------------------------
-
 
    private val requestMessagePermissionLauncher = registerForActivityResult(
       ActivityResultContracts.RequestPermission(),
@@ -177,7 +166,7 @@ class DisplayClientsFragment :
    }
 
    private fun onMessagePermissionGranted() {
-      val phoneNumber = "sms:+998${binding.inputPhoneNumber.text.toString()}"
+      val phoneNumber = "sms:+998${binding.tvMobile.text}"
       val sendIntent = Intent(Intent.ACTION_VIEW)
       sendIntent.data = Uri.parse("sms:")
       sendIntent.data = Uri.parse(phoneNumber)
@@ -207,5 +196,11 @@ class DisplayClientsFragment :
             .create()
             .show()
       }
+   }
+
+
+   private companion object{
+      const val CLIENT_ENTITY_KEY = "client_entity"
+      const val CLIENT_ENTITY_BUNDLE_KEY = "client_entity_bundle"
    }
 }

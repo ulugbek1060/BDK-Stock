@@ -85,17 +85,25 @@ class DriversSourceImpl @Inject constructor(
       pageIndex: Int,
       pageSize: Int
    ): List<DriverEntity> = wrapNetworkException {
-      driversApi.getDriversList(query = query, pageIndex, pageSize).driverList.map { driver ->
-         DriverEntity(
-            id = driver.id,
-            driverFullName = driver.name,
-            phoneNumber = driver.phoneNumber,
-            autoRegNumber = driver.avtoNumber,
-            vehicle = VehicleModelEntity(
-               id = driver.model.id,
-               name = driver.model.name
-            )
+      driversApi
+         .getDriversList(
+            query = query,
+            pageIndex = pageIndex,
+            pageSize = pageSize
          )
-      }
+         .drivers
+         .driverList
+         .map { driver ->
+            DriverEntity(
+               id = driver.id,
+               driverFullName = driver.name,
+               phoneNumber = driver.phoneNumber,
+               autoRegNumber = driver.avtoNumber,
+               vehicle = VehicleModelEntity(
+                  id = driver.model.id,
+                  name = driver.model.name
+               )
+            )
+         }
    }
 }

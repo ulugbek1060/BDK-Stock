@@ -58,6 +58,11 @@ class OrderDetailViewModel @Inject constructor(
       _navigatePaymentsFrag.publishEvent(getOrderEntity())
    }
 
+   // TODO: need to fix
+   fun cancelOrder() = viewModelScope.safeLaunch {
+      salesRepository.cancelOrder(_orderId)
+   }
+
    private fun getOrderEntity(): OrderEntity? {
       return _order.requireValue().orderEntity
    }
@@ -78,6 +83,11 @@ class OrderDetailViewModel @Inject constructor(
       _state.value = _state.requireValue().copy(
          isInProgress = false
       )
+   }
+
+   fun statusIsEqualZero(): Boolean {
+      if (_order.requireValue()?.orderEntity == null) return false
+      return _order.requireValue()?.orderEntity?.status == 0
    }
 
    data class State(

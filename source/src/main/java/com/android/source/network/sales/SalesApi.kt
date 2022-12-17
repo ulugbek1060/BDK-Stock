@@ -26,7 +26,7 @@ interface SalesApi {
    @GET("api/order/order-cancel/{id}")
    suspend fun cancelOrder(
       @Path("id") orderId: Long
-   )
+   ): Unit
 
    @Headers("Content-Type: application/json", "Accept: application/json")
    @GET("api/order/order-list")

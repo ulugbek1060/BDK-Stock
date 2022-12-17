@@ -1,13 +1,8 @@
 package com.android.bdkstock.screens.main.menu.clients
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
-import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.base.BaseViewModel
-import com.android.model.repository.account.AccountRepository
-import com.android.model.repository.clients.ClientsRepository
 import com.android.model.repository.clients.entity.ClientEntity
 import com.android.model.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,117 +10,33 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DisplayClientsViewModel @Inject constructor(
-   private val clientsRepository: ClientsRepository,
-   accountRepository: AccountRepository,
    savedStateHandle: SavedStateHandle
-) : BaseViewModel(accountRepository) {
+) : BaseViewModel() {
 
    private val _currentClient = DisplayClientsFragmentArgs
       .fromSavedStateHandle(savedStateHandle)
+      .clientEntity
 
-   private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   private val _client = MutableLiveData<ClientEntity>()
+   val client = _client.liveData()
 
-   private val _clientEntity = MutableLiveData<ClientEntity>()
-   val clientEntity = _clientEntity.liveData()
-
-   private val _showSuggestionDialog = MutableUnitLiveEvent()
-   val showSuggestionDialog = _showSuggestionDialog.liveData()
-
-   private val _showSuccessMessage = MutableLiveEvent<String>()
-   val showSuccessMessage = _showSuccessMessage.liveData()
+   private val _navigateToEdit = MutableLiveEvent<ClientEntity>()
+   val navigateToEdit = _navigateToEdit.liveData()
 
    init {
-      getInitialValue()
-   }
-
-   private fun getInitialValue() = try {
-      val entity = _currentClient.clientEntity
-      val phoneNumber = formatPhoneNumber(entity.phoneNumber)
-      _clientEntity.value = entity.copy(
-         phoneNumber = phoneNumber
-      )
-   } catch (e: Exception) {
-      e.printStackTrace()
-   }
-
-   fun updateClient(
-      fullName: String,
-      phoneNumber: String,
-      address: String
-   ) = viewModelScope.safeLaunch {
-      showProgress()
-      try {
-         val message = clientsRepository.updateClient(
-            getClientId(), fullName, phoneNumber, address
-         )
-
-         // show success message
-         showSuccessMessageAndRefreshState(message)
-
-         // update driver fields
-         setDriverData(fullName, phoneNumber, address)
-
-      } catch (e: EmptyFieldException) {
-         showEmptyFields(e)
-      } finally {
-         hideProgress()
-      }
-   }
-
-   fun toggleChangeableState() {
-      if (!changeableState()) {
-         _showSuggestionDialog.publishEvent()
-      } else {
-         disableChangeableState()
-      }
-   }
-
-   fun enableChangeableState() {
-      _state.value = _state.requireValue().copy(
-         isChangeableEnable = true
+      val client = _currentClient
+      _client.value = client.copy(
+         phoneNumber = formatPhoneNumber(client.phoneNumber)
       )
    }
 
-   fun disableChangeableState() {
-      _state.value = _state.requireValue().copy(
-         isChangeableEnable = false
-      )
-      getInitialValue()
+   fun navigateToEdit() {
+      _navigateToEdit.publishEvent(_client.requireValue())
    }
 
-   private fun showEmptyFields(e: EmptyFieldException) {
-      _state.value = _state.requireValue().copy(
-         emptyFullName = e.field == Field.FULL_NAME,
-         emptyPhoneNumber = e.field == Field.PHONE_NUMBER,
-         emptyAddress = e.field == Field.ADDRESS,
-      )
-   }
-
-   private fun setDriverData(fullName: String, phoneNumber: String, address: String) {
-      val formattedNumber = formatPhoneNumber(phoneNumber)
-      _clientEntity.value = _clientEntity.requireValue().copy(
-         fullName = fullName, phoneNumber = formattedNumber, address = address
-      )
-   }
-
-   private fun showSuccessMessageAndRefreshState(message: String) {
-      _showSuccessMessage.publishEvent(message)
-      _state.value = State()
-   }
-
-   private fun getClientId() = _clientEntity.requireValue().clientId
-
-   private fun showProgress() {
-      _state.value = _state.requireValue().copy(
-         isInProgress = true
-      )
-   }
-
-   private fun hideProgress() {
-      _state.value = _state.requireValue().copy(
-         isInProgress = false
-      )
+   fun setUpdatedEntity(clientEntity: ClientEntity?) {
+      if (clientEntity == null) return
+      _client.value = clientEntity!!
    }
 
    private fun formatPhoneNumber(number: String): String {
@@ -142,27 +53,5 @@ class DisplayClientsViewModel @Inject constructor(
       }
    }
 
-   private fun changeableState() = _state.requireValue().isChangeableEnable
-
-   data class State(
-      val isChangeableEnable: Boolean = false,
-      val isInProgress: Boolean = false,
-      val emptyFullName: Boolean = false,
-      val emptyPhoneNumber: Boolean = false,
-      val emptyAddress: Boolean = false
-   ) {
-
-      fun getFullNameErrorMessage(context: Context) =
-         if (emptyFullName) context.getString(R.string.error_empty_name)
-         else null
-
-      fun getPhoneNumberErrorMessage(context: Context) =
-         if (emptyPhoneNumber) context.getString(R.string.error_empty_phone_number)
-         else null
-
-      fun getAddressErrorMessage(context: Context) =
-         if (emptyAddress) context.getString(R.string.error_empty_address)
-         else null
-   }
 
 }

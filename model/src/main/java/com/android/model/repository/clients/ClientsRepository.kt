@@ -38,6 +38,7 @@ class ClientsRepository @Inject constructor(
       if (fullName.isBlank()) throw EmptyFieldException(Field.FULL_NAME)
       if (phoneNumber.isBlank()) throw EmptyFieldException(Field.PHONE_NUMBER)
       if (address.isBlank()) throw EmptyFieldException(Field.ADDRESS)
+
       return suspendRunCatching {
          clientSource.updateClient(
             clientId, fullName, phoneNumber, address

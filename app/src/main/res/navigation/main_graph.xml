@@ -141,6 +141,13 @@
     <argument
       android:name="employeeEntity"
       app:argType="com.android.model.repository.employees.entity.EmployeeEntity" />
+    <action
+      android:id="@+id/displayEmployee_to_editEmployee"
+      app:destination="@id/editEmployeeFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit"/>
 
   </fragment>
 
@@ -169,6 +176,13 @@
     <argument
       android:name="driverEntity"
       app:argType="com.android.model.repository.drivers.entity.DriverEntity" />
+    <action
+      android:id="@+id/displayDriver_to_editDriver"
+      app:destination="@id/editDriverFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit"/>
 
   </fragment>
 
@@ -189,6 +203,13 @@
     <argument
       android:name="clientEntity"
       app:argType="com.android.model.repository.clients.entity.ClientEntity" />
+    <action
+      android:id="@+id/displayClients_to_editClient"
+      app:destination="@id/editClientFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
   </fragment>
 
   <fragment
@@ -490,6 +511,33 @@
     <argument
       android:name="productId"
       app:argType="long" />
+  </fragment>
+  <fragment
+    android:id="@+id/editEmployeeFragment"
+    android:name="com.android.bdkstock.screens.main.menu.employees.EditEmployeeFragment"
+    android:label="@string/edit"
+    tools:layout="@layout/fragment_edit_employee">
+    <argument
+      android:name="employeeEntity"
+      app:argType="com.android.model.repository.employees.entity.EmployeeEntity" />
+  </fragment>
+  <fragment
+    android:id="@+id/editClientFragment"
+    android:name="com.android.bdkstock.screens.main.menu.clients.EditClientFragment"
+    android:label="@string/edit"
+    tools:layout="@layout/fragment_edit_client" >
+    <argument
+      android:name="clientEntity"
+      app:argType="com.android.model.repository.clients.entity.ClientEntity" />
+  </fragment>
+  <fragment
+    android:id="@+id/editDriverFragment"
+    android:name="com.android.bdkstock.screens.main.menu.drivers.EditDriverFragment"
+    android:label="@string/edit"
+    tools:layout="@layout/fragment_edti_driver">
+    <argument
+      android:name="driverEntity"
+      app:argType="com.android.model.repository.drivers.entity.DriverEntity" />
   </fragment>
 
 </navigation>

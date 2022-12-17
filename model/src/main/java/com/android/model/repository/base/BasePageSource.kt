@@ -1,7 +1,9 @@
 package com.android.model.repository.base
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.android.model.Logger
 import com.android.model.utils.AuthException
 import com.android.model.utils.BackendException
 import com.android.model.utils.PageNotFoundException
@@ -24,7 +26,6 @@ class BasePageSource<T : Any>(
       val pageIndex = params.key ?: STARTING_PAGE_INDEX
       return try {
          val list = loader.invoke(pageIndex)
-
          LoadResult.Page(
             data = list,
             // index of the previous page if exists

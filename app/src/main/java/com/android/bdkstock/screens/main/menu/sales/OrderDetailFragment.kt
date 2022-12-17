@@ -1,5 +1,6 @@
 package com.android.bdkstock.screens.main.menu.sales
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +9,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentOrderDetailBinding
 import com.android.bdkstock.databinding.RecyclerSingleItemBinding
-import com.android.bdkstock.screens.main.base.adapters.BaseAdapter
 import com.android.bdkstock.screens.main.base.BaseFragment
+import com.android.bdkstock.screens.main.base.adapters.BaseAdapter
 import com.android.bdkstock.screens.main.base.adapters.ViewHolderCreator
 import com.android.bdkstock.views.findTopNavController
 import com.android.bdkstock.views.getActionBar
@@ -48,10 +50,35 @@ class OrderDetailFragment :
       observeState()
       observeOrder()
       observePayError()
-
+      fabBehavior()
       observePaymentResult()
 
       binding.fabPay.setOnClickListener { viewModel.payment() }
+      binding.buttonCancel.setOnClickListener { cancelOnClick() }
+   }
+
+   private fun fabBehavior() {
+      binding.mainContainer.setOnScrollChangeListener { v, x, y, oldX, oldY ->
+         if (viewModel.statusIsEqualZero()) {
+            if (y > oldY) {
+               binding.fabPay.hide()
+            } else {
+               binding.fabPay.show()
+            }
+         }
+      }
+   }
+
+   private fun cancelOnClick() {
+      AlertDialog.Builder(requireContext())
+         .setTitle("Order cancelation")
+         .setMessage("Do you want to cancel order?")
+         .setNegativeButton(getString(R.string.no)) { _, _ -> }
+         .setPositiveButton(getString(R.string.yes)) { _, _ ->
+            viewModel.cancelOrder()
+         }
+         .create()
+         .show()
    }
 
    private fun observePaymentResult() {
