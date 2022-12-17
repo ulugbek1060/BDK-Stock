@@ -16,7 +16,7 @@
     android:padding="@dimen/dimen_small"
     android:text="@string/no_connection"
     android:textColor="?attr/colorOnError"
-    android:visibility="visible" />
+    android:visibility="gone" />
 
   <com.google.android.material.appbar.AppBarLayout
     android:id="@+id/appbar"

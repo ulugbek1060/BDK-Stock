@@ -62,23 +62,18 @@ class NetworkConnection(private val context: Context) : LiveData<Boolean>() {
    }
 
    private fun connectivityManagerCallback(): ConnectivityManager.NetworkCallback {
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-         networkCallback = object : ConnectivityManager.NetworkCallback() {
-
-            override fun onLost(network: Network) {
-               super.onLost(network)
-               postValue(false)
-            }
-
-            override fun onAvailable(network: Network) {
-               super.onAvailable(network)
-               postValue(true)
-            }
+      networkCallback = object : ConnectivityManager.NetworkCallback() {
+         override fun onLost(network: Network) {
+            super.onLost(network)
+            postValue(false)
          }
-         return networkCallback
-      } else {
-         throw IllegalAccessError("Error")
+
+         override fun onAvailable(network: Network) {
+            super.onAvailable(network)
+            postValue(true)
+         }
       }
+      return networkCallback
    }
 
    private val networkReceiver = object : BroadcastReceiver() {

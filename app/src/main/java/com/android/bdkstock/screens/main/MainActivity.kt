@@ -8,6 +8,8 @@ import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -64,7 +66,14 @@ class MainActivity : AppCompatActivity() {
       val networkConnection = NetworkConnection(this)
       networkConnection.observe(this) {
          if (it) {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+
+            WindowCompat
+               .getInsetsController(window, window.decorView)
+               .isAppearanceLightStatusBars = it
+
             val animation: Animation = TranslateAnimation(0f, 0f, 0f, -100f)
+
             animation.setAnimationListener(object : Animation.AnimationListener {
                override fun onAnimationStart(animation: Animation?) = Unit
                override fun onAnimationRepeat(animation: Animation?) = Unit
@@ -76,7 +85,14 @@ class MainActivity : AppCompatActivity() {
             animation.fillAfter = true
             binding.noConnection.startAnimation(animation)
          } else {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.red)
+
+            WindowCompat
+               .getInsetsController(window, window.decorView)
+               .isAppearanceLightStatusBars = it
+
             val animation: Animation = TranslateAnimation(0f, 0f, -100f, 0f)
+
             animation.setAnimationListener(object : Animation.AnimationListener {
                override fun onAnimationStart(animation: Animation?) {
                   binding.noConnection.isVisible = true
