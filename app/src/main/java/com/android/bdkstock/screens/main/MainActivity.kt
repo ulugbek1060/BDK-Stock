@@ -2,10 +2,13 @@ package com.android.bdkstock.screens.main
 
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.TranslateAnimation
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks
@@ -16,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.ActivityMainBinding
+import com.android.bdkstock.views.NetworkConnection
 import com.android.model.utils.Const.FLAG_SIGNED_IN
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Pattern
@@ -23,9 +27,11 @@ import java.util.regex.Pattern
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+   private val show: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.enter) }
+   private val hide: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.pop_exit) }
+
    private lateinit var binding: ActivityMainBinding
    private lateinit var navController: NavController
-   private val TAG = "MainActivity"
 
    private val topLevelDestinations = setOf(getSignInId(), getActionsId())
 
@@ -35,6 +41,8 @@ class MainActivity : AppCompatActivity() {
       setContentView(binding.root)
 
       setSupportActionBar(binding.toolbar)
+
+      checkNetworkState()
 
       val navHost = supportFragmentManager
          .findFragmentById(R.id.fragment_main_container) as NavHostFragment
@@ -50,6 +58,38 @@ class MainActivity : AppCompatActivity() {
       NavigationUI.setupActionBarWithNavController(this, navController)
 
       supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentListener, true)
+   }
+
+   private fun checkNetworkState() {
+      val networkConnection = NetworkConnection(this)
+      networkConnection.observe(this) {
+         if (it) {
+            val animation: Animation = TranslateAnimation(0f, 0f, 0f, -100f)
+            animation.setAnimationListener(object : Animation.AnimationListener {
+               override fun onAnimationStart(animation: Animation?) = Unit
+               override fun onAnimationRepeat(animation: Animation?) = Unit
+               override fun onAnimationEnd(animation: Animation?) {
+                  binding.noConnection.isVisible = false
+               }
+            })
+            animation.duration = 300
+            animation.fillAfter = true
+            binding.noConnection.startAnimation(animation)
+         } else {
+            val animation: Animation = TranslateAnimation(0f, 0f, -100f, 0f)
+            animation.setAnimationListener(object : Animation.AnimationListener {
+               override fun onAnimationStart(animation: Animation?) {
+                  binding.noConnection.isVisible = true
+               }
+
+               override fun onAnimationRepeat(animation: Animation?) = Unit
+               override fun onAnimationEnd(animation: Animation?) = Unit
+            })
+            animation.duration = 300
+            animation.fillAfter = true
+            binding.noConnection.startAnimation(animation)
+         }
+      }
    }
 
    private val fragmentListener = object : FragmentLifecycleCallbacks() {
@@ -74,13 +114,13 @@ class MainActivity : AppCompatActivity() {
 
    private val destinationListener =
       NavController.OnDestinationChangedListener { _, destination, arguments ->
-         Log.d(TAG, "Destination Label: ${destination.label} " +
-              "\nDisplay Name: ${destination.displayName} " +
-              "\nParent: ${destination.parent}" +
-              "\nID: ${destination.id}" +
-              "\nNavigator Name: ${destination.navigatorName}" +
-              "\nRoute: ${destination.route}" +
-              "\n-----------------------------------------------------------------")
+//         Log.d(TAG, "Destination Label: ${destination.label} " +
+//              "\nDisplay Name: ${destination.displayName} " +
+//              "\nParent: ${destination.parent}" +
+//              "\nID: ${destination.id}" +
+//              "\nNavigator Name: ${destination.navigatorName}" +
+//              "\nRoute: ${destination.route}" +
+//              "\n-----------------------------------------------------------------")
          supportActionBar?.title = prepareTitle(destination.label, arguments)
          supportActionBar?.setDisplayHomeAsUpEnabled(!isStartDestination(destination))
       }

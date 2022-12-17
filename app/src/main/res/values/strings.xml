@@ -155,5 +155,6 @@
   <string name="edit_product">Редактировать товар</string>
   <string name="edit_ingredient_of_product">Редактировать ингредиены</string>
   <string name="mobile">Mobile</string>
+  <string name="no_connection">нет соединения</string>
 
 </resources>
