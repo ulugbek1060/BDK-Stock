@@ -25,13 +25,13 @@ class EditClientViewModel @Inject constructor(
       .clientEntity
 
    private val _client = MutableLiveData<ClientEntity>()
-   val client = _client.liveData()
+   val client = _client.asLiveData()
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    private val _navigateBack = MutableLiveEvent<ClientEntity>()
-   val navigateBack = _navigateBack.liveData()
+   val navigateBack = _navigateBack.asLiveData()
 
    init {
       _client.value = _currentClient

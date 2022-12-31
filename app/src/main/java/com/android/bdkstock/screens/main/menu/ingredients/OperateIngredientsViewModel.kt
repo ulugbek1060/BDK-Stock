@@ -30,13 +30,13 @@ class OperateIngredientsViewModel @Inject constructor(
       .defaultIngredient
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    private val _navigateToDisplay = MutableLiveEvent<String>()
-   val navigateToDisplay = _navigateToDisplay.liveData()
+   val navigateToDisplay = _navigateToDisplay.asLiveData()
 
    private val _selectedIngredient = MutableLiveData<SimpleIngredient>()
-   val selectedIngredient = _selectedIngredient.liveData()
+   val selectedIngredient = _selectedIngredient.asLiveData()
 
    var getIngredientList: Flow<Results<List<SimpleIngredient>>> = ingredientsRepository
       .getIngredientsList(_ingredient != null)

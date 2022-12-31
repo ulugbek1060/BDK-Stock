@@ -25,13 +25,13 @@ class NewOrderViewModel @Inject constructor(
    private var driverId: Long? = null
 
    private val _goBack = MutableLiveEvent<OrderEntity>()
-   val goBack = _goBack.liveData()
+   val goBack = _goBack.asLiveData()
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    private val _productsList = MutableLiveData<MutableList<ProductSelectionItem>>(mutableListOf())
-   val productsList = _productsList.liveData()
+   val productsList = _productsList.asLiveData()
 
    fun createOrder() = viewModelScope.safeLaunch {
       showProgress()

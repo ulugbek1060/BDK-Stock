@@ -15,13 +15,13 @@ open class BaseViewModel(
 ) : ViewModel() {
 
    private val _showErrorMessageResEvent = MutableLiveEvent<Int>()
-   val showErrorMessageRes = _showErrorMessageResEvent.liveData()
+   val showErrorMessageRes = _showErrorMessageResEvent.asLiveData()
 
    private val _showErrorMessageEvent = MutableLiveEvent<String>()
-   val showErrorMessageEvent = _showErrorMessageEvent.liveData()
+   val showErrorMessageEvent = _showErrorMessageEvent.asLiveData()
 
    private val _showAuthErrorAndRestart = MutableUnitLiveEvent()
-   val showAuthErrorAndRestart = _showAuthErrorAndRestart.liveData()
+   val showAuthErrorAndRestart = _showAuthErrorAndRestart.asLiveData()
 
    fun CoroutineScope.safeLaunch(block: suspend CoroutineScope.() -> Unit) {
       viewModelScope.launch {

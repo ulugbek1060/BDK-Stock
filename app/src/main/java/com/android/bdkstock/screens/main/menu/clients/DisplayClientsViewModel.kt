@@ -18,10 +18,10 @@ class DisplayClientsViewModel @Inject constructor(
       .clientEntity
 
    private val _client = MutableLiveData<ClientEntity>()
-   val client = _client.liveData()
+   val client = _client.asLiveData()
 
    private val _navigateToEdit = MutableLiveEvent<ClientEntity>()
-   val navigateToEdit = _navigateToEdit.liveData()
+   val navigateToEdit = _navigateToEdit.asLiveData()
 
    init {
       val client = _currentClient

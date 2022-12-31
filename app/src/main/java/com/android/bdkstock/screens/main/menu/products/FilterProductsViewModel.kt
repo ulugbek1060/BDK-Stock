@@ -5,7 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.android.bdkstock.R
 import com.android.model.utils.MutableLiveEvent
-import com.android.model.utils.liveData
+import com.android.model.utils.asLiveData
 import com.android.model.utils.publishEvent
 import com.android.model.utils.requireValue
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,10 +23,10 @@ class FilterProductsViewModel @Inject constructor(
       .productsFilterData
 
    private val _filter = MutableLiveData(_filterData)
-   val filter = _filter.liveData()
+   val filter = _filter.asLiveData()
 
    private val _moveBack = MutableLiveEvent<ProductsFilterData>()
-   val moveBack = _moveBack.liveData()
+   val moveBack = _moveBack.asLiveData()
 
    fun acceptFilterData(
       query: String,

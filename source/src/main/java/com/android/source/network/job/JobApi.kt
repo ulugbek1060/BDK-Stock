@@ -5,7 +5,9 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 
 interface JobApi {
+
    @Headers("Content-Type: application/json", "Accept: application/json")
    @GET("api/job/get")
    suspend fun getJobs(): JobsResponseEntity
+
 }

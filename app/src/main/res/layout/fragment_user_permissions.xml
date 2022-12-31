@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context=".screens.main.profile.UserPermissionsFragment">
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+      android:id="@+id/main_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:visibility="visible">
+
+      <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_extra"
+        android:layout_marginEnd="@dimen/dimen_large"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter_bold"
+        android:maxLines="1"
+        android:text="@string/change_user_permissions"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="@dimen/text_size_big" />
+
+      <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:layout_marginEnd="@dimen/dimen_large"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/permission_description" />
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_job_title"
+        style="@style/TextInputLayoutStyleDropDown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:layout_marginEnd="@dimen/dimen_large"
+        android:fontFamily="@font/inter_regular"
+        android:hint="@string/job"
+        app:errorEnabled="true"
+        app:startIconDrawable="@drawable/ic_work_24">
+
+        <AutoCompleteTextView
+          android:id="@+id/auto_complete_job_title"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/inter_regular"
+          android:inputType="none"
+          tools:ignore="LabelFor" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <LinearLayout
+        android:id="@+id/layout_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+          android:id="@+id/tv_permissions_employees"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_large"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:fontFamily="@font/inter_regular"
+          android:text="@string/permissions_for_employees" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+          android:id="@+id/toggleButtonEmployees"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_large"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toTopOf="@id/input_layout_from_date"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/input_layout_query">
+
+          <Button
+            android:id="@+id/button_add_employee"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="8"
+            android:text="@string/permission_to_add_employees"
+            android:textAllCaps="false" />
+
+          <Button
+            android:id="@+id/button_view_employee_contacts"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="2"
+            android:text="@string/view_employee_contacts"
+            android:textAllCaps="false" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <TextView
+          android:id="@+id/tv_permissions_sales"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_large"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:fontFamily="@font/inter_regular"
+          android:text="@string/permissions_for_sales" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+          android:id="@+id/toggleButtonSales"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_large"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toTopOf="@id/input_layout_from_date"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/input_layout_query">
+
+          <Button
+            android:id="@+id/button_view_order"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="3"
+            android:text="@string/permission_view_orders"
+            android:textAllCaps="false" />
+
+          <Button
+            android:id="@+id/button_new_order"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="10"
+            android:text="@string/permission_ot_create_new_order"
+            android:textAllCaps="false" />
+
+          <Button
+            android:id="@+id/button_pay_order"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="11"
+            android:text="@string/permission_to_pay_for_orders"
+            android:textAllCaps="false" />
+
+          <Button
+            android:id="@+id/button_cancel_order"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="12"
+            android:text="@string/permission_to_cancel_orders"
+            android:textAllCaps="false" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <TextView
+          android:id="@+id/tv_permissions_ingredients"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_large"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:fontFamily="@font/inter_regular"
+          android:text="@string/permissions_for_ingredients" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+          android:id="@+id/toggleButtonIngredients"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_large"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toTopOf="@id/input_layout_from_date"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/input_layout_query">
+
+          <Button
+            android:id="@+id/button_view_ingredients"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="5"
+            android:text="@string/permission_to_view_ingredients"
+            android:textAllCaps="false" />
+
+          <Button
+            android:id="@+id/button_new_ingredient"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="13"
+            android:text="@string/permission_to_create_new_ingredient"
+            android:textAllCaps="false" />
+
+          <Button
+            android:id="@+id/button_add_ingredient"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="14"
+            android:text="@string/permission_import_ingredient"
+            android:textAllCaps="false" />
+
+          <Button
+            android:id="@+id/button_arr_ingredient"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="15"
+            android:text="@string/permission_export_ingredient"
+            android:textAllCaps="false" />
+
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <TextView
+          android:id="@+id/tv_permissions_products"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_large"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:fontFamily="@font/inter_regular"
+          android:text="@string/permissions_for_products" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+          android:id="@+id/toggleButtonProducts"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_large"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toTopOf="@id/input_layout_from_date"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/input_layout_query">
+
+          <Button
+            android:id="@+id/button_view_products"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="4"
+            android:text="@string/permission_view_products"
+            android:textAllCaps="false" />
+
+          <Button
+            android:id="@+id/button_new_product"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="16"
+            android:text="@string/permission_new_product"
+            android:textAllCaps="false" />
+
+          <Button
+            android:id="@+id/button_add_product"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="17"
+            android:text="@string/permission_import_products"
+            android:textAllCaps="false" />
+
+          <Button
+            android:id="@+id/button_arr_product"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="18"
+            android:text="@string/permission_export_products"
+            android:textAllCaps="false" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <TextView
+          android:id="@+id/tv_permissions_dashboard"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_large"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:fontFamily="@font/inter_regular"
+          android:text="@string/permissions_for_dashboard" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+          android:id="@+id/toggleButtonDashboard"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_large"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toTopOf="@id/input_layout_from_date"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/input_layout_query">
+
+          <Button
+            android:id="@+id/button_view_dashboard"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="1"
+            android:text="@string/permission_view_dashboard"
+            android:textAllCaps="false" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <TextView
+          android:id="@+id/tv_permissions_client"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_large"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:fontFamily="@font/inter_regular"
+          android:text="@string/permissions_for_clients" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+          android:id="@+id/toggleButtonClient"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_large"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toTopOf="@id/input_layout_from_date"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/input_layout_query">
+
+          <Button
+            android:id="@+id/button_view_clients"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="7"
+            android:text="@string/permission_view_clients"
+            android:textAllCaps="false" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <TextView
+          android:id="@+id/tv_permissions_driver"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_large"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:fontFamily="@font/inter_regular"
+          android:text="@string/permissions_for_driver" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+          android:id="@+id/toggleButtonDriver"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/dimen_large"
+          android:layout_marginTop="@dimen/dimen_large"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toTopOf="@id/input_layout_from_date"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/input_layout_query">
+
+          <Button
+            android:id="@+id/button_view_drivers"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tag="6"
+            android:text="@string/permission_view_drivers"
+            android:textAllCaps="false" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+      </LinearLayout>
+
+      <Button
+        android:id="@+id/button_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_marginHorizontal="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:layout_marginBottom="@dimen/dimen_large"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/save"
+        android:textAllCaps="false" />
+
+    </LinearLayout>
+
+    <ProgressBar
+      android:id="@+id/progressbar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:padding="@dimen/dimen_large" />
+
+  </FrameLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -14,7 +14,6 @@ import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentProfileBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.findTopNavController
-import com.android.bdkstock.views.navigate
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +31,11 @@ class ProfileFragment :
          binding.inputSurname.setText(it.lastname)
          binding.inputPhoneNumber.setText(it.phoneNumber)
          binding.inputAddress.setText(it.address)
+      }
+
+      binding.buttonPermissions.setOnClickListener {
+         findNavController().navigate(R.id.profile_to_userPermissions)
+         findTopNavController()
       }
 
       requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)

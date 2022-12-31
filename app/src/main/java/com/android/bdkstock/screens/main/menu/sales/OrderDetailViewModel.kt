@@ -28,13 +28,13 @@ class OrderDetailViewModel @Inject constructor(
       .orderId
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    private val _order = MutableLiveData(OrderData())
-   val order = _order.liveData()
+   val order = _order.asLiveData()
 
    private val _navigatePaymentsFrag = MutableLiveEvent<OrderEntity?>()
-   val navigatePaymentsFrag = _navigatePaymentsFrag.liveData()
+   val navigatePaymentsFrag = _navigatePaymentsFrag.asLiveData()
 
    private val orderResult = salesRepository
       .getOrderOverview(_orderId)

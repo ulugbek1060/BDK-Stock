@@ -9,6 +9,16 @@
     android:id="@+id/profileFragment"
     android:name="com.android.bdkstock.screens.main.profile.ProfileFragment"
     android:label="@string/app_name"
-    tools:layout="@layout/fragment_profile" />
+    tools:layout="@layout/fragment_profile">
+    <action
+      android:id="@+id/profile_to_userPermissions"
+      app:destination="@id/userPermissionsFragment" />
+  </fragment>
+
+  <dialog
+    android:id="@+id/userPermissionsFragment"
+    android:name="com.android.bdkstock.screens.main.profile.UserPermissionsFragment"
+    android:label="fragment_user_permissions"
+    tools:layout="@layout/fragment_user_permissions" />
 
 </navigation>

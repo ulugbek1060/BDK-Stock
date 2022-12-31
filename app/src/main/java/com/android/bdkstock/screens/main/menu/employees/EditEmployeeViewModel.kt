@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
-import com.android.model.repository.clients.entity.ClientEntity
 import com.android.model.repository.employees.EmployeeRepository
 import com.android.model.repository.employees.entity.EmployeeEntity
 import com.android.model.repository.jobs.JobRepository
@@ -30,16 +29,16 @@ class EditEmployeeViewModel @Inject constructor(
       .employeeEntity
 
    private val _employee = MutableLiveData<EmployeeEntity>()
-   val employee = _employee.liveData()
+   val employee = _employee.asLiveData()
 
    private val _jobs = MutableLiveData<List<JobEntity>>()
-   val jobs = _jobs.liveData()
+   val jobs = _jobs.asLiveData()
 
    private val _navigateBack = MutableLiveEvent<EmployeeEntity>()
-   val navigateBack = _navigateBack.liveData()
+   val navigateBack = _navigateBack.asLiveData()
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    init {
       _employee.value = _currentEmployee

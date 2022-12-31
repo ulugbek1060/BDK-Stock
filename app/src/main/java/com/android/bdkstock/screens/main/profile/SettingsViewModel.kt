@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
 import com.android.model.utils.MutableLiveEvent
-import com.android.model.utils.liveData
+import com.android.model.utils.asLiveData
 import com.android.model.utils.publishEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -15,7 +15,7 @@ class SettingsViewModel @Inject constructor(
 ) : BaseViewModel(repository) {
 
    private val _doLogoutActions = MutableLiveEvent<String>()
-   val doLogoutActions = _doLogoutActions.liveData()
+   val doLogoutActions = _doLogoutActions.asLiveData()
 
    fun logoutManually() = viewModelScope.safeLaunch {
       val message = repository.logoutManually()

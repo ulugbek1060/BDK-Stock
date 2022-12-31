@@ -11,7 +11,7 @@ import com.android.model.repository.clients.ClientsRepository
 import com.android.model.repository.clients.entity.ClientEntity
 import com.android.model.utils.Const.DEFAULT_DELAY
 import com.android.model.utils.MutableUnitLiveEvent
-import com.android.model.utils.liveData
+import com.android.model.utils.asLiveData
 import com.android.model.utils.publishEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -29,7 +29,7 @@ class ClientsViewModel @Inject constructor(
 ) : BaseViewModel(accountRepository) {
 
    private val _errorEvent = MutableUnitLiveEvent()
-   val errorEvent = _errorEvent.liveData()
+   val errorEvent = _errorEvent.asLiveData()
 
    private val _query = savedStateHandle.getLiveData(CLIENT_QUERY_KEY, "")
 

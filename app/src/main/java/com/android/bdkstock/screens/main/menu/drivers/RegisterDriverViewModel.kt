@@ -27,16 +27,16 @@ class RegisterDriverViewModel @Inject constructor(
       .displayDriver
 
    private val _vehicles = MutableLiveData<List<VehicleModelEntity>?>(emptyList())
-   val vehicles = _vehicles.liveData()
+   val vehicles = _vehicles.asLiveData()
 
    private val _selectedVehicle = MutableLiveData(VehicleModelEntity())
-   val selectedVehicle = _selectedVehicle.liveData()
+   val selectedVehicle = _selectedVehicle.asLiveData()
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    private val _navigateToDisplayFrag = MutableLiveEvent<Pair<Boolean, DriverEntity>>()
-   val navigateToDisplayFrag = _navigateToDisplayFrag.liveData()
+   val navigateToDisplayFrag = _navigateToDisplayFrag.asLiveData()
 
    init {
       viewModelScope.safeLaunch {

@@ -25,13 +25,13 @@ class PayViewModel @Inject constructor(
       .orderEntity
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    private val _order = MutableLiveData<OrderEntity?>()
-   val order = _order.liveData()
+   val order = _order.asLiveData()
 
    private val _goBack = MutableLiveEvent<String>()
-   val goBack = _goBack.liveData()
+   val goBack = _goBack.asLiveData()
 
    init {
       _order.value = orderEntity

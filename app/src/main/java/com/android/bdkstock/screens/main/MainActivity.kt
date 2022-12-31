@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
       setSupportActionBar(binding.toolbar)
 
-      checkNetworkState()
+//      checkNetworkState()
 
       val navHost = supportFragmentManager
          .findFragmentById(R.id.fragment_main_container) as NavHostFragment

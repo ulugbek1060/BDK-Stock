@@ -19,10 +19,10 @@ class AddIngredientsViewModel @Inject constructor(
 ) : BaseViewModel(accountRepository) {
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    private val _navigateToDisplayFrag = MutableLiveEvent<IngredientEntity>()
-   val navigateToDisplayFrag = _navigateToDisplayFrag.liveData()
+   val navigateToDisplayFrag = _navigateToDisplayFrag.asLiveData()
 
    fun createIngredients(
       name: String,

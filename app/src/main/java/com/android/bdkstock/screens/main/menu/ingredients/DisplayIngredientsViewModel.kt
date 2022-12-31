@@ -12,7 +12,7 @@ import com.android.model.repository.ingredients.IngredientsRepository
 import com.android.model.repository.ingredients.entity.IngredientEntity
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
 import com.android.model.utils.MutableUnitLiveEvent
-import com.android.model.utils.liveData
+import com.android.model.utils.asLiveData
 import com.android.model.utils.publishEvent
 import com.android.model.utils.requireValue
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,13 +30,13 @@ class DisplayIngredientsViewModel @Inject constructor(
 ) : BaseViewModel(accountRepository) {
 
    private val _errorEvent = MutableUnitLiveEvent()
-   val errorEvent = _errorEvent.liveData()
+   val errorEvent = _errorEvent.asLiveData()
 
    private val _currentIngredient = DisplayIngredientsFragmentArgs
       .fromSavedStateHandle(savedStateHandle)
 
    private val _ingredientEntity = MutableLiveData<IngredientEntity>()
-   val ingredientEntity = _ingredientEntity.liveData()
+   val ingredientEntity = _ingredientEntity.asLiveData()
 
    private val _ingredientId = savedStateHandle.getLiveData<Long>(INGREDIENT_ID)
 

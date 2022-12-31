@@ -3,7 +3,7 @@ package com.android.bdkstock.screens.splash
 import androidx.lifecycle.ViewModel
 import com.android.model.repository.account.AccountRepository
 import com.android.model.utils.MutableLiveEvent
-import com.android.model.utils.liveData
+import com.android.model.utils.asLiveData
 import com.android.model.utils.publishEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -14,7 +14,7 @@ class SplashViewModel @Inject constructor(
 ) : ViewModel() {
 
    private val _launchMainScreen = MutableLiveEvent<Boolean>()
-   val launchMainScreen = _launchMainScreen.liveData()
+   val launchMainScreen = _launchMainScreen.asLiveData()
 
    init {
       _launchMainScreen.publishEvent(repository.isSignedIn())

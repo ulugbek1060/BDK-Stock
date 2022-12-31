@@ -7,7 +7,7 @@ import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.ingredients.entity.IngredientExOrInEntity
-import com.android.model.utils.liveData
+import com.android.model.utils.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -22,7 +22,7 @@ class DisplayIngredientOperationViewModel @Inject constructor(
       .operationIngredient
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    init {
       val ingredient = _currentOperations

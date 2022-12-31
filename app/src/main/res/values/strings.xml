@@ -157,4 +157,33 @@
   <string name="mobile">Mobile</string>
   <string name="no_connection">нет соединения</string>
 
+
+  <string name="view_employee_contacts">Посмотреть контакты сотрудников</string>
+  <string name="permission_to_add_employees">Разрешение на добавление контактов</string>
+  <string name="permission_view_orders">Посмотреть все заказы</string>
+  <string name="permission_ot_create_new_order">Разрешение на создать новый заказ</string>
+  <string name="permission_to_pay_for_orders">Разрешение на оплату заказов</string>
+  <string name="permission_to_cancel_orders">Разрешение на отменить заказов</string>
+  <string name="permission_to_view_ingredients">Разрешения на просмотр ингредиентов</string>
+  <string name="permission_to_create_new_ingredient">Разрешение на создание нового ингредиента</string>
+  <string name="permission_import_ingredient">Разрешение на приход ингредиент</string>
+  <string name="permission_export_ingredient">Разрешение на экспорт ингредиента</string>
+  <string name="permission_view_products">Разрешение на просмотр всех товаров</string>
+  <string name="permission_new_product">Разрешение на создание нового продукта</string>
+  <string name="permission_import_products">Разрешение на импортаци продуктов</string>
+  <string name="permission_export_products">Разрешение на эксротаци продуктов</string>
+  <string name="permission_view_dashboard">Разрешение на просмотр финансового раздела</string>
+  <string name="permission_view_clients">Разрешение на просмотр клиентов</string>
+  <string name="permission_view_drivers">Разрешение на просмотр водителы</string>
+  <string name="empty_jobId">Вам нужно выбрать одну из должностей</string>
+  <string name="permission_description">Чтобы изменить разрешения для определенной должности, выберите одно из названий должностей и выберите или отмените выбор разрешений ниже.</string>
+  <string name="change_user_permissions">Изменить разрешения пользователя</string>
+  <string name="permissions_for_employees">Разрешения для сотрудников</string>
+  <string name="permissions_for_sales">Разрешения для продаж</string>
+  <string name="permissions_for_ingredients">Разрешения для ингредиентов</string>
+  <string name="permissions_for_products">Разрешения для продуктов</string>
+  <string name="permissions_for_dashboard">Разрешения для финансовых</string>
+  <string name="permissions_for_clients">Разрешения для клиентов</string>
+  <string name="permissions_for_driver">Разрешения для водителя</string>
+
 </resources>

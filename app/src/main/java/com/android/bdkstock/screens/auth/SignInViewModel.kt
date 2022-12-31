@@ -20,22 +20,22 @@ class SignInViewModel @Inject constructor(
 ) : ViewModel() {
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    private val _showAuthError = MutableUnitLiveEvent()
-   val showAuthError = _showAuthError.liveData()
+   val showAuthError = _showAuthError.asLiveData()
 
    private val _errorParseJson = MutableUnitLiveEvent()
-   val errorParseJson = _errorParseJson.liveData()
+   val errorParseJson = _errorParseJson.asLiveData()
 
    private val _showMessageFromBackend = MutableLiveEvent<String>()
-   val showCauseMessage = _showMessageFromBackend.liveData()
+   val showCauseMessage = _showMessageFromBackend.asLiveData()
 
    private val _clearFields = MutableUnitLiveEvent()
-   val clearFields = _clearFields.liveData()
+   val clearFields = _clearFields.asLiveData()
 
    private val _navigate = MutableUnitLiveEvent()
-   val navigate = _navigate.liveData()
+   val navigate = _navigate.asLiveData()
 
    fun signIn(phoneNumber: String, password: String) = viewModelScope.launch {
       showProgress()

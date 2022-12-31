@@ -23,13 +23,13 @@ class RegisterEmployeeViewModel @Inject constructor(
 ) : BaseViewModel(accountRepository) {
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    private val _jobsList = MutableLiveData<List<JobEntity>>(emptyList())
-   val jobsList = _jobsList.liveData()
+   val jobsList = _jobsList.asLiveData()
 
    private val _navigate = MutableLiveEvent<EmployeeEntity>()
-   val navigate = _navigate.liveData()
+   val navigate = _navigate.asLiveData()
 
    private var jobId: Int? = null
 

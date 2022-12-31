@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.android.bdkstock.R
-import com.android.model.utils.liveData
+import com.android.model.utils.asLiveData
 import com.android.model.utils.requireValue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.Serializable
@@ -20,7 +20,7 @@ class FilterOrderViewModel @Inject constructor(
       .ordersFilterData
 
    private val _filterData = MutableLiveData(_currentFilterData)
-   val filterData = _filterData.liveData()
+   val filterData = _filterData.asLiveData()
 
    fun setFilterDate(
       status: Int,

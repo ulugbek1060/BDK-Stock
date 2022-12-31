@@ -19,16 +19,16 @@ class AddProductViewModel @Inject constructor(
 ) : BaseViewModel(accountRepository) {
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    private val _goBack = MutableLiveEvent<String>()
-   val goBack = _goBack.liveData()
+   val goBack = _goBack.asLiveData()
 
    private val _ingredientList = MutableLiveData<List<SimpleIngredient>>()
-   val ingredientList = _ingredientList.liveData()
+   val ingredientList = _ingredientList.asLiveData()
 
    private val _selectedIngredients = MutableLiveData<ArrayList<SimpleIngredient>>(arrayListOf())
-   val selectedIngredients = _selectedIngredients.liveData()
+   val selectedIngredients = _selectedIngredients.asLiveData()
 
    val ingredientsFlow = productsRepository
       .getIngredientsForSelect()

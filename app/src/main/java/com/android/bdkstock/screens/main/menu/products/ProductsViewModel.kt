@@ -11,7 +11,7 @@ import com.android.model.repository.products.ProductsRepository
 import com.android.model.repository.products.entity.ProductEntity
 import com.android.model.utils.Const.DEFAULT_DELAY
 import com.android.model.utils.MutableUnitLiveEvent
-import com.android.model.utils.liveData
+import com.android.model.utils.asLiveData
 import com.android.model.utils.publishEvent
 import com.android.model.utils.requireValue
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,7 +32,7 @@ class ProductsViewModel @Inject constructor(
 ) : BaseViewModel(accountRepository) {
 
    private val _errorEvent = MutableUnitLiveEvent()
-   val errorEvent = _errorEvent.liveData()
+   val errorEvent = _errorEvent.asLiveData()
 
    private val _query = savedStateHandle.getLiveData(PRODUCTS_QUERY_KEY, "")
    val productsFlow: Flow<PagingData<ProductEntity>> = _query.asFlow()

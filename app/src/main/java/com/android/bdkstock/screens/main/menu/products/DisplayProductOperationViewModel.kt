@@ -8,7 +8,7 @@ import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.products.ProductsRepository
 import com.android.model.repository.products.entity.ProductOperationEntity
-import com.android.model.utils.liveData
+import com.android.model.utils.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -24,7 +24,7 @@ class DisplayProductOperationViewModel @Inject constructor(
       .productOperation
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    init {
       val productOperation = _currentOperation

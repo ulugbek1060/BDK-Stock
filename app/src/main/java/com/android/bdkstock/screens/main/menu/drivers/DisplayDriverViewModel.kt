@@ -1,19 +1,11 @@
 package com.android.bdkstock.screens.main.menu.drivers
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
-import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.base.BaseViewModel
-import com.android.model.repository.account.AccountRepository
-import com.android.model.repository.clients.entity.ClientEntity
-import com.android.model.repository.drivers.DriversRepository
 import com.android.model.repository.drivers.entity.DriverEntity
-import com.android.model.repository.drivers.entity.VehicleModelEntity
 import com.android.model.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,11 +18,11 @@ class DisplayDriverViewModel @Inject constructor(
       .driverEntity
 
    private val _driver = MutableLiveData<DriverEntity>()
-   val driver = _driver.liveData()
+   val driver = _driver.asLiveData()
 
 
    private val _navigateToEdit = MutableLiveEvent<DriverEntity>()
-   val navigateToEdit = _navigateToEdit.liveData()
+   val navigateToEdit = _navigateToEdit.asLiveData()
 
    init {
       val driver = _currentDriver

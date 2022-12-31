@@ -8,7 +8,7 @@ import com.android.bdkstock.screens.main.base.BaseViewModel
 import com.android.model.repository.account.AccountRepository
 import com.android.model.repository.ingredients.IngredientsRepository
 import com.android.model.utils.MutableUnitLiveEvent
-import com.android.model.utils.liveData
+import com.android.model.utils.asLiveData
 import com.android.model.utils.publishEvent
 import com.android.model.utils.requireValue
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,10 +24,10 @@ class IngredientsOperationsViewModel @Inject constructor(
 ) : BaseViewModel(accountRepository) {
 
    private val _errorEvent = MutableUnitLiveEvent()
-   val errorEvent = _errorEvent.liveData()
+   val errorEvent = _errorEvent.asLiveData()
 
    private val _filter = MutableLiveData(IngredientsFilterData())
-   val filter = _filter.liveData()
+   val filter = _filter.asLiveData()
 
    val ingredientsExAndInFlow = _filter
       .asFlow()

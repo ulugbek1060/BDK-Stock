@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
   tools:context=".screens.main.profile.ProfileFragment">
 
   <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,23 +22,21 @@
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintVertical_bias="0.1" />
 
-
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/input_layout_name"
       style="@style/TextInputLayoutStyle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="20dp"
-      android:layout_marginTop="20dp"
-      android:layout_marginRight="20dp"
+      android:layout_marginHorizontal="@dimen/dimen_large"
+      android:layout_marginTop="@dimen/dimen_large"
       android:enabled="false"
-      android:hint="@string/name"
       android:fontFamily="@font/inter_regular"
-      app:startIconDrawable="@drawable/ic_person_24"
+      android:hint="@string/name"
       app:layout_constraintBottom_toTopOf="@id/input_layout_surname"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/iv_avatar">
+      app:layout_constraintTop_toBottomOf="@id/iv_avatar"
+      app:startIconDrawable="@drawable/ic_person_24">
 
       <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_name"
@@ -56,17 +54,16 @@
       style="@style/TextInputLayoutStyle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="20dp"
-      android:layout_marginTop="20dp"
-      android:layout_marginRight="20dp"
+      android:layout_marginHorizontal="@dimen/dimen_large"
+      android:layout_marginTop="@dimen/dimen_large"
       android:enabled="false"
-      android:hint="@string/surname"
       android:fontFamily="@font/inter_regular"
-      app:startIconDrawable="@drawable/ic_emergency_24"
+      android:hint="@string/surname"
       app:layout_constraintBottom_toTopOf="@id/input_layout_phone_number"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/input_layout_name">
+      app:layout_constraintTop_toBottomOf="@id/input_layout_name"
+      app:startIconDrawable="@drawable/ic_emergency_24">
 
       <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_surname"
@@ -83,18 +80,17 @@
       android:id="@+id/input_layout_phone_number"
       style="@style/TextInputLayoutStyle"
       android:layout_width="match_parent"
-      android:fontFamily="@font/inter_regular"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="20dp"
-      android:layout_marginTop="20dp"
-      android:layout_marginRight="20dp"
+      android:layout_marginHorizontal="@dimen/dimen_large"
+      android:layout_marginTop="@dimen/dimen_large"
       android:enabled="false"
+      android:fontFamily="@font/inter_regular"
       android:hint="@string/phone_number"
-      app:startIconDrawable="@drawable/ic_call"
       app:layout_constraintBottom_toTopOf="@id/input_layout_address"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/input_layout_surname">
+      app:layout_constraintTop_toBottomOf="@id/input_layout_surname"
+      app:startIconDrawable="@drawable/ic_call">
 
       <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_phone_number"
@@ -112,17 +108,16 @@
       style="@style/TextInputLayoutStyle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="20dp"
-      android:fontFamily="@font/inter_regular"
+      android:layout_marginHorizontal="@dimen/dimen_large"
       android:layout_marginTop="20dp"
-      android:layout_marginRight="20dp"
-      app:startIconDrawable="@drawable/ic_location_24"
       android:enabled="false"
+      android:fontFamily="@font/inter_regular"
       android:hint="@string/address"
-      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintBottom_toTopOf="@id/button_permissions"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/input_layout_phone_number">
+      app:layout_constraintTop_toBottomOf="@id/input_layout_phone_number"
+      app:startIconDrawable="@drawable/ic_location_24">
 
       <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_address"
@@ -134,6 +129,18 @@
         android:lines="1" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+      android:id="@+id/button_permissions"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/dimen_large"
+      android:layout_marginTop="@dimen/dimen_large"
+      android:text="button perms"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/input_layout_address" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

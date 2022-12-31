@@ -27,16 +27,16 @@ class EditDriverViewModel @Inject constructor(
       .driverEntity
 
    private val _vehicleModels = MutableLiveData<List<VehicleModelEntity>>()
-   val vehicleModels = _vehicleModels.liveData()
+   val vehicleModels = _vehicleModels.asLiveData()
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    private val _driver = MutableLiveData<DriverEntity>()
-   val driver = _driver.liveData()
+   val driver = _driver.asLiveData()
 
    private val _navigateBack = MutableLiveEvent<DriverEntity>()
-   val navigateBack = _navigateBack.liveData()
+   val navigateBack = _navigateBack.asLiveData()
 
    init {
       _driver.value = _currentDriver

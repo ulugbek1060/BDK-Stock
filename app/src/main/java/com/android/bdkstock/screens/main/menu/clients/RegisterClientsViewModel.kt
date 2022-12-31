@@ -25,10 +25,10 @@ class RegisterClientsViewModel @Inject constructor(
       .displayUser
 
    private val _state = MutableLiveData(State())
-   val state = _state.liveData()
+   val state = _state.asLiveData()
 
    private val _navigateToDisplayFrag = MutableLiveEvent<Pair<Boolean, ClientEntity>>()
-   val navigateToDisplay = _navigateToDisplayFrag.liveData()
+   val navigateToDisplay = _navigateToDisplayFrag.asLiveData()
 
    fun registerClients(
       fullName: String,

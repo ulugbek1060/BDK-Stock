@@ -18,11 +18,11 @@ class DisplayEmployeeViewModel @Inject constructor(
       .employeeEntity
 
    private val _employee = MutableLiveData<EmployeeEntity>()
-   val employee = _employee.liveData()
+   val employee = _employee.asLiveData()
 
 
    private val _navigateToEdit = MutableLiveEvent<EmployeeEntity>()
-   val navigateToEdit = _navigateToEdit.liveData()
+   val navigateToEdit = _navigateToEdit.asLiveData()
 
    fun navigateToEdit() {
       _navigateToEdit.publishEvent(_employee.requireValue())
