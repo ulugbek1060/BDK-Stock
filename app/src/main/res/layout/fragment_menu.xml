@@ -1,10 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/recycler_menu"
+  android:id="@+id/refresh_layout"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:paddingLeft="@dimen/dimen_normal"
-  android:paddingRight="@dimen/dimen_normal"
+  android:orientation="vertical"
   tools:context=".screens.main.menu.actions.MenuFragment"
-  tools:listitem="@layout/recycler_item_menu" />
+  tools:listitem="@layout/recycler_item_menu">
+
+  <androidx.core.widget.NestedScrollView
+    android:id="@+id/main_scroll_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:id="@+id/liner_layout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+      <androidx.cardview.widget.CardView
+        android:id="@+id/card_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_large"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardCornerRadius="@dimen/corner_extra">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="@dimen/dimen_extra">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_large"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/income"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="@dimen/text_size_big"
+            android:textStyle="bold" />
+
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line" />
+
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_large"
+            android:fontFamily="@font/inter_medium"
+            android:text="Обшая сумма по наличному" />
+
+          <TextView
+            android:id="@+id/tv_cash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:text="98237894537 sum"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="@dimen/text_size_big" />
+
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_small"
+            android:fontFamily="@font/inter_medium"
+            android:text="Обшая сумма по терминалу" />
+
+          <TextView
+            android:id="@+id/tv_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:text="98237894537 sum"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="@dimen/text_size_big" />
+
+        </LinearLayout>
+
+      </androidx.cardview.widget.CardView>
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/dimen_normal"
+        android:paddingRight="@dimen/dimen_normal"
+        tools:listitem="@layout/recycler_item_menu" />
+
+    </LinearLayout>
+
+  </androidx.core.widget.NestedScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

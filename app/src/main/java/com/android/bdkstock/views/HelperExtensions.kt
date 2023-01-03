@@ -59,11 +59,11 @@ fun <T> LiveData<Results<T>>.observeResults(
    progress: View?,
    onSuccess: (T) -> Unit
 ) = observe(fragment.viewLifecycleOwner) { result ->
-   if (result is Success) {
+   if (result is Results.Success) {
       progress?.gone()
       onSuccess(result.value)
    }
-   if (result is Pending) progress?.visible()
+   if (result is Results.Pending) progress?.visible()
 }
 
 

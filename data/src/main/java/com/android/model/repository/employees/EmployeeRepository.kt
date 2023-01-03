@@ -5,13 +5,14 @@ import com.android.model.repository.base.BasePageSource
 import com.android.model.repository.base.BaseRepository
 import com.android.model.repository.base.DataLoader
 import com.android.model.repository.employees.entity.EmployeeEntity
+import com.android.model.repository.settings.UserPermissions
 import com.android.model.utils.*
-import com.android.model.utils.wrapBackendExceptions
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class EmployeeRepository @Inject constructor(
-   private val employeesSource: EmployeesSource
+   private val employeesSource: EmployeesSource,
+   private val userPermissions: UserPermissions
 ) : BaseRepository() {
 
    suspend fun registerEmployee(
@@ -57,7 +58,9 @@ class EmployeeRepository @Inject constructor(
 
       if (password.isNotBlank() && confirmPassword.isBlank()) throw EmptyFieldException(Field.MATCH_PASSWORD_FIELDS)
       if (password.isBlank() && confirmPassword.isNotBlank()) throw EmptyFieldException(Field.MATCH_PASSWORD_FIELDS)
-      if (password.isNotBlank()&& confirmPassword.isNotBlank()&& password != confirmPassword) throw EmptyFieldException(Field.MATCH_PASSWORD_FIELDS)
+      if (password.isNotBlank() && confirmPassword.isNotBlank() && password != confirmPassword) throw EmptyFieldException(
+         Field.MATCH_PASSWORD_FIELDS
+      )
 
       return try {
          employeesSource.updateEmployee(

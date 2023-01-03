@@ -4,23 +4,21 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".screens.main.profile.ProfileFragment">
+  tools:context=".screens.main.menu.profile.ProfileFragment">
 
-  <androidx.constraintlayout.widget.ConstraintLayout
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ImageView
       android:id="@+id/iv_avatar"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_margin="@dimen/dimen_large"
       android:gravity="center"
-      android:src="@drawable/img_avatar"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.1" />
+      android:src="@drawable/img_avatar" />
 
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/input_layout_name"
@@ -29,19 +27,16 @@
       android:layout_height="wrap_content"
       android:layout_marginHorizontal="@dimen/dimen_large"
       android:layout_marginTop="@dimen/dimen_large"
-      android:enabled="false"
       android:fontFamily="@font/inter_regular"
       android:hint="@string/name"
-      app:layout_constraintBottom_toTopOf="@id/input_layout_surname"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/iv_avatar"
       app:startIconDrawable="@drawable/ic_person_24">
 
       <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:cursorVisible="false"
+        android:focusable="false"
         android:fontFamily="@font/inter_regular"
         android:imeOptions="actionNext"
         android:inputType="number"
@@ -56,19 +51,16 @@
       android:layout_height="wrap_content"
       android:layout_marginHorizontal="@dimen/dimen_large"
       android:layout_marginTop="@dimen/dimen_large"
-      android:enabled="false"
       android:fontFamily="@font/inter_regular"
       android:hint="@string/surname"
-      app:layout_constraintBottom_toTopOf="@id/input_layout_phone_number"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/input_layout_name"
       app:startIconDrawable="@drawable/ic_emergency_24">
 
       <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_surname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:cursorVisible="false"
+        android:focusable="false"
         android:fontFamily="@font/inter_regular"
         android:imeOptions="actionNext"
         android:inputType="number"
@@ -83,19 +75,16 @@
       android:layout_height="wrap_content"
       android:layout_marginHorizontal="@dimen/dimen_large"
       android:layout_marginTop="@dimen/dimen_large"
-      android:enabled="false"
       android:fontFamily="@font/inter_regular"
       android:hint="@string/phone_number"
-      app:layout_constraintBottom_toTopOf="@id/input_layout_address"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/input_layout_surname"
       app:startIconDrawable="@drawable/ic_call">
 
       <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:cursorVisible="false"
+        android:focusable="false"
         android:fontFamily="@font/inter_regular"
         android:imeOptions="actionNext"
         android:inputType="number"
@@ -110,19 +99,16 @@
       android:layout_height="wrap_content"
       android:layout_marginHorizontal="@dimen/dimen_large"
       android:layout_marginTop="20dp"
-      android:enabled="false"
       android:fontFamily="@font/inter_regular"
       android:hint="@string/address"
-      app:layout_constraintBottom_toTopOf="@id/button_permissions"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/input_layout_phone_number"
       app:startIconDrawable="@drawable/ic_location_24">
 
       <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:cursorVisible="false"
+        android:focusable="false"
         android:fontFamily="@font/inter_regular"
         android:imeOptions="actionNext"
         android:inputType="number"
@@ -136,12 +122,20 @@
       android:layout_height="wrap_content"
       android:layout_marginHorizontal="@dimen/dimen_large"
       android:layout_marginTop="@dimen/dimen_large"
-      android:text="button perms"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/input_layout_address" />
+      android:text="@string/user_permissions"
+      android:textAllCaps="false" />
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+      android:id="@+id/button_logout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/dimen_large"
+      android:layout_marginTop="@dimen/dimen_large"
+      android:layout_marginBottom="@dimen/dimen_large"
+      android:backgroundTint="?attr/colorError"
+      android:text="@string/logout"
+      android:textAllCaps="false" />
+
+  </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

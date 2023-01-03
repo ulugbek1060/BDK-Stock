@@ -48,7 +48,7 @@ class DisplayClientsFragment :
    }
 
    private fun getFragmentResult() {
-      setFragmentResultListener(CLIENT_ENTITY_KEY){_, bundle ->
+      setFragmentResultListener(CLIENT_ENTITY_KEY) { _, bundle ->
          val clientEntity = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             bundle.getSerializable(CLIENT_ENTITY_BUNDLE_KEY, ClientEntity::class.java)
          } else {
@@ -65,12 +65,13 @@ class DisplayClientsFragment :
       }
    }
 
+   @SuppressLint("SetTextI18n")
    private fun observeClient() {
       viewModel.client.observe(viewLifecycleOwner) { client ->
          with(binding) {
             tvFullName.text = client.fullName
-            tvMobile.text = "+998${client.phoneNumber}"
-            tvAddress.text = client.address
+            inputPhoneNumber.setText(client.phoneNumber)
+            inputAddress.setText(client.address)
          }
       }
    }
@@ -93,22 +94,6 @@ class DisplayClientsFragment :
    private fun callOnClick() {
       requestCallPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
    // -- call permission launch ------------------------------
@@ -136,7 +121,7 @@ class DisplayClientsFragment :
    }
 
    private fun onCallPermissionGranted() {
-      val phoneNumber = "tel:+998${binding.tvMobile.text}"
+      val phoneNumber = "tel:+998${binding.inputPhoneNumber.text}"
       val intent = Intent(Intent.ACTION_CALL)
       intent.data = Uri.parse(phoneNumber)
       requireActivity().startActivity(intent)
@@ -166,7 +151,7 @@ class DisplayClientsFragment :
    }
 
    private fun onMessagePermissionGranted() {
-      val phoneNumber = "sms:+998${binding.tvMobile.text}"
+      val phoneNumber = "sms:+998${binding.inputPhoneNumber.text}"
       val sendIntent = Intent(Intent.ACTION_VIEW)
       sendIntent.data = Uri.parse("sms:")
       sendIntent.data = Uri.parse(phoneNumber)
@@ -199,7 +184,7 @@ class DisplayClientsFragment :
    }
 
 
-   private companion object{
+   private companion object {
       const val CLIENT_ENTITY_KEY = "client_entity"
       const val CLIENT_ENTITY_BUNDLE_KEY = "client_entity_bundle"
    }

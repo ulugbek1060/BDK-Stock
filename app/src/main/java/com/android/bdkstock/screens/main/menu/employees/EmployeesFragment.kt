@@ -27,7 +27,6 @@ import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.employees.entity.EmployeeEntity
 import com.android.model.utils.AuthException
 import com.android.model.utils.observeEvent
-import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -79,16 +78,22 @@ class EmployeesFragment :
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
+      observeState()
+
       setupRecyclerView()
       setupRefreshLayout()
-
       handleViewVisibility()
-
       observeAuthError()
 
-      binding.extendedFab.setOnClickListener { fabOnClick() }
 
+      binding.extendedFab.setOnClickListener { fabOnClick() }
       requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
+   }
+
+   private fun observeState() {
+      viewModel.state.observe(viewLifecycleOwner) {
+         binding.extendedFab.isVisible = it.addEmployee
+      }
    }
 
 
@@ -133,10 +138,12 @@ class EmployeesFragment :
       binding.recyclerEmployees.addOnScrollListener(object : RecyclerView.OnScrollListener() {
          override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
-            if (dy > 0 && binding.extendedFab.isVisible) {
-               binding.extendedFab.hide()
-            } else if (dy < 0 && !binding.extendedFab.isVisible) {
-               binding.extendedFab.show()
+            if (viewModel.addEmployeePerm()) {
+               if (dy > 0 && binding.extendedFab.isVisible) {
+                  binding.extendedFab.hide()
+               } else if (dy < 0 && !binding.extendedFab.isVisible) {
+                  binding.extendedFab.show()
+               }
             }
          }
       })

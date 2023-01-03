@@ -1,4 +1,4 @@
-package com.android.bdkstock.screens.main.profile
+package com.android.bdkstock.screens.main.menu.profile
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
@@ -51,14 +51,14 @@ class UserPermissionsViewModel @Inject constructor(
       viewModelScope.launch(ioDispatcher) {
          jobRepository.getJobs().collectLatest { result ->
             when (result) {
-               is Success -> {
+               is Results.Success -> {
                   hideProgress()
                   result.value?.let { _jobs.postValue(it) }
                }
-               is Pending -> {
+               is Results.Pending -> {
                   showProgress()
                }
-               is Error -> {
+               is Results.Error -> {
                   hideProgress()
                   _errorMessage.publishEventOnBackground(
                      result.error.localizedMessage ?: "Unknown error!"
@@ -78,7 +78,7 @@ class UserPermissionsViewModel @Inject constructor(
          jobId = jobId
       ).collectLatest { result ->
          when (result) {
-            is Success -> {
+            is Results.Success -> {
                hideProgress()
                result.value.let {
                   _selectedPermsOfJofTitle.postValue(it)
@@ -87,10 +87,10 @@ class UserPermissionsViewModel @Inject constructor(
                   _newSelectedPerms.addAll(perms)
                }
             }
-            is Pending -> {
+            is Results.Pending -> {
                showProgress()
             }
-            is Error -> {
+            is Results.Error -> {
                hideProgress()
                result.error.localizedMessage?.let {
                   _errorMessage.publishEventOnBackground(it)

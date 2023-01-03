@@ -6,5 +6,6 @@ data class MenuItem(
    val id: Int,
    @DrawableRes val icon: Int,
    val title: String,
-   val fragmentId: Int
+   val fragmentId: Int,
+   val permission: String
 )

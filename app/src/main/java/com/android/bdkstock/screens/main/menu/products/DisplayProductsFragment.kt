@@ -15,8 +15,7 @@ import com.android.bdkstock.screens.main.base.adapters.BaseAdapter
 import com.android.bdkstock.screens.main.base.adapters.ViewHolderCreator
 import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.products.entity.IngredientItem
-import com.android.model.utils.Pending
-import com.android.model.utils.Success
+import com.android.model.utils.Results
 import com.android.model.utils.gone
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -50,11 +49,11 @@ class DisplayProductsFragment :
    private fun observeIngredients() = lifecycleScope.launch {
       viewModel.ingredients.collectLatest { result ->
          when (result) {
-            is Success -> {
+            is Results.Success -> {
                val list = result.value
                ingredientsAdapter.submitList(list)
             }
-            is Pending -> {}
+            is Results.Pending -> {}
             else -> {}
          }
       }

@@ -11,6 +11,7 @@ import dagger.hilt.android.HiltAndroidApp
 class App : Application()
 
 // TODO: messages 1.pay message 2.created order message 3.login (password or mobile wrong message)
+// TODO: Dashboard apis & Permissions api auth error don't exists
 
 
 

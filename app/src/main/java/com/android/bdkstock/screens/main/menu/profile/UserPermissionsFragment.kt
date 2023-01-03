@@ -1,4 +1,4 @@
-package com.android.bdkstock.screens.main.profile
+package com.android.bdkstock.screens.main.menu.profile
 
 import android.os.Bundle
 import android.view.View

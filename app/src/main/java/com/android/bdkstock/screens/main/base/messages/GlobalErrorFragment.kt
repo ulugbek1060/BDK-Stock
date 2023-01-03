@@ -14,9 +14,7 @@ class GlobalErrorFragment : DialogFragment(R.layout.fragment_global_error) {
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
-      arguments?.let {
-         message = it.getString(ERROR_MESSAGE_KEY)
-      }
+      message = arguments?.getString(ERROR_MESSAGE_KEY) ?: getString(R.string.error)
    }
 
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

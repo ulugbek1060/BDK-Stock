@@ -22,15 +22,15 @@ open class BaseRepository : Repository {
    ) = flow {
       val data = query().first()
       val flow = if (shouldFetch(data)) {
-         emit(Pending())
+         emit(Results.Pending())
          try {
             saveFetchedResult(fetch())
-            query().map { Success(it) }
+            query().map { Results.Success(it) }
          } catch (e: Exception) {
-            query().map { Success(it) }
+            query().map { Results.Success(it) }
          }
       } else {
-         query().map { Success(it) }
+         query().map { Results.Success(it) }
       }
       emitAll(flow)
    }.flowOn(Dispatchers.IO)
@@ -51,10 +51,10 @@ open class BaseRepository : Repository {
    fun <T> Flow<T>.asResult(): Flow<Results<T>> {
       return this
          .map<T, Results<T>> {
-            Success(it)
+            Results.Success(it)
          }
-         .onStart { emit(Pending()) }
-         .catch { emit(Error(it)) }
+         .onStart { emit(Results.Pending()) }
+         .catch { emit(Results.Error(it)) }
    }
 
    companion object {

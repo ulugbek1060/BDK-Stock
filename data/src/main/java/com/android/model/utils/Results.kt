@@ -1,6 +1,6 @@
 package com.android.model.utils
 
-sealed class Results<T> {
+sealed class Results<T>() {
 
    /**
     * Convert Result<T> into Result<R>.
@@ -14,12 +14,11 @@ sealed class Results<T> {
                Success(mapper(this.value))
             }
          }
-           is Error<T> -> Error(this.error)
+         is Error<T> -> Error(this.error)
          is Empty<T> -> Empty()
          is Pending<T> -> Pending()
       }
    }
-
 
 
    fun getValueOrNull(): T? {
@@ -28,12 +27,10 @@ sealed class Results<T> {
    }
 
    fun isFinished() = this is Success<T> || this is Error<T>
+
+   class Success<T>(val value: T) : Results<T>()
+   class Error<T>(val error: Throwable) : Results<T>()
+   class Empty<T> : Results<T>()
+   class Pending<T> : Results<T>()
 }
 
-class Success<T>(val value: T) : Results<T>()
-
-class Error<T>(val error: Throwable) : Results<T>()
-
-class Empty<T> : Results<T>()
-
-class Pending<T> : Results<T>()

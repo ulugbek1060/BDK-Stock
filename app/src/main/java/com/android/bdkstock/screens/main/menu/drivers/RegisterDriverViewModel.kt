@@ -41,7 +41,7 @@ class RegisterDriverViewModel @Inject constructor(
    init {
       viewModelScope.safeLaunch {
          driversRepository.getVehicleModelsList().collectLatest { result ->
-            if (result is Success) _vehicles.value = result.value
+            if (result is Results.Success) _vehicles.value = result.value
          }
       }
    }

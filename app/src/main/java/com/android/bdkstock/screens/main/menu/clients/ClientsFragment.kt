@@ -77,9 +77,7 @@ class ClientsFragment :
 
       setupRecyclerView()
       setupRefreshLayout()
-
       handleViewVisibility()
-
       observeAuthError()
 
       binding.extendedFab.setOnClickListener { fabOnClick() }

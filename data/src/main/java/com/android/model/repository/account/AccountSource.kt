@@ -51,6 +51,11 @@ interface AccountSource {
     * Fetches job's permissions
     */
    suspend fun getPermissionsOfJobTitle(
-      jobId:Int
-   ):PermsWithJobIdEntity
+      jobId: Int
+   ): PermsWithJobIdEntity
+
+   /**
+    * Fetch user permissions
+    */
+   suspend fun getUserPermissions(): List<String>
 }

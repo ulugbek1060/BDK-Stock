@@ -39,4 +39,8 @@ interface AccountApi {
       @Path("jobId") jobId: Int
    ): PermissionOfJobTitleResponseEntity
 
+   @Headers("Content-Type: application/json", "Accept: application/json")
+   @GET("/api/user/perms")
+   suspend fun getUserPermissions(): List<String>
+
 }

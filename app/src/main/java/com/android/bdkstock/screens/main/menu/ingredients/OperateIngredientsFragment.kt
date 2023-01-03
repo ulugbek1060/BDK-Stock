@@ -38,7 +38,7 @@ class OperateIngredientsFragment :
    private fun setupIngredientsList() = lifecycleScope.launchWhenStarted {
       viewModel.getIngredientList.collectLatest { result ->
          when (result) {
-            is Success -> {
+            is Results.Success -> {
                binding.mainContainer.visible()
                binding.progressbar.gone()
                val list = result.value
@@ -49,7 +49,7 @@ class OperateIngredientsFragment :
                   viewModel.setIngredient(list[position])
                }
             }
-            is Pending -> {
+            is Results.Pending -> {
                binding.mainContainer.gone()
                binding.progressbar.visible()
             }

@@ -89,12 +89,12 @@ class AddProductFragment : BaseFragment<AddProductViewModel, FragmentAddProductB
    private fun fetchIngredientsForSelection() = lifecycleScope.launchWhenStarted {
       viewModel.ingredientsFlow.collectLatest { result ->
          when (result) {
-            is Success -> {
+            is Results.Success -> {
                binding.progressbar.gone()
                binding.mainContainer.visible()
                viewModel.setAllIngredients(result.value)
             }
-            is Pending -> {
+            is Results.Pending -> {
                binding.mainContainer.gone()
                binding.progressbar.visible()
             }

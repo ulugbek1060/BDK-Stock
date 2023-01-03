@@ -14,8 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentProductsForOrderBinding
 import com.android.bdkstock.views.findTopNavController
-import com.android.model.utils.Pending
-import com.android.model.utils.Success
 import com.android.model.utils.gone
 import com.android.model.utils.visible
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

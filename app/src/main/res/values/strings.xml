@@ -185,5 +185,9 @@
   <string name="permissions_for_dashboard">Разрешения для финансовых</string>
   <string name="permissions_for_clients">Разрешения для клиентов</string>
   <string name="permissions_for_driver">Разрешения для водителя</string>
+  <string name="error">Что-то пошло не так</string>
+  <string name="user_permissions">разрешения пользователя</string>
+  <string name="logout">выйти</string>
+  <string name="logout_message">Выход из приложения!</string>
 
 </resources>

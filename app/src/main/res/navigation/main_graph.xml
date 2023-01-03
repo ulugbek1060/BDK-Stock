@@ -129,6 +129,13 @@
       app:exitAnim="@anim/slide_exit"
       app:popEnterAnim="@anim/slide_pop_enter"
       app:popExitAnim="@anim/slide_pop_exit" />
+    <action
+      android:id="@+id/action_actionsFragment_to_financialFragment"
+      app:destination="@id/financialFragment"
+      app:enterAnim="@anim/slide_enter"
+      app:exitAnim="@anim/slide_exit"
+      app:popEnterAnim="@anim/slide_pop_enter"
+      app:popExitAnim="@anim/slide_pop_exit" />
 
   </fragment>
 
@@ -293,7 +300,7 @@
 
   <fragment
     android:id="@+id/settingsFragment"
-    android:name="com.android.bdkstock.screens.main.profile.SettingsFragment"
+    android:name="com.android.bdkstock.screens.main.menu.profile.SettingsFragment"
     android:label="fragment_settings"
     tools:layout="@layout/fragment_settings" />
 
@@ -539,5 +546,10 @@
       android:name="driverEntity"
       app:argType="com.android.model.repository.drivers.entity.DriverEntity" />
   </fragment>
+  <fragment
+    android:id="@+id/financialFragment"
+    android:name="com.android.bdkstock.screens.main.menu.financial.FinancialFragment"
+    android:label="fragment_financial"
+    tools:layout="@layout/fragment_financial" />
 
 </navigation>

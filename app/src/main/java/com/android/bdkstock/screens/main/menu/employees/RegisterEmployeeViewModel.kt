@@ -36,7 +36,7 @@ class RegisterEmployeeViewModel @Inject constructor(
    init {
       viewModelScope.safeLaunch {
          jobRepository.getJobs().collectLatest { result ->
-            if (result is Success) _jobsList.value = result.value ?: emptyList()
+            if (result is Results.Success) _jobsList.value = result.value ?: emptyList()
          }
       }
    }

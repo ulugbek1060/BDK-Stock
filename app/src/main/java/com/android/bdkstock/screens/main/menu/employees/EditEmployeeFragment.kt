@@ -11,10 +11,8 @@ import com.android.bdkstock.R
 import com.android.bdkstock.databinding.FragmentEditEmployeeBinding
 import com.android.bdkstock.screens.main.base.BaseFragment
 import com.android.bdkstock.views.findTopNavController
-import com.android.model.utils.Success
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class EditEmployeeFragment : BaseFragment<EditEmployeeViewModel, FragmentEditEmployeeBinding>() {

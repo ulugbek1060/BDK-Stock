@@ -10,10 +10,8 @@ import com.android.model.repository.account.entity.PermsWithJobIdEntity
 import com.android.model.repository.account.entity.UserPermissionEntity
 import com.android.model.repository.base.BaseRepository
 import com.android.model.repository.settings.AppSettings
-import com.android.model.utils.EmptyFieldException
-import com.android.model.utils.Field
-import com.android.model.utils.Results
-import com.android.model.utils.wrapBackendExceptions
+import com.android.model.repository.settings.UserPermissions
+import com.android.model.utils.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -24,6 +22,7 @@ import javax.inject.Inject
 class AccountRepository @Inject constructor(
    private val accountSource: AccountSource,
    private val appSettings: AppSettings,
+   private val userPermissions: UserPermissions,
    private val accountDao: AccountDao,
    private val employeeDao: EmployeesDao,
    private val jobsDao: JobsDao,
@@ -54,15 +53,18 @@ class AccountRepository @Inject constructor(
       accountDao.insert(account.toUserRoomEntity())
    }
 
+
    fun getAccount(): Flow<AccountEntity?> {
       return accountDao.getAccount().map { it?.toAccountEntity() }
    }
 
-   fun getUserPermissions(): Flow<Results<List<UserPermissionEntity>>> = flow {
+
+   fun getPermissions(): Flow<Results<List<UserPermissionEntity>>> = flow {
       emit(wrapBackendExceptions { accountSource.getPermissions() })
    }
       .flowOn(ioDispatcher)
       .asResult()
+
 
    suspend fun updateUsersPermissions(
       jobId: Int?,
@@ -78,6 +80,7 @@ class AccountRepository @Inject constructor(
       }
    }
 
+
    fun getPermissionOfJobTitle(jobId: Int): Flow<Results<PermsWithJobIdEntity>> =
       flow {
          emit(wrapBackendExceptions {
@@ -88,8 +91,26 @@ class AccountRepository @Inject constructor(
          .asResult()
 
 
+   fun getUserPermissions(): Flow<Results<List<String>>> = flow {
+      val data = try {
+         wrapBackendExceptions {
+            val list = accountSource.getUserPermissions()
+            userPermissions.savePermissions(list)
+            list
+         }
+      } catch (e: AuthException) {
+         throw e
+      } catch (e: Exception) {
+         userPermissions.getPermissions()
+      }
+      emit(data)
+   }
+      .flowOn(ioDispatcher)
+      .asResult()
+
 
    suspend fun logoutManually(): String = accountSource.logout()
+
 
    suspend fun logout() {
       appSettings.setCurrentToken(null)
@@ -98,5 +119,4 @@ class AccountRepository @Inject constructor(
       jobsDao.clear()
       vehiclesDao.clear()
    }
-
 }

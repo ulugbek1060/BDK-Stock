@@ -35,8 +35,6 @@ class ActionsFragment : Fragment() {
          .findFragmentById(R.id.fragment_actions_container) as NavHostFragment
 
       navController = navHost.navController
-
-      NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
    }
 
 

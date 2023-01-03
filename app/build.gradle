@@ -96,8 +96,7 @@ dependencies {
     //lotti animation
     implementation "com.airbnb.android:lottie:5.2.0"
 
-    //rounded layout
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.0-alpha04' // if you want to use motion layout
+    implementation 'com.github.blackfizz:eazegraph:1.2.2@aar'
 
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
+    implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
 }

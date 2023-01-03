@@ -69,4 +69,7 @@ class AccountSourceImpl @Inject constructor(
             }.toSet()
          )
       }
+
+   override suspend fun getUserPermissions(): List<String> =
+      wrapNetworkException { accountApi.getUserPermissions() }
 }

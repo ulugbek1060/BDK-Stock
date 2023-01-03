@@ -7,8 +7,8 @@
 
   <ImageView
     android:id="@+id/iv_warning"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="45dp"
+    android:layout_height="45dp"
     android:contentDescription="@null"
     android:src="@drawable/ic_warning"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -36,9 +36,9 @@
     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_large"
     android:layout_marginTop="@dimen/dimen_extra"
     android:text="@string/close"
-    android:layout_margin="@dimen/dimen_large"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent" />
