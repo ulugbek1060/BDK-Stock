@@ -1,9 +1,8 @@
 package com.android.model.repository.sales.entity
 
-import android.content.Context
 import android.os.Parcelable
-import com.android.model.R
 import kotlinx.parcelize.Parcelize
+import java.math.BigDecimal
 
 @Parcelize
 data class OrderEntity(
@@ -17,4 +16,19 @@ data class OrderEntity(
    val client: ClientForOrderEntity,
    val driver: DriverForOrderEntity,
    val products: List<OrderedProduct>
-) : Parcelable
+) : Parcelable {
+
+   fun calculateTotalWeight(): String {
+      var weight = "0"
+      try {
+         products.forEach { product ->
+            if (product.amount != "")
+               weight = BigDecimal(weight).plus(BigDecimal(product.amount)).toString()
+         }
+      } catch (e: Exception) {
+         weight
+      }
+      return "$weight ${products.first().unit}"
+   }
+
+}

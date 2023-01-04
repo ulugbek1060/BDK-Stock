@@ -22,6 +22,8 @@ import com.android.model.utils.gone
 import com.android.model.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 
+private const val TAG = "OrderDetailFragment"
+
 @AndroidEntryPoint
 class OrderDetailFragment :
    BaseFragment<OrderListViewModel, FragmentOrderDetailBinding>() {
@@ -48,7 +50,6 @@ class OrderDetailFragment :
 
       setupRecyclerView()
       observeState()
-      observeOrder()
       observePayError()
       fabBehavior()
       observePaymentResult()
@@ -59,11 +60,13 @@ class OrderDetailFragment :
 
    private fun fabBehavior() {
       binding.mainContainer.setOnScrollChangeListener { v, x, y, oldX, oldY ->
-         if (viewModel.statusIsEqualZero()) {
-            if (y > oldY) {
-               binding.fabPay.hide()
-            } else {
-               binding.fabPay.show()
+         if (viewModel.getPayForOrderPerm()) {
+            if (viewModel.statusIsEqualZero()) {
+               if (y > oldY) {
+                  binding.fabPay.hide()
+               } else {
+                  binding.fabPay.show()
+               }
             }
          }
       }
@@ -71,8 +74,8 @@ class OrderDetailFragment :
 
    private fun cancelOnClick() {
       AlertDialog.Builder(requireContext())
-         .setTitle("Order cancelation")
-         .setMessage("Do you want to cancel order?")
+         .setTitle(getString(R.string.cancel_order))
+         .setMessage(getString(R.string.cancel_order_decription))
          .setNegativeButton(getString(R.string.no)) { _, _ -> }
          .setPositiveButton(getString(R.string.yes)) { _, _ ->
             viewModel.cancelOrder()
@@ -86,36 +89,6 @@ class OrderDetailFragment :
          if (bundle.getBoolean(PAYMENTS_BUNDLE_KEY)) {
             viewModel.getOrder()
          }
-      }
-   }
-
-   private fun observeOrder() {
-      viewModel.order.observe(viewLifecycleOwner) { orderData ->
-         val order = orderData.orderEntity
-         val client = order?.client
-         val driver = order?.driver
-         val products = order?.products ?: listOf()
-
-         binding.inputClientName.setText(client?.fullName)
-         binding.inputClientMobile.setText(client?.phoneNumber)
-         binding.inputClientAddress.setText(client?.address)
-
-         binding.inputDriverName.setText(driver?.name)
-         binding.inputDriverMobile.setText(driver?.phoneNumber)
-         binding.inputDriverAutoNumber.setText(driver?.autoRegNumber)
-
-         binding.tvTotalSum.text = order?.summa
-         binding.tvDebit.text = order?.debit
-         binding.tvPayed.text = order?.paid
-         adapter.submitList(products)
-
-         orderData.fabVisibility(binding.fabPay)
-
-         getActionBar()?.title = orderData.getIdentification()
-         binding.tvIdentification.text = orderData?.getStatusText(requireContext())
-         binding.tvIdentification.setTextColor(orderData.getStatusColor(requireContext()))
-         binding.ivIndicator.setColorFilter(orderData.getStatusColor(requireContext()))
-         binding.ivIndicator.setImageDrawable(orderData.getStatusIndicator(requireContext()))
       }
    }
 
@@ -137,8 +110,39 @@ class OrderDetailFragment :
 
    private fun observeState() {
       viewModel.state.observe(viewLifecycleOwner) { state ->
+         val order = state.orderEntity
+         val client = order?.client
+         val driver = order?.driver
+         val products = order?.products ?: listOf()
+
+         binding.inputClientName.setText(client?.fullName)
+         binding.inputClientMobile.setText(client?.phoneNumber)
+         binding.inputClientAddress.setText(client?.address)
+
+         binding.inputDriverName.setText(driver?.name)
+         binding.inputDriverMobile.setText(driver?.phoneNumber)
+         binding.inputDriverAutoNumber.setText(driver?.autoRegNumber)
+
+         binding.tvTotalSum.text = order?.summa
+         binding.tvDebit.text = order?.debit
+         binding.tvPayed.text = order?.paid
+         binding.tvTotalWeight.text = order?.calculateTotalWeight()
+
+         if (products.isNotEmpty()) adapter.submitList(products)
+
+         if (state.fabVisibility() != null)
+            binding.fabPay.isVisible = state.fabVisibility() ?: false
+
+         getActionBar()?.title = state.getIdentification()
+         binding.tvIdentification.text = state?.getStatusText(requireContext())
+         binding.tvIdentification.setTextColor(state.getStatusColor(requireContext()))
+         binding.ivIndicator.setColorFilter(state.getStatusColor(requireContext()))
+         binding.ivIndicator.setImageDrawable(state.getStatusIndicator(requireContext()))
+
          binding.progressbar.isVisible = state.isInProgress
          binding.mainContainer.isVisible = !state.isInProgress
+         binding.fabPay.isVisible = state.payOrderPerm
+         binding.buttonCancel.isVisible = state.cancelOrderPerm
       }
    }
 

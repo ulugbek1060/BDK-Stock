@@ -189,5 +189,7 @@
   <string name="user_permissions">разрешения пользователя</string>
   <string name="logout">выйти</string>
   <string name="logout_message">Выход из приложения!</string>
+  <string name="cancel_order">Отменить заказ</string>
+  <string name="cancel_order_decription">Вы хотите отменить заказ?</string>
 
 </resources>

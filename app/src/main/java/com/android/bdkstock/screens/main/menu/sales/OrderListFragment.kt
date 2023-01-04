@@ -30,7 +30,6 @@ import com.android.bdkstock.views.findTopNavController
 import com.android.model.repository.sales.entity.OrderListItem
 import com.android.model.utils.AuthException
 import com.android.model.utils.observeEvent
-import com.elveum.elementadapter.simpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
@@ -98,19 +97,24 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
+      observeState()
       setupRecyclerView()
       setupRefreshLayout()
       setFabBehaviorOnRecycler()
 
       handleViewVisibility()
-
       observeAuthError()
-
       getFilterDataResult()
 
       binding.extendedFab.setOnClickListener { fabOnClick() }
 
       requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
+   }
+
+   private fun observeState() {
+      viewModel.state.observe(viewLifecycleOwner) { state ->
+         binding.extendedFab.isVisible = state.createNewOrder
+      }
    }
 
    private fun getFilterDataResult() {
@@ -159,10 +163,12 @@ class OrderListFragment : BaseFragment<OrderListViewModel, FragmentOrderListBind
       binding.recyclerProducts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
          override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
-            if (dy > 0 && binding.extendedFab.isVisible) {
-               binding.extendedFab.hide()
-            } else if (dy < 0 && !binding.extendedFab.isVisible) {
-               binding.extendedFab.show()
+            if (viewModel.getNewOrderPerm()) {
+               if (dy > 0 && binding.extendedFab.isVisible) {
+                  binding.extendedFab.hide()
+               } else if (dy < 0 && !binding.extendedFab.isVisible) {
+                  binding.extendedFab.show()
+               }
             }
          }
 

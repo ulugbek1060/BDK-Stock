@@ -145,7 +145,7 @@
         android:layout_marginTop="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/container_product"
+        app:layout_constraintBottom_toTopOf="@id/tv_product"
         app:layout_constraintTop_toBottomOf="@id/container_client">
 
         <TextView
@@ -226,40 +226,58 @@
         </com.google.android.material.textfield.TextInputLayout>
       </LinearLayout>
 
-      <LinearLayout
-        android:id="@+id/container_product"
+      <TextView
+        android:id="@+id/tv_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/products"
+        android:textColor="@color/high_emphasises"
+        android:textSize="@dimen/text_size_normal"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_sales"
+        app:layout_constraintBottom_toTopOf="@id/recycler_products"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_driver" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_products"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_large"
         android:layout_marginTop="@dimen/dimen_large"
         android:layout_marginRight="@dimen/dimen_large"
-        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/tv_total_weight"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_product" />
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_large"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/total_weight"
+        app:layout_constraintBottom_toBottomOf="@id/tv_total_weight"
+        app:layout_constraintRight_toLeftOf="@id/tv_total_weight"
+        app:layout_constraintTop_toTopOf="@id/tv_total_weight" />
+
+      <TextView
+        android:id="@+id/tv_total_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_large"
+        android:layout_marginEnd="@dimen/dimen_large"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="?attr/colorOnSurface"
         app:layout_constraintBottom_toTopOf="@id/container_payments"
-        app:layout_constraintTop_toBottomOf="@id/container_driver">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recycler_products"
+        tools:text="12432432 kg" />
 
-        <TextView
-          android:id="@+id/tv_product"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginHorizontal="@dimen/dimen_small"
-          android:drawablePadding="@dimen/dimen_large"
-          android:fontFamily="@font/inter_regular"
-          android:text="@string/products"
-          android:textColor="@color/high_emphasises"
-          android:textSize="@dimen/text_size_normal"
-          android:textStyle="bold"
-          app:drawableStartCompat="@drawable/ic_sales" />
-
-        <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/recycler_products"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/dimen_large"
-          app:layout_constraintLeft_toLeftOf="parent"
-          app:layout_constraintRight_toRightOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/container_driver" />
-
-      </LinearLayout>
 
       <LinearLayout
         android:id="@+id/container_payments"
@@ -274,7 +292,7 @@
         app:layout_constraintBottom_toTopOf="@id/button_cancel"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_product">
+        app:layout_constraintTop_toBottomOf="@id/tv_total_weight">
 
         <LinearLayout
           android:layout_width="match_parent"
@@ -392,6 +410,7 @@
     android:layout_margin="@dimen/dimen_big"
     android:contentDescription="@string/add"
     android:text="@string/payments"
+    android:visibility="gone"
     app:icon="@drawable/ic_payments"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintRight_toRightOf="parent" />
