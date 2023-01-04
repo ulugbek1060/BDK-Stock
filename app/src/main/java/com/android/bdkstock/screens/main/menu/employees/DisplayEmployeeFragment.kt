@@ -65,9 +65,9 @@ class DisplayEmployeeFragment :
    private fun observeEmployee() {
       viewModel.employee.observe(viewLifecycleOwner) { employee ->
          binding.tvFullName.text = "${employee.firstname} ${employee.lastname}"
-         binding.tvMobile.text = "+998${employee.phoneNumber}"
-         binding.tvAddress.text = employee.address
-         binding.tvJob.text = employee.job.name
+         binding.inputPhoneNumber.setText(employee.phoneNumber)
+         binding.inputAddress.setText(employee.address)
+         binding.autoCompleteJobTitle.setText(employee.job.name, false)
       }
    }
 
@@ -158,14 +158,14 @@ class DisplayEmployeeFragment :
    }
 
    private fun onCallPermissionGranted() {
-      val phoneNumber = "tel:+998${binding.tvMobile.text}"
+      val phoneNumber = "tel:+998${binding.inputPhoneNumber.text}"
       val intent = Intent(Intent.ACTION_CALL)
       intent.data = Uri.parse(phoneNumber)
       requireActivity().startActivity(intent)
    }
 
    private fun onMessagePermissionGranted() {
-      val phoneNumber = "sms:+998${binding.tvMobile.text}"
+      val phoneNumber = "sms:+998${binding.inputPhoneNumber.text}"
       val sendIntent = Intent(Intent.ACTION_VIEW)
       sendIntent.data = Uri.parse("sms:")
       sendIntent.data = Uri.parse(phoneNumber)

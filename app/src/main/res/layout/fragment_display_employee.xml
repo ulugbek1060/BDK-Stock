@@ -6,9 +6,10 @@
   android:layout_height="match_parent"
   tools:context=".screens.main.menu.employees.DisplayEmployeeFragment">
 
-  <androidx.constraintlayout.widget.ConstraintLayout
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ImageView
       android:id="@+id/iv_employee"
@@ -16,11 +17,9 @@
       android:layout_height="wrap_content"
       android:layout_marginHorizontal="@dimen/dimen_big"
       android:layout_marginTop="@dimen/dimen_big"
+      android:layout_gravity="center_horizontal"
       android:contentDescription="@null"
-      android:src="@drawable/img_avatar"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      android:src="@drawable/img_avatar" />
 
     <TextView
       android:id="@+id/tv_full_name"
@@ -29,120 +28,111 @@
       android:layout_marginHorizontal="@dimen/dimen_big"
       android:layout_marginTop="@dimen/dimen_big"
       android:fontFamily="@font/inter_medium"
+      android:layout_gravity="center_horizontal"
       android:gravity="center"
       android:textColor="?attr/colorOnSurface"
       android:textSize="@dimen/text_size_big"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/iv_employee"
       tools:text="Ulashev Ulugbek" />
 
-    <LinearLayout
-      android:id="@+id/linearLayout"
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/input_layout_phone_number"
+      style="@style/TextInputLayoutStyle"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_marginHorizontal="@dimen/dimen_big"
-      android:layout_marginTop="@dimen/dimen_big"
-      android:layout_marginBottom="@dimen/dimen_big"
-      android:background="@drawable/cornered_bg"
-      android:orientation="vertical"
-      android:padding="@dimen/dimen_big"
-      app:layout_constraintBottom_toTopOf="@id/button_call"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/tv_full_name">
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dimen_large"
+      android:layout_marginTop="@dimen/dimen_large"
+      android:layout_marginRight="@dimen/dimen_large"
+      android:fontFamily="@font/inter_regular"
+      android:hint="@string/phone_number"
+      app:errorEnabled="true"
+      app:prefixText="+998"
+      app:startIconDrawable="@drawable/ic_call">
 
-      <TextView
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/input_phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:cursorVisible="false"
+        android:focusable="false"
         android:fontFamily="@font/inter_regular"
-        android:text="@string/mobile"
-        android:textSize="@dimen/text_size_normal" />
+        android:inputType="number"
+        android:lines="1" />
 
-      <TextView
-        android:id="@+id/tv_mobile"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/input_layout_address"
+      style="@style/TextInputLayoutStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dimen_large"
+      android:layout_marginRight="@dimen/dimen_large"
+      android:fontFamily="@font/inter_regular"
+      android:hint="@string/address"
+      app:errorEnabled="true"
+      app:startIconDrawable="@drawable/ic_location_24">
+
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/input_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_regular"
-        android:textColor="?attr/colorOnSurface"
-        android:textIsSelectable="true"
-        android:textSize="@dimen/text_size_normal"
-        tools:text="+998903381060" />
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:fontFamily="@font/inter_regular" />
 
-      <TextView
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/input_layout_job_title"
+      style="@style/TextInputLayoutStyleDropDown"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dimen_large"
+      android:layout_marginRight="@dimen/dimen_large"
+      android:fontFamily="@font/inter_regular"
+      android:hint="@string/job"
+      app:errorEnabled="true"
+      app:startIconDrawable="@drawable/ic_work_24">
+
+      <AutoCompleteTextView
+        android:id="@+id/auto_complete_job_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_big"
+        android:cursorVisible="false"
+        android:focusable="false"
         android:fontFamily="@font/inter_regular"
-        android:text="@string/address"
-        android:textSize="@dimen/text_size_normal" />
+        android:inputType="none"
+        tools:ignore="LabelFor" />
 
-      <TextView
-        android:id="@+id/tv_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_regular"
-        android:textColor="?attr/colorOnSurface"
-        android:textIsSelectable="true"
-        android:textSize="@dimen/text_size_normal"
-        tools:text="Toshkent" />
-
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_big"
-        android:fontFamily="@font/inter_regular"
-        android:text="@string/job"
-        android:textSize="@dimen/text_size_normal" />
-
-      <TextView
-        android:id="@+id/tv_job"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_regular"
-        android:textColor="?attr/colorOnSurface"
-        android:textIsSelectable="true"
-        android:textSize="@dimen/text_size_normal"
-        tools:text="Toshkent" />
-
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
       android:id="@+id/button_call"
       style="@style/Widget.MaterialComponents.Button.Icon"
-      android:layout_width="0dp"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen_small"
-      android:layout_marginEnd="@dimen/dimen_big"
-      android:layout_marginBottom="@dimen/dimen_big"
+
+      android:layout_marginHorizontal="@dimen/dimen_large"
       android:backgroundTint="@color/green"
+      android:fontFamily="@font/inter_medium"
       android:text="@string/call"
       android:textAllCaps="false"
-      android:fontFamily="@font/inter_medium"
-      app:icon="@drawable/ic_call"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintLeft_toRightOf="@id/button_message"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/linearLayout" />
+      app:icon="@drawable/ic_call" />
 
     <Button
       android:id="@+id/button_message"
       style="@style/Widget.MaterialComponents.Button.Icon"
-      android:layout_width="0dp"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen_big"
-      android:layout_marginEnd="@dimen/dimen_small"
+      android:layout_marginHorizontal="@dimen/dimen_large"
+      android:layout_marginTop="@dimen/dimen_large"
       android:backgroundTint="@color/orange"
+      android:fontFamily="@font/inter_medium"
       android:text="@string/message"
       android:textAllCaps="false"
-      android:fontFamily="@font/inter_medium"
-      app:icon="@drawable/ic_message"
-      app:layout_constraintBottom_toBottomOf="@id/button_call"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toLeftOf="@id/button_call"
-      app:layout_constraintTop_toTopOf="@id/button_call" />
+      app:icon="@drawable/ic_message" />
 
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+  </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

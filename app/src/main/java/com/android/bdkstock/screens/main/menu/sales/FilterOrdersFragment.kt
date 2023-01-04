@@ -2,6 +2,7 @@ package com.android.bdkstock.screens.main.menu.sales
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -23,7 +24,7 @@ class FilterOrdersFragment : BaseBottomSheetDialogFragment<FragmentOrdersFilterB
 
       observeFilterData()
 
-      binding.buttonApply.setOnClickListener { applyOnClick() }
+      binding.buttonApply.setOnClickListener { applyOnClick(view) }
       binding.buttonClear.setOnClickListener { clearOnClick() }
       binding.inputLayoutFromDate.setEndIconOnClickListener { fromDateOnClick() }
       binding.inputLayoutToDate.setEndIconOnClickListener { toDateOnClick() }
@@ -34,9 +35,9 @@ class FilterOrdersFragment : BaseBottomSheetDialogFragment<FragmentOrdersFilterB
       back()
    }
 
-   private fun applyOnClick() {
+   private fun applyOnClick(view: View) {
       viewModel.setFilterDate(
-         status = 0,
+         status = getButtonTag(view, binding.toggleButton.checkedButtonId),
          client = binding.inputQueryClient.text.toString(),
          fromDate = binding.inputFromDate.text.toString(),
          toDate = binding.inputToDate.text.toString(),
@@ -45,10 +46,13 @@ class FilterOrdersFragment : BaseBottomSheetDialogFragment<FragmentOrdersFilterB
       back()
    }
 
+   private fun getButtonTag(view: View, id: Int): Int {
+      return view.findViewById<Button>(id).tag.toString().toInt()
+   }
+
    private fun back() {
       setFragmentResult(
-         ORDER_FILTER_DATA_KEY,
-         bundleOf(ORDER_FILTER_DATA_BUNDLE_KEY to viewModel.getFilterData())
+         ORDER_FILTER_DATA_KEY, bundleOf(ORDER_FILTER_DATA_BUNDLE_KEY to viewModel.getFilterData())
       )
       findNavController().popBackStack()
    }
@@ -63,7 +67,6 @@ class FilterOrdersFragment : BaseBottomSheetDialogFragment<FragmentOrdersFilterB
 
    private fun observeFilterData() {
       viewModel.filterData.observe(viewLifecycleOwner) { filter ->
-
          binding.toggleButton.check(filter.getSelectedStatusId())
          binding.inputQueryClient.setText(filter.client)
          binding.inputQueryDriver.setText(filter.driver)

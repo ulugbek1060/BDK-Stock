@@ -38,7 +38,7 @@ class FilterOrderViewModel @Inject constructor(
       )
    }
 
-   fun getFilterData() = _filterData.requireValue()
+   fun getFilterData() = _filterData.requireValue()!!
 
    fun clearData() {
       _filterData.value = OrdersFilterData()
@@ -52,9 +52,18 @@ data class OrdersFilterData(
    val toDate: String? = null,
    val driver: String? = null,
 ) : Serializable {
+
    fun getSelectedStatusId(): Int = when (status) {
-      1 -> R.id.button_expense
-      0 -> R.id.button_income
+      ORDER_WAITING_FOR_PAYMENT -> R.id.button_waiting
+      ORDER_SOLD -> R.id.button_sold
+      ORDER_CANCELED -> R.id.button_cancel
       else -> R.id.button_all
+   }
+
+
+   companion object {
+      const val ORDER_WAITING_FOR_PAYMENT = 0
+      const val ORDER_SOLD = 1
+      const val ORDER_CANCELED = 3
    }
 }

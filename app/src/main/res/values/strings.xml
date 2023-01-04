@@ -141,7 +141,7 @@
   <string name="cash">Наличка</string>
   <string name="error_empty_pay_field">Вам необходимо заполнить поля оплаты</string>
   <string name="sale_status_0">Ожидает оплаты</string>
-  <string name="sale_status_1">Продан</string>
+  <string name="sale_status_1">Продано</string>
   <string name="order">Заказ</string>
   <string name="payments">Платежи</string>
   <string name="debit">Остаток суммы</string>

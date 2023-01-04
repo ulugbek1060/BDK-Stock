@@ -21,6 +21,7 @@ import com.android.bdkstock.R
 import com.android.bdkstock.screens.main.MainActivity
 import com.android.bdkstock.screens.main.base.BaseBottomSheetDialogFragment
 import com.android.model.utils.*
+import com.android.model.utils.Const.DATE_TIME_INPUT_FORMAT
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
@@ -117,7 +118,7 @@ fun BottomSheetDialogFragment.getDate(
    val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText(title)
       .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
    datePicker.addOnPositiveButtonClickListener { timeMiles ->
-      val formatter = SimpleDateFormat("dd/MM/yyyy")
+      val formatter = SimpleDateFormat(DATE_TIME_INPUT_FORMAT)
       val date = formatter.format(Date(timeMiles))
       inputFromDate.setText(date)
    }
